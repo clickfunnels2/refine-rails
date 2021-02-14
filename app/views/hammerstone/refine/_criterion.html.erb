@@ -1,4 +1,9 @@
 <%= turbo_frame_tag "criterion_#{criterion_id}" do %>
-  <%= render partial: 'hammerstone/refine/condition_select', locals: {
-    conditions: conditions, selected_condition_id: criterion[:condition_id] } %>
+  <% if local_assigns[:criterion].nil? %>
+    <%= render partial: 'hammerstone/refine/condition_select', locals: {
+      conditions: conditions } %>
+  <% else  %>
+    <%= render partial: 'hammerstone/refine/condition_select', locals: {
+      conditions: conditions, selected_condition_id: criterion[:condition_id] } %>
+  <% end %>
 <% end %>

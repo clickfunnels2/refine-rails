@@ -1,0 +1,8 @@
+<%= turbo_frame_tag "group_#{group_id}" do %>
+  <div class="bg-gray-50 rounded p-4 mt-2 font-sans">
+    <% criteria.each_with_index do |criterion, index| %>
+      <%= render partial: 'criterion', locals: {
+        criterion: criterion, criterion_id: index, conditions: conditions } %>
+    <% end %>
+  </div>
+<% end %>

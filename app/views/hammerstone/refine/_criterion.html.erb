@@ -1,0 +1,4 @@
+<%= turbo_frame_tag "criterion_#{criterion_id}" do %>
+  <%= render partial: 'condition_select', locals: {
+    conditions: conditions, selected_condition_id: criterion[:condition_id] } %>
+<% end %>

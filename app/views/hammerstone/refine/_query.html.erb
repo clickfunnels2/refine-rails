@@ -1,0 +1,9 @@
+<%= turbo_frame_tag 'groups' do %>
+  <% configuration[:blueprint].each_with_index do |criteria, index| %>
+    <%= render partial: 'group', locals: {
+      conditions: configuration[:conditions],
+      criteria: criteria,
+      group_id: index }
+    %>
+  <% end %>
+<% end %>

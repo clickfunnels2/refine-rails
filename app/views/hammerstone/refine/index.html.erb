@@ -1,10 +1,1 @@
-<%= turbo_frame_tag 'refine' do %>
-  <%= render partial: 'query', locals: { configuration: @configuration } %>
-  <form action="refine" method="post">
-    <input type="hidden" name="configuration" value="<%= @configuration.to_json %>" />
-    <input type="hidden" name="blueprint" value="[]" />
-    <button type="submit" class="text-center px-4 py-2 border border-gray-300 shadow-sm text-md font-bold rounded-md text-gray-600 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 w-full mt-2">
-      Add an 'Or'
-    </button>
-  </form>
-<% end %>
+<%= render partial: 'query', locals: { configuration: @configuration } %>

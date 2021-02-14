@@ -3,10 +3,15 @@ class Hammerstone::RefineController < ApplicationController
 
   def index
     @configuration = JSON.parse(params[:configuration]).deep_symbolize_keys
+  end
+
+  def create
+    configuration = JSON.parse(params[:configuration]).deep_symbolize_keys
+    conditions = configuration[:conditions]
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.append(:groups, partial: 'account/shared/refine/group',
-          locals: { group_id: 'group1', configuration: JSON.parse(params[:configuration], symbolize_names: true) })
+        render turbo_stream: turbo_stream.append(:groups, partial: 'group', locals: {
+          group_id: 'group1', conditions: conditions, criteria: []})
       end
       format.html
     end

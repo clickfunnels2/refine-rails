@@ -6,4 +6,7 @@
     <%= render partial: 'hammerstone/refine/condition_select', locals: {
       conditions: conditions, selected_condition_id: criterion[:condition_id] } %>
   <% end %>
+
+  <%= render partial: "hammerstone/refine/clauses/#{clause_for_criterion(criterion, conditions)}", locals: {
+    condition: condition_for_criterion(criterion, conditions), input: criterion[:input] } %>
 <% end %>

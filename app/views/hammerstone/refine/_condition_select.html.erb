@@ -1,6 +1,10 @@
 <% selected_condition_id = conditions[0][:id] if local_assigns[:selected_condition_id].nil? %>
 
-<select name="conditions" class="font-sans mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+<select
+  data-action="change->refine-update#update"
+  name="conditions"
+  class="font-sans mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+>
   <% conditions.each do |condition_option| %>
     <option
       value="<%= condition_option[:id] %>"

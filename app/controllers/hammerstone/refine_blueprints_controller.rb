@@ -1,4 +1,4 @@
-class Hammerstone::RefineController < ApplicationController
+class Hammerstone::RefineBlueprintsController < ApplicationController
   layout false
 
   def index
@@ -17,4 +17,7 @@ class Hammerstone::RefineController < ApplicationController
     end
   end
 
+  def update
+    byebug
+  end
 end

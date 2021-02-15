@@ -1,12 +1,22 @@
 <%= turbo_frame_tag "criterion_#{criterion_id}" do %>
-  <% if local_assigns[:criterion].nil? %>
-    <%= render partial: 'hammerstone/refine/condition_select', locals: {
-      conditions: conditions } %>
-  <% else  %>
-    <%= render partial: 'hammerstone/refine/condition_select', locals: {
-      conditions: conditions, selected_condition_id: criterion[:condition_id] } %>
-  <% end %>
+  <div class="flex items-center">
+    <div class="mr-3">
+      <% if local_assigns[:criterion].nil? %>
+        <%= render partial: 'hammerstone/refine/condition_select', locals: {
+          conditions: conditions } %>
+      <% else  %>
+        <%= render partial: 'hammerstone/refine/condition_select', locals: {
+          conditions: conditions, selected_condition_id: criterion[:condition_id] } %>
+      <% end %>
+    </div>
 
-  <%= render partial: "hammerstone/refine/clauses/#{clause_for_criterion(criterion, conditions)}", locals: {
-    condition: condition_for_criterion(criterion, conditions), input: criterion[:input] } %>
+    <div class="mr-3">
+      <%= render partial: 'hammerstone/refine/clause_select', locals: {
+        meta: meta_for_criterion(criterion, conditions), input: criterion[:input]} %>
+    </div>
+    <div>
+      <%= render partial: "hammerstone/refine/clauses/#{clause_for_criterion(criterion, conditions)}", locals: {
+        meta: meta_for_criterion(criterion, conditions), input: criterion[:input], criterion_id: criterion_id } %>
+    </div>
+  </div>
 <% end %>

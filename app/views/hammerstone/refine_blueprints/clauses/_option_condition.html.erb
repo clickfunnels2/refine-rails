@@ -2,7 +2,7 @@
   <% meta[:options].each do |option| %>
     <option
       value="<%= option[:id] %>"
-      <% if input[:selected].find option[:id] %>selected<% end %>
+      <% if input[:selected]&.find option[:id] %>selected<% end %>
     >
       <%= option[:display] %>
     </option>

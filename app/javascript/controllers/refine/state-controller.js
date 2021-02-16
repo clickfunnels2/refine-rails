@@ -8,6 +8,16 @@ export default class extends Controller {
 
   connect() {
     this.configuration = { ...this.configurationValue };
+    this.blueprint = this.configuration.blueprint;
+    this.conditionsLookup = this.configuration.conditions.reduce((lookup, condition) => {
+      lookup[condition.id] = condition;
+      return lookup;
+    }, {});
+
+  }
+
+  conditionConfigFor(conditionId) {
+    return this.conditionsLookup[conditionId];
   }
 
   update(path, value, callback) {
@@ -19,9 +29,11 @@ export default class extends Controller {
       updated = updated[key];
     });
     updated[path[path.length - 1]] = value;
-
+    console.log(this.blueprint);
     // Send back a URL so that update controller can reload the relevant turbo frame
     const configParam = encodeURIComponent(JSON.stringify(configuration));
-    callback(`${this.urlValue}?configuration=${configParam}`);
+    if (callback) {
+      callback(`${this.urlValue}?configuration=${configParam}`);
+    }
   }
 }

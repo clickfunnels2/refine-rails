@@ -5,7 +5,7 @@
   <%= turbo_frame_tag 'groups' do %>
     <% @configuration[:blueprint].each_with_index do |criteria, index| %>
       <%= render partial: 'hammerstone/refine_blueprints/group', locals: {
-        path: ['blueprint', index],
+        blueprint_path: ['blueprint', index],
         conditions: @configuration[:conditions],
         criteria: criteria,
         group_id: index }

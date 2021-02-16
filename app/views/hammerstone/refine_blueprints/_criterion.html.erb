@@ -3,10 +3,10 @@
     <div class="mr-3">
       <%= form_tag(hammerstone_refine_blueprint_path, method: :put, data: {
         controller: "refine--update",
-        refine__update_frame_id_value: "criterion_#{criterion_id}", refine__update_path_value: path.to_json }) do %>
+        refine__update_frame_id_value: "criterion_#{criterion_id}", refine__update_path_value: blueprint_path.to_json }) do %>
         <% if local_assigns[:criterion].nil? %>
           <%= render partial: 'hammerstone/refine_blueprints/condition_select', locals: {
-            conditions: conditions, path: path + [] } %>
+            conditions: conditions } %>
         <% else  %>
           <%= render partial: 'hammerstone/refine_blueprints/condition_select', locals: {
             conditions: conditions, selected_condition_id: criterion[:condition_id] } %>

@@ -6,14 +6,22 @@ export default class extends Controller {
     url: String,
   }
 
-  updateBlueprint(path, value, callback) {
-    const newConfiguration = { ...this.configurationValue };
-    let updated = newConfiguration;
+  connect() {
+    this.configuration = { ...this.configurationValue };
+  }
+
+  update(path, value, callback) {
+    const { configuration } = this;
+
+    // Update the configuration object given the path and the value
+    let updated = configuration;
     path.slice(0, -1).forEach((key) => {
       updated = updated[key];
     });
     updated[path[path.length - 1]] = value;
-    const configParam = encodeURIComponent(JSON.stringify(newConfiguration));
+
+    // Send back a URL so that update controller can reload the relevant turbo frame
+    const configParam = encodeURIComponent(JSON.stringify(configuration));
     callback(`${this.urlValue}?configuration=${configParam}`);
   }
 }

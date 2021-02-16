@@ -6,17 +6,19 @@ export default class extends Controller {
     path: Array,
   }
 
-  condition(event) {
+  connect() {
     const refineElement = document.getElementById('refine');
-    const blueprintController = this.application.getControllerForElementAndIdentifier(
+    this.stateController = this.application.getControllerForElementAndIdentifier(
       refineElement,
       'refine--state',
     );
-    const { frameIdValue } = this;
-    blueprintController.updateBlueprint(this.pathValue, event.target.value, (url) => {
+  }
+
+  condition(event) {
+    const { frameIdValue, stateController, pathValue } = this;
+    stateController.update(pathValue, event.target.value, (url) => {
       const frame = document.getElementById(frameIdValue);
       frame.src = url;
     });
-    console.log(blueprintController.configurationValue);
   }
 }

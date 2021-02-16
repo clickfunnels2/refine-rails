@@ -15,8 +15,14 @@ export default class extends Controller {
   }
 
   clause(event) {
-    console.log(event);
-    console.log(this.pathValue);
+    const { frameIdValue, stateController, pathValue } = this;
+    const frame = document.getElementById(frameIdValue);
+
+    stateController.update(
+      pathValue.concat('input', 'clause'),
+      event.target.value,
+      url => frame.src = url,
+    );
   }
 
   condition(event) {

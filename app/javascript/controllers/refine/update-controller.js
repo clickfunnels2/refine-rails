@@ -14,6 +14,21 @@ export default class extends Controller {
     );
   }
 
+  select(event) {
+    const { stateController, pathValue } = this;
+    const selectElement = event.target;
+    const selected = [];
+
+    // do this instead of selectedOptions to support IE
+    for (var i = 0; i < selectElement.length; i++) {
+        if (selectElement.options[i].selected) selected.push(selectElement.options[i].value);
+    }
+    stateController.update(
+      pathValue.concat('input', 'selected'),
+      selected,
+    );
+  }
+
   clause(event) {
     const { frameIdValue, stateController, pathValue } = this;
     const frame = document.getElementById(frameIdValue);

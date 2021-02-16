@@ -2,8 +2,8 @@
   <div class="flex items-center">
     <div class="mr-3">
       <%= form_tag(hammerstone_refine_blueprint_path, method: :put, data: {
-        controller: "refine-update",
-        refine_update_frame_id_value: "criterion_#{criterion_id}", refine_update_path_value: path.to_json }) do %>
+        controller: "refine--update",
+        refine__update_frame_id_value: "criterion_#{criterion_id}", refine__update_path_value: path.to_json }) do %>
         <% if local_assigns[:criterion].nil? %>
           <%= render partial: 'hammerstone/refine_blueprints/condition_select', locals: {
             conditions: conditions, path: path + [] } %>

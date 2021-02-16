@@ -1,7 +1,10 @@
-<%= turbo_frame_tag 'refine' do %>
+<%= turbo_frame_tag 'refine', data: {
+  controller: "refine-blueprint",
+  refine_blueprint_configuration_value: @configuration.to_json,
+  refine_blueprint_url_value: hammerstone_refine_blueprint_path(configuration: @configuration.to_json) } do %>
   <%= turbo_frame_tag 'groups' do %>
     <% @configuration[:blueprint].each_with_index do |criteria, index| %>
-      <%= render partial: 'hammerstone/refine/group', locals: {
+      <%= render partial: 'hammerstone/refine_blueprints/group', locals: {
         conditions: @configuration[:conditions],
         criteria: criteria,
         group_id: index }

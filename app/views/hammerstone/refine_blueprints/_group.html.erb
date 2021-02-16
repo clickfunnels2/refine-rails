@@ -1,11 +1,11 @@
 <%= turbo_frame_tag "group_#{group_id}" do %>
   <div class="bg-gray-50 rounded p-4 mt-2 font-sans">
     <% if criteria.count == 0 %>
-      <%= render partial: 'hammerstone/refine/criterion', locals: {
+      <%= render partial: 'hammerstone/refine_blueprints/criterion', locals: {
         criterion_id: "#{group_id}_0", conditions: conditions } %>
     <% else %>
       <% criteria&.each_with_index do |criterion, index| %>
-        <%= render partial: 'hammerstone/refine/criterion', locals: {
+        <%= render partial: 'hammerstone/refine_blueprints/criterion', locals: {
           criterion: criterion, criterion_id: "#{group_id}_#{index}", conditions: conditions } %>
       <% end %>
     <% end %>

@@ -1,7 +1,7 @@
 class Hammerstone::RefineBlueprintsController < ApplicationController
   layout false
 
-  def index
+  def show
     @configuration = JSON.parse(params[:configuration]).deep_symbolize_keys
   end
 

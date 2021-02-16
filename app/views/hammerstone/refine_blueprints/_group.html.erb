@@ -6,7 +6,8 @@
     <% else %>
       <% criteria&.each_with_index do |criterion, index| %>
         <%= render partial: 'hammerstone/refine_blueprints/criterion', locals: {
-          criterion: criterion, criterion_id: "#{group_id}_#{index}", conditions: conditions } %>
+          criterion: criterion, criterion_id: "#{group_id}_#{index}",
+          conditions: conditions, path: path + [index, 'condition_id'] } %>
       <% end %>
     <% end %>
   </div>

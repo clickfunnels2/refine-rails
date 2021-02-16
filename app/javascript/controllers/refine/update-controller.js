@@ -14,6 +14,11 @@ export default class extends Controller {
     );
   }
 
+  clause(event) {
+    console.log(event);
+    console.log(this.pathValue);
+  }
+
   condition(event) {
     const { frameIdValue, stateController, pathValue } = this;
     const element = event.target;

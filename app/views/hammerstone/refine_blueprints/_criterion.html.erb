@@ -3,7 +3,8 @@
     <div class="mr-3">
       <%= form_tag(hammerstone_refine_blueprint_path, method: :put, data: {
         controller: "refine--update",
-        refine__update_frame_id_value: "criterion_#{criterion_id}", refine__update_path_value: blueprint_path.to_json }) do %>
+        refine__update_frame_id_value: "criterion_#{criterion_id}",
+        refine__update_path_value: blueprint_path.to_json }) do %>
         <% if local_assigns[:criterion].nil? %>
           <%= render partial: 'hammerstone/refine_blueprints/condition_select', locals: {
             conditions: conditions } %>
@@ -13,15 +14,20 @@
         <% end %>
       <% end %>
     </div>
-    <%= turbo_frame_tag "clause_#{criterion_id}", class: 'flex items-center' do %>
-      <div class="mr-3">
-        <%= render partial: 'hammerstone/refine_blueprints/clause_select', locals: {
-          meta: meta_for_criterion(criterion, conditions), input: criterion[:input]} %>
-      </div>
-      <div>
-        <%= render partial: "hammerstone/refine_blueprints/clauses/#{clause_for_criterion(criterion, conditions)}", locals: {
-          meta: meta_for_criterion(criterion, conditions), input: criterion[:input], criterion_id: criterion_id } %>
-      </div>
+    <%= turbo_frame_tag "clause_#{criterion_id}" do %>
+      <%= form_tag(hammerstone_refine_blueprint_path, method: :put, class: 'flex items-center', data: {
+        controller: "refine--update",
+        refine__update_frame_id_value: "clause_#{criterion_id}",
+        refine__update_path_value: blueprint_path.to_json }) do %>
+        <div class="mr-3">
+          <%= render partial: 'hammerstone/refine_blueprints/clause_select', locals: {
+            meta: meta_for_criterion(criterion, conditions), input: criterion[:input]} %>
+        </div>
+        <div>
+          <%= render partial: "hammerstone/refine_blueprints/clauses/#{clause_for_criterion(criterion, conditions)}", locals: {
+            meta: meta_for_criterion(criterion, conditions), input: criterion[:input], criterion_id: criterion_id } %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 <% end %>

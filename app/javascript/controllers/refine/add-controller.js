@@ -19,18 +19,20 @@ export default class extends Controller {
     const condition = conditions[0];
     const { meta } = condition;
 
-    const group = {
+    const group = [{
+      condition_id: condition.id,
+      input: { clause: meta.clauses[0] },
+    }]
+
+    const groupLocals = {
       group_id: groupId,
-      criteria: [{
-        condition_id: condition.id,
-        input: { clause: meta.clauses[0] },
-      }],
+      criteria: group,
       conditions,
       blueprint_path: ['blueprint', groupId],
     };
 
     this.stateController.addGroup(group);
-    this.blueprintTarget.value = JSON.stringify(group);
+    this.blueprintTarget.value = JSON.stringify(groupLocals);
     this.element.requestSubmit();
   }
 

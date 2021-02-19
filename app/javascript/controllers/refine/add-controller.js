@@ -1,6 +1,7 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
+  static targets = [ "blueprint" ]
 
   connect() {
     const refineElement = document.getElementById('refine');
@@ -11,9 +12,26 @@ export default class extends Controller {
   }
 
   group(event) {
-    console.log('add group');
     event.preventDefault();
-    event.stopImmediatePropagation();
+    event.stopPropagation();
+    const { blueprint, conditions } = this.stateController;
+    const groupId = blueprint.length;
+    const condition = conditions[0];
+    const { meta } = condition;
+
+    const group = {
+      group_id: groupId,
+      criteria: [{
+        condition_id: condition.id,
+        input: { clause: meta.clauses[0] },
+      }],
+      conditions,
+      blueprint_path: ['blueprint', groupId],
+    };
+
+    this.stateController.addGroup(group);
+    this.blueprintTarget.value = JSON.stringify(group);
+    // this.element.requestSubmit();
   }
 
   condition() {

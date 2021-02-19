@@ -9,7 +9,8 @@ export default class extends Controller {
   connect() {
     this.configuration = { ...this.configurationValue };
     this.blueprint = this.configuration.blueprint;
-    this.conditionsLookup = this.configuration.conditions.reduce((lookup, condition) => {
+    this.conditions = this.configuration.conditions;
+    this.conditionsLookup = this.conditions.reduce((lookup, condition) => {
       lookup[condition.id] = condition;
       return lookup;
     }, {});
@@ -18,6 +19,10 @@ export default class extends Controller {
 
   conditionConfigFor(conditionId) {
     return this.conditionsLookup[conditionId];
+  }
+
+  addGroup(group) {
+    this.blueprint.push(group);
   }
 
   update(path, value, callback) {

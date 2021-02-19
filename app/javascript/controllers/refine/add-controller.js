@@ -31,7 +31,7 @@ export default class extends Controller {
 
     this.stateController.addGroup(group);
     this.blueprintTarget.value = JSON.stringify(group);
-    // this.element.requestSubmit();
+    this.element.requestSubmit();
   }
 
   condition() {

@@ -7,11 +7,11 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
 
   def create
     conditions = JSON.parse(params[:conditions]).map(&:deep_symbolize_keys)
-    group_id = params[:group_id]
+    group = JSON.parse(params[:group])
+
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.append(:groups, partial: 'group', locals: {
-          group_id: group_id, conditions: conditions, criteria: []})
+        render turbo_stream: turbo_stream.append(:groups, partial: 'group', locals: group.merge(conditions: conditions).deep_symbolize_keys)
       end
       format.html
     end

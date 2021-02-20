@@ -25,6 +25,10 @@ export default class extends Controller {
     this.blueprint.push(group);
   }
 
+  addCriterion(groupId, criterion) {
+    this.blueprint[groupId].push(criterion);
+  }
+
   update(path, value, callback) {
     const { configuration } = this;
 

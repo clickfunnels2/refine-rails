@@ -10,5 +10,24 @@
           conditions: conditions, blueprint_path: blueprint_path + [index] } %>
       <% end %>
     <% end %>
+    <%= form_tag(hammerstone_refine_blueprint_path, method: :post, data: {
+      controller: "refine--add",
+      'refine--add-group-id-value': group_id,
+      'refine--add-blueprint-path-value': blueprint_path
+    }) do %>
+      <!-- TODO remove once backend is providing conditions -->
+      <input type="hidden" name="conditions" value="<%= @configuration[:conditions].to_json %>" />
+      <input
+        data-refine--add-target="blueprint"
+        type="hidden"
+        name="criterion"
+        value="" />
+      <button
+        class="background-transparent text-blue-600 text-xs outline-none focus:outline-none pt-4" type="button" style="transition: all .15s ease"
+        data-action="click->refine--add#criterion"
+      >
+        <i class="fas fa-plus"></i> Add
+      </button>
+    <% end %>
   </div>
 <% end %>

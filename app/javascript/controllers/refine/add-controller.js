@@ -29,14 +29,17 @@ export default class extends Controller {
     };
 
     const criterionLocals = {
+      group_id: this.groupIdValue,
       criterion_id: `${this.groupIdValue}_${group.length}`,
       criterion,
       conditions,
-      blueprint_path: this.blueprintPathValue,
+      blueprint_path: this.blueprintPathValue.concat(group.length),
     };
 
+    this.blueprintTarget.value = JSON.stringify(criterionLocals);
     this.stateController.addCriterion(this.groupIdValue, criterion);
-}
+    this.element.requestSubmit();
+  }
 
   group(event) {
     event.preventDefault();

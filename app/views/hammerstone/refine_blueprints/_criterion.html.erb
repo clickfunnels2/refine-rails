@@ -5,13 +5,8 @@
         controller: "refine--update",
         refine__update_frame_id_value: "criterion_#{criterion_id}",
         refine__update_path_value: blueprint_path.to_json }) do %>
-        <% if local_assigns[:criterion].nil? %>
-          <%= render partial: 'hammerstone/refine_blueprints/condition_select', locals: {
-            conditions: conditions } %>
-        <% else  %>
-          <%= render partial: 'hammerstone/refine_blueprints/condition_select', locals: {
-            conditions: conditions, selected_condition_id: criterion[:condition_id] } %>
-        <% end %>
+        <%= render partial: 'hammerstone/refine_blueprints/condition_select', locals: {
+          conditions: conditions, selected_condition_id: criterion[:condition_id] } %>
       <% end %>
     </div>
     <%= turbo_frame_tag "clause_#{criterion_id}" do %>

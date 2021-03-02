@@ -17,6 +17,11 @@ module Hammerstone::Refine::Conditions
 
     def boot
       # TODO "Add some nullable rules here!"
+      @floats = false
+    end
+
+    def component
+      'numeric-condition'
     end
 
     def clauses
@@ -43,6 +48,11 @@ module Hammerstone::Refine::Conditions
       ]
     end
 
+    def allow_floats
+      @floats = true
+      self
+    end
+
     def apply_condition(relation, input)
       clause = input[:clause]
       value1 = input[:value1]
@@ -54,7 +64,7 @@ module Hammerstone::Refine::Conditions
         apply_clause_equals(relation, value1)
 
       when CLAUSE_DOESNT_EQUAL
-        apply_clause_doesnt_equal(relation, value)
+        apply_clause_doesnt_equal(relation, value1)
 
       when CLAUSE_GREATER_THAN
         apply_clause_greater_than(relation, value1)
@@ -69,21 +79,25 @@ module Hammerstone::Refine::Conditions
         apply_clause_less_than_or_equal(relation, value1)
 
       when CLAUSE_BETWEEN
-        apply_clause_contains(relation, value)
+        apply_clause_between(relation, value1, value2)
 
       when CLAUSE_NOT_BETWEEN
-        apply_clause_doesnt_contain(relation, value)
+        apply_clause_not_between(relation, value1, value2)
 
       when CLAUSE_SET
-        apply_clause_set(relation, value)
+        apply_clause_set(relation)
 
       when CLAUSE_NOT_SET
-        apply_clause_not_set(relation, value)
+        apply_clause_not_set(relation)
       end
     end
 
     def apply_clause_equals(relation, value)
       relation.where("#{attribute}": value)
+    end
+
+    def apply_clause_doesnt_equal(relation, value)
+      relation.where.not("#{attribute}": value).or(relation.where("#{attribute}":nil))
     end
 
     def apply_clause_greater_than(relation, value)
@@ -102,8 +116,21 @@ module Hammerstone::Refine::Conditions
       relation.where("#{attribute} <= ?", value)
     end
 
-    #How it should be serializing, validating . to array method what is exposed to the world
-    #apply clauses applying user input to a query.
+    def apply_clause_between(relation, value1, value2)
+      relation.where("#{attribute}": value1..value2)
+    end
+
+    def apply_clause_not_between(relation, value1, value2)
+      relation.where.not("#{attribute}": value1..value2)
+    end
+
+    def apply_clause_set(relation)
+      relation.where.not("#{attribute}": nil)
+    end
+
+    def apply_clause_not_set(relation)
+      relation.where("#{attribute}": nil)
+    end
 
   end
 end

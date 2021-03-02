@@ -1,0 +1,25 @@
+[
+  {
+    "depth": 0,
+    "type": "criterion",
+    "condition_id": "some_text_condition",
+    "input": {
+      "clause": "eq",
+      "value": "aaron"
+    }
+  },
+  {
+    "depth": 0,
+    "type": "conjunction",
+    "word": "and"
+  },
+  {
+    "depth": 0,
+    "type": "criterion",
+    "condition_id": "some_text_condition",
+    "input": {
+      "clause": "sw",
+      "value": "aa"
+    }
+  }
+]

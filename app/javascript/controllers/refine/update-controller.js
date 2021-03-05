@@ -21,7 +21,7 @@ export default class extends Controller {
 
     // do this instead of selectedOptions to support IE
     for (var i = 0; i < selectElement.length; i++) {
-        if (selectElement.options[i].selected) selected.push(selectElement.options[i].value);
+      if (selectElement.options[i].selected) selected.push(selectElement.options[i].value);
     }
     stateController.update(
       pathValue.concat('input', 'selected'),
@@ -37,6 +37,15 @@ export default class extends Controller {
       pathValue.concat('input', 'clause'),
       event.target.value,
       url => frame.src = url,
+    );
+  }
+
+  value(event) {
+    const { stateController, pathValue } = this;
+
+    stateController.update(
+      pathValue.concat('input', 'value'),
+      event.target.value,
     );
   }
 

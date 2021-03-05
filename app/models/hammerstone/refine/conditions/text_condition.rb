@@ -1,5 +1,6 @@
 module Hammerstone::Refine::Conditions
   class TextCondition < Condition
+    include HasClauses
 
     CLAUSE_EQUALS = Clauses::EQUALS
     CLAUSE_DOESNT_EQUAL = Clauses::DOESNT_EQUAL
@@ -22,28 +23,28 @@ module Hammerstone::Refine::Conditions
     def clauses
       [
         Clause.new(CLAUSE_EQUALS, 'Equals')
-            .requiresInputs('value'),
+            .requires_inputs('value'),
 
         Clause.new(CLAUSE_DOESNT_EQUAL, 'Does Not Equal')
-            .requiresInputs('value'),
+            .requires_inputs('value'),
 
         Clause.new(CLAUSE_STARTS_WITH, 'Starts With')
-            .requiresInputs('value'),
+            .requires_inputs('value'),
 
         Clause.new(CLAUSE_ENDS_WITH, 'Ends With')
-            .requiresInputs('value'),
+            .requires_inputs('value'),
 
         Clause.new(CLAUSE_DOESNT_START_WITH, 'Does Not Start With')
-            .requiresInputs('value'),
+            .requires_inputs('value'),
 
         Clause.new(CLAUSE_DOESNT_END_WITH, 'Does Not End With')
-            .requiresInputs('value'),
+            .requires_inputs('value'),
 
         Clause.new(CLAUSE_CONTAINS, 'Contains')
-            .requiresInputs('value'),
+            .requires_inputs('value'),
 
         Clause.new(CLAUSE_DOESNT_CONTAIN, 'Does Not Contain')
-            .requiresInputs('value'),
+            .requires_inputs('value'),
 
         Clause.new(CLAUSE_SET, 'Is Set'),
 

@@ -26,21 +26,21 @@ module Hammerstone::Refine::Conditions
 
     def clauses
       [
-        Clause.new(CLAUSE_EQUALS, 'Is Equal To').requiresInputs('value1'),
+        Clause.new(CLAUSE_EQUALS, 'Is Equal To').requires_inputs('value1'),
 
-        Clause.new(CLAUSE_DOESNT_EQUAL, 'Is Not Equal To').requiresInputs('value1'),
+        Clause.new(CLAUSE_DOESNT_EQUAL, 'Is Not Equal To').requires_inputs('value1'),
 
-        Clause.new(CLAUSE_GREATER_THAN, 'Is Greater Than').requiresInputs('value1'),
+        Clause.new(CLAUSE_GREATER_THAN, 'Is Greater Than').requires_inputs('value1'),
 
-        Clause.new(CLAUSE_GREATER_THAN_OR_EQUAL, 'Is Greater Than Or Equal To').requiresInputs('value1'),
+        Clause.new(CLAUSE_GREATER_THAN_OR_EQUAL, 'Is Greater Than Or Equal To').requires_inputs('value1'),
 
-        Clause.new(CLAUSE_LESS_THAN, 'Is Less Than').requiresInputs('value1'),
+        Clause.new(CLAUSE_LESS_THAN, 'Is Less Than').requires_inputs('value1'),
 
-        Clause.new(CLAUSE_LESS_THAN_OR_EQUAL, 'Is Less Than Or Equal To').requiresInputs('value1'),
+        Clause.new(CLAUSE_LESS_THAN_OR_EQUAL, 'Is Less Than Or Equal To').requires_inputs('value1'),
 
-        Clause.new(CLAUSE_BETWEEN, 'Is Between').requiresInputs(['value1', 'value2']),
+        Clause.new(CLAUSE_BETWEEN, 'Is Between').requires_inputs(['value1', 'value2']),
 
-        Clause.new(CLAUSE_NOT_BETWEEN, 'Is Not Between').requiresInputs(['value1', 'value2']),
+        Clause.new(CLAUSE_NOT_BETWEEN, 'Is Not Between').requires_inputs(['value1', 'value2']),
 
         Clause.new(CLAUSE_SET, 'Is Set'),
 

@@ -1,5 +1,6 @@
 require "test_helper"
 require 'support/test_filter'
+require 'support/test_filter_with_meta'
 
 describe Hammerstone::Refine::Filter do
 
@@ -26,27 +27,170 @@ describe Hammerstone::Refine::Filter do
     end
   end
 
-  describe 'to array' do
-    it 'has multiple conditions no meta' do
-      filter = TestFilter.new([])
-      expected_value =
-      { type: "Hammerstone",
-        blueprint: [],
-        conditions: [{
-                      id: "text_field_value",
-                      component: 'text-condition',
-                      display: "Text Field Value",
-                      meta: ""
-                   },{
-                      id: "button_value",
-                      component: 'text-condition',
-                      display: "Button Value",
-                      meta: ""
-                   }],
-        stable_id: 'dontcare'
-      }
-      assert_equal expected_value, filter.to_array
+  describe 'To Array - data going to frontend' do
+
+    describe 'Text Condition - no meta, no clauses' do
+      it 'returns correct json' do
+        filter = TestFilter.new([])
+        expected_value =
+        {
+          type: "Hammerstone",
+          blueprint: [],
+          conditions: expected_conditions,
+          stable_id: 'dontcare'
+        }
+        assert_equal expected_value, filter.to_array
+      end
     end
+
+    describe 'Text Condition with meta, no clauses' do
+      it 'returns correct json' do
+        skip "Meta nesting"
+        filter = TestFilterWithMeta.new([])
+        expected_value =
+        {
+          type: "Hammerstone",
+          blueprint: [],
+          conditions: expected_conditions_with_meta,
+          stable_id: 'dontcare'
+        }
+        assert_equal expected_conditions_with_meta, filter.to_array
+      end
+    end
+  end
+
+
+  def expected_conditions_with_meta
+    [
+      {
+        :id=>"text_field_value",
+        :component=>"text-condition",
+        :display=>"Text Field Value",
+        :meta=>
+          {
+            :hint => "password",
+            :clauses=>
+              [
+                {
+                  :id=>"eq",
+                  :display=>"Equals",
+                  :meta=>[]
+                },
+                {
+                  :id=>"dne",
+                  :display=>"Does Not Equal",
+                  :meta=>[]
+                },
+                {
+                  :id=>"sw",
+                  :display=>"Starts With",
+                  :meta=>[]
+                },
+                {
+                  :id=>"ew",
+                  :display=>"Ends With",
+                  :meta=>[]
+                },
+                {
+                  :id=>"dsw",
+                  :display=>"Does Not Start With",
+                  :meta=>[]
+                },
+                {
+                  :id=>"dew",
+                  :display=>"Does Not End With",
+                  :meta=>[]
+                },
+                {
+                  :id=>"cont",
+                  :display=>"Contains",
+                  :meta=>[]
+                },
+                {
+                  :id=>"dcont",
+                  :display=>"Does Not Contain",
+                  :meta=>[]
+                },
+                {
+                  :id=>"st",
+                  :display=>"Is Set",
+                  :meta=>[]
+                },
+                {
+                  :id=>"nst",
+                  :display=>"Is Not Set",
+                  :meta=>[]
+                }
+              ]
+          },
+      }
+    ]
+  end
+
+  def expected_conditions
+    [
+      {
+        :id=>"text_field_value",
+        :component=>"text-condition",
+        :display=>"Text Field Value",
+        :meta=>
+          {
+            :clauses=>
+              [
+                {
+                  :id=>"eq",
+                  :display=>"Equals",
+                  :meta=>nil
+                },
+                {
+                  :id=>"dne",
+                  :display=>"Does Not Equal",
+                  :meta=>nil
+                },
+                {
+                  :id=>"sw",
+                  :display=>"Starts With",
+                  :meta=>nil
+                },
+                {
+                  :id=>"ew",
+                  :display=>"Ends With",
+                  :meta=>nil
+                },
+                {
+                  :id=>"dsw",
+                  :display=>"Does Not Start With",
+                  :meta=>nil
+                },
+                {
+                  :id=>"dew",
+                  :display=>"Does Not End With",
+                  :meta=>nil
+                },
+                {
+                  :id=>"cont",
+                  :display=>"Contains",
+                  :meta=>nil
+                },
+                {
+                  :id=>"dcont",
+                  :display=>"Does Not Contain",
+                  :meta=>nil
+                },
+                {
+                  :id=>"st",
+                  :display=>"Is Set",
+                  :meta=>nil
+                },
+                {
+                  :id=>"nst",
+                  :display=>"Is Not Set",
+                  :meta=>nil
+                }
+              ]
+          },
+      }
+    ]
   end
 
   # ors do not work at this time

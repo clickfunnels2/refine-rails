@@ -1,5 +1,6 @@
 module Hammerstone::Refine::Conditions
   class BooleanCondition < Condition
+    include HasClauses
 
     CLAUSE_TRUE = Clauses::TRUE
     CLAUSE_FALSE = Clauses::FALSE

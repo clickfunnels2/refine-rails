@@ -1,12 +1,14 @@
 module Hammerstone::Refine::Conditions
   class Clause
+    include HasMeta
+
+    attr_reader :id, :display
 
     def initialize(id=nil, display=nil)
       @id = id
       @display = display
       @rules
       @messages
-      @meta = []
     end
 
     def rules(rules, messages)
@@ -15,8 +17,8 @@ module Hammerstone::Refine::Conditions
       self
     end
 
-    def requires_input(fields)
-      #add to rules it appears
+    def requires_inputs(fields)
+      #TODO
       self
     end
 

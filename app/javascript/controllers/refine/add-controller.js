@@ -1,5 +1,14 @@
 import { Controller } from "stimulus";
 
+const createCriterion = (id, depth, meta) => {
+  return {
+    depth,
+    type: "criterion",
+    condition_id: id,
+    input: { clause: meta.clauses[0].id },
+  };
+};
+
 export default class extends Controller {
   static targets = [ "blueprint" ]
 
@@ -21,12 +30,7 @@ export default class extends Controller {
     const group = blueprint[this.groupIdValue];
     const { meta } = condition;
 
-    const criterion = {
-      depth: 1,
-      type: "criterion",
-      condition_id: condition.id,
-      input: { clause: meta.clauses[0] },
-    };
+    const criterion = createCriterion(condition.id, 1, meta);
 
     const criterionLocals = {
       group_id: this.groupIdValue,
@@ -50,10 +54,8 @@ export default class extends Controller {
     const condition = conditions[0];
     const { meta } = condition;
 
-    const group = [{
-      condition_id: condition.id,
-      input: { clause: meta.clauses[0] },
-    }]
+    const criterion = createCriterion(condition.id, 1, meta);
+    const group = [criterion];
 
     const groupLocals = {
       group_id: groupId,

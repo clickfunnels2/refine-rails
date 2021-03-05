@@ -26,7 +26,7 @@ module Hammerstone::Refine::Conditions
       {
         id: @id,
         display: @display,
-        meta: @meta
+        meta: @meta ||= {}
       }
     end
   end

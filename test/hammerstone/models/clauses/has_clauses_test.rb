@@ -17,7 +17,7 @@ module Hammerstone::Refine::Conditions
       expected_clause = {
                           id: "eq",
                           display: "Equals",
-                          meta: nil,
+                          meta: {},
                         }
       assert_equal expected_clause, actual_clause[0]
     end

@@ -140,52 +140,52 @@ describe Hammerstone::Refine::Filter do
                 {
                   :id=>"eq",
                   :display=>"Equals",
-                  :meta=>nil
+                  :meta=>{}
                 },
                 {
                   :id=>"dne",
                   :display=>"Does Not Equal",
-                  :meta=>nil
+                  :meta=>{}
                 },
                 {
                   :id=>"sw",
                   :display=>"Starts With",
-                  :meta=>nil
+                  :meta=>{}
                 },
                 {
                   :id=>"ew",
                   :display=>"Ends With",
-                  :meta=>nil
+                  :meta=>{}
                 },
                 {
                   :id=>"dsw",
                   :display=>"Does Not Start With",
-                  :meta=>nil
+                  :meta=>{}
                 },
                 {
                   :id=>"dew",
                   :display=>"Does Not End With",
-                  :meta=>nil
+                  :meta=>{}
                 },
                 {
                   :id=>"cont",
                   :display=>"Contains",
-                  :meta=>nil
+                  :meta=>{}
                 },
                 {
                   :id=>"dcont",
                   :display=>"Does Not Contain",
-                  :meta=>nil
+                  :meta=>{}
                 },
                 {
                   :id=>"st",
                   :display=>"Is Set",
-                  :meta=>nil
+                  :meta=>{}
                 },
                 {
                   :id=>"nst",
                   :display=>"Is Not Set",
-                  :meta=>nil
+                  :meta=>{}
                 }
               ]
           },

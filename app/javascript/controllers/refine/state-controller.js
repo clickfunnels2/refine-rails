@@ -41,6 +41,14 @@ export default class extends Controller {
     console.log(this.blueprint);
     // Send back a URL so that update controller can reload the relevant turbo frame
     const configParam = encodeURIComponent(JSON.stringify(configuration));
+
+    // todo: remove. for integration purposes only
+    const encodedBlueprint = encodeURIComponent(JSON.stringify({
+      filter: 'Scaffolding::CompletelyConcrete::TangibleThingFilter',
+      blueprint: this.blueprint,
+    }));
+    document.getElementById('demo_link').href=`?configuration=${encodedBlueprint}`;
+
     if (callback) {
       callback(`${this.urlValue}?configuration=${configParam}`);
     }

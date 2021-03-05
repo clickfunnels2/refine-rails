@@ -27,7 +27,7 @@ describe Hammerstone::Refine::Filter do
     end
   end
 
-  describe 'To Array - data going to frontend' do
+  describe 'Configuration object - data going to frontend' do
 
     describe 'Text Condition - no meta, no clauses' do
       it 'returns correct json' do
@@ -35,11 +35,12 @@ describe Hammerstone::Refine::Filter do
         expected_value =
         {
           type: "Hammerstone",
+          class_name: 'TestFilter',
           blueprint: [],
           conditions: expected_conditions,
           stable_id: 'dontcare'
         }
-        assert_equal expected_value, filter.to_array
+        assert_equal expected_value, filter.configuration
       end
     end
 

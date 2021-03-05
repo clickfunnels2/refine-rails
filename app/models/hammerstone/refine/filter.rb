@@ -66,9 +66,10 @@ module Hammerstone::Refine
       returned_object
     end
 
-    def to_array
+    def configuration
       {
         type: 'Hammerstone',
+        class_name: self.class.name,
         blueprint: @blueprint,
         conditions: conditions_to_array,
         stable_id: 'dontcare'

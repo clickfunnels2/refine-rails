@@ -20,7 +20,7 @@
         </div>
         <div>
           <%= render partial: "hammerstone/refine_blueprints/clauses/#{clause_for_criterion(criterion, conditions)}", locals: {
-            meta: meta_for_criterion(criterion, conditions), input: criterion[:input], criterion_id: criterion_id } %>
+            condition: condition_for_criterion(criterion, conditions), input: criterion[:input], criterion_id: criterion_id } %>
         </div>
       <% end %>
     <% end %>

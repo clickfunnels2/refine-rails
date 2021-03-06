@@ -1,5 +1,10 @@
-<input
-  type="text"
-  value="<%= input[:value] %>"
-  data-action="input->refine--update#value"
-/>
+<div>
+  <label for="<%= condition[:id] %>" class="sr-only"><%= condition[:display] %></label>
+  <input
+    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+    name="<%= condition[:id] %>"
+    type="text"
+    value="<%= input[:value] %>"
+    data-action="input->refine--update#value"
+  />
+</div>

@@ -12,8 +12,6 @@
       'refine--add-group-id-value': group_id,
       'refine--add-blueprint-path-value': blueprint_path
     }) do %>
-      <!-- TODO remove once backend is providing conditions -->
-      <input type="hidden" name="conditions" value="<%= conditions.to_json %>" />
       <input
         data-refine--add-target="blueprint"
         type="hidden"

@@ -9,10 +9,10 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         if group
-          render turbo_stream: turbo_stream.append(:groups, partial: 'group', locals: group.merge(conditions: conditions).deep_symbolize_keys)
+          render turbo_stream: turbo_stream.append(:groups, partial: 'group', locals: group)
         elsif criterion
           render turbo_stream: turbo_stream.append(
-            "criteria_#{criterion[:group_id]}", partial: 'criterion', locals: criterion.merge(conditions: conditions).deep_symbolize_keys)
+            "criteria_#{criterion[:group_id]}", partial: 'criterion', locals: criterion)
         end
       end
       format.html
@@ -20,10 +20,6 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
   end
 
   private
-
-  def conditions
-    JSON.parse(params.require(:conditions)).map(&:deep_symbolize_keys)
-  end
 
   def group
     params.has_key?(:group) && JSON.parse(params.require(:group)).deep_symbolize_keys

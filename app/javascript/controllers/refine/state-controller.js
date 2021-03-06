@@ -75,6 +75,8 @@ export default class extends Controller {
 
     blueprintUpdatedEvent(this.blueprint);
 
+    const configParam = encodeURIComponent(JSON.stringify(configuration));
+
     if (callback) {
       callback(`${this.urlValue}?configuration=${configParam}`);
     }

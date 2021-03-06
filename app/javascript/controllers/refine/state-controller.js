@@ -1,5 +1,36 @@
 import { Controller } from "stimulus";
 
+// Polyfill for custom events in IE9-11
+// https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#polyfill
+(function () {
+
+  if ( typeof window.CustomEvent === "function" ) return false;
+
+  function CustomEvent ( event, params ) {
+    params = params || { bubbles: false, cancelable: false, detail: undefined };
+    var evt = document.createEvent('CustomEvent');
+    evt.initCustomEvent( event, params.bubbles, params.cancelable, params.detail );
+    return evt;
+  }
+
+  CustomEvent.prototype = window.Event.prototype;
+
+  window.CustomEvent = CustomEvent;
+
+  // eslint expects a return here
+  return true;
+})();
+
+const blueprintUpdatedEvent = (blueprint, filter) => {
+  filter = 'Scaffolding::CompletelyConcrete::TangibleThingFilter';
+  const event = new CustomEvent("blueprint-updated", {
+    detail: {
+      blueprint: [ ...blueprint ],
+      filter,
+    }});
+  window.dispatchEvent(event);
+};
+
 export default class extends Controller {
   static values = {
     configuration: Object,
@@ -23,10 +54,12 @@ export default class extends Controller {
 
   addGroup(group) {
     this.blueprint.push(group);
+    blueprintUpdatedEvent(this.blueprint);
   }
 
   addCriterion(groupId, criterion) {
     this.blueprint[groupId].push(criterion);
+    blueprintUpdatedEvent(this.blueprint);
   }
 
   update(path, value, callback) {
@@ -39,15 +72,8 @@ export default class extends Controller {
     });
     updated[path[path.length - 1]] = value;
     console.log(this.blueprint);
-    // Send back a URL so that update controller can reload the relevant turbo frame
-    const configParam = encodeURIComponent(JSON.stringify(configuration));
 
-    // todo: remove. for integration purposes only
-    const encodedBlueprint = encodeURIComponent(JSON.stringify({
-      filter: 'Scaffolding::CompletelyConcrete::TangibleThingFilter',
-      blueprint: this.blueprint,
-    }));
-    document.getElementById('demo_link').href=`?configuration=${encodedBlueprint}`;
+    blueprintUpdatedEvent(this.blueprint);
 
     if (callback) {
       callback(`${this.urlValue}?configuration=${configParam}`);

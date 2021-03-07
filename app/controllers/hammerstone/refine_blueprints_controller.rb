@@ -2,10 +2,11 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
   layout false
 
   def show
-    @configuration = JSON.parse(params[:configuration]).deep_symbolize_keys
+    @refine_filter = filter
   end
 
   def create
+    @refine_filter = filter
     respond_to do |format|
       format.turbo_stream do
         if group
@@ -20,6 +21,16 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
   end
 
   private
+
+  def filter
+    blueprint = JSON.parse(filter_params[:blueprint]).map(&:deep_symbolize_keys)
+    filterClass = filter_params[:filterName].constantize
+    filterClass.new(blueprint)
+  end
+
+  def filter_params
+    params.permit(:filterName, :blueprint)
+  end
 
   def group
     params.has_key?(:group) && JSON.parse(params.require(:group)).deep_symbolize_keys

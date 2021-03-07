@@ -21,12 +21,11 @@ import { Controller } from "stimulus";
   return true;
 })();
 
-const blueprintUpdatedEvent = (blueprint, filter) => {
-  filter = 'Scaffolding::CompletelyConcrete::TangibleThingFilter';
+const blueprintUpdatedEvent = (blueprint, filterName) => {
   const event = new CustomEvent("blueprint-updated", {
     detail: {
-      blueprint: [ ...blueprint ],
-      filter,
+      blueprint: JSON.parse(JSON.stringify(blueprint)),
+      filterName,
     }});
   window.dispatchEvent(event);
 };
@@ -41,6 +40,7 @@ export default class extends Controller {
     this.configuration = { ...this.configurationValue };
     this.blueprint = this.configuration.blueprint;
     this.conditions = this.configuration.conditions;
+    this.filterName = this.configuration.class_name;
     this.conditionsLookup = this.conditions.reduce((lookup, condition) => {
       lookup[condition.id] = condition;
       return lookup;
@@ -54,12 +54,32 @@ export default class extends Controller {
 
   addGroup(group) {
     this.blueprint.push(group);
-    blueprintUpdatedEvent(this.blueprint);
+    blueprintUpdatedEvent(this.serverBlueprint(), this.filterName);
   }
 
   addCriterion(groupId, criterion) {
     this.blueprint[groupId].push(criterion);
-    blueprintUpdatedEvent(this.blueprint);
+    blueprintUpdatedEvent(this.serverBlueprint(), this.filterName);
+  }
+
+  // Client uses a different blueprint format than the server.
+  // Convert to format server expects
+  serverBlueprint() {
+    if (this.blueprint.length === 0) {
+      return this.blueprint;
+    }
+
+    const groups = JSON.parse(JSON.stringify(this.blueprint));
+    const firstGroup = groups.shift();
+    const newBlueprint = groups.reduce((serverBlueprint, group) => {
+      serverBlueprint.push({
+        depth: 0,
+        type: 'conjunction',
+        word: 'or',
+      });
+      return serverBlueprint.concat(group);
+    }, firstGroup);
+    return newBlueprint;
   }
 
   update(path, value, callback) {
@@ -71,14 +91,15 @@ export default class extends Controller {
       updated = updated[key];
     });
     updated[path[path.length - 1]] = value;
-    console.log(this.blueprint);
 
-    blueprintUpdatedEvent(this.blueprint);
+    blueprintUpdatedEvent(this.serverBlueprint(), this.filterName);
 
     const configParam = encodeURIComponent(JSON.stringify(configuration));
+    const blueprintParam = encodeURIComponent(JSON.stringify(this.serverBlueprint()));
+    const filterNameParam = encodeURIComponent(this.filterName);
 
     if (callback) {
-      callback(`${this.urlValue}?configuration=${configParam}`);
+      callback(`${this.urlValue}?filterName=${filterNameParam}&blueprint=${blueprintParam}`);
     }
   }
 }

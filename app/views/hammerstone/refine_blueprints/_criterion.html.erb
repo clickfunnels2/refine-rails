@@ -6,7 +6,7 @@
         refine__update_frame_id_value: "criterion_#{criterion_id}",
         refine__update_path_value: blueprint_path.to_json }) do %>
         <%= render partial: 'hammerstone/refine_blueprints/condition_select', locals: {
-          conditions: conditions, selected_condition_id: criterion[:condition_id] } %>
+          selected_condition_id: criterion[:condition_id] } %>
       <% end %>
     </div>
     <%= turbo_frame_tag "clause_#{criterion_id}" do %>
@@ -16,11 +16,11 @@
         refine__update_path_value: blueprint_path.to_json }) do %>
         <div class="mr-3">
           <%= render partial: 'hammerstone/refine_blueprints/clause_select', locals: {
-            meta: meta_for_criterion(criterion, conditions), input: criterion[:input]} %>
+            meta: meta_for_criterion(criterion), input: criterion[:input]} %>
         </div>
         <div>
-          <%= render partial: "hammerstone/refine_blueprints/clauses/#{clause_for_criterion(criterion, conditions)}", locals: {
-            condition: condition_for_criterion(criterion, conditions), input: criterion[:input], criterion_id: criterion_id } %>
+          <%= render partial: "hammerstone/refine_blueprints/clauses/#{clause_for_criterion(criterion)}", locals: {
+            condition: condition_for_criterion(criterion), input: criterion[:input], criterion_id: criterion_id } %>
         </div>
       <% end %>
     <% end %>

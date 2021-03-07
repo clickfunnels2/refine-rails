@@ -1,12 +1,11 @@
 <%= turbo_frame_tag 'refine', data: {
   controller: "refine--state",
-  refine__state_configuration_value: @configuration.to_json,
+  refine__state_configuration_value: configuration.to_json,
   refine__state_url_value: hammerstone_refine_blueprint_path } do %>
   <%= turbo_frame_tag 'groups' do %>
-    <% @configuration[:blueprint].each_with_index do |criteria, index| %>
+    <% grouped_blueprint.each_with_index do |criteria, index| %>
       <%= render partial: 'hammerstone/refine_blueprints/group', locals: {
         blueprint_path: ['blueprint', index],
-        conditions: @configuration[:conditions],
         criteria: criteria,
         group_id: index }
       %>

@@ -1,17 +1,42 @@
 module Hammerstone
   module RefineHelper
-    def condition_for_criterion(criterion, conditions)
+    def grouped_blueprint
+      new_blueprint = []
+
+      # start with an empty group
+      new_blueprint.push []
+      @refine_filter.blueprint.each do |piece|
+        if piece[:word] == 'or'
+          new_blueprint.push []
+        else
+          new_blueprint.last.push piece
+        end
+      end
+      new_blueprint
+    end
+
+    def condition_for_criterion(criterion)
       conditions.find { |condition| condition[:id] == criterion[:condition_id] }
     end
 
-    def meta_for_criterion(criterion, conditions)
-      condition = condition_for_criterion criterion, conditions
+    def meta_for_criterion(criterion)
+      condition = condition_for_criterion criterion
       condition[:meta]
     end
 
-    def clause_for_criterion(criterion, conditions)
-      condition = condition_for_criterion criterion, conditions
+    def clause_for_criterion(criterion)
+      condition = condition_for_criterion criterion
       condition[:component].underscore
+    end
+
+    def conditions
+      configuration[:conditions]
+    end
+
+    def configuration
+      configuration = @refine_filter.configuration
+      configuration[:blueprint] = grouped_blueprint
+      configuration
     end
   end
 end

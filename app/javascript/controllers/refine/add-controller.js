@@ -10,8 +10,7 @@ const createCriterion = (id, depth, meta) => {
 };
 
 export default class extends Controller {
-  static targets = [ "blueprint" ]
-
+  static targets = [ "blueprint" ];
   static values = { groupId: Number, blueprintPath: Array };
 
   connect() {

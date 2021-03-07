@@ -12,6 +12,7 @@
       'refine--add-group-id-value': group_id,
       'refine--add-blueprint-path-value': blueprint_path
     }) do %>
+      <input type="hidden" name="filterName" value="<%= filter_class_name %>" />
       <input
         data-refine--add-target="blueprint"
         type="hidden"

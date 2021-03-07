@@ -6,7 +6,9 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
   end
 
   def create
-    @refine_filter = filter
+    filterClass = filter_params[:filterName].constantize
+    @refine_filter = filterClass.new []
+
     respond_to do |format|
       format.turbo_stream do
         if group
@@ -26,6 +28,10 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
     blueprint = JSON.parse(filter_params[:blueprint]).map(&:deep_symbolize_keys)
     filterClass = filter_params[:filterName].constantize
     filterClass.new(blueprint)
+  end
+
+  def filter_name
+    filter_params[:filterName]
   end
 
   def filter_params

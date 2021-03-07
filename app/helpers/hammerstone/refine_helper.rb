@@ -1,10 +1,13 @@
 module Hammerstone
   module RefineHelper
     def grouped_blueprint
+      return [] unless @refine_filter.blueprint.any?
+
       new_blueprint = []
 
       # start with an empty group
       new_blueprint.push []
+
       @refine_filter.blueprint.each do |piece|
         if piece[:word] == 'or'
           new_blueprint.push []
@@ -13,6 +16,10 @@ module Hammerstone
         end
       end
       new_blueprint
+    end
+
+    def filter_class_name
+      @refine_filter.configuration[:class_name]
     end
 
     def condition_for_criterion(criterion)

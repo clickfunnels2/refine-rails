@@ -19,6 +19,7 @@ module Hammerstone::Refine::Conditions
       condition.with_meta( {other_meta: 'something_else'} )
 
       expected_value = { hint: 'password', other_meta: 'something_else' }
+
       assert_equal expected_value,  condition.meta.without(:clauses)
     end
   end

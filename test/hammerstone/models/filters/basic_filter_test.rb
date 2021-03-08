@@ -46,16 +46,16 @@ describe Hammerstone::Refine::Filter do
 
     describe 'Text Condition with meta, no clauses' do
       it 'returns correct json' do
-        skip "Meta nesting"
         filter = TestFilterWithMeta.new([])
         expected_value =
         {
           type: "Hammerstone",
+          class_name: 'TestFilterWithMeta',
           blueprint: [],
           conditions: expected_conditions_with_meta,
           stable_id: 'dontcare'
         }
-        assert_equal expected_conditions_with_meta, filter.to_array
+        assert_equal expected_value, filter.configuration
       end
     end
   end
@@ -69,60 +69,60 @@ describe Hammerstone::Refine::Filter do
         :display=>"Text Field Value",
         :meta=>
           {
-            :hint => "password",
             :clauses=>
               [
                 {
                   :id=>"eq",
                   :display=>"Equals",
-                  :meta=>[]
+                  :meta=>{}
                 },
                 {
                   :id=>"dne",
                   :display=>"Does Not Equal",
-                  :meta=>[]
+                  :meta=>{}
                 },
                 {
                   :id=>"sw",
                   :display=>"Starts With",
-                  :meta=>[]
+                  :meta=>{}
                 },
                 {
                   :id=>"ew",
                   :display=>"Ends With",
-                  :meta=>[]
+                  :meta=>{}
                 },
                 {
                   :id=>"dsw",
                   :display=>"Does Not Start With",
-                  :meta=>[]
+                  :meta=>{}
                 },
                 {
                   :id=>"dew",
                   :display=>"Does Not End With",
-                  :meta=>[]
+                  :meta=>{}
                 },
                 {
                   :id=>"cont",
                   :display=>"Contains",
-                  :meta=>[]
+                  :meta=>{}
                 },
                 {
                   :id=>"dcont",
                   :display=>"Does Not Contain",
-                  :meta=>[]
+                  :meta=>{}
                 },
                 {
                   :id=>"st",
                   :display=>"Is Set",
-                  :meta=>[]
+                  :meta=>{}
                 },
                 {
                   :id=>"nst",
                   :display=>"Is Not Set",
-                  :meta=>[]
+                  :meta=>{}
                 }
-              ]
+              ],
+            :hint => "password",
           },
       }
     ]

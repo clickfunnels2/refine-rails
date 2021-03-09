@@ -1,5 +1,5 @@
-<%= turbo_frame_tag "criterion_#{criterion_id}" do %>
-  <%= form_tag(hammerstone_refine_blueprint_path, method: :put, class: 'flex items-center mb-4', data: {
+<%= turbo_frame_tag "criterion_#{criterion_id}", class: 'flex items-center mb-4' do %>
+  <%= form_tag(hammerstone_refine_blueprint_path, method: :put, class: 'flex items-center', data: {
     controller: "refine--update",
     refine__update_frame_id_value: "criterion_#{criterion_id}",
     refine__update_path_value: blueprint_path.to_json }) do %>
@@ -20,5 +20,11 @@
       </div>
     <% end %>
   <% end %>
-  <button class="ml-auto"><i class="fal fa-sign-out ti ti-close"></i></button>
+  <%= button_tag type: 'button', class: 'ml-auto', data: {
+    controller: "refine--delete",
+    action: "click->refine--delete#criterion",
+    refine__delete_dom_id_value: "criterion_#{criterion_id}",
+    refine__delete_path_value: blueprint_path.to_json } do %>
+    <i class="fal fa-sign-out ti ti-close"></i>
+  <% end %>
 <% end %>

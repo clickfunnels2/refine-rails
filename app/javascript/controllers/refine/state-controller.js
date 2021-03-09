@@ -82,6 +82,21 @@ export default class extends Controller {
     return newBlueprint;
   }
 
+  delete(path) {
+    const { configuration } = this;
+    const lastPathKey = path[path.length - 1];
+
+    let parent = configuration;
+    path.slice(0, -1).forEach(key => parent = parent[key]);
+
+    if (Array.isArray(parent)) {
+      parent.splice(lastPathKey, 1);
+    } else {
+      delete parent[lastPathKey];
+    }
+    blueprintUpdatedEvent(this.serverBlueprint(), this.filterName);
+  }
+
   update(path, value, callback) {
     const { configuration } = this;
 

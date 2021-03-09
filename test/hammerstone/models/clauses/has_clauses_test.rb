@@ -12,14 +12,124 @@ module Hammerstone::Refine::Conditions
     end
 
     it 'adds Clause to Meta' do
+      skip
       condition = TextCondition.new('text_test')
       actual_clause = condition.to_array[:meta][:clauses]
-      expected_clause = {
-                          id: "eq",
-                          display: "Equals",
-                          meta: {},
-                        }
-      assert_equal expected_clause, actual_clause[0]
+      assert_equal text_condition_clauses, actual_clause
+    end
+
+    describe 'without clause' do
+      it 'removes clause from configuration' do
+        skip
+        condition = TextCondition.new('text_test').without_clauses(TextCondition::CLAUSE_SET)
+        actual_clause = condition.to_array[:meta][:clauses]
+        assert_equal text_condition_clauses_without_set, actual_clause
+      end
+    end
+
+    def text_condition_clauses
+      [
+        {
+          :id=>"eq",
+          :display=>"Equals",
+          :meta=>{}
+        },
+        {
+          :id=>"dne",
+          :display=>"Does Not Equal",
+          :meta=>{}
+        },
+        {
+          :id=>"sw",
+          :display=>"Starts With",
+          :meta=>{}
+        },
+        {
+          :id=>"ew",
+          :display=>"Ends With",
+          :meta=>{}
+        },
+        {
+          :id=>"dsw",
+          :display=>"Does Not Start With",
+          :meta=>{}
+        },
+        {
+          :id=>"dew",
+          :display=>"Does Not End With",
+          :meta=>{}
+        },
+        {
+          :id=>"cont",
+          :display=>"Contains",
+          :meta=>{}
+        },
+        {
+          :id=>"dcont",
+          :display=>"Does Not Contain",
+          :meta=>{}
+        },
+        {
+          :id=>"st",
+          :display=>"Is Set",
+          :meta=>{}
+        },
+        {
+          :id=>"nst",
+          :display=>"Is Not Set",
+          :meta=>{}
+        }
+      ]
+    end
+
+    def text_condition_clauses_without_set
+      [
+        {
+          :id=>"eq",
+          :display=>"Equals",
+          :meta=>{}
+        },
+        {
+          :id=>"dne",
+          :display=>"Does Not Equal",
+          :meta=>{}
+        },
+        {
+          :id=>"sw",
+          :display=>"Starts With",
+          :meta=>{}
+        },
+        {
+          :id=>"ew",
+          :display=>"Ends With",
+          :meta=>{}
+        },
+        {
+          :id=>"dsw",
+          :display=>"Does Not Start With",
+          :meta=>{}
+        },
+        {
+          :id=>"dew",
+          :display=>"Does Not End With",
+          :meta=>{}
+        },
+        {
+          :id=>"cont",
+          :display=>"Contains",
+          :meta=>{}
+        },
+        {
+          :id=>"dcont",
+          :display=>"Does Not Contain",
+          :meta=>{}
+        },
+        {
+          :id=>"nst",
+          :display=>"Is Not Set",
+          :meta=>{}
+        }
+      ]
     end
 
     # class HasClausesTestCondition < Condition

@@ -3,11 +3,13 @@ module Hammerstone::Refine::Conditions
   class Condition
     include ActiveModel::Validations
 
+    #TODO remove hasclauses here, rename boot_has_clauses
     include HasClauses
     include HasMeta
 
     validate :ensure_id
     validate :ensure_attribute_configured
+    # validates_with ConditionsValidator
 
     attr_reader :id, :attribute
 
@@ -15,7 +17,8 @@ module Hammerstone::Refine::Conditions
       @display = display || id.humanize(keep_id_suffix: true).titleize if id
       @id = id
       @attribute = id
-      boot_has_clauses #Interpolate later in life
+      @rules = {}
+      boot_has_clauses #Interpolate later in life for each class that needs it
       boot #Allow each condition to set state post initialization
     end
 
@@ -52,9 +55,10 @@ module Hammerstone::Refine::Conditions
     def boot
     end
 
-    def add_rules(rules, messages)
-      # rules = merge in the new rule to the rules array?
-      # add_messages(messages)
+    def add_rules(new_rules)
+      #TODO add messages
+      @rules.merge!(new_rules)
+      self
     end
 
     def add_messages(messages)
@@ -62,8 +66,32 @@ module Hammerstone::Refine::Conditions
     end
 
     def apply(relation, input)
-      #Run all the ensurance validations here
-      apply_condition
+      #Run all the ensurance validations here (confirm all are run)
+      #Called from filter.make_query (rename?)
+      validate_clause_allowed(input)
+      validate_clause_rules(input)
+      apply_condition(relation, input)
+    end
+
+    def validate_clause_rules(input)
+      current_clause = clauses.select{ |clause| clause.id == input[:clause] }
+      #.select returns array of current clause object
+      current_clause[0].rules.each_pair do |k, v|
+        #TODO add other validations besides required...?
+        if input[k].blank?
+          errors.add(:base, "The clause with id #{input[:clause]} is required")
+          raise Errors::ConditionClauseError, "#{errors.full_messages}"
+        end
+      end
+    end
+
+    def validate_clause_allowed(input)
+      frontend_input = input[:clause]
+      good_clause = get_clauses.select{|clause| clause[:id]==frontend_input}
+      if good_clause.empty?
+        errors.add(:base, "The clause with id #{frontend_input} was not found")
+        raise Errors::ConditionClauseError, "#{errors.full_messages}"
+      end
     end
 
     def component

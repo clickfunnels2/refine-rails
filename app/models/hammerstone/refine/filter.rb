@@ -51,18 +51,18 @@ module Hammerstone::Refine
     def apply_condition!(criterion)
       current_condition = get_condition_for_criterion(criterion)
       if current_condition
-        @relation = current_condition.apply_condition(@relation, criterion[:input])
+        @relation = current_condition.apply(@relation, criterion[:input])
       end
     end
 
     def get_condition_for_criterion(criterion)
       # returns the object that matches the condition (cloned in php). Adds errors if not found.
+      # This checks the id on the condition such as text_test
       returned_object = conditions.find { |condition| condition.id == criterion[:condition_id] }
 
       if returned_object.nil?
         errors.add(:filter, "The condition ID #{criterion[:condition_id]} was not found")
       end
-
       returned_object
     end
 

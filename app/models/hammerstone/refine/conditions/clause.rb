@@ -2,23 +2,28 @@ module Hammerstone::Refine::Conditions
   class Clause
     include HasMeta
 
-    attr_reader :id, :display
+    attr_reader :id, :display, :rules
 
     def initialize(id=nil, display=nil)
       @id = id
       @display = display
-      @rules
+      @rules = {}
       @messages
     end
 
-    def rules(rules, messages)
-      @rules = rules
-      @messages = messages
+    # def rules(rules, messages)
+    #   @rules = rules
+    #   @messages = messages
+    #   self
+    # end
+
+    def with_rules(user_defined_hash)
+      @rules.merge!(user_defined_hash)
       self
     end
 
     def requires_inputs(fields)
-      #TODO
+      @rules.merge!({"#{fields}": 'required'})
       self
     end
 
@@ -26,7 +31,7 @@ module Hammerstone::Refine::Conditions
       {
         id: @id,
         display: @display,
-        meta: @meta ||= {}
+        meta: meta
       }
     end
   end

@@ -1,8 +1,10 @@
 module Hammerstone::Refine::Conditions::HasClauses
 
   def boot_has_clauses
-    #add rules
-    with_meta( {clauses: get_clauses} )
+    add_rules({ clause: 'required' })
+    #TODO do this later in lifecycle? Send as proc?
+    clauses.select{ |clause| add_rules(clause.rules) }
+    with_meta({ clauses: get_clauses })
   end
 
   def custom_clauses
@@ -11,13 +13,15 @@ module Hammerstone::Refine::Conditions::HasClauses
 
   def with_clauses(clauses)
     #TODO
+    self
   end
 
   def without_clauses(clauses)
+    self
     #TODO
   end
 
-  def get_clauses #actually a single class
+  def get_clauses #returns array of clauses
 
     # [{
      #   id: "eq",
@@ -28,12 +32,10 @@ module Hammerstone::Refine::Conditions::HasClauses
      #   display: "has not received",
      #   meta: [],
      # }],
-    # clause.map {|clause| clause.to_array}
     clauses_serialized = []
     clauses.each do |clause|
       clauses_serialized << clause.to_array
     end
     clauses_serialized
-
   end
 end

@@ -11,7 +11,7 @@ module Hammerstone::Refine::Conditions
       ApplicationRecord.connection.execute("DROP TABLE t;")
     end
 
-    it 'fails with no clause id in apply' do
+    it 'fails with no clause id by raising error' do
       condition = ValidatesClausesTestCondition.new('text_test')
       user_input = { clause: 'eq', value: 'sample_value'}
 
@@ -24,18 +24,23 @@ module Hammerstone::Refine::Conditions
 
     end
 
-    # it 'passes with clause id' do
-    # end
-    # it 'validates a clause exists' do
-    #   condition = ValidatesClausesTestCondition.new('text_test')
-    #   user_input = { clause: nil }
-    #   exception =
-    #     assert_raises Hammerstone::Refine::Conditions::Errors::ConditionClauseError do
-    #       condition.apply_condition_on_test_filter(condition, user_input)
-    #       #condition.apply(FilterTestHelper::TestDouble.all, user_input)
-    #     end
-    #   assert_equal("The clause field is required", exception.message)
-    # end
+    it 'passes with clause id' do
+      condition = ValidatesClausesTestCondition.new('text_test')
+      user_input = { clause: 'id_one', value: 'sample_value'}
+      condition.apply_condition_on_test_filter(condition, user_input)
+      assert_equal condition.clauses[0].id, 'id_one'
+    end
+
+    it 'validates a clause exists (a clause is required)' do
+      condition = ValidatesClausesTestCondition.new('text_test')
+      user_input = { clause: nil }
+      exception =
+        assert_raises Hammerstone::Refine::Conditions::Errors::ConditionClauseError do
+          condition.apply_condition_on_test_filter(condition, user_input)
+          #condition.apply(FilterTestHelper::TestDouble.all, user_input)
+        end
+      assert_equal("[\"The clause with id  was not found\"]", exception.message)
+    end
 
     it 'validates Text Condition Eq has a value' do
       condition = TextCondition.new('text_test') #Should automatically have all the clauses with all the rules
@@ -43,7 +48,16 @@ module Hammerstone::Refine::Conditions
       exception = assert_raises Hammerstone::Refine::Conditions::Errors::ConditionClauseError do
         apply_condition_on_test_filter(condition, data)
       end
-      assert_equal("[\"The clause with id eq is required\"]", exception.message)
+      assert_equal("[\"A value is required for clause with id eq\"]", exception.message)
+    end
+
+    it 'excludes clauses using without' do
+      skip 'validate after recieving as well'
+      condition = ValidatesClausesTestCondition.new('text_test').without_clauses(['id_one'])
+      data = { clause: 'id_one', value: 'foo' }
+      assert_raises Hammerstone::Refine::Conditions::Errors::ConditionClauseError do
+        apply_condition_on_test_filter(condition, data)
+      end
     end
   end
 

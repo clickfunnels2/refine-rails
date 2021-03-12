@@ -9,7 +9,6 @@ module Hammerstone::Refine::Conditions
 
     validate :ensure_id
     validate :ensure_attribute_configured
-    # validates_with ConditionsValidator
 
     attr_reader :id, :attribute
 
@@ -56,41 +55,43 @@ module Hammerstone::Refine::Conditions
     end
 
     def add_rules(new_rules)
-      #TODO add messages
+      #TODO add messages if desired
       @rules.merge!(new_rules)
       self
     end
 
     def add_messages(messages)
-      # messages = merge the message into the messages array
+      # messages = merge the message into the messages array if we go this route
     end
 
     def apply(relation, input)
-      #Run all the ensurance validations here (confirm all are run)
-      #Called from filter.make_query (rename?)
-      validate_clause_allowed(input)
-      validate_clause_rules(input)
+      #Run all the ensurance validations here - developer configured correctly
+      validate_user_input(input)
+
       apply_condition(relation, input)
     end
 
-    def validate_clause_rules(input)
-      current_clause = clauses.select{ |clause| clause.id == input[:clause] }
-      #.select returns array of current clause object
-      current_clause[0].rules.each_pair do |k, v|
-        #TODO add other validations besides required...?
-        if input[k].blank?
-          errors.add(:base, "The clause with id #{input[:clause]} is required")
-          raise Errors::ConditionClauseError, "#{errors.full_messages}"
-        end
+    def validate_user_input(input)
+      add_clause_rules_to_condition(input)
+      if !clause_exists?(input)
+        errors.add(:base, "The clause with id #{input[:clause]} was not found")
+        raise Errors::ConditionClauseError, "#{errors.full_messages}"
       end
+      validate_condition(input)
     end
 
-    def validate_clause_allowed(input)
-      frontend_input = input[:clause]
-      good_clause = get_clauses.select{|clause| clause[:id]==frontend_input}
-      if good_clause.empty?
-        errors.add(:base, "The clause with id #{frontend_input} was not found")
-        raise Errors::ConditionClauseError, "#{errors.full_messages}"
+    def clause_exists?(input)
+      current_clause = clauses.select{ |clause| clause.id == input[:clause] }
+      current_clause.present?
+    end
+
+    def validate_condition(input)
+      @rules = recursively_evaluate_lazy_enumerable(@rules)
+      @rules.each_pair do |k,v|
+        if input[k].blank?
+          errors.add(:base, "A #{k} is required for clause with id #{input[:clause]}")
+          raise Errors::ConditionClauseError, "#{errors.full_messages}"
+        end
       end
     end
 
@@ -102,35 +103,14 @@ module Hammerstone::Refine::Conditions
       raise NotImplementedError
     end
 
-    # def to_array
-    #   if valid?
-    #     { id: id,
-    #       component: component,
-    #       display: @display,
-    #       meta: {
-    #         clauses: clauses.map{|clause| clause.to_array}
-    #       }
-    #     }
-    #   else
-    #     raise ConditionError, "#{errors.full_messages}"
-    #   end
-    # end
-
     def to_array
-      #has clauses has already been called, so meta is populated
+      #has clauses has already been called, so meta is populated with possible closures
       if valid?
         {
           id: id,
           component: component,
           display: @display,
           meta: evaluated_meta
-          # meta comes in as:
-          # foo: 'bar',
-      #     other_stuff: Proc.new{'For the frontend'}
-        # evaluated_meta should return
-        # foo: 'bar',
-        # other_stuff: 'For the frontend'
-          # meta: recursively_redact_private_keys(evaluated_meta)
         }
       else
         raise ConditionError, "#{errors.full_messages}"
@@ -138,14 +118,8 @@ module Hammerstone::Refine::Conditions
     end
 
     def evaluated_meta
-      recursively_evaluate_lazy_array(@meta)
+      recursively_evaluate_lazy_enumerable(@meta)
     end
-
-    #Can set meta
-    # this.with_meta({
-    #   foo: 'bar',
-    #   other_stuff: Proc.new{'For the frontend'}
-    # })
 
     def call_proc_if_callable(value)
       if value.respond_to? :call
@@ -156,18 +130,28 @@ module Hammerstone::Refine::Conditions
     end
 
     #In HasCallbacks
-    def recursively_evaluate_lazy_array(meta_hash)
 
-      #revisit for options condition
-      meta_hash.each do |key, value|
-        next if key == "clauses".to_sym
-        #Sanitize value if it is a Proc
-        meta_hash[key] = call_proc_if_callable(value) #bar
-        #See about the array casting in laravel
-        if meta_hash[key].is_a? Enumerable
-          recursively_evaluate_lazy_array(meta_hash[key])
+    def recursively_evaluate_lazy_enumerable(enumerable)
+      if enumerable.is_a? Hash
+        enumerable.transform_values! do |value|
+          update_value(value)
+        end
+      elsif enumerable.is_a? Array
+        enumerable.map! do |value|
+          update_value(value)
         end
       end
+    end
+
+    def update_value(value)
+      value = call_proc_if_callable(value)
+      if value.respond_to? :to_array
+        value = value.to_array
+      end
+      if value.is_a? Enumerable
+        recursively_evaluate_lazy_enumerable(value)
+      end
+      value
     end
   end
 end

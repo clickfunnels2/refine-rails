@@ -210,14 +210,6 @@ describe Hammerstone::Refine::Filter do
      "SELECT \"scaffolding_completely_concrete_tangible_things\".* FROM \"scaffolding_completely_concrete_tangible_things\" WHERE (\"scaffolding_completely_concrete_tangible_things\".\"text_field_value\" = 'aaron' OR \"scaffolding_completely_concrete_tangible_things\".\"text_field_value\" = 'aa')"
   end
 
-  # describe 'builder query' do
-  #   #Works if blueprint doesn't have a type attribute
-  #   it 'builds the query' do
-  #     sql_query = "SELECT \"scaffolding_completely_concrete_tangible_things\".* FROM \"scaffolding_completely_concrete_tangible_things\" WHERE \"scaffolding_completely_concrete_tangible_things\".\"text_field_value\" = 'TextInATextField' AND \"scaffolding_completely_concrete_tangible_things\".\"button_value\" = 'one'"
-  #     assert_equal subject.query.to_sql, sql_query
-  #   end
-  # end'
-
   def bad_id
     [{
       "depth": 0,

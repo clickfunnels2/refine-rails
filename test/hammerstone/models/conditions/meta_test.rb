@@ -10,7 +10,22 @@ module Hammerstone::Refine::Conditions
       condition = BooleanCondition.new('boolean_test').with_meta(user_meta)
       #Strip clauses out of meta array
       assert_equal condition.meta.without(:clauses), user_meta
-      assert_equal expected_value, condition.recursively_evaluate_lazy_array(user_meta)
+      assert_equal expected_value, condition.recursively_evaluate_lazy_enumerable(user_meta)
+    end
+
+    it 'handles nested procs' do
+      meta = {
+              options:
+                [
+                  {
+                    id: "ID1",
+                    display: "Display1",
+                    value: Proc.new{'A mysterious value'},
+                  }
+                ]
+              }
+      condition = BooleanCondition.new('boolean_test').with_meta(meta)
+      assert_equal nested_expected_value, condition.recursively_evaluate_lazy_enumerable(meta)
     end
 
     it 'can add meta later in lifecycle' do
@@ -21,6 +36,19 @@ module Hammerstone::Refine::Conditions
       expected_value = { hint: 'password', other_meta: 'something_else' }
 
       assert_equal expected_value,  condition.meta.without(:clauses)
+    end
+
+    def nested_expected_value
+      {
+        options:
+          [
+            {
+              id: "ID1",
+              display: "Display1",
+              value: 'A mysterious value'
+            }
+          ]
+        }
     end
   end
 end

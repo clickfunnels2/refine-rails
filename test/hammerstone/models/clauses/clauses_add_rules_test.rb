@@ -12,7 +12,6 @@ module Hammerstone::Refine::Conditions
     end
 
     it 'a clause can add rules that are enforced' do
-      skip 'condition rules'
       condition = ClausesAddRulesTestCondition.new('test')
 
       user_input = { clause: 'clause_1', value: 'sample_value'}
@@ -22,7 +21,7 @@ module Hammerstone::Refine::Conditions
           condition.apply_condition_on_test_filter(condition, user_input)
           #condition.apply(FilterTestHelper::TestDouble.all, user_input)
         end
-      assert_equal("foo is a required input", exception.message)
+      assert_equal("[\"A foo is required for clause with id clause_1\"]", exception.message)
     end
   end
 

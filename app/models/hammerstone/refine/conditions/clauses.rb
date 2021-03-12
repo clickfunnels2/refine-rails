@@ -1,5 +1,5 @@
 module Hammerstone::Refine::Conditions
-  #freeze these
+
   class Clauses
     EQUALS = 'eq'
     DOESNT_EQUAL = 'dne'

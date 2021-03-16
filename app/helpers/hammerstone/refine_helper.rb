@@ -11,6 +11,8 @@ module Hammerstone
       @refine_filter.blueprint.each_with_index do |piece, index|
         if piece[:word] == 'or'
           new_blueprint.push []
+        elsif piece[:word] == 'and'
+          next
         else
           piece[:position] = index
           new_blueprint.last.push piece

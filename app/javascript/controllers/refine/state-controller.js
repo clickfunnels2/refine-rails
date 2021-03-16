@@ -40,7 +40,17 @@ const or = function(depth) {
   };
 };
 
+const and = function(depth) {
+  depth = depth === undefined ? 1 : depth;
+  return {
+    depth,
+    type: 'conjunction',
+    word: 'and',
+  };
+};
+
 const blueprintUpdatedEvent = (blueprint, filterName) => {
+  console.log(blueprint);
   const event = new CustomEvent('blueprint-updated', {
     detail: {
       blueprint: JSON.parse(JSON.stringify(blueprint)),
@@ -89,8 +99,7 @@ export default class extends Controller {
     const condition = conditions[0];
     const { meta } = condition;
     const criterion = createCriterion(condition.id, 1, meta);
-
-    blueprint.splice(previousCriterionId + 1, 0, criterion);
+    blueprint.splice(previousCriterionId + 1, 0, and(), criterion);
     blueprintUpdatedEvent(this.blueprint, this.filterName);
   }
 

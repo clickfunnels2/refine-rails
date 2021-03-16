@@ -7,16 +7,19 @@
       <% end %>
     </div>
     <%= form_tag(hammerstone_refine_blueprint_path, method: :get, data: {
-      controller: "refine--add"
+      controller: "refine--add",
+      refine__add_previous_criterion_id_value: criteria.count - 1,
     }) do %>
       <input type="hidden" name="filter" value="<%= filter_class_name %>" />
       <input
         data-refine--add-target="blueprint"
         type="hidden"
-        name="criterion"
+        name="blueprint"
         value="" />
       <button
-        class="background-transparent text-blue-600 text-xs outline-none focus:outline-none pt-4" type="button" style="transition: all .15s ease"
+        class="background-transparent text-blue-600 text-xs outline-none focus:outline-none pt-4"
+        type="submit"
+        style="transition: all .15s ease"
         data-action="click->refine--add#criterion"
       >
         <i class="ti ti-plus align-middle"></i> Add

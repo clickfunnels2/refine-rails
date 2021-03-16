@@ -1,16 +1,10 @@
 import { Controller } from "stimulus";
 
-const createCriterion = (id, depth, meta) => {
-  return {
-    depth,
-    type: "criterion",
-    condition_id: id,
-    input: { clause: meta.clauses[0].id },
-  };
-};
-
 export default class extends Controller {
   static targets = [ "blueprint" ];
+  static values = {
+    previousCriterionId: Number,
+  };
 
   connect() {
     const refineElement = document.getElementById('refine');
@@ -20,43 +14,17 @@ export default class extends Controller {
     );
   }
 
-  criterion(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    const { blueprint, conditions } = this.state;
-    const condition = conditions[0];
-    const group = blueprint[this.groupIdValue];
-    const { meta } = condition;
-
-    const criterion = createCriterion(condition.id, 1, meta);
-
-    const criterionLocals = {
-      group_id: this.groupIdValue,
-      criterion_id: `${this.groupIdValue}_${group.length}`,
-      criterion,
-      conditions,
-      blueprint_path: this.blueprintPathValue.concat(group.length),
-    };
-
-    this.blueprintTarget.value = JSON.stringify(criterionLocals);
-    this.state.addCriterion(this.groupIdValue, criterion);
-    this.element.requestSubmit();
+  criterion() {
+    this.state.addCriterion(this.previousCriterionIdValue);
+    this.updateBlueprintInput();
   }
 
-  group(event) {
+  group() {
     this.state.addGroup();
-
-    event.preventDefault();
-    event.stopPropagation();
-
-    this.submitForm();
+    this.updateBlueprintInput();
   }
 
-  submitForm() {
+  updateBlueprintInput() {
     this.blueprintTarget.value = JSON.stringify(this.state.blueprint);
-    this.element.requestSubmit();
-  }
-
-  condition() {
   }
 };

@@ -72,7 +72,7 @@ export default class extends Controller {
   }
 
   addGroup() {
-    const { blueprint, conditions, addGroup } = this;
+    const { blueprint, conditions } = this;
     const condition = conditions[0];
     const { meta } = condition;
     const criterion = createCriterion(condition.id, 1, meta);
@@ -84,8 +84,13 @@ export default class extends Controller {
     blueprintUpdatedEvent(this.blueprint, this.filterName);
   }
 
-  addCriterion(groupId, criterion) {
-    this.blueprint[groupId].push(criterion);
+  addCriterion(previousCriterionId) {
+    const { blueprint, conditions } = this;
+    const condition = conditions[0];
+    const { meta } = condition;
+    const criterion = createCriterion(condition.id, 1, meta);
+
+    blueprint.splice(previousCriterionId + 1, 0, criterion);
     blueprintUpdatedEvent(this.blueprint, this.filterName);
   }
 
@@ -105,9 +110,9 @@ export default class extends Controller {
     return cleanedBlueprint;
   }
 
-  delete(conditionId) {
+  deleteCriterion(criterionId) {
     const { blueprint } = this;
-    blueprint.splice(conditionId, 1);
+    blueprint.splice(criterionId, 1);
     this.cleanup();
     blueprintUpdatedEvent(this.blueprint, this.filterName);
   }

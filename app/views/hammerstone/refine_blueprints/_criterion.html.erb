@@ -1,7 +1,7 @@
 <%= turbo_frame_tag "criterion_#{criterion_id}", class: 'flex items-center mb-4' do %>
   <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex items-center', data: {
     controller: "refine--update",
-    refine__criterion_id_value: criterion_id }) do %>
+    refine__update_criterion_id_value: criterion_id }) do %>
     <div class="mr-3 w-80">
       <%= render partial: 'hammerstone/refine_blueprints/condition_select', locals: {
         selected_condition_id: criterion[:condition_id] } %>
@@ -21,17 +21,25 @@
       type="hidden"
       name="blueprint"
       value="<%= blueprint.to_json %>" />
+  <% end %>
+  <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex items-center', data: {
+    controller: 'refine--delete',
+    refine__delete_criterion_id_value: criterion_id,
+    turbo_frame: 'refine',
+  }) do %>
     <input
-      data-refine--add-target="filter"
+      data-refine--delete-target="blueprint"
+      type="hidden"
+      name="blueprint"
+      value="" />
+    <input
       type="hidden"
       name="filter"
       value="<%= filter_class_name %>" />
-  <% end %>
-  <%= button_tag type: 'button', class: 'ml-auto', data: {
-    controller: "refine--delete",
-    action: "click->refine--delete#criterion",
-    refine__delete_criterion_id_value: criterion_id,
-  } do %>
-    <i class="fal fa-sign-out ti ti-close"></i>
+    <%= button_tag type: 'submit', class: 'ml-auto', data: {
+      action: "click->refine--delete#criterion",
+    } do %>
+      <i class="fal fa-sign-out ti ti-close"></i>
+    <% end %>
   <% end %>
 <% end %>

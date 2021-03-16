@@ -1,7 +1,7 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = [ "blueprint", "filter" ];
+  static targets = [ "blueprint" ];
   static values = {
     criterionId: Number,
   };
@@ -28,6 +28,7 @@ export default class extends Controller {
     for (var i = 0; i < selectElement.length; i++) {
       if (selectElement.options[i].selected) selected.push(selectElement.options[i].value);
     }
+
     state.update(
       criterionIdValue,
       selected,

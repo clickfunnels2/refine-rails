@@ -1,5 +1,4 @@
 import { Controller } from "stimulus";
-import { delegate } from 'jquery-events-to-dom-events';
 
 // Polyfill for custom events in IE9-11
 // https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#polyfill
@@ -22,7 +21,7 @@ import { delegate } from 'jquery-events-to-dom-events';
   return true;
 })();
 
-const createCriterion = (id, depth, meta) => {
+const criterion = (id, depth, meta) => {
   return {
     depth,
     type: 'criterion',
@@ -65,7 +64,6 @@ export default class extends Controller {
   }
 
   connect() {
-    delegate('change');
     this.configuration = { ...this.configurationValue };
     this.blueprint = this.configuration.blueprint;
     this.conditions = this.configuration.conditions;
@@ -85,12 +83,13 @@ export default class extends Controller {
     const { blueprint, conditions } = this;
     const condition = conditions[0];
     const { meta } = condition;
-    const criterion = createCriterion(condition.id, 1, meta);
 
     if(this.blueprint.length > 0) {
       this.blueprint.push(or());
     }
-    this.blueprint.push(criterion);
+    this.blueprint.push(
+      criterion(condition.id, 1, meta)
+    );
     blueprintUpdatedEvent(this.blueprint, this.filterName);
   }
 
@@ -98,8 +97,15 @@ export default class extends Controller {
     const { blueprint, conditions } = this;
     const condition = conditions[0];
     const { meta } = condition;
-    const criterion = createCriterion(condition.id, 1, meta);
-    blueprint.splice(previousCriterionId + 1, 0, and(), criterion);
+
+    debugger;
+    blueprint.splice(
+      previousCriterionId + 1,
+      0,
+      and(),
+      criterion(condition.id, 1, meta),
+    );
+
     blueprintUpdatedEvent(this.blueprint, this.filterName);
   }
 

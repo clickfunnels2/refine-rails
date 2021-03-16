@@ -1,22 +1,14 @@
-import { Controller } from "stimulus";
+import FormController from './form-controller';
 
-export default class extends Controller {
+export default class extends FormController {
   static targets = [ 'blueprint' ];
   static values = {
     criterionId: Number,
   }
 
-  connect() {
-    const refineElement = document.getElementById('refine');
-    this.state = this.application.getControllerForElementAndIdentifier(
-      refineElement,
-      'refine--state',
-    );
-  }
-
   criterion() {
     const { state, criterionIdValue } = this;
     state.deleteCriterion(criterionIdValue);
-    this.blueprintTarget.value = JSON.stringify(this.state.blueprint);
+    this.updateBlueprintInput();
   }
 }

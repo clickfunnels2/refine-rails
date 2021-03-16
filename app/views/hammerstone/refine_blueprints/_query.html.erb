@@ -1,22 +1,26 @@
 <%= turbo_frame_tag 'refine', data: {
   controller: "refine--state",
-  refine__state_configuration_value: configuration.to_json,
-  refine__state_url_value: hammerstone_refine_blueprint_path } do %>
+  refine__state_configuration_value: configuration.to_json } do %>
   <%= turbo_frame_tag 'groups' do %>
     <% grouped_blueprint.each_with_index do |criteria, index| %>
       <%= render partial: 'hammerstone/refine_blueprints/group', locals: {
-        blueprint_path: ['blueprint', index],
         criteria: criteria,
         group_id: index }
       %>
     <% end %>
   <% end %>
-  <%= form_tag(hammerstone_refine_blueprint_path, method: :post, data: {
+  <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex items-center', data: {
     controller: "refine--add" }) do %>
-    <input data-refine--add-target="blueprint" type="hidden" name="group" value="" />
-    <input type="hidden" name="filterName" value="<%= filter_class_name %>"
-    />
-
+    <input
+      data-refine--add-target="blueprint"
+      type="hidden"
+      name="blueprint"
+      value="<%= blueprint.to_json %>" />
+    <input
+      data-refine--add-target="filter"
+      type="hidden"
+      name="filter"
+      value="<%= filter_class_name %>" />
     <button
       class="text-center px-4 py-2 border border-gray-300 shadow-sm text-md font-bold rounded-md text-gray-600 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 w-full mt-2"
       data-action="click->refine--add#group"

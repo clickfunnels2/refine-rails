@@ -15,6 +15,7 @@ module Hammerstone
           new_blueprint.last.push piece
         end
       end
+
       new_blueprint
     end
 
@@ -40,10 +41,12 @@ module Hammerstone
       configuration[:conditions]
     end
 
+    def blueprint
+      @refine_filter.blueprint
+    end
+
     def configuration
-      configuration = @refine_filter.configuration
-      configuration[:blueprint] = grouped_blueprint
-      configuration
+      @refine_filter.configuration
     end
   end
 end

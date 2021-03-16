@@ -11,11 +11,10 @@ const createCriterion = (id, depth, meta) => {
 
 export default class extends Controller {
   static targets = [ "blueprint" ];
-  static values = { groupId: Number, blueprintPath: Array };
 
   connect() {
     const refineElement = document.getElementById('refine');
-    this.stateController = this.application.getControllerForElementAndIdentifier(
+    this.state = this.application.getControllerForElementAndIdentifier(
       refineElement,
       'refine--state',
     );
@@ -24,7 +23,7 @@ export default class extends Controller {
   criterion(event) {
     event.preventDefault();
     event.stopPropagation();
-    const { blueprint, conditions } = this.stateController;
+    const { blueprint, conditions } = this.state;
     const condition = conditions[0];
     const group = blueprint[this.groupIdValue];
     const { meta } = condition;
@@ -40,31 +39,21 @@ export default class extends Controller {
     };
 
     this.blueprintTarget.value = JSON.stringify(criterionLocals);
-    this.stateController.addCriterion(this.groupIdValue, criterion);
+    this.state.addCriterion(this.groupIdValue, criterion);
     this.element.requestSubmit();
   }
 
   group(event) {
+    this.state.addGroup();
+
     event.preventDefault();
     event.stopPropagation();
 
-    const { blueprint, conditions } = this.stateController;
-    const groupId = blueprint.length;
-    const condition = conditions[0];
-    const { meta } = condition;
+    this.submitForm();
+  }
 
-    const criterion = createCriterion(condition.id, 1, meta);
-    const group = [criterion];
-
-    const groupLocals = {
-      group_id: groupId,
-      criteria: group,
-      conditions,
-      blueprint_path: ['blueprint', groupId],
-    };
-
-    this.stateController.addGroup(group);
-    this.blueprintTarget.value = JSON.stringify(groupLocals);
+  submitForm() {
+    this.blueprintTarget.value = JSON.stringify(this.state.blueprint);
     this.element.requestSubmit();
   }
 

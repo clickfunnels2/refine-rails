@@ -1,30 +1,37 @@
 <%= turbo_frame_tag "criterion_#{criterion_id}", class: 'flex items-center mb-4' do %>
-  <%= form_tag(hammerstone_refine_blueprint_path, method: :put, class: 'flex items-center', data: {
+  <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex items-center', data: {
     controller: "refine--update",
-    refine__update_frame_id_value: "criterion_#{criterion_id}",
-    refine__update_path_value: blueprint_path.to_json }) do %>
+    refine__criterion_id_value: criterion_id }) do %>
     <div class="mr-3 w-80">
       <%= render partial: 'hammerstone/refine_blueprints/condition_select', locals: {
         selected_condition_id: criterion[:condition_id] } %>
     </div>
-    <%= turbo_frame_tag "clause_#{criterion_id}" do %>
-      <div class="flex items-center">
-        <div class="mr-3 w-80">
-          <%= render partial: 'hammerstone/refine_blueprints/clause_select', locals: {
-            meta: meta_for_criterion(criterion), input: criterion[:input]} %>
-        </div>
-        <div>
-          <%= render partial: "hammerstone/refine_blueprints/clauses/#{clause_for_criterion(criterion)}", locals: {
-            condition: condition_for_criterion(criterion), input: criterion[:input], criterion_id: criterion_id } %>
-        </div>
+    <div class="flex items-center">
+      <div class="mr-3 w-80">
+        <%= render partial: 'hammerstone/refine_blueprints/clause_select', locals: {
+          meta: meta_for_criterion(criterion), input: criterion[:input]} %>
       </div>
-    <% end %>
+      <div>
+        <%= render partial: "hammerstone/refine_blueprints/clauses/#{clause_for_criterion(criterion)}", locals: {
+          condition: condition_for_criterion(criterion), input: criterion[:input], criterion_id: criterion_id } %>
+      </div>
+    </div>
+    <input
+      data-refine--update-target="blueprint"
+      type="hidden"
+      name="blueprint"
+      value="<%= blueprint.to_json %>" />
+    <input
+      data-refine--add-target="filter"
+      type="hidden"
+      name="filter"
+      value="<%= filter_class_name %>" />
   <% end %>
   <%= button_tag type: 'button', class: 'ml-auto', data: {
     controller: "refine--delete",
     action: "click->refine--delete#criterion",
-    refine__delete_dom_id_value: "criterion_#{criterion_id}",
-    refine__delete_path_value: blueprint_path.to_json } do %>
+    refine__delete_criterion_id_value: criterion_id,
+  } do %>
     <i class="fal fa-sign-out ti ti-close"></i>
   <% end %>
 <% end %>

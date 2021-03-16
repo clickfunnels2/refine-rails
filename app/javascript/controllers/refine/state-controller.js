@@ -22,8 +22,26 @@ import { delegate } from 'jquery-events-to-dom-events';
   return true;
 })();
 
+const createCriterion = (id, depth, meta) => {
+  return {
+    depth,
+    type: 'criterion',
+    condition_id: id,
+    input: { clause: meta.clauses[0].id },
+  };
+};
+
+const or = function(depth) {
+  depth = depth === undefined ? 0 : depth;
+  return {
+    depth,
+    type: 'conjunction',
+    word: 'or',
+  };
+};
+
 const blueprintUpdatedEvent = (blueprint, filterName) => {
-  const event = new CustomEvent("blueprint-updated", {
+  const event = new CustomEvent('blueprint-updated', {
     detail: {
       blueprint: JSON.parse(JSON.stringify(blueprint)),
       filterName,
@@ -34,7 +52,6 @@ const blueprintUpdatedEvent = (blueprint, filterName) => {
 export default class extends Controller {
   static values = {
     configuration: Object,
-    url: String,
   }
 
   connect() {
@@ -54,69 +71,66 @@ export default class extends Controller {
     return this.conditionsLookup[conditionId];
   }
 
-  addGroup(group) {
-    this.blueprint.push(group);
-    blueprintUpdatedEvent(this.serverBlueprint(), this.filterName);
+  addGroup() {
+    const { blueprint, conditions, addGroup } = this;
+    const condition = conditions[0];
+    const { meta } = condition;
+    const criterion = createCriterion(condition.id, 1, meta);
+
+    if(this.blueprint.length > 0) {
+      this.blueprint.push(or());
+    }
+    this.blueprint.push(criterion);
+    blueprintUpdatedEvent(this.blueprint, this.filterName);
   }
 
   addCriterion(groupId, criterion) {
     this.blueprint[groupId].push(criterion);
-    blueprintUpdatedEvent(this.serverBlueprint(), this.filterName);
+    blueprintUpdatedEvent(this.blueprint, this.filterName);
   }
 
-  // Client uses a different blueprint format than the server.
-  // Convert to format server expects
-  serverBlueprint() {
-    if (this.blueprint.length === 0) {
-      return this.blueprint;
+  cleanup() {
+    const { blueprint } = this;
+    const cleanedBlueprint = [];
+    for(let i = 0; i < blueprint.length; i++) {
+      const current = blueprint[i];
+      const next = blueprint[i + 1];
+      if (current.word === 'or') {
+        if (next.type !== 'criterion') {
+          continue;
+        }
+      }
+      cleanedBlueprint.push(current);
     }
-
-    const groups = JSON.parse(JSON.stringify(this.blueprint));
-    const firstGroup = groups.shift();
-    const newBlueprint = groups.reduce((serverBlueprint, group) => {
-      serverBlueprint.push({
-        depth: 0,
-        type: 'conjunction',
-        word: 'or',
-      });
-      return serverBlueprint.concat(group);
-    }, firstGroup);
-    return newBlueprint;
+    return cleanedBlueprint;
   }
 
-  delete(path) {
-    const { configuration } = this;
-    const lastPathKey = path[path.length - 1];
-
-    let parent = configuration;
-    path.slice(0, -1).forEach(key => parent = parent[key]);
-
-    if (Array.isArray(parent)) {
-      parent.splice(lastPathKey, 1);
-    } else {
-      delete parent[lastPathKey];
-    }
-    blueprintUpdatedEvent(this.serverBlueprint(), this.filterName);
+  delete(conditionId) {
+    const { blueprint } = this;
+    blueprint.splice(conditionId, 1);
+    this.cleanup();
+    blueprintUpdatedEvent(this.blueprint, this.filterName);
   }
 
-  update(path, value, callback) {
-    const { configuration } = this;
-
-    // Update the configuration object given the path and the value
-    let updated = configuration;
-    path.slice(0, -1).forEach((key) => {
-      updated = updated[key];
-    });
-    updated[path[path.length - 1]] = value;
-
-    blueprintUpdatedEvent(this.serverBlueprint(), this.filterName);
-
-    const configParam = encodeURIComponent(JSON.stringify(configuration));
-    const blueprintParam = encodeURIComponent(JSON.stringify(this.serverBlueprint()));
-    const filterNameParam = encodeURIComponent(this.filterName);
-
-    if (callback) {
-      callback(`${this.urlValue}?filterName=${filterNameParam}&blueprint=${blueprintParam}`);
+  updateConditionId(criterionId, conditionId) {
+    const criterion = this.blueprint[criterionId];
+    if (criterion.type !== 'criterion') {
+      throw new Error(`You can't call updateConditionId on a non-criterion type. Trying to update ${JSON.stringify(criterion)}`);
     }
+    criterion.condition_id = conditionId;
+  }
+
+  replaceInput(criterionId, input) {
+    const { blueprint } = this;
+    const criterion = blueprint[criterionId];
+    criterion.input = input;
+    blueprintUpdatedEvent(this.blueprint, this.filterName);
+  }
+
+  updateInput(criterionId, input) {
+    const { blueprint } = this;
+    const criterion = blueprint[criterionId];
+    criterion.input = {...criterion.input, ...input};
+    blueprintUpdatedEvent(this.blueprint, this.filterName);
   }
 }

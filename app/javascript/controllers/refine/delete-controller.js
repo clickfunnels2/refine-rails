@@ -15,9 +15,7 @@ export default class extends Controller {
   }
 
   criterion(event) {
-    const { stateController, pathValue, domIdValue } = this;
-    const element = document.getElementById(domIdValue);
-    stateController.delete(pathValue);
-    element.parentNode.removeChild(element);
+    const { stateController, criterionId } = this;
+    stateController.delete(criterionId);
   }
 }

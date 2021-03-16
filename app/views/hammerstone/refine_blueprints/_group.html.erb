@@ -3,16 +3,13 @@
     <div id="<%= "criteria_#{group_id}" %>">
       <% criteria&.each_with_index do |criterion, index| %>
         <%= render partial: 'hammerstone/refine_blueprints/criterion', locals: {
-          criterion: criterion, criterion_id: "#{group_id}_#{index}",
-          blueprint_path: blueprint_path + [index] } %>
+          criterion: criterion, criterion_id: index } %>
       <% end %>
     </div>
-    <%= form_tag(hammerstone_refine_blueprint_path, method: :post, data: {
-      controller: "refine--add",
-      'refine--add-group-id-value': group_id,
-      'refine--add-blueprint-path-value': blueprint_path
+    <%= form_tag(hammerstone_refine_blueprint_path, method: :get, data: {
+      controller: "refine--add"
     }) do %>
-      <input type="hidden" name="filterName" value="<%= filter_class_name %>" />
+      <input type="hidden" name="filter" value="<%= filter_class_name %>" />
       <input
         data-refine--add-target="blueprint"
         type="hidden"

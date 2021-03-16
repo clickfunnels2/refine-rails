@@ -1,7 +1,8 @@
 <%= turbo_frame_tag "criterion_#{criterion_id}", class: 'flex items-center mb-4' do %>
   <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex items-center', data: {
     controller: "refine--update",
-    refine__update_criterion_id_value: criterion_id }) do %>
+    refine__update_criterion_id_value: criterion_id,
+    position: criterion[:position]}) do %>
     <div class="mr-3 w-80">
       <%= render partial: 'hammerstone/refine_blueprints/condition_select', locals: {
         selected_condition_id: criterion[:condition_id] } %>

@@ -98,7 +98,6 @@ export default class extends Controller {
     const condition = conditions[0];
     const { meta } = condition;
 
-    debugger;
     blueprint.splice(
       previousCriterionId + 1,
       0,

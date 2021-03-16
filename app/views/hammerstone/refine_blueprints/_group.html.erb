@@ -1,9 +1,9 @@
 <%= turbo_frame_tag "group_#{group_id}" do %>
   <div class="bg-gray-50 rounded p-4 mt-2 font-sans">
     <div id="<%= "criteria_#{group_id}" %>">
-      <% criteria&.each_with_index do |criterion, index| %>
+      <% criteria&.each_with_index do |criterion| %>
         <%= render partial: 'hammerstone/refine_blueprints/criterion', locals: {
-          criterion: criterion, criterion_id: index } %>
+          criterion: criterion, criterion_id: criterion[:position] } %>
       <% end %>
     </div>
     <%= form_tag(hammerstone_refine_blueprint_path, method: :get, data: {

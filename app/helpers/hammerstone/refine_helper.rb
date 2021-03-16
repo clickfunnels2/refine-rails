@@ -8,10 +8,11 @@ module Hammerstone
       # start with an empty group
       new_blueprint.push []
 
-      @refine_filter.blueprint.each do |piece|
+      @refine_filter.blueprint.each_with_index do |piece, index|
         if piece[:word] == 'or'
           new_blueprint.push []
         else
+          piece[:position] = index
           new_blueprint.last.push piece
         end
       end

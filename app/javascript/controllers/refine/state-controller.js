@@ -49,7 +49,7 @@ const and = function(depth) {
 };
 
 const blueprintUpdatedEvent = (blueprint, filterName) => {
-  console.log(blueprint);
+  console.log([...blueprint]);
   const event = new CustomEvent('blueprint-updated', {
     detail: {
       blueprint: JSON.parse(JSON.stringify(blueprint)),
@@ -108,26 +108,37 @@ export default class extends Controller {
     blueprintUpdatedEvent(this.blueprint, this.filterName);
   }
 
-  cleanup() {
-    const { blueprint } = this;
-    const cleanedBlueprint = [];
-    for(let i = 0; i < blueprint.length; i++) {
-      const current = blueprint[i];
-      const next = blueprint[i + 1];
-      if (current.word === 'or') {
-        if (next.type !== 'criterion') {
-          continue;
-        }
-      }
-      cleanedBlueprint.push(current);
-    }
-    return cleanedBlueprint;
-  }
-
   deleteCriterion(criterionId) {
     const { blueprint } = this;
-    blueprint.splice(criterionId, 1);
-    this.cleanup();
+    const previous = blueprint[criterionId - 1];
+    const next = blueprint[criterionId + 1];
+
+    const nextIsOr = next && next.word === 'or';
+    const previousIsOr = previous && previous.word === 'or';
+
+    const nextIsRightParen = nextIsOr || !next;
+    const previousIsLeftParen = previousIsOr || !previous;
+
+    const isFirstInGroup = previousIsLeftParen && !nextIsRightParen;
+    const isLastInGroup = previousIsLeftParen && nextIsRightParen;
+    const isLastCriterion = !previous && !next;
+
+    if (isLastCriterion) {
+      this.blueprint = [];
+
+    } else if (isLastInGroup && previousIsOr) {
+      blueprint.splice(criterionId - 1, 2);
+
+    } else if (isLastInGroup && !previous) {
+      blueprint.splice(criterionId, 2);
+
+    } else if (isFirstInGroup) {
+      blueprint.splice(criterionId, 2)
+
+    } else {
+      blueprint.splice(criterionId - 1, 2);
+    }
+
     blueprintUpdatedEvent(this.blueprint, this.filterName);
   }
 

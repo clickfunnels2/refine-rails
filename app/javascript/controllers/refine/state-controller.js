@@ -109,6 +109,21 @@ export default class extends Controller {
   }
 
   deleteCriterion(criterionId) {
+    /**
+       To support 'groups' there is some complicated logic for deleting criterion.
+
+       Imagine this simplified blueprint: [eq, and, sw, or, eq]
+
+       User clicks to delete the last eq. We also have to delete the preceding or
+       otherwise we're left with a hanging empty group
+
+       What if the user deletes the sw? We have to clean up the preceding and.
+
+       Imagine another scenario: [eq or sw and ew]
+       Now we delete the first eq but this time we need to clean up the or.
+
+       These conditionals cover these cases.
+    **/
     const { blueprint } = this;
     const previous = blueprint[criterionId - 1];
     const next = blueprint[criterionId + 1];

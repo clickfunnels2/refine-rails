@@ -23,15 +23,6 @@
     refine__delete_criterion_id_value: criterion_id,
     turbo_frame: 'refine',
   }) do %>
-    <input
-      data-refine--delete-target="blueprint"
-      type="hidden"
-      name="blueprint"
-      value="" />
-    <input
-      type="hidden"
-      name="filter"
-      value="<%= filter_class_name %>" />
     <%= button_tag type: 'submit', class: 'ml-auto', data: {
       action: "click->refine--delete#criterion",
     } do %>

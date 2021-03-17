@@ -10,12 +10,6 @@
       controller: "refine--add",
       refine__add_previous_criterion_id_value: criteria.last[:position],
     }) do %>
-      <input type="hidden" name="filter" value="<%= filter_class_name %>" />
-      <input
-        data-refine--add-target="blueprint"
-        type="hidden"
-        name="blueprint"
-        value="" />
       <button
         class="background-transparent text-blue-600 text-xs outline-none focus:outline-none pt-4"
         type="submit"

@@ -1,7 +1,6 @@
 import FormController from './form-controller';
 
 export default class extends FormController {
-  static targets = [ "blueprint" ];
   static values = {
     previousCriterionId: Number,
   };

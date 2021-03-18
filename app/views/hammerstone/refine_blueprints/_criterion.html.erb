@@ -4,7 +4,7 @@
     refine__update_criterion_id_value: criterion_id,
     position: criterion[:position]}) do %>
 
-    <div class="mb-3 w-full sm:w-auto sm:flex-grow sm:flex-shrink sm:mr-3 sm:mb-0">
+    <div class="mb-3 w-full sm:w-1/3 sm:flex-shrink-0 sm:mr-3 sm:mb-0">
       <%= render partial: 'hammerstone/refine_blueprints/condition_select', locals: {
         selected_condition_id: criterion[:condition_id] } %>
     </div>

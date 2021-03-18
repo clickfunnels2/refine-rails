@@ -1,24 +1,21 @@
-<%= turbo_frame_tag "criterion_#{criterion_id}", class: 'flex items-center mb-4' do %>
-  <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex items-center', data: {
+<%= turbo_frame_tag "criterion_#{criterion_id}", class: 'flex flex-wrap items-center mb-4 sm:mr-3 sm:mb-0 sm:flex-nowrap' do %>
+  <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex flex-wrap items-center sm:flex-nowrap', data: {
     controller: "refine--update",
     refine__update_criterion_id_value: criterion_id,
     position: criterion[:position]}) do %>
-    <div class="mr-3 w-80">
+
+    <div class="mb-3 w-full sm:w-auto sm:flex-grow sm:flex-shrink sm:mr-3 sm:mb-0">
       <%= render partial: 'hammerstone/refine_blueprints/condition_select', locals: {
         selected_condition_id: criterion[:condition_id] } %>
     </div>
-    <div class="flex items-center">
-      <div class="mr-3 w-80">
-        <%= render partial: 'hammerstone/refine_blueprints/clause_select', locals: {
-          meta: meta_for_criterion(criterion), input: criterion[:input]} %>
-      </div>
-      <div>
-        <%= render partial: "hammerstone/refine_blueprints/clauses/#{clause_for_criterion(criterion)}", locals: {
-          condition: condition_for_criterion(criterion), input: criterion[:input], criterion_id: criterion_id } %>
-      </div>
-    </div>
+
+    <%= render partial: 'hammerstone/refine_blueprints/clause_select', locals: {
+      meta: meta_for_criterion(criterion), input: criterion[:input]} %>
+
+    <%= render partial: "hammerstone/refine_blueprints/clauses/#{clause_for_criterion(criterion)}", locals: {
+      condition: condition_for_criterion(criterion), input: criterion[:input], criterion_id: criterion_id } %>
   <% end %>
-  <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex items-center', data: {
+  <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex items-center w-full mt-3 sm:mt-0 sm:w-auto sm:flex-grow', data: {
     controller: 'refine--delete',
     refine__delete_criterion_id_value: criterion_id,
     turbo_frame: 'refine',

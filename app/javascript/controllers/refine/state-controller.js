@@ -73,6 +73,7 @@ export default class extends Controller {
       lookup[condition.id] = condition;
       return lookup;
     }, {});
+    console.log(this.configuration);
     blueprintUpdatedEvent(this.blueprint, this.filterName, true);
   }
 

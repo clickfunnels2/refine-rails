@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "criterion_#{criterion_id}", class: 'flex flex-wrap items-center mb-4 sm:mr-3 sm:mb-0 sm:flex-nowrap' do %>
-  <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex flex-wrap items-center sm:flex-nowrap', data: {
+  <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex flex-wrap flex-grow items-center sm:flex-nowrap', data: {
     controller: "refine--update",
     refine__update_criterion_id_value: criterion_id,
     position: criterion[:position]}) do %>
@@ -20,10 +20,11 @@
     refine__delete_criterion_id_value: criterion_id,
     turbo_frame: 'refine',
   }) do %>
-    <%= button_tag type: 'submit', class: 'ml-auto', data: {
+    <%= button_tag type: 'submit', class: 'ml-auto flex items-center', data: {
       action: "click->refine--delete#criterion",
     } do %>
       <i class="fal fa-sign-out ti ti-close"></i>
+      <span class="text-black-500 pl-2 sm:hidden">Remove filter</span>
     <% end %>
   <% end %>
 <% end %>

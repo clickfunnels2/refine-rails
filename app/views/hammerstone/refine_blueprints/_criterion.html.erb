@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "criterion_#{criterion_id}", class: 'flex flex-wrap items-center mb-4 sm:mr-3 sm:mb-0 sm:flex-nowrap' do %>
+<%= turbo_frame_tag "criterion_#{criterion_id}", class: 'flex flex-wrap items-center mb-4 sm:mr-3 sm:flex-nowrap' do %>
   <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex flex-wrap flex-grow items-center sm:flex-nowrap', data: {
     controller: "refine--update",
     refine__update_criterion_id_value: criterion_id,

@@ -16,7 +16,11 @@
       data-action="click->refine--add#group"
       type="submit"
     >
-      Add an 'Or'
+      <% if grouped_blueprint.any? %>
+        Add an 'Or'
+      <% else %>
+        Create a Filter
+      <% end %>
     </button>
   <% end %>
 <% end %>

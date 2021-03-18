@@ -48,12 +48,13 @@ const and = function(depth) {
   };
 };
 
-const blueprintUpdatedEvent = (blueprint, filterName) => {
+const blueprintUpdatedEvent = (blueprint, filterName, initialLoad) => {
   console.log([...blueprint]);
   const event = new CustomEvent('blueprint-updated', {
     detail: {
       blueprint: JSON.parse(JSON.stringify(blueprint)),
       filterName,
+      initialLoad,
     }});
   window.dispatchEvent(event);
 };
@@ -72,7 +73,7 @@ export default class extends Controller {
       lookup[condition.id] = condition;
       return lookup;
     }, {});
-
+    blueprintUpdatedEvent(this.blueprint, this.filterName, true);
   }
 
   conditionConfigFor(conditionId) {

@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "group_#{group_id}" do %>
-  <div class="bg-gray-50 rounded p-4 mt-2 font-sans">
+  <div class="bg-gray-50 rounded p-4 font-sans">
     <% criteria&.each_with_index do |criterion| %>
       <%= render partial: 'hammerstone/refine_blueprints/criterion', locals: {
         criterion: criterion, criterion_id: criterion[:position] } %>
@@ -14,7 +14,7 @@
         style="transition: all .15s ease"
         data-action="click->refine--add#criterion"
       >
-        <i class="ti ti-plus align-middle"></i> Add
+        <i class="ti ti-plus align-middle"></i> And
       </button>
     <% end %>
   </div>

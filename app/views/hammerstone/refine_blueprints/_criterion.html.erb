@@ -15,7 +15,7 @@
     <%= render partial: "hammerstone/refine_blueprints/clauses/#{clause_for_criterion(criterion)}", locals: {
       condition: condition_for_criterion(criterion), input: criterion[:input], criterion_id: criterion_id } %>
   <% end %>
-  <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex items-center mt-3 sm:mt-0 sm:w-auto sm:ml-3', data: {
+  <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex items-center mt-3 sm:mt-0 sm:w-auto sm:ml-4', data: {
     controller: 'refine--delete',
     refine__delete_criterion_id_value: criterion_id,
     turbo_frame: 'refine',

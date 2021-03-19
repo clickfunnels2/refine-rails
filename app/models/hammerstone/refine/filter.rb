@@ -2,11 +2,9 @@ module Hammerstone::Refine
   class Filter
     include ActiveModel::Validations
     include ActiveModel::Callbacks
-    #Validation each condition, check condition class
+    #Revisit this validation structure
     define_model_callbacks :initialize, only: [:after]
     after_initialize :valid?
-    # Configuration and Blueprint are different
-    # Config sends array of conditions to front end
 
     attr_reader :blueprint
 
@@ -22,36 +20,80 @@ module Hammerstone::Refine
       end
     end
 
+
     def initial_query
       raise NotImplementedError
     end
 
     def get_query
-      make_sub_query
-    end
-
-    def make_sub_query
-      blueprint.each_with_index do |criterion, index|
-        # If it's a conjunction, the next condition will handle it.
-        next if criterion[:type] == 'conjunction'
-
-        # We start every group with `where`.
-        if index == 0
-          query_method = 'where'
-        else
-          #Check the word on the previous blueprint method. If it is not 'and'....?
-          query_method = blueprint[index -1][:word] == 'and' ? 'where' : 'or'
-        end
-        # Sort out wheres, this is calling `where` in the text condition, need to prepend w/ method
-        apply_condition!(criterion)
+      if blueprint.present?
+        @relation.where(group(make_sub_query(blueprint)))
+      else
+        @relation
       end
-      @relation
     end
 
-    def apply_condition!(criterion)
+    def make_sub_query(modified_blueprint, depth = 0)
+
+      #need index control to directly skip indicies in fast forward
+      index = 0
+      while index < modified_blueprint.length
+        criterion = modified_blueprint[index]
+
+        #decreasing depth, pass control back to caller.
+        break if criterion[:depth] < depth
+
+        #initialize Arel::Node
+        if index == 0
+          subquery = apply_condition(criterion)
+          index +=1
+          next
+        end
+        # If it's a conjunction, the next condition will handle it.
+        if criterion[:type] == 'conjunction'
+          index +=1
+          next
+        end
+
+        #Check the word on the previous blueprint method. If it is not 'and'....?
+        query_method = modified_blueprint[index -1][:word] == 'and' ? 'and' : 'or'
+
+
+        if criterion[:depth] > depth
+          #Modify the array to send in the elements not yet handled (depth>current depth)
+          new_depth_array = modified_blueprint[index..-1]
+
+          #Return the nodes in () for elements on the same depth
+          subgroup = make_sub_query(new_depth_array, depth + 1)
+
+          #Add the subgroup to the existing query
+          subquery = subquery.send(query_method, group(subgroup))
+
+          for cursor in index..modified_blueprint.length-1 do
+            if modified_blueprint[cursor][:depth] <= depth
+              break
+            end
+          end
+
+          #skip indexes handled by recursive call
+          index = cursor
+        else
+          #same level
+          subquery = subquery.send(query_method, apply_condition(criterion))
+        end
+        index += 1
+      end
+      subquery
+    end
+
+    def group(nodes)
+      table.grouping(nodes)
+    end
+
+    def apply_condition(criterion)
       current_condition = get_condition_for_criterion(criterion)
       if current_condition
-        @relation = current_condition.apply(@relation, criterion[:input])
+        current_condition.apply(criterion[:input], table)
       end
     end
 

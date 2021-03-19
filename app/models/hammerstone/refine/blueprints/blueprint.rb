@@ -4,12 +4,18 @@ module Hammerstone::Refine::Blueprints
     def initialize
       @blueprint = []
       @depth = 0
-      @word
+    end
+
+    def group(&block)
+      @depth = @depth+=1
+      instance_eval(&block)
+      @depth = @depth-=1
+      self
     end
 
     def criterion(condition_id, input)
       if !@blueprint.blank? && @blueprint.last[:type] == 'criterion'
-        conjunction
+        raise 'Conjunction missing'
       end
 
       add({
@@ -18,25 +24,24 @@ module Hammerstone::Refine::Blueprints
           depth: @depth,
           input: input
         })
-      #To chain methods need to return self, not the value from add
       self
     end
 
-    def conjunction
+    def conjunction(word)
       add({
         type: 'conjunction',
-        word: @word,
+        word: word,
         depth: @depth
       })
     end
 
     def and
-      @word = 'and'
+      conjunction('and')
       self
     end
 
     def or
-      @word = 'or'
+      conjunction('or')
       self
     end
 

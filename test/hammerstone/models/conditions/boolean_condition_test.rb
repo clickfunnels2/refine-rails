@@ -22,7 +22,7 @@ module Hammerstone::Refine::Conditions
         condition = BooleanCondition.new('test_bool').nulls_are_unknown.show_unknowns
 
         expected_sql = <<~SQL.squish
-                      SELECT "t".* FROM "t" WHERE "t"."test_bool" = TRUE
+                      SELECT "t".* FROM "t" WHERE ("t"."test_bool" = TRUE)
                       SQL
         assert_equal expected_sql, apply_condition_on_test_filter(condition, data).to_sql
       end
@@ -32,7 +32,7 @@ module Hammerstone::Refine::Conditions
         condition = BooleanCondition.new('test_bool').nulls_are_unknown.show_unknowns
 
         expected_sql = <<~SQL.squish
-                      SELECT "t".* FROM "t" WHERE "t"."test_bool" = FALSE
+                      SELECT "t".* FROM "t" WHERE ("t"."test_bool" = FALSE)
                       SQL
         assert_equal expected_sql, apply_condition_on_test_filter(condition, data).to_sql
       end
@@ -42,7 +42,7 @@ module Hammerstone::Refine::Conditions
         condition = BooleanCondition.new('test_bool').nulls_are_unknown.show_unknowns
 
         expected_sql = <<~SQL.squish
-                        SELECT "t".* FROM "t" WHERE "t"."test_bool" IS NULL
+                        SELECT "t".* FROM "t" WHERE ("t"."test_bool" IS NULL)
                         SQL
         assert_equal expected_sql, apply_condition_on_test_filter(condition, data).to_sql
       end
@@ -51,7 +51,7 @@ module Hammerstone::Refine::Conditions
         data = { clause: BooleanCondition::CLAUSE_SET }
         condition = BooleanCondition.new('test_bool').nulls_are_unknown.show_unknowns
         expected_sql = <<~SQL.squish
-                        SELECT "t".* FROM "t" WHERE "t"."test_bool" IS NOT NULL
+                        SELECT "t".* FROM "t" WHERE ("t"."test_bool" IS NOT NULL)
                         SQL
 
         assert_equal expected_sql, apply_condition_on_test_filter(condition, data).to_sql

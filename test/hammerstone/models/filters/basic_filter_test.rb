@@ -1,13 +1,23 @@
 require "test_helper"
 require 'support/test_filter'
 require 'support/test_filter_with_meta'
+require 'support/filter_test_helper'
 
 describe Hammerstone::Refine::Filter do
+  include FilterTestHelper
+
+  around do |test|
+    ApplicationRecord.connection.execute("CREATE TABLE t (test_bool boolean);")
+    test.call
+    ApplicationRecord.connection.execute("DROP TABLE t;")
+  end
 
   describe 'single basic condition' do
     it 'gets correct query' do
-      query = TestFilter.new(single_condition_blueprint)
-      correct_sql = "SELECT \"scaffolding_completely_concrete_tangible_things\".* FROM \"scaffolding_completely_concrete_tangible_things\" WHERE \"scaffolding_completely_concrete_tangible_things\".\"text_field_value\" = 'aaron'"
+      query = create_filter(single_condition_blueprint)
+      correct_sql = <<~SQL.squish
+                    SELECT "t".* FROM "t" WHERE ("t"."text_field_value" = 'aaron')
+                    SQL
       assert_equal query.get_query.to_sql, correct_sql
     end
   end
@@ -22,10 +32,33 @@ describe Hammerstone::Refine::Filter do
 
   describe 'basic filters with ands' do
     it 'gets correct query' do
-      query = TestFilter.new(and_condition_blueprint)
+      query = create_filter(and_condition_blueprint)
       assert_equal query.get_query.to_sql, and_sql
     end
   end
+
+  describe 'basic filters with ors' do
+    it 'gets correct query' do
+      query = create_filter(or_condition_blueprint)
+      assert_equal query.get_query.to_sql, or_sql
+    end
+  end
+
+  describe 'basic filter with groups' do
+    it 'creates filter' do
+      query = create_filter(grouped_blueprint)
+      assert_equal query.get_query.to_sql, grouped_sql
+    end
+  end
+
+  describe 'basic filters with nested groups' do
+    it 'creates filter' do
+      skip "nested groups can not skip level yet"
+      query = create_filter(nested_group_blueprint)
+      assert_equal query.get_query.to_sql, nested_grouped_sql
+    end
+  end
+
 
   describe 'Configuration object - data going to frontend' do
 
@@ -60,6 +93,70 @@ describe Hammerstone::Refine::Filter do
     end
   end
 
+  def grouped_sql
+    <<~SQL.squish
+      SELECT "t".* FROM "t" WHERE (("t"."text_field_value" = 'one') AND (("t"."text_field_value" = 'two') AND ("t"."text_field_value" = 'three')))
+    SQL
+  end
+
+  def grouped_blueprint
+    Hammerstone::Refine::Blueprints::Blueprint.new
+      .criterion('text_field_value',
+        clause: Hammerstone::Refine::Conditions::TextCondition::CLAUSE_EQUALS,
+        value: 'one',
+      )
+      .and
+      .group {
+        criterion('text_field_value',
+          clause: Hammerstone::Refine::Conditions::TextCondition::CLAUSE_EQUALS,
+          value: 'two',
+        )
+        .and
+        .criterion('text_field_value',
+          clause: Hammerstone::Refine::Conditions::TextCondition::CLAUSE_EQUALS,
+          value: 'three',
+        )
+      }
+  end
+
+  def nested_group_blueprint
+    Hammerstone::Refine::Blueprints::Blueprint.new
+      .criterion('text_field_value',
+        clause: Hammerstone::Refine::Conditions::TextCondition::CLAUSE_EQUALS,
+        value: 'one',
+      )
+      .and
+      .group {
+        group {
+          criterion('text_field_value',
+            clause: Hammerstone::Refine::Conditions::TextCondition::CLAUSE_EQUALS,
+            value: 'two',
+          )
+          .and
+          .criterion('text_field_value',
+            clause: Hammerstone::Refine::Conditions::TextCondition::CLAUSE_EQUALS,
+            value: 'three',
+          )
+        }
+        .and
+        .criterion('text_field_value',
+          clause: Hammerstone::Refine::Conditions::TextCondition::CLAUSE_EQUALS,
+          value: 'four',
+        )
+      }
+      .and
+      .criterion('text_field_value',
+        clause: Hammerstone::Refine::Conditions::TextCondition::CLAUSE_EQUALS,
+        value: 'five'
+      )
+  end
+
+  def create_filter(blueprint)
+    BlankTestFilter.new(blueprint,
+      FilterTestHelper::TestDouble.all,
+      [Hammerstone::Refine::Conditions::TextCondition.new('text_field_value')],
+      FilterTestHelper::TestDouble.arel_table)
+  end
 
   def expected_conditions_with_meta
     [
@@ -194,20 +291,24 @@ describe Hammerstone::Refine::Filter do
     ]
   end
 
-  # ors do not work at this time
-  # describe 'basic filters with ors' do
-  #   it 'gets correct query' do
-  #     query = TestFilter.new(or_condition_blueprint)
-  #     assert_equal query.get_query.to_sql, or_sql
-  #   end
-  # end
+  def nested_grouped_sql
+    <<~SQL.squish
+      SELECT "t".* FROM "t" WHERE (("t"."text_field_value" = 'one') AND
+      ((("t"."text_field_value" = 'two') AND ("t"."text_field_value" = "three")) AND ("t"."text_field_value" = "four"))
+      AND ("t"."text_field_value" = "five"))
+    SQL
+  end
 
   def and_sql
-   "SELECT \"scaffolding_completely_concrete_tangible_things\".* FROM \"scaffolding_completely_concrete_tangible_things\" WHERE \"scaffolding_completely_concrete_tangible_things\".\"text_field_value\" = 'aaron' AND \"scaffolding_completely_concrete_tangible_things\".\"text_field_value\" = 'aa'"
+    <<~SQL.squish
+      SELECT "t".* FROM "t" WHERE (("t"."text_field_value" = 'aaron') AND ("t"."text_field_value" = 'aa'))
+    SQL
   end
 
   def or_sql
-     "SELECT \"scaffolding_completely_concrete_tangible_things\".* FROM \"scaffolding_completely_concrete_tangible_things\" WHERE (\"scaffolding_completely_concrete_tangible_things\".\"text_field_value\" = 'aaron' OR \"scaffolding_completely_concrete_tangible_things\".\"text_field_value\" = 'aa')"
+    <<~SQL.squish
+      SELECT "t".* FROM "t" WHERE (("t"."text_field_value" = 'aaron') OR ("t"."text_field_value" = 'aa'))
+    SQL
   end
 
   def bad_id

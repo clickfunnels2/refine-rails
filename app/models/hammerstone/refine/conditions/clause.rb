@@ -23,7 +23,9 @@ module Hammerstone::Refine::Conditions
     end
 
     def requires_inputs(fields)
-      @rules.merge!({"#{fields}": 'required'})
+      fields.each do |field|
+        @rules.merge!({"#{field}": 'required'})
+      end
       self
     end
 

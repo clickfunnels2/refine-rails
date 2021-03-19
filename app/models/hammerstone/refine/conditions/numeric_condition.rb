@@ -26,17 +26,17 @@ module Hammerstone::Refine::Conditions
 
     def clauses
       [
-        Clause.new(CLAUSE_EQUALS, 'Is Equal To').requires_inputs('value1'),
+        Clause.new(CLAUSE_EQUALS, 'Is Equal To').requires_inputs(['value1']),
 
-        Clause.new(CLAUSE_DOESNT_EQUAL, 'Is Not Equal To').requires_inputs('value1'),
+        Clause.new(CLAUSE_DOESNT_EQUAL, 'Is Not Equal To').requires_inputs(['value1']),
 
-        Clause.new(CLAUSE_GREATER_THAN, 'Is Greater Than').requires_inputs('value1'),
+        Clause.new(CLAUSE_GREATER_THAN, 'Is Greater Than').requires_inputs(['value1']),
 
-        Clause.new(CLAUSE_GREATER_THAN_OR_EQUAL, 'Is Greater Than Or Equal To').requires_inputs('value1'),
+        Clause.new(CLAUSE_GREATER_THAN_OR_EQUAL, 'Is Greater Than Or Equal To').requires_inputs(['value1']),
 
-        Clause.new(CLAUSE_LESS_THAN, 'Is Less Than').requires_inputs('value1'),
+        Clause.new(CLAUSE_LESS_THAN, 'Is Less Than').requires_inputs(['value1']),
 
-        Clause.new(CLAUSE_LESS_THAN_OR_EQUAL, 'Is Less Than Or Equal To').requires_inputs('value1'),
+        Clause.new(CLAUSE_LESS_THAN_OR_EQUAL, 'Is Less Than Or Equal To').requires_inputs(['value1']),
 
         Clause.new(CLAUSE_BETWEEN, 'Is Between').requires_inputs(['value1', 'value2']),
 
@@ -53,7 +53,7 @@ module Hammerstone::Refine::Conditions
       self
     end
 
-    def apply_condition(relation, input)
+    def apply_condition(input, table)
       clause = input[:clause]
       value1 = input[:value1]
       value2 = input[:value2]
@@ -61,75 +61,75 @@ module Hammerstone::Refine::Conditions
 
       case clause
       when CLAUSE_EQUALS
-        apply_clause_equals(relation, value1)
+        apply_clause_equals(table, value1)
 
       when CLAUSE_DOESNT_EQUAL
-        apply_clause_doesnt_equal(relation, value1)
+        apply_clause_doesnt_equal(table, value1)
 
       when CLAUSE_GREATER_THAN
-        apply_clause_greater_than(relation, value1)
+        apply_clause_greater_than(table, value1)
 
       when CLAUSE_GREATER_THAN_OR_EQUAL
-        apply_clause_greater_than_or_equal(relation, value1)
+        apply_clause_greater_than_or_equal(table, value1)
 
       when CLAUSE_LESS_THAN
-        apply_clause_less_than(relation, value1)
+        apply_clause_less_than(table, value1)
 
       when CLAUSE_LESS_THAN_OR_EQUAL
-        apply_clause_less_than_or_equal(relation, value1)
+        apply_clause_less_than_or_equal(table, value1)
 
       when CLAUSE_BETWEEN
-        apply_clause_between(relation, value1, value2)
+        apply_clause_between(table, value1, value2)
 
       when CLAUSE_NOT_BETWEEN
-        apply_clause_not_between(relation, value1, value2)
+        apply_clause_not_between(table, value1, value2)
 
       when CLAUSE_SET
-        apply_clause_set(relation)
+        apply_clause_set(table)
 
       when CLAUSE_NOT_SET
-        apply_clause_not_set(relation)
+        apply_clause_not_set(table)
       end
     end
 
-    def apply_clause_equals(relation, value)
-      relation.where("#{attribute}": value)
+    def apply_clause_equals(table, value)
+      table.grouping(table[:"#{attribute}"].eq(value))
     end
 
-    def apply_clause_doesnt_equal(relation, value)
-      relation.where.not("#{attribute}": value).or(relation.where("#{attribute}":nil))
+    def apply_clause_doesnt_equal(table, value)
+      table.grouping(table[:"#{attribute}"].not_eq(value).or(table[:"#{attribute}"].eq(nil)))
     end
 
-    def apply_clause_greater_than(relation, value)
-      relation.where("#{attribute} > ?", value)
+    def apply_clause_greater_than(table, value)
+      table.grouping(table[:"#{attribute}"].gt(value))
     end
 
-    def apply_clause_greater_than_or_equal(relation, value)
-      relation.where("#{attribute} >= ?", value)
+    def apply_clause_greater_than_or_equal(table, value)
+      table.grouping(table[:"#{attribute}"].gteq(value))
     end
 
-    def apply_clause_less_than(relation, value)
-      relation.where("#{attribute} < ?", value)
+    def apply_clause_less_than(table, value)
+      table.grouping(table[:"#{attribute}"].lt(value))
     end
 
-    def apply_clause_less_than_or_equal(relation, value)
-      relation.where("#{attribute} <= ?", value)
+    def apply_clause_less_than_or_equal(table, value)
+      table.grouping(table[:"#{attribute}"].lteq(value))
     end
 
-    def apply_clause_between(relation, value1, value2)
-      relation.where("#{attribute}": value1..value2)
+    def apply_clause_between(table, value1, value2)
+      table.grouping(table[:"#{attribute}"].between(value1..value2))
     end
 
-    def apply_clause_not_between(relation, value1, value2)
-      relation.where.not("#{attribute}": value1..value2)
+    def apply_clause_not_between(table, value1, value2)
+      table.grouping(table[:"#{attribute}"].not_between(value1..value2))
     end
 
-    def apply_clause_set(relation)
-      relation.where.not("#{attribute}": nil)
+    def apply_clause_set(table)
+      table.grouping(table[:"#{attribute}"].not_eq(nil))
     end
 
-    def apply_clause_not_set(relation)
-      relation.where("#{attribute}": nil)
+    def apply_clause_not_set(table)
+      table.grouping(table[:"#{attribute}"].eq(nil))
     end
 
   end

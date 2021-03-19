@@ -56,49 +56,49 @@ module Hammerstone::Refine::Conditions
       ]
     end
 
-    def apply_condition(relation, input)
+    def apply_condition(input, table)
 
       clause = input[:clause]
 
       case clause
       when CLAUSE_SET
-        apply_clause_set(relation)
+        apply_clause_set(table)
 
       when CLAUSE_NOT_SET
-        apply_clause_not_set(relation)
+        apply_clause_not_set(table)
 
       when CLAUSE_TRUE
-        apply_clause_true(relation)
+        apply_clause_true(table)
 
       when CLAUSE_FALSE
-        apply_clause_false(relation)
+        apply_clause_false(table)
       end
 
       #Apply a custom clause
     end
 
-    def apply_clause_set(relation)
-      relation.where.not("#{attribute}": nil)
+    def apply_clause_set(table)
+      table.grouping(table[:"#{attribute}"].not_eq(nil))
     end
 
-    def apply_clause_not_set(relation)
-      relation.where("#{attribute}": nil)
+    def apply_clause_not_set(table)
+      table.grouping(table[:"#{attribute}"].eq(nil))
     end
 
-    def apply_clause_true(relation)
-      apply_clause_bool(relation, true)
+    def apply_clause_true(table)
+      apply_clause_bool(table, true)
     end
 
-    def apply_clause_bool(relation, bool)
+    def apply_clause_bool(table, bool)
       if @nulls_are ==  bool
-        relation.where("#{attribute}": bool).or(relation.where("#{attribute}": nil))
+        table.grouping(table[:"#{attribute}"].eq(bool).or(table[:"#{attribute}"].eq(nil)))
       else
-        relation.where("#{attribute}": bool)
+        table.grouping(table[:"#{attribute}"].eq(bool))
       end
     end
 
-    def apply_clause_false(relation)
-      apply_clause_bool(relation, false)
+    def apply_clause_false(table)
+      apply_clause_bool(table, false)
     end
 
   end

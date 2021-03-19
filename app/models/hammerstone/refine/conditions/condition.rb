@@ -64,11 +64,10 @@ module Hammerstone::Refine::Conditions
       # messages = merge the message into the messages array if we go this route
     end
 
-    def apply(relation, input)
+    def apply(input, table)
       #Run all the ensurance validations here - developer configured correctly
       validate_user_input(input)
-
-      apply_condition(relation, input)
+      apply_condition(input, table)
     end
 
     def validate_user_input(input)
@@ -87,6 +86,7 @@ module Hammerstone::Refine::Conditions
 
     def validate_condition(input)
       @rules = recursively_evaluate_lazy_enumerable(@rules)
+
       @rules.each_pair do |k,v|
         if input[k].blank?
           errors.add(:base, "A #{k} is required for clause with id #{input[:clause]}")

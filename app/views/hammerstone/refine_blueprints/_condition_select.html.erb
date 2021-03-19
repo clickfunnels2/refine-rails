@@ -3,13 +3,14 @@
 <%= tag.div data: {
   action: "$change->refine--update#condition",
   controller: 'fields--super-select',
-  fields__super_select_enable_search_value: 'false'
+  fields__super_select_enable_search_value: 'false',
+  fields__super_select_container_width_value: 'resolve',
 } do %>
   <select
     data-fields--super-select-target="select"
     data-condition-id="selected_condition_id"
     name="conditions"
-    class="font-sans mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+    class="w-full sm:w-auto"
   >
     <% conditions.each do |condition_option| %>
       <option

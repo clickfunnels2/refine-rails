@@ -8,8 +8,6 @@ export default class extends Controller {
     // for select2 jquery evnets
     delegate('change');
 
-    this.loadingElement = document.getElementById('refine-loader');
-
     this.state = this.application.getControllerForElementAndIdentifier(
       refineElement,
       'refine--state',
@@ -28,14 +26,15 @@ export default class extends Controller {
     return input;
   }
 
+  // called on connect
   finishUpdate() {
-    console.log(this.loadingElement);
-    this.loadingElement.classList.add('hidden');
+    this.state.finishUpdate();
   }
 
+  // Call this on submit
   startUpdate() {
     this.blueprintInput.value = JSON.stringify(this.state.blueprint);
-    this.loadingElement.classList.remove('hidden');
+    this.state.startUpdate();
   }
 
   submitForm() {

@@ -62,7 +62,8 @@ const blueprintUpdatedEvent = (blueprint, filterName, initialLoad) => {
 export default class extends Controller {
   static values = {
     configuration: Object,
-  }
+  };
+  static targets = [ 'loading' ];
 
   connect() {
     this.configuration = { ...this.configurationValue };
@@ -73,8 +74,28 @@ export default class extends Controller {
       lookup[condition.id] = condition;
       return lookup;
     }, {});
+    this.loadingTimeout = null;
 
     blueprintUpdatedEvent(this.blueprint, this.filterName, true);
+  }
+
+  startUpdate() {
+    if (this.loadingTimeout) {
+      window.clearTimeout(this.loadingTimeout);
+    }
+    // only show the loading overlay if it's taking a long time
+    // to render the updates
+    this.loadingTimeout = window.setTimeout(() => {
+      document.activeElement.blur();
+      this.loadingTarget.classList.remove('hidden');
+    }, 500);
+  }
+
+  finishUpdate() {
+    if (this.loadingTimeout) {
+      window.clearTimeout(this.loadingTimeout);
+    }
+    this.loadingTarget.classList.add('hidden');
   }
 
   conditionConfigFor(conditionId) {

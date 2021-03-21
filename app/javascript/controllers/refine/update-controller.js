@@ -5,7 +5,7 @@ export default class extends FormController {
     criterionId: Number,
   };
 
-  select(event) {
+  option(event) {
     const { criterionIdValue, state } = this;
     const selectElement = event.target;
     const selected = [];

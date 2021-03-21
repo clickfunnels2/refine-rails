@@ -8,12 +8,15 @@ export default class extends Controller {
     // for select2 jquery evnets
     delegate('change');
 
+    this.loadingElement = document.getElementById('refine-loader');
+
     this.state = this.application.getControllerForElementAndIdentifier(
       refineElement,
       'refine--state',
     );
     this.blueprintInput = this.addHiddenInput('blueprint');
     this.addHiddenInput('filter', this.state.filterName);
+    this.finishUpdate();
   }
 
   addHiddenInput(name, initialValue) {
@@ -25,12 +28,18 @@ export default class extends Controller {
     return input;
   }
 
-  updateBlueprintInput() {
+  finishUpdate() {
+    console.log(this.loadingElement);
+    this.loadingElement.classList.add('hidden');
+  }
+
+  startUpdate() {
     this.blueprintInput.value = JSON.stringify(this.state.blueprint);
+    this.loadingElement.classList.remove('hidden');
   }
 
   submitForm() {
-    this.updateBlueprintInput();
+    this.startUpdate();
     this.element.requestSubmit();
   }
 }

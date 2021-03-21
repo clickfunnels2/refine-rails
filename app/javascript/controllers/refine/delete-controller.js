@@ -8,6 +8,6 @@ export default class extends FormController {
   criterion() {
     const { state, criterionIdValue } = this;
     state.deleteCriterion(criterionIdValue);
-    this.updateBlueprintInput();
+    this.startUpdate();
   }
 }

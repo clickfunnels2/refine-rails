@@ -2,7 +2,7 @@
 
 <select multiple
         class="font-sans mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-        data-action="change->refine--update#select"
+        data-action="change->refine--update#option"
 >
   <% condition[:meta][:options].each do |option| %>
     <option

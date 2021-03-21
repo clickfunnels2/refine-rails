@@ -7,11 +7,11 @@ export default class extends FormController {
 
   criterion() {
     this.state.addCriterion(this.previousCriterionIdValue);
-    this.updateBlueprintInput();
+    this.startUpdate();
   }
 
   group() {
     this.state.addGroup();
-    this.updateBlueprintInput();
+    this.startUpdate();
   }
 };

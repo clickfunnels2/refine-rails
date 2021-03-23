@@ -23,7 +23,8 @@ module Hammerstone::Refine::Conditions
     end
 
     def requires_inputs(fields)
-      fields.each do |field|
+      # Coerce field to an array
+      [*fields].each do |field|
         @rules.merge!({"#{field}": 'required'})
       end
       self

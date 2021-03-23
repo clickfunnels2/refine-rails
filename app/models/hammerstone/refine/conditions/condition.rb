@@ -17,7 +17,8 @@ module Hammerstone::Refine::Conditions
       @id = id
       @attribute = id
       @rules = {}
-      boot_has_clauses #Interpolate later in life for each class that needs it
+      boot_has_clauses #Interpolate later in life for each class that needs it - no
+      #everyone needs it
       boot #Allow each condition to set state post initialization
     end
 

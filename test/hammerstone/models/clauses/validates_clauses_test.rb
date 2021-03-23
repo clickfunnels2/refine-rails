@@ -18,7 +18,6 @@ module Hammerstone::Refine::Conditions
       exception =
         assert_raises Hammerstone::Refine::Conditions::Errors::ConditionClauseError do
           condition.apply_condition_on_test_filter(condition, user_input)
-          #condition.apply(FilterTestHelper::TestDouble.all, user_input)
         end
       assert_equal("[\"The clause with id eq was not found\"]", exception.message)
 

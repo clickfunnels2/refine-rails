@@ -2,6 +2,7 @@ module Hammerstone::Refine
   class Filter
     include ActiveModel::Validations
     include ActiveModel::Callbacks
+    include TracksPendingRelationshipSubqueries
     #Revisit this validation structure
     define_model_callbacks :initialize, only: [:after]
     after_initialize :valid?
@@ -58,7 +59,6 @@ module Hammerstone::Refine
           index +=1
           next
         end
-
         #Check the word on the previous blueprint method. If it is not 'and'....?
         query_method = modified_blueprint[index -1][:word] == 'and' ? 'and' : 'or'
 
@@ -97,7 +97,7 @@ module Hammerstone::Refine
     def apply_condition(criterion)
       current_condition = get_condition_for_criterion(criterion)
       if current_condition
-        current_condition.apply(criterion[:input], table)
+        current_condition.apply(criterion[:input], table, initial_query)
       end
     end
 
@@ -108,8 +108,12 @@ module Hammerstone::Refine
 
       if returned_object.nil?
         errors.add(:filter, "The condition ID #{criterion[:condition_id]} was not found")
+      else
+        # Set filter variable on condition
+        instantiate_condition(returned_object)
       end
-      returned_object
+      # Must duplicate the condition so nested attributes don't bleed into one another
+      returned_object.dup
     end
 
     def configuration
@@ -123,7 +127,12 @@ module Hammerstone::Refine
     end
 
     def conditions_to_array
-      conditions.map{| condition| condition.to_array }
+      # Set filter object on condition and return to_array
+      conditions.map{|condition| instantiate_condition(condition) }.map(&:to_array)
+    end
+
+    def instantiate_condition(condition_class)
+      condition_class.set_filter(self)
     end
   end
 end

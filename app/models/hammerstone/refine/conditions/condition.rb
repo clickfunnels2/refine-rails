@@ -6,6 +6,7 @@ module Hammerstone::Refine::Conditions
     #TODO remove hasclauses here, rename boot_has_clauses
     include HasClauses
     include HasMeta
+    include UsesAttributes
 
     validate :ensure_id
     validate :ensure_attribute_configured
@@ -20,6 +21,7 @@ module Hammerstone::Refine::Conditions
       boot_has_clauses #Interpolate later in life for each class that needs it - no
       #everyone needs it
       boot #Allow each condition to set state post initialization
+      @on_deepest_relationship = false
     end
 
     def with_display(value)
@@ -65,10 +67,15 @@ module Hammerstone::Refine::Conditions
       # messages = merge the message into the messages array if we go this route
     end
 
-    def apply(input, table)
+    def apply(input, table, initial_query)
       #Run all the ensurance validations here - developer configured correctly
       validate_user_input(input)
-      apply_condition(input, table)
+
+      if is_relationship_attribute?
+        apply_relationship_attribute(input: input, table: table, query: initial_query)
+      else
+        apply_condition(input, table)
+      end
     end
 
     def validate_user_input(input)
@@ -102,6 +109,15 @@ module Hammerstone::Refine::Conditions
 
     def apply_condition
       raise NotImplementedError
+    end
+
+    def set_filter(filter)
+      @filter = filter
+      self
+    end
+
+    def filter
+      @filter
     end
 
     def to_array

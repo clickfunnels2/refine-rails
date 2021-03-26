@@ -25,6 +25,10 @@ module Hammerstone::Refine
       raise NotImplementedError
     end
 
+    def table
+      @table ||= initial_query.model.arel_table
+    end
+
     def get_query
       if blueprint.present?
         @relation.where(group(make_sub_query(blueprint)))

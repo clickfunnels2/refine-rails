@@ -122,8 +122,8 @@ module Hammerstone::Refine::Conditions
     def apply_condition(input, table)
       clause = input[:clause]
 
-      date1 = Date.parse(input[:date1]) if input[:date1]
-      date2 = Date.parse(input[:date2]) if input[:date2]
+      date1 = Date.strptime(input[:date1], "%m/%d/%Y") if input[:date1]
+      date2 = Date.strptime(input[:date2], "%m/%d/%Y") if input[:date2]
 
       if is_relative_clause?(clause)
         date1 = comparison_date(input)

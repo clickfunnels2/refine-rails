@@ -32,14 +32,14 @@ export default class extends FormController {
     this.submitForm();
   }
 
-  value(event) {
+  value(event, value) {
     const { criterionIdValue, state } = this;
+    const inputKey = event.target.dataset.inputKey || 'value';
+    value = value || event.target.value;
 
-    // TODO add input key here as data attribute to not
-    // hard code the key to 'value'
     state.updateInput(
       criterionIdValue, {
-        value: event.target.value,
+        [inputKey]: value,
       });
   }
 

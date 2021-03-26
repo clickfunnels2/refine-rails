@@ -171,7 +171,7 @@ export default class extends Controller {
       blueprint.splice(criterionId, 2);
 
     } else if (isFirstInGroup) {
-      blueprint.splice(criterionId, 2)
+      blueprint.splice(criterionId, 2);
 
     } else {
       blueprint.splice(criterionId - 1, 2);

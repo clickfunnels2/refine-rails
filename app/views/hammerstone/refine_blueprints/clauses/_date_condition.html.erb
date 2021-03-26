@@ -1,1 +1,16 @@
-<p>date condition!</p>
+<div
+  class="date-input mt-3 sm:mt-0"
+  data-controller="fields--date"
+  data-fields--date-format-value="YYYY/MM/DD">
+  <label for="<%= condition[:id] %>" class="sr-only"><%= condition[:display] %></label>
+  <input
+    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+    name="<%= condition[:id] %>"
+    type="text"
+    value="<%= input[:date1] %>"
+    data-fields--date-target="field"
+    data-input-key="date1"
+    data-action="$change->refine--update#value"
+  />
+
+</div>

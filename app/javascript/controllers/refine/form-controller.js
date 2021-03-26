@@ -5,7 +5,7 @@ export default class extends Controller {
   connect() {
     const refineElement = document.getElementById('refine');
 
-    // for select2 jquery evnets
+    // for select2 jquery events and datepicker
     delegate('change');
 
     this.state = this.application.getControllerForElementAndIdentifier(

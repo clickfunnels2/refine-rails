@@ -1,12 +1,8 @@
 import { Controller } from "stimulus";
-import { delegate } from 'jquery-events-to-dom-events';
 
 export default class extends Controller {
   connect() {
     const refineElement = document.getElementById('refine');
-
-    // for select2 jquery events and datepicker
-    delegate('change');
 
     this.state = this.application.getControllerForElementAndIdentifier(
       refineElement,

@@ -1,5 +1,7 @@
 <div class="flex items-center date-input mt-3 sm:mt-0">
-  <% if input[:clause] == 'exct' %>
+  <% if ['st', 'nst'].include? input[:clause] %>
+    <!-- render nothing -->
+  <% elsif ['exct', 'gt', 'lt'].include? input[:clause] %>
     <div class="w-24">
       <label for="<%= condition[:id] %>" class="sr-only">Number of days</label>
       <input
@@ -36,7 +38,7 @@
         </option>
       </select>
     </div>
-  <% elsif %>
+  <% else %>
     <div
       class="<% if input[:clause] == 'btwn' %>flex-grow<% end %>"
       data-controller="fields--date"

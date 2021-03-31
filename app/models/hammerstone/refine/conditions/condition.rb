@@ -18,10 +18,18 @@ module Hammerstone::Refine::Conditions
       @id = id
       @attribute = id
       @rules = {}
-      boot_has_clauses #Interpolate later in life for each class that needs it - no
+      boot_has_clauses #Interpolate later in life for each class that needs it - not
       #everyone needs it
       boot #Allow each condition to set state post initialization
       @on_deepest_relationship = false
+    end
+
+    def ensurance
+      @ensurance ||= []
+    end
+
+    def add_ensurance(callable)
+      ensurance << callable
     end
 
     def with_display(value)
@@ -29,18 +37,11 @@ module Hammerstone::Refine::Conditions
       return self
     end
 
-    #Move to has attributes concern
-    def with_attribute(value)
-      @attribute = value
-      self
-    end
-
     def ensure_attribute_configured
       if @attribute.nil?
         errors.add(:base, "An attribute is required.")
       end
     end
-    #End attributes concern
 
     def ensure_id
       if @id.nil?
@@ -67,8 +68,16 @@ module Hammerstone::Refine::Conditions
       # messages = merge the message into the messages array if we go this route
     end
 
+    def run_ensurance_validations
+      ensurance.each do |function|
+        call_proc_if_callable(function)
+      end
+    end
+
     def apply(input, table, initial_query)
-      #Run all the ensurance validations here - developer configured correctly
+      # Ensurance validations are checking the developer configured correctly
+      run_ensurance_validations
+
       validate_user_input(input)
 
       if is_relationship_attribute?
@@ -94,7 +103,6 @@ module Hammerstone::Refine::Conditions
 
     def validate_condition(input)
       @rules = recursively_evaluate_lazy_enumerable(@rules)
-
       @rules.each_pair do |k,v|
         if input[k].blank?
           errors.add(:base, "A #{k} is required for clause with id #{input[:clause]}")
@@ -121,7 +129,7 @@ module Hammerstone::Refine::Conditions
     end
 
     def to_array
-      #has clauses has already been called, so meta is populated with possible closures
+      # Has clauses has already been called, so meta is populated with possible closures
       if valid?
         {
           id: id,

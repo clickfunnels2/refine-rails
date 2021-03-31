@@ -1,6 +1,11 @@
 module Hammerstone::Refine::Conditions
   module UsesAttributes
 
+    def with_attribute(value)
+      @attribute = value
+      self
+    end
+
     def apply_relationship_attribute(input:, table:, query:)
       decompose_attribute = @attribute.split(".", 2) # Split on first .
 

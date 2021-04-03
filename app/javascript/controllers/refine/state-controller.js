@@ -1,5 +1,5 @@
 import { Controller } from "stimulus";
-import { delegate } from 'jquery-events-to-dom-events';
+import { delegate, abnegate } from 'jquery-events-to-dom-events';
 
 // Polyfill for custom events in IE9-11
 // https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#polyfill
@@ -68,7 +68,7 @@ export default class extends Controller {
 
   connect() {
     // for select2 jquery events and datepicker
-    delegate('change', ['event', 'picker']);
+    this.changeDelegate = delegate('change', ['event', 'picker']);
 
     this.configuration = { ...this.configurationValue };
     this.blueprint = this.configuration.blueprint;
@@ -81,6 +81,10 @@ export default class extends Controller {
     this.loadingTimeout = null;
 
     blueprintUpdatedEvent(this.blueprint, this.filterName, true);
+  }
+
+  disconnect() {
+    abnegate('change', this.changeDelegate);
   }
 
   startUpdate() {

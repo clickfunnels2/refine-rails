@@ -48,10 +48,10 @@
         class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
         name="<%= condition[:id] %>"
         type="text"
-        value="<%= input[:date1] %>"
+        value="<%= input[:date1].to_date.strftime('%m/%d/%y') %>"
         data-fields--date-target="field"
         data-input-key="date1"
-        data-action="$change->refine--update#value"
+        data-action="$change->refine--update#date"
       />
     </div>
     <% if input[:clause] == 'btwn' %>

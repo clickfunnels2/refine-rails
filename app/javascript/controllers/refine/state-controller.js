@@ -68,7 +68,7 @@ export default class extends Controller {
 
   connect() {
     // for select2 jquery events and datepicker
-    delegate('change');
+    delegate('change', ['event', 'picker']);
 
     this.configuration = { ...this.configurationValue };
     this.blueprint = this.configuration.blueprint;

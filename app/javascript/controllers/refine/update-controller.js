@@ -32,6 +32,12 @@ export default class extends FormController {
     this.submitForm();
   }
 
+  date(event) {
+    const { picker } = event.detail;
+    const value = picker.startDate.format('YYYY-MM-DD');
+    this.value(event, value);
+  }
+
   value(event, value) {
     const { criterionIdValue, state } = this;
     const inputKey = event.target.dataset.inputKey || 'value';

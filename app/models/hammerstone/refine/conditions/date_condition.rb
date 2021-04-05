@@ -27,6 +27,7 @@ module Hammerstone::Refine::Conditions
 
     def boot
       @attribute_type = @attribute_type ||= ATTRIBUTE_TYPE_DATE
+      # TODO: Add rules and validations later
       # add_rules(
       #   date1: ['nullable', 'date'],
       #   date2: ['nullable', 'date'],
@@ -168,7 +169,7 @@ module Hammerstone::Refine::Conditions
       if modifier == 'ago'
         days *=- 1
       end
-      date1 = Date.current + days
+      date1 = (Date.current + days).strftime("%Y-%m-%d")
     end
 
     def standardize_clause(clause, input)
@@ -184,6 +185,7 @@ module Hammerstone::Refine::Conditions
     end
 
     def start_of_day(day)
+      # Returns the start of day in the user timezone
       # Day shifted to user time zone 00 based
       day_in_user_tz = standardize_day(day).in_time_zone(user_timezone).beginning_of_day
 
@@ -242,7 +244,7 @@ module Hammerstone::Refine::Conditions
 
     def standardize_day(date)
       if date.respond_to? :to_date
-        date.to_date
+        date = Date.strptime(date, "%Y-%m-%d")
       else
         date
       end

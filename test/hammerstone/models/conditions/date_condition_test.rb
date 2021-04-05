@@ -21,7 +21,7 @@ module Hammerstone::Refine::Conditions
     describe 'date format validations' do
       it 'throws errors for invalid date format for date1' do
         skip "Revisit validations"
-        data = { clause: DateCondition::CLAUSE_EQUALS, date1: '05/15/2019' }
+        data = { clause: DateCondition::CLAUSE_EQUALS, date1: '2019-05-15' }
         exception =
         assert_raises Hammerstone::Refine::Conditions::ConditionError do
           apply_condition_on_test_filter(condition, data)
@@ -40,7 +40,7 @@ module Hammerstone::Refine::Conditions
       end
 
       it 'correctly executes clause doesnt equals' do
-        data = { clause: DateCondition::CLAUSE_DOESNT_EQUAL, date1: zulu('05/15/2019') }
+        data = { clause: DateCondition::CLAUSE_DOESNT_EQUAL, date1: ('2019-05-15') }
         expected_sql = <<~SQL.squish
                         SELECT "t".* FROM "t" WHERE ("t"."date_to_test" != '2019-05-15' OR "t"."date_to_test" IS NULL)
                         SQL
@@ -48,7 +48,7 @@ module Hammerstone::Refine::Conditions
       end
 
       it 'correctly executes clause greater than or equal' do
-        data = { clause: DateCondition::CLAUSE_GREATER_THAN_OR_EQUAL, date1: zulu('05/15/2019') }
+        data = { clause: DateCondition::CLAUSE_GREATER_THAN_OR_EQUAL, date1: ('2019-05-15') }
         expected_sql = <<~SQL.squish
                         SELECT "t".* FROM "t" WHERE ("t"."date_to_test" >= '2019-05-15')
                         SQL
@@ -56,7 +56,7 @@ module Hammerstone::Refine::Conditions
       end
 
       it 'correctly executes clause less than or equal' do
-        data = { clause: DateCondition::CLAUSE_LESS_THAN_OR_EQUAL, date1: zulu('05/15/2019') }
+        data = { clause: DateCondition::CLAUSE_LESS_THAN_OR_EQUAL, date1: ('2019-05-15') }
         expected_sql = <<~SQL.squish
                         SELECT "t".* FROM "t" WHERE ("t"."date_to_test" <= '2019-05-15')
                         SQL
@@ -119,7 +119,7 @@ module Hammerstone::Refine::Conditions
 
       describe "Between" do
         it 'correctly executes clause between' do
-          data = { clause: DateCondition::CLAUSE_BETWEEN, date1: zulu('05/15/2019') , date2: zulu('05/30/2019') }
+          data = { clause: DateCondition::CLAUSE_BETWEEN, date1: ('2019-05-15') , date2: ('2019-05-30') }
           expected_sql = <<~SQL.squish
                           SELECT "t".* FROM "t" WHERE ("t"."date_to_test" BETWEEN '2019-05-15' AND '2019-05-30')
                           SQL
@@ -128,7 +128,7 @@ module Hammerstone::Refine::Conditions
 
         it 'throws error if dates are not in correct order' do
           skip "revist when finishing up validations"
-            data = { clause: DateCondition::CLAUSE_BETWEEN, date1: zulu('05/15/2019') , date2: zulu('05/30/2019') }
+            data = { clause: DateCondition::CLAUSE_BETWEEN, date1: ('2019-05-15') , date2: ('05/30/2019') }
             exception =
             assert_raises Hammerstone::Refine::Conditions::Errors::ConditionClauseError do
               apply_condition_on_test_filter(condition, data)

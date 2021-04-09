@@ -20,10 +20,12 @@
       <select
         class="w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
         name="modifer"
+        data-controller="refine--defaults"
+        data-refine--defaults-input-value="{ &quot;modifier&quot;: &quot;ago&quot; }"
+        data-refine--defaults-criterion-id-value="<%= criterion_id %>"
         data-input-key="modifier"
         data-action="change->refine--update#value"
       >
-        <option hidden disabled selected value> -- select an option -- </option>
         <option
           <% if input[:modifier] == 'ago' %>selected<% end %>
           value="ago"

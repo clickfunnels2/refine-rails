@@ -45,35 +45,23 @@
   <% else %>
     <div
       class="<% if input[:clause] == 'btwn' %>flex-grow<% end %>"
-      data-controller="fields--date"
     >
-      <label for="<%= condition[:id] %>" class="sr-only">First date</label>
-      <input
-        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-        name="<%= condition[:id] %>"
-        type="text"
-        value="<%= input[:date1]&.to_date&.strftime('%m/%d/%y') %>"
-        data-fields--date-target="field"
-        data-input-key="date1"
-        data-action="$change->refine--update#date"
-      />
+      <%= render partial: "hammerstone/refine_blueprints/clauses/date_picker", locals: {
+        label: "First Date",
+        condition_id: condition[:id],
+        date: input[:date1],
+        input_key: 'date1'
+      } %>
     </div>
     <% if input[:clause] == 'btwn' %>
       <span class="px-2">and</span>
-      <div
-        class="flex-grow"
-        data-controller="fields--date"
-      >
-        <label for="<%= condition[:id] %>" class="sr-only">Second date</label>
-        <input
-          class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-          name="<%= condition[:id] %>"
-          type="text"
-          value="<%= input[:date2] %>"
-          data-fields--date-target="field"
-          data-input-key="date2"
-          data-action="$change->refine--update#value"
-        />
+      <div class="flex-grow">
+        <%= render partial: "hammerstone/refine_blueprints/clauses/date_picker", locals: {
+          label: "Second Date",
+          condition_id: condition[:id],
+          date: input[:date2],
+          input_key: 'date2'
+        } %>
       </div>
     <% end %>
   <% end %>

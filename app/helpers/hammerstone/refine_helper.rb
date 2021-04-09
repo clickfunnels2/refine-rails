@@ -40,8 +40,26 @@ module Hammerstone
       condition[:component].underscore
     end
 
+    def categories
+      categories = conditions.map do |condition|
+        condition[:meta][:category]
+      end
+
+      categories.uniq.compact
+    end
+
     def conditions
       configuration[:conditions]
+    end
+
+    def conditions_for_category(category)
+      conditions.filter do |condition|
+        condition[:meta][:category] == category
+      end
+    end
+
+    def uncategorized_conditions
+      conditions.filter{ |condition| condition[:meta][:category].nil? }
     end
 
     def blueprint

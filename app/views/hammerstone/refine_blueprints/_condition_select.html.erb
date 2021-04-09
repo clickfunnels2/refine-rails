@@ -1,4 +1,4 @@
-<% selected_condition_id = conditions[0][:id] if local_assigns[:selected_condition_id].nil? %>
+<% selected_condition_id = first_condition[:id] if local_assigns[:selected_condition_id].nil? %>
 
 <%= tag.div data: {
   action: "$change->refine--update#condition",
@@ -12,7 +12,19 @@
     name="conditions"
     class="w-full sm:w-auto"
   >
-    <% conditions.each do |condition_option| %>
+    <% categories.each do |category| %>
+      <optgroup label="<%= category %>">
+        <% conditions_for_category(category).each do |condition_option| %>
+          <option
+            value="<%= condition_option[:id] %>"
+            <% if selected_condition_id == condition_option[:id] %>selected<% end %>
+          >
+            <%= condition_option[:display] %>
+          </option>
+        <% end %>
+      </optgroup>
+    <% end %>
+    <% uncategorized_conditions.each do |condition_option| %>
       <option
         value="<%= condition_option[:id] %>"
         <% if selected_condition_id == condition_option[:id] %>selected<% end %>

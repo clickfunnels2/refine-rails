@@ -28,9 +28,9 @@
         type="submit"
       >
         <% if grouped_blueprint.any? %>
-          Add an 'Or'
+          <%= t(".buttons.add_or") %>
         <% else %>
-          Create a Filter
+          <%= t(".buttons.create_filter") %>
         <% end %>
       </button>
     <% end %>

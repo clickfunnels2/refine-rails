@@ -13,8 +13,13 @@ module Hammerstone::Refine::Conditions
 
     attr_reader :id, :attribute
 
-    def initialize(id=nil, display=nil)
-      @display = display || id.humanize(keep_id_suffix: true).titleize if id
+    def initialize(filter, id=nil, display=nil)
+      @filter = filter
+      # If there are no locale definitions for this condition's subject, we can allow I18n to use a human-readable version of the ID.
+      label_fallback = id ? {default: id.humanize(keep_id_suffix: true).titleize} : {}
+      # But, ideally, they have locales defined and we can find one of those. 
+      # However, before all of those options, we also allow them to specifically pass in a `display` value that takes precedence.
+      @display = display || @filter.t(".filter.conditions.#{id}.label", default: @filter.t(".fields.#{id}.label", label_fallback))
       @id = id
       @attribute = id
       @rules = {}

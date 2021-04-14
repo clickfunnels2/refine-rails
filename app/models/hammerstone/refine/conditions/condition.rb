@@ -13,13 +13,12 @@ module Hammerstone::Refine::Conditions
 
     attr_reader :id, :attribute
 
-    def initialize(filter, id=nil, display=nil)
-      @filter = filter
+    def initialize(id=nil, display=nil)
       # If there are no locale definitions for this condition's subject, we can allow I18n to use a human-readable version of the ID.
       label_fallback = id ? {default: id.humanize(keep_id_suffix: true).titleize} : {}
-      # But, ideally, they have locales defined and we can find one of those. 
+      # But, ideally, they have locales defined and we can find one of those.
       # However, before all of those options, we also allow them to specifically pass in a `display` value that takes precedence.
-      @display = display || @filter.t(".filter.conditions.#{id}.label", default: @filter.t(".fields.#{id}.label", label_fallback))
+      @display = display || t(".filter.conditions.#{id}.label", default: t(".fields.#{id}.label", label_fallback))
       @id = id
       @attribute = id
       @rules = {}
@@ -27,6 +26,11 @@ module Hammerstone::Refine::Conditions
       #everyone needs it
       boot #Allow each condition to set state post initialization
       @on_deepest_relationship = false
+    end
+
+
+    def t(key, options = {})
+      I18n.t("scaffolding/completely_concrete/tangible_things#{key}", options)
     end
 
     def ensurance

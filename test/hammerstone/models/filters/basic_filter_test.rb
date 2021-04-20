@@ -53,7 +53,6 @@ describe Hammerstone::Refine::Filter do
 
   describe 'basic filters with nested groups' do
     it 'creates filter' do
-      skip "nested groups can not skip level yet"
       query = create_filter(nested_group_blueprint)
       assert_equal query.get_query.to_sql, nested_grouped_sql
     end
@@ -294,8 +293,8 @@ describe Hammerstone::Refine::Filter do
   def nested_grouped_sql
     <<~SQL.squish
       SELECT "t".* FROM "t" WHERE (("t"."text_field_value" = 'one') AND
-      ((("t"."text_field_value" = 'two') AND ("t"."text_field_value" = "three")) AND ("t"."text_field_value" = "four"))
-      AND ("t"."text_field_value" = "five"))
+      ((("t"."text_field_value" = 'two') AND ("t"."text_field_value" = 'three')) AND ("t"."text_field_value" = 'four'))
+      AND ("t"."text_field_value" = 'five'))
     SQL
   end
 
@@ -379,6 +378,60 @@ describe Hammerstone::Refine::Filter do
       "input": {
         "clause": "eq",
         "value": "aa"
+      }
+    }]
+  end
+
+  def grouped_or_blueprint
+    [{
+      :type=>"criterion",
+      :condition_id=>"user_name",
+      :depth=>1,
+      :input=>{
+        :clause=>"cont",
+        :value=>"Aaron"
+      }
+    },
+    {
+      :type=>"conjunction",
+      :word=>"and",
+      :depth=>1
+    },
+    {
+      :type=>"criterion",
+      :condition_id=>"user_name",
+      :depth=>1,
+      :input=>{
+        :clause=>"cont",
+        :value=>"Francis"
+      }
+    },
+    {
+      :type=>"conjunction",
+      :word=>"or",
+      :depth=>0
+    },
+    {
+      :type=>"criterion",
+      :condition_id=>"user_name",
+      :depth=>1,
+      :input=>{
+        :clause=>"cont",
+        :value=>"Sean"
+      }
+    },
+    {
+      :type=>"conjunction",
+      :word=>"and",
+      :depth=>1
+    },
+    {
+      :type=>"criterion",
+      :condition_id=>"user_name",
+      :depth=>1,
+      :input=>{
+        :clause=>"cont",
+        :value=>"Fioritto"
       }
     }]
   end

@@ -90,7 +90,8 @@ module Hammerstone::Refine::Conditions
       validate_user_input(input)
 
       if is_relationship_attribute?
-        apply_relationship_attribute(input: input, table: table, query: initial_query)
+        apply_relationship_attribute(input: input, query: initial_query)
+        return
       else
         apply_condition(input, table)
       end

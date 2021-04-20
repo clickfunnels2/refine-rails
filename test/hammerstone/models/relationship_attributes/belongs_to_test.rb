@@ -35,15 +35,210 @@ module Hammerstone::Refine::Conditions
     end
 
     it 'collapses two attributes on belongs to relationships' do
-      skip 'not collapsing yet'
       query = create_filter(two_attributes_adjacent_blueprint)
       correct_sql = <<~SQL.squish
               SELECT "btt_phones".* FROM "btt_phones"
               WHERE ("btt_phones"."btt_user_id" IN
               (SELECT "btt_users"."id" FROM "btt_users"
-              WHERE ("btt_users"."name" ilike \'%aaron%\') AND ("btt_users"."name" ilike \'%francis%\')))
+              WHERE ("btt_users"."name" ILIKE \'%Aaron%\') AND ("btt_users"."name" = \'Francis\')))
               SQL
       assert_equal query.get_query.to_sql, correct_sql
+    end
+
+    it 'collapses two attributes on belongs to when not adjacent' do
+      query = create_filter(two_attributes_not_adjacent_blueprint)
+      correct_sql = <<~SQL.squish
+              SELECT "btt_phones".* FROM "btt_phones"
+              WHERE (("btt_phones"."number" ILIKE \'%214%\')
+              AND ("btt_phones"."btt_user_id" IN
+              (SELECT "btt_users"."id" FROM "btt_users"
+              WHERE ("btt_users"."name" ILIKE \'%Aaron%\') AND ("btt_users"."name" ILIKE \'%Francis%\'))))
+              SQL
+      assert_equal query.get_query.to_sql, correct_sql
+    end
+
+    it 'does not mix up belongs to in groups' do
+      query = create_filter(grouped_belongs_to_blueprint)
+      correct_sql = <<~SQL.squish
+              SELECT "btt_phones".* FROM "btt_phones"
+              WHERE (("btt_phones"."btt_user_id" IN (SELECT "btt_users"."id" FROM "btt_users"
+              WHERE ("btt_users"."name" ILIKE '%Aaron%')
+              AND ("btt_users"."name" ILIKE '%Francis%'))) OR
+              ("btt_phones"."btt_user_id" IN (SELECT "btt_users"."id" FROM "btt_users"
+              WHERE ("btt_users"."name" ILIKE '%Sean%') AND ("btt_users"."name" ILIKE '%Fioritto%'))))
+              SQL
+      assert_equal query.get_query.to_sql, correct_sql
+    end
+
+    it 'Does not collapse ORs with varying depths' do
+      query = create_filter(non_collapsing_blueprint)
+      correct_sql = <<~SQL.squish
+                    SELECT
+                      "btt_phones".* FROM "btt_phones"
+                    WHERE
+                      (("btt_phones"."btt_user_id"
+                        IN (SELECT
+                              "btt_users"."id"
+                            FROM
+                              "btt_users"
+                            WHERE
+                              ("btt_users"."name" ILIKE '%Aaron%')
+                              AND ("btt_users"."name" ILIKE '%Francis%')))
+                        OR
+                          ("btt_phones"."btt_user_id"
+                          IN (SELECT
+                              "btt_users"."id"
+                            FROM
+                              "btt_users"
+                            WHERE
+                              ("btt_users"."name" ILIKE '%Sean%')))
+                        AND
+                        ("btt_phones"."btt_user_id"
+                          IN (SELECT "btt_users"."id"
+                            FROM
+                              "btt_users"
+                            WHERE
+                              ("btt_users"."name" ILIKE '%Fioritto%'))))
+                    SQL
+      assert_equal query.get_query.to_sql, correct_sql
+    end
+
+    it 'can handle deeply nested belongs to relationships' do
+      query = create_filter(deeply_nested_blueprint)
+      correct_sql = <<~SQL.squish
+              SELECT "btt_phones".* FROM "btt_phones"
+              WHERE ("btt_phones"."btt_user_id" IN (SELECT "btt_users"."id" FROM "btt_users"
+              WHERE "btt_users"."id" IN (SELECT "btt_notes"."btt_user_id" FROM "btt_notes" WHERE ("btt_notes"."body" ILIKE '%foo%'))))
+      SQL
+      assert_equal query.get_query.to_sql, correct_sql
+    end
+
+    it 'collapses first and second level belongs to' do
+      query = create_filter(first_and_second_level)
+      correct_sql = <<~SQL.squish
+          SELECT "btt_phones".* FROM "btt_phones"
+          WHERE ("btt_phones"."btt_user_id" IN
+          (SELECT "btt_users"."id" FROM "btt_users"
+          WHERE ("btt_users"."name" ILIKE '%Aaron%')
+          AND "btt_users"."id" IN (SELECT "btt_notes"."btt_user_id" FROM "btt_notes" WHERE ("btt_notes"."body" ILIKE '%foo%'))))
+      SQL
+      assert_equal query.get_query.to_sql, correct_sql
+    end
+
+    it 'collapses first and second level belongs to in opposite order' do
+      query = create_filter(first_and_second_level_opposite_order)
+      correct_sql = <<~SQL.squish
+            SELECT "btt_phones".* FROM "btt_phones"
+            WHERE ("btt_phones"."btt_user_id" IN
+            (SELECT "btt_users"."id" FROM "btt_users"
+            WHERE "btt_users"."id" IN (SELECT "btt_notes"."btt_user_id" FROM "btt_notes"
+            WHERE ("btt_notes"."body" ILIKE '%foo%')) AND ("btt_users"."name" ILIKE '%Aaron%')))
+      SQL
+      assert_equal query.get_query.to_sql, correct_sql
+    end
+
+    def first_and_second_level_opposite_order
+       Hammerstone::Refine::Blueprints::Blueprint.new
+        .criterion('user_note_body',
+          clause: TextCondition::CLAUSE_CONTAINS,
+          value: 'foo',
+        )
+        .and
+        .criterion('user_name',
+          clause: TextCondition::CLAUSE_CONTAINS,
+          value: 'Aaron',
+        )
+    end
+
+    def first_and_second_level
+      Hammerstone::Refine::Blueprints::Blueprint.new
+        .criterion('user_name',
+          clause: TextCondition::CLAUSE_CONTAINS,
+          value: 'Aaron',
+        )
+        .and
+        .criterion('user_note_body',
+          clause: TextCondition::CLAUSE_CONTAINS,
+          value: 'foo',
+        )
+    end
+
+    def deeply_nested_blueprint
+      Hammerstone::Refine::Blueprints::Blueprint.new
+      .criterion('user_note_body',
+          clause: TextCondition::CLAUSE_CONTAINS,
+          value: 'foo',
+        )
+    end
+
+    def non_collapsing_blueprint
+      Hammerstone::Refine::Blueprints::Blueprint.new
+      .group {
+        criterion('user_name',
+          clause: TextCondition::CLAUSE_CONTAINS,
+          value: 'Aaron',
+        )
+        .and
+        .criterion('user_name',
+          clause: TextCondition::CLAUSE_CONTAINS,
+          value: 'Francis',
+        )
+      }
+      .or
+      .criterion('user_name',
+        clause: TextCondition::CLAUSE_CONTAINS,
+        value: 'Sean',
+      )
+      .and
+      .criterion('user_name',
+        clause: TextCondition::CLAUSE_CONTAINS,
+        value: 'Fioritto',
+      )
+    end
+
+    def grouped_belongs_to_blueprint
+      Hammerstone::Refine::Blueprints::Blueprint.new
+      .group {
+        criterion('user_name',
+          clause: TextCondition::CLAUSE_CONTAINS,
+          value: 'Aaron',
+        )
+        .and
+        .criterion('user_name',
+          clause: TextCondition::CLAUSE_CONTAINS,
+          value: 'Francis',
+        )
+      }
+      .or
+      .group {
+        criterion('user_name',
+          clause: TextCondition::CLAUSE_CONTAINS,
+          value: 'Sean',
+        )
+        .and
+        .criterion('user_name',
+          clause: TextCondition::CLAUSE_CONTAINS,
+          value: 'Fioritto',
+        )
+      }
+    end
+
+    def two_attributes_not_adjacent_blueprint
+      Hammerstone::Refine::Blueprints::Blueprint.new
+      .criterion('user_name',
+        clause: TextCondition::CLAUSE_CONTAINS,
+        value: 'Aaron',
+      )
+      .and
+      .criterion('number',
+        clause: TextCondition::CLAUSE_CONTAINS,
+        value: 214,
+      )
+      .and
+      .criterion('user_name',
+        clause: TextCondition::CLAUSE_CONTAINS,
+        value: 'Francis',
+      )
     end
 
     def two_attributes_adjacent_blueprint

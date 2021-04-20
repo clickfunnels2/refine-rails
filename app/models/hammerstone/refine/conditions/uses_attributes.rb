@@ -6,9 +6,9 @@ module Hammerstone::Refine::Conditions
       self
     end
 
-    def apply_relationship_attribute(input:, table:, query:)
+    def apply_relationship_attribute(input:, query:)
       decompose_attribute = @attribute.split(".", 2) # Split on first .
-
+      # Relation to be handled
       relation = decompose_attribute[0]
       # Attribute now is the back half of the initial attribute
       @attribute = decompose_attribute[1]
@@ -19,71 +19,77 @@ module Hammerstone::Refine::Conditions
       end
 
       # Get the Reflection object aka the relationship.
-      # First iteration pull relationship using base query which responds to model
+      # First iteration pull relationship using base query which responds to model.
       if query.respond_to? :model
         instance = query.model.reflect_on_association(relation.to_sym)
       else
-        # When query is sent in as subquery the query object is the model pulled from the
+        # When query is sent in as subquery (recursive) the query object is the model class pulled from the
         # previous instance value
         instance = query.reflect_on_association(relation.to_sym)
       end
+
       raise "Relationship does not exist for #{attribute_to_array[0]}" if !instance
 
       filter.set_pending_relationship(relation, instance)
 
-      if can_use_where_in?(instance)
-        create_pending_wherein_subquery(input: input, relation: relation, table: table, instance: instance, query: query)
+      if can_use_where_in_relationship_subquery?(instance)
+        create_pending_wherein_subquery(input: input, relation: relation, instance: instance, query: query)
       else
         #do wherehas
       end
+      filter.release_pending_relationship
+      # This is an odd case where we want the method to return nil for relationship attributes
+      # The purpose of this method is to populate pending relationship subqueries
+      nil
     end
 
-      def key_1(instance)
-        # Foreign key on belongs to, primary key on HasMany
-        if instance.is_a? ActiveRecord::Reflection::BelongsToReflection
-          instance.foreign_key.to_sym
-        else
-          instance.active_record.primary_key.to_sym
-        end
+    def key_1(instance)
+      # Foreign key on belongs to, primary key on HasMany
+      if instance.is_a? ActiveRecord::Reflection::BelongsToReflection
+        instance.foreign_key.to_sym
+      else
+        instance.active_record.primary_key.to_sym
       end
+    end
 
-      def key_2(instance)
-        if instance.is_a? ActiveRecord::Reflection::BelongsToReflection
-          instance.active_record.primary_key.to_sym
-        else
-          instance.foreign_key.to_sym
-        end
+    def key_2(instance)
+      if instance.is_a? ActiveRecord::Reflection::BelongsToReflection
+        instance.active_record.primary_key.to_sym
+      else
+        instance.foreign_key.to_sym
       end
+    end
 
 
-    def create_pending_wherein_subquery(input:, relation:, table:, instance:, query: )
-      # Grabs class that will be class to be queried at this level
-      # If @attribute is initially user.notes.body this grabs user on iteration 1, notes on iteration 2
-      # The query_class will be User, and the subquery_table will be arel_table for User
+    def create_pending_wherein_subquery(input:, relation:, instance:, query: )
+      query_class = instance.klass
+      subquery_table = instance.klass.arel_table
 
       if filter.get_pending_relationship_subquery
         subquery = filter.get_pending_relationship_subquery
       else
-        subquery = create_where_in(input: input, relation: relation, table: table, instance: instance, query: query)
+        subquery = subquery_table.project(subquery_table["#{key_2(instance)}"])
       end
 
-      query_class = instance.klass
-      subquery_table = instance.klass.arel_table
+      filter.add_pending_where_in_relationship_subquery(subquery: subquery, primary_key: key_1(instance), secondary_key: key_2(instance))
 
-      # Build the select to return only what we need
-      # The keys change depending on the type of relationship
-      recursive_apply = apply(input, subquery_table, query_class)
+      if apply_in_nested_where(query_class: query_class, table: subquery_table, input: input)
+        subquery.where(apply_in_nested_where(query_class: query_class, table: subquery_table, input: input))
+      else
+        apply_in_nested_where(query_class: query_class, table: subquery_table, input: input)
+      end
+    end
 
-      select_manager = subquery_table.project(subquery_table["#{key_2(instance)}"])
-
-      table["#{ key_1(instance)}"].in(select_manager.where(recursive_apply))
+    def apply_in_nested_where(query_class:, table:, input:)
+      apply(input, table, query_class) #this apply returns nil
     end
 
     def create_where_in(input:, relation:, table:, instance:, query:)
+      #Revisit
     end
 
 
-    def can_use_where_in?(instance)
+    def can_use_where_in_relationship_subquery?(instance)
       # Where in only works for belongs to, has one, or has many
       (instance.is_a? ActiveRecord::Reflection::BelongsToReflection) || (instance.is_a? ActiveRecord::Reflection::HasManyReflection) || (instance.is_a? ActiveRecord::Reflection::HasOneReflection)
     end
@@ -95,6 +101,5 @@ module Hammerstone::Refine::Conditions
       # If the attribute includes a ., it's a relationship attribute
       @attribute.include?(".")
     end
-
   end
 end

@@ -112,6 +112,7 @@ module Hammerstone::Refine
         # subquery but will not return a value.
         # apply condition is NOT idempotent, hence the placeholder var
         nodes_to_apply = apply_condition(criterion)
+
         subquery = add_nodes_to_query(subquery: subquery, nodes: nodes_to_apply, query_method: query_method)
 
         if @immediately_commit_pending_relationship_subqueries.present?

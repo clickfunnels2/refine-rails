@@ -75,7 +75,7 @@ module Hammerstone::Refine
       return if relationship_supports_collapsing(instance)
 
       current = get_current_relationship
-      if !current
+      if current.blank?
         @immediately_commit_pending_relationship_subqueries = true
         return
       end

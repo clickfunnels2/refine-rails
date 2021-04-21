@@ -28,7 +28,7 @@ module Hammerstone::Refine::Conditions
         instance = query.reflect_on_association(relation.to_sym)
       end
 
-      raise "Relationship does not exist for #{attribute_to_array[0]}" if !instance
+      raise "Relationship does not exist for #{relation}" if !instance
 
       filter.set_pending_relationship(relation, instance)
 

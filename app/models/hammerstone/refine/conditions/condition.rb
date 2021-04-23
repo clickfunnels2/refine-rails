@@ -12,25 +12,20 @@ module Hammerstone::Refine::Conditions
     validate :ensure_attribute_configured
 
     attr_reader :id, :attribute
+    attr_accessor :display
 
     def initialize(id=nil, display=nil)
-      # If there are no locale definitions for this condition's subject, we can allow I18n to use a human-readable version of the ID.
-      label_fallback = id ? {default: id.humanize(keep_id_suffix: true).titleize} : {}
-      # But, ideally, they have locales defined and we can find one of those.
-      # However, before all of those options, we also allow them to specifically pass in a `display` value that takes precedence.
-      @display = display || t(".filter.conditions.#{id}.label", default: t(".fields.#{id}.label", label_fallback))
+      # Capture display value if sent it. Not translated, takes precedence
+      # If no display value explicitly sent, use locales to translate in translate_display
+      @display = display
       @id = id
       @attribute = id
       @rules = {}
-      boot_has_clauses #Interpolate later in life for each class that needs it - not
-      #everyone needs it
-      boot #Allow each condition to set state post initialization
+      #Interpolate later in life for each class that needs it - not everyone needs it
+      boot_has_clauses
+      #Allow each condition to set state post initialization
+      boot
       @on_deepest_relationship = false
-    end
-
-
-    def t(key, options = {})
-      I18n.t("scaffolding/completely_concrete/tangible_things#{key}", options)
     end
 
     def ensurance

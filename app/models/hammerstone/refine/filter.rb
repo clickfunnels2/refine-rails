@@ -170,6 +170,15 @@ module Hammerstone::Refine
 
     def instantiate_condition(condition_class)
       condition_class.set_filter(self)
+      translate_display(condition_class)
+      condition_class
+    end
+
+    def translate_display(condition)
+      # If there are no locale definitions for this condition's subject, we can allow I18n to use a human-readable version of the ID.
+      # But, ideally, they have locales defined and we can find one of those.
+      label_fallback = { default: condition.id.humanize(keep_id_suffix: true).titleize }
+      condition.display = condition.display || t(".filter.conditions.#{condition.id}.label", default: t(".fields.#{condition.id}.label", label_fallback))
     end
   end
 end

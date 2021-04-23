@@ -25,6 +25,7 @@ describe Hammerstone::Refine::Filter do
   describe 'condition with wrong id' do
     it 'adds error' do
       query = TestFilter.new(bad_id)
+      query.conditions = [Hammerstone::Refine::Conditions::TextCondition.new('text_field_value')]
       query.get_query
       assert query.errors.added? :filter, "The condition ID fake was not found"
     end
@@ -64,6 +65,7 @@ describe Hammerstone::Refine::Filter do
     describe 'Text Condition - no meta, no clauses' do
       it 'returns correct json' do
         filter = TestFilter.new([])
+        filter.conditions = [Hammerstone::Refine::Conditions::TextCondition.new('text_field_value')]
         expected_value =
         {
           type: "Hammerstone",

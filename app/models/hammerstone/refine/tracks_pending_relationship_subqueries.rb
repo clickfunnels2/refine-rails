@@ -15,13 +15,16 @@ module Hammerstone::Refine
       pending_relationship_subqueries.dig(*get_current_relationship)[:instance] = instance
     end
 
-
     def get_current_relationship
       pending_relationship_subquery_depth.join(".children.").split(".").map(&:to_sym)
     end
 
-    def add_pending_where_in_relationship_subquery(subquery: , primary_key: , secondary_key: )
+    def add_pending_relationship_subquery(subquery: , primary_key: , secondary_key: )
       add_pending_relationship_subquery(subquery: subquery, primary_key: primary_key, secondary_key: secondary_key)
+    end
+
+    def add_pending_joins_relationship_subquery(subquery:)
+      add_pending_relationship_subquery(subquery: subquery, primary_key: JOINS)
     end
 
     def build_keys_for_pending_relationship_subqueries(array_of_keys)
@@ -93,7 +96,6 @@ module Hammerstone::Refine
 
     def commit_subset(query:nil, subset:)
       # Turn pending subqueries into nodes to apply in the filter
-
       subset.each do |relation, subquery|
         child_nodes = subquery.dig(:children)
         if child_nodes.present?
@@ -107,11 +109,14 @@ module Hammerstone::Refine
         if query.present?
           # If query is a Select Manager ("SELECT....") we are deeply nested and need to build the query
           # with a WHERE statement
+
           if query.is_a? Arel::SelectManager
-            query = query.where(parent_table["#{linking_key}"].in(temp_query))
+            # Where's called on AREL select managers modify the object in place
+            query.where(parent_table["#{linking_key}"].in(temp_query))
           else
             # Otherwise we are joining nodes, which requires an AND statement (ORs are immediately commited)
-            query = query.and(parent_table["#{linking_key}"].in(temp_query))
+            # The group() in front of query is required for nested relationship attributes.
+            query = group(query).and(group(parent_table["#{linking_key}"].in(temp_query)))
           end
         else
           query = parent_table["#{linking_key}"].in(temp_query)

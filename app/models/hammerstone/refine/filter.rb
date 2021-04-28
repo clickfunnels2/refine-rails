@@ -45,7 +45,7 @@ module Hammerstone::Refine
           # Apply the nodes using the AREL AND method
           subquery = subquery.send(query_method, group(nodes))
         else
-          # Override the AREL OR method in order to remove the parens
+          # Override the AREL OR method in order to remove the automatic parens
           subquery = Arel::Nodes::Or.new(subquery, group(nodes))
         end
       # No nodes returned, do nothing
@@ -117,6 +117,7 @@ module Hammerstone::Refine
 
         if @immediately_commit_pending_relationship_subqueries.present?
           committed_nodes_from_pending = commit_pending_relationship_subqueries
+
           subquery = add_nodes_to_query(subquery: subquery, nodes: committed_nodes_from_pending, query_method: query_method)
         end
         index += 1
@@ -128,7 +129,8 @@ module Hammerstone::Refine
     end
 
     def group(nodes)
-      table.grouping(nodes)
+      Arel::Nodes::Grouping.new(nodes)
+      # table.grouping(nodes)
     end
 
     def apply_condition(criterion)

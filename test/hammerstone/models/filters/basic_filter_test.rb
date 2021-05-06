@@ -72,7 +72,7 @@ describe Hammerstone::Refine::Filter do
           class_name: 'TestFilter',
           blueprint: [],
           conditions: expected_conditions,
-          stable_id: 'dontcare'
+          stable_id: 'dontcare',
         }
         assert_equal expected_value, filter.configuration
       end
@@ -222,6 +222,7 @@ describe Hammerstone::Refine::Filter do
               ],
             :hint => "password",
           },
+        :refinements => nil
       }
     ]
   end
@@ -288,6 +289,7 @@ describe Hammerstone::Refine::Filter do
                 }
               ]
           },
+        :refinements=>nil
       }
     ]
   end

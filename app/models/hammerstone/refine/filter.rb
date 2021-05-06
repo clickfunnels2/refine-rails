@@ -3,7 +3,7 @@ module Hammerstone::Refine
     include ActiveModel::Validations
     include ActiveModel::Callbacks
     include TracksPendingRelationshipSubqueries
-    #Revisit this validation structure
+    # Revisit this validation structure
     define_model_callbacks :initialize, only: [:after]
     after_initialize :valid?
 
@@ -11,8 +11,8 @@ module Hammerstone::Refine
 
     def initialize(blueprint)
       run_callbacks :initialize do
-        #If using this in test mode, `blueprint` will be an instance of
-        #`Blueprint` and the value must be extracted
+        # If using this in test mode, `blueprint` will be an instance of
+        # `Blueprint` and the value must be extracted
         if blueprint.is_a? Blueprints::Blueprint
           blueprint = blueprint.to_array
         end
@@ -41,7 +41,7 @@ module Hammerstone::Refine
     def add_nodes_to_query(subquery:, nodes:, query_method:)
       # Apply existing nodes to existing subquery
       if subquery.present? && nodes.present?
-        if query_method == 'and'
+        if query_method == "and"
           # Apply the nodes using the AREL AND method
           subquery = subquery.send(query_method, group(nodes))
         else
@@ -58,7 +58,7 @@ module Hammerstone::Refine
       subquery
     end
 
-    def make_sub_query(modified_blueprint, depth = 0, subquery=nil)
+    def make_sub_query(modified_blueprint, depth = 0, subquery = nil)
       # Need index control to directly skip indicies in fast forward (recursive call)
       index = 0
       while index < modified_blueprint.length
@@ -67,16 +67,16 @@ module Hammerstone::Refine
         break if criterion[:depth] < depth
 
         # If it's a conjunction, the next condition will handle it.
-        if criterion[:type] == 'conjunction'
-          index +=1
+        if criterion[:type] == "conjunction"
+          index += 1
           next
         end
 
         # Check the word on the previous blueprint method. If it is not 'and'....?
         if index == 0
-          query_method = 'and'
+          query_method = "and"
         else
-          query_method = modified_blueprint[index -1][:word] == 'and' ? 'and' : 'or'
+          query_method = modified_blueprint[index - 1][:word] == "and" ? "and" : "or"
         end
 
         # If the new depth is deeper than our current depth, that means we're
@@ -92,7 +92,7 @@ module Hammerstone::Refine
           # Add the recursive subquery nodes to the existing query and modify the query
           subquery = add_nodes_to_query(subquery: subquery, nodes: recursive_nodes, query_method: query_method)
 
-          for cursor in index..modified_blueprint.length-1 do
+          for cursor in index..modified_blueprint.length - 1 do
             if modified_blueprint[cursor][:depth] <= depth
               break
             end
@@ -103,7 +103,7 @@ module Hammerstone::Refine
           next
         end
         # If there are any ORs at this depth, commit subqueries
-        if modified_blueprint.select{|item| (item[:type] == "conjunction" && item[:word] == "or" && item[:depth] == depth)}.present?
+        if modified_blueprint.select { |item| (item[:type] == "conjunction" && item[:word] == "or" && item[:depth] == depth) }.present?
           @immediately_commit_pending_relationship_subqueries = true
         else
           @immediately_commit_pending_relationship_subqueries = false
@@ -124,27 +124,22 @@ module Hammerstone::Refine
       end
 
       final_depth_nodes = commit_pending_relationship_subqueries
-      subquery = add_nodes_to_query(subquery: subquery, nodes: final_depth_nodes, query_method: query_method)
-      subquery
+      # Add nodes to existing query and return existing query
+      add_nodes_to_query(subquery: subquery, nodes: final_depth_nodes, query_method: query_method)
     end
 
     def group(nodes)
       Arel::Nodes::Grouping.new(nodes)
-      # table.grouping(nodes)
     end
 
     def apply_condition(criterion)
-      current_condition = get_condition_for_criterion(criterion)
-      if current_condition
-        current_condition.apply(criterion[:input], table, initial_query)
-      end
+      get_condition_for_criterion(criterion)&.apply(criterion[:input], table, initial_query)
     end
 
     def get_condition_for_criterion(criterion)
       # returns the object that matches the condition. Adds errors if not found.
       # This checks the id on the condition such as text_test
       returned_object = conditions.find { |condition| condition.id == criterion[:condition_id] }
-
       if returned_object.nil?
         errors.add(:filter, "The condition ID #{criterion[:condition_id]} was not found")
       else
@@ -157,17 +152,17 @@ module Hammerstone::Refine
 
     def configuration
       {
-        type: 'Hammerstone',
+        type: "Hammerstone",
         class_name: self.class.name,
         blueprint: @blueprint,
         conditions: conditions_to_array,
-        stable_id: 'dontcare'
+        stable_id: "dontcare"
       }
     end
 
     def conditions_to_array
       # Set filter object on condition and return to_array
-      conditions.map{|condition| instantiate_condition(condition) }.map(&:to_array)
+      conditions.map { |condition| instantiate_condition(condition) }.map(&:to_array)
     end
 
     def instantiate_condition(condition_class)
@@ -179,9 +174,8 @@ module Hammerstone::Refine
     def translate_display(condition)
       # If there are no locale definitions for this condition's subject, we can allow I18n to use a human-readable version of the ID.
       # But, ideally, they have locales defined and we can find one of those.
-      label_fallback = { default: condition.id.humanize(keep_id_suffix: true).titleize }
+      label_fallback = {default: condition.id.humanize(keep_id_suffix: true).titleize}
       condition.display = condition.display || t(".filter.conditions.#{condition.id}.label", default: t(".fields.#{condition.id}.label", label_fallback))
     end
   end
 end
-

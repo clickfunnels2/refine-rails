@@ -7,12 +7,13 @@ module Hammerstone::Refine::Conditions
     include HasClauses
     include HasMeta
     include UsesAttributes
+    include HasRefinements
 
     validate :ensure_id
     validate :ensure_attribute_configured
 
-    attr_reader :id, :attribute
-    attr_accessor :display
+    attr_reader :attribute
+    attr_accessor :display, :id, :is_refinement
 
     def initialize(id=nil, display=nil)
       # Capture display value if sent it. Not translated, takes precedence
@@ -21,11 +22,15 @@ module Hammerstone::Refine::Conditions
       @id = id
       @attribute = id
       @rules = {}
-      #Interpolate later in life for each class that needs it - not everyone needs it
+      # Interpolate later in life for each class that needs it - not everyone needs it
       boot_has_clauses
-      #Allow each condition to set state post initialization
+      # Allow each condition to set state post initialization
       boot
       @on_deepest_relationship = false
+      @is_refinement = false
+      # Refinements variables
+      @date_refinement_proc = nil
+      @count_refinement_proc = nil
     end
 
     def ensurance
@@ -78,8 +83,10 @@ module Hammerstone::Refine::Conditions
       end
     end
 
+
     def apply(input, table, initial_query)
       # Ensurance validations are checking the developer configured correctly
+      table = table || filter.table
       run_ensurance_validations
 
       validate_user_input(input)
@@ -87,9 +94,14 @@ module Hammerstone::Refine::Conditions
       if is_relationship_attribute?
         apply_relationship_attribute(input: input, query: initial_query)
         return
-      else
-        apply_condition(input, table)
       end
+      nodes = apply_condition(input, table)
+      if !is_refinement && has_any_refinements?
+        refined_node = apply_refinements(input)
+        # Count refinement will return nil because it directly modified pending relationship subquery
+        nodes = nodes.and(refined_node) if refined_node
+      end
+      nodes
     end
 
     def validate_user_input(input)
@@ -140,7 +152,8 @@ module Hammerstone::Refine::Conditions
           id: id,
           component: component,
           display: @display,
-          meta: evaluated_meta
+          meta: evaluated_meta,
+          refinements: refinements_to_array
         }
       else
         raise ConditionError, "#{errors.full_messages}"

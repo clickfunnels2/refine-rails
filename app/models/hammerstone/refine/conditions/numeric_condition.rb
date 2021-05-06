@@ -117,11 +117,19 @@ module Hammerstone::Refine::Conditions
     end
 
     def apply_clause_between(table, value1, value2)
-      table.grouping(table[:"#{attribute}"].between(value1..value2))
+      if is_refinement
+        Arel.star.count.between(value1..value2)
+      else
+        table.grouping(table[:"#{attribute}"].between(value1..value2))
+      end
     end
 
     def apply_clause_not_between(table, value1, value2)
-      table.grouping(table[:"#{attribute}"].not_between(value1..value2))
+      if is_refinement
+        Arel.star.count.not_between(value1..value2)
+      else
+        table.grouping(table[:"#{attribute}"].not_between(value1..value2))
+      end
     end
 
     def apply_clause_set(table)

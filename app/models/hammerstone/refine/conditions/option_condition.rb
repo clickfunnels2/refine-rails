@@ -4,8 +4,9 @@ module Hammerstone::Refine::Conditions
     include UsesAttributes
     include ActiveModel::Validations
 
-    # validates :selected, allow_nil: true
-    # validate :option_in_approved_list?
+    validate :select_is_array
+    validate :option_in_approved_list?
+
     attr_reader :selected, :nil_option_id, :options
 
     CLAUSE_EQUALS = Clauses::EQUALS
@@ -27,6 +28,22 @@ module Hammerstone::Refine::Conditions
       @validate_selections = true
       with_meta({ options: get_options })
       add_ensurance(ensure_options)
+    end
+
+    def set_input_parameters(input)
+      @selected = input[:selected]
+    end
+
+    def select_is_array
+      errors.add(:base, "Select must be an array") unless selected.is_a?(Array)
+    end
+
+    def option_in_approved_list?
+      selected.each do |select|
+        unless get_options.call.map { |option| option[:id] }.include? select
+          errors.add(:base, "Selected #{select} is not configured in options list")
+        end
+      end
     end
 
     def get_options
@@ -82,7 +99,7 @@ module Hammerstone::Refine::Conditions
 
     def apply_condition(input, table)
 
-      value = input[:selected]
+      value = selected
 
       case clause
       when CLAUSE_SET

@@ -35,7 +35,7 @@ module Hammerstone::Refine::Conditions
     describe 'Clause Equals' do
 
       it "correctly executes with one condition" do
-        data = {clause: OptionCondition::CLAUSE_EQUALS, selected: "option_1"}
+        data = {clause: OptionCondition::CLAUSE_EQUALS, selected: ["option_1"]}
         expected_sql = <<~SQL.squish
           SELECT "t".* FROM "t" WHERE ("t"."option_test" = 'option_1')
         SQL
@@ -51,7 +51,7 @@ module Hammerstone::Refine::Conditions
       end
 
       it 'handles nil condition' do
-        data = {clause: OptionCondition::CLAUSE_EQUALS, selected: ["nil"]}
+        data = {clause: OptionCondition::CLAUSE_EQUALS, selected: ["null"]}
         expected_sql = <<~SQL.squish
           SELECT "t".* FROM "t" WHERE ("t"."option_test" IS NULL)
         SQL
@@ -70,7 +70,7 @@ module Hammerstone::Refine::Conditions
     describe 'Clause Doesn''t Equal' do
 
       it "correctly executes with one condition" do
-        data = {clause: OptionCondition::CLAUSE_DOESNT_EQUAL, selected: "option_1"}
+        data = {clause: OptionCondition::CLAUSE_DOESNT_EQUAL, selected: ["option_1"]}
         expected_sql = <<~SQL.squish
           SELECT "t".* FROM "t" WHERE ("t"."option_test" != 'option_1' OR "t"."option_test" IS NULL)
         SQL
@@ -194,7 +194,7 @@ module Hammerstone::Refine::Conditions
       end
 
       it 'can handle hash shorthand' do
-        skip 'does not deserialize yet'
+        skip 'revisit this'
         condition = OptionCondition.new("option_test")
                       .with_options(
                         [{
@@ -258,6 +258,28 @@ module Hammerstone::Refine::Conditions
           condition.to_array
         end
         assert_equal("Options must have unique IDs. Duplicate [\"option_1\"] found.", exception.message)
+      end
+    end
+
+    describe 'Option validations' do
+      it 'only accepts options in the set of ids' do
+        condition = OptionCondition.new("option_test")
+                        .with_options(
+                          [{
+                            id: "option_1",
+                            display: "Option 1"
+                          }, {
+                            id: "option_2",
+                            display: "Option 2"
+                          }]
+                        )
+
+        data = { clause: OptionCondition::CLAUSE_EQUALS, selected: ["option_7"] }
+        exception =
+        assert_raises Hammerstone::Refine::Conditions::Errors::ConditionClauseError do
+          apply_condition_on_test_filter(condition, data)
+        end
+        assert_equal("[\"Selected option_7 is not configured in options list\"]", exception.message)
       end
     end
   end

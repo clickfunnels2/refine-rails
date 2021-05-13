@@ -31,6 +31,11 @@ module Hammerstone::Refine::Conditions
       @floats = false
     end
 
+    def set_input_parameters(input)
+      @value1 = input[:value1]
+      @value2 = input[:value2]
+    end
+
     def component
       'numeric-condition'
     end
@@ -66,11 +71,6 @@ module Hammerstone::Refine::Conditions
 
     def floats_not_allowed?
       !@floats
-    end
-
-    def set_input_parameters(input)
-      @value1 = input[:value1]
-      @value2 = input[:value2]
     end
 
     #Refactor to remove input here

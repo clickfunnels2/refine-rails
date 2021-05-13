@@ -53,7 +53,6 @@ module Hammerstone::Refine::Conditions
     end
 
     def apply_condition(input, table)
-      clause = input[:clause]
       value = input[:value]
 
       case clause

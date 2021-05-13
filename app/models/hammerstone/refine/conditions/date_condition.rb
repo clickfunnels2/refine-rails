@@ -1,10 +1,16 @@
 module Hammerstone::Refine::Conditions
   class DateCondition < Condition
+    include ActiveModel::Validations
     include HasClauses
+
+    validate :dates_must_be_real
+
+    cattr_accessor :default_user_timezone, default: 'UTC', instance_accessor: false
+    cattr_accessor :default_database_timezone, default: 'UTC', instance_accessor: false
+    attr_reader :date1, :date2, :days
 
     CLAUSE_EQUALS = Clauses::EQUALS
     CLAUSE_DOESNT_EQUAL = Clauses::DOESNT_EQUAL
-
 
     CLAUSE_LESS_THAN_OR_EQUAL = Clauses::LESS_THAN_OR_EQUAL
     CLAUSE_BETWEEN = Clauses::BETWEEN
@@ -21,30 +27,39 @@ module Hammerstone::Refine::Conditions
     ATTRIBUTE_TYPE_DATE_WITH_TIME = 1
     ATTRIBUTE_TYPE_UNIX_TIMESTAMP = 2
 
-    cattr_accessor :default_user_timezone, default: 'UTC', instance_accessor: false
-    cattr_accessor :default_database_timezone, default: 'UTC', instance_accessor: false
-    # TODO: Move the add_ensurances to standard model validations
+    def dates_must_be_real
+      # If date parameter exists but cannot be coerce into a Date Object, add error
+      real_date1 = Date.strptime(date1, '%Y-%m-%d') rescue false
+      real_date2 = Date.strptime(date2, '%Y-%m-%d') rescue false
+      if !real_date1 && date1
+        errors.add(:base, "date1 is not a real date")
+      end
+      if !real_date2 && date2
+        errors.add(:base, "date2 is not a real date")
+      end
+    end
 
     def boot
       @attribute_type = @attribute_type ||= ATTRIBUTE_TYPE_DATE
-      # TODO: Add rules and validations later
-      # add_rules(
-      #   date1: ['nullable', 'date'],
-      #   date2: ['nullable', 'date'],
-      #   days: ['nullable', 'integer']
-      # )
       add_ensurance(ensure_timezone)
     end
 
+    def set_input_parameters(input)
+      @date1 = input[:date1]
+      @date2 = input[:date2]
+      @days = input[:days]
+    end
+
     def ensure_timezone
-      Proc.new do
-        if !ActiveSupport::TimeZone.all.map{|tz| tz.tzinfo.name}.include? database_timezone
-          errors.add(:base, "Database timezone is not valid")
-        end
-        if !ActiveSupport::TimeZone.all.map{|tz| tz.tzinfo.name}.include? user_timezone
-          errors.add(:base, "User timezone is not valid")
-        end
+      proc do
+        timezone_exists(database_timezone)
+        timezone_exists(user_timezone)
       end
+    end
+
+    def timezone_exists(zone)
+      return if ActiveSupport::TimeZone[zone].present?
+      errors.add(:base, "#{zone} timezone does not exist in ActiveSupport::TimeZone")
     end
 
     def component
@@ -129,12 +144,16 @@ module Hammerstone::Refine::Conditions
       [CLAUSE_GREATER_THAN, CLAUSE_LESS_THAN, CLAUSE_EXACTLY]
     end
 
-    def is_relative_clause?(clause)
-      relative_clauses.include?(clause)
+    def is_relative_clause?
+      relative_clauses.include? clause
+    end
+
+    def modify_date_and_clause!(input)
+      @date1 = comparison_date(input)
+      @clause = standardize_clause(input)
     end
 
     def apply_condition(input, table)
-      clause = input[:clause]
 
       if clause == CLAUSE_SET
         return apply_clause_set(table)
@@ -144,35 +163,30 @@ module Hammerstone::Refine::Conditions
         return apply_clause_not_set(table)
       end
 
-      date1 = input[:date1]
-      date2 = input[:date2]
+      modify_date_and_clause!(input) if is_relative_clause?
 
-      if is_relative_clause?(clause)
-        date1 = comparison_date(input)
-        clause = standardize_clause(clause, input)
-      end
       # TODO: Allow for custom clauses
       if @attribute_type == ATTRIBUTE_TYPE_DATE
-        apply_standardized_values(table, date1, date2, clause)
+        apply_standardized_values(table)
       else
-        apply_standardized_values_with_time(table, date1, date2, clause)
+        apply_standardized_values_with_time(table)
       end
     end
 
     def comparison_date(input)
-      days = input[:days].to_i
+      modified_days = days.to_i
       modifier = input[:modifier]
 
       # If the user has requested a certain number of days 'ago',then value
       # needs to be negative
 
       if modifier == 'ago'
-        days *=- 1
+        modified_days *=- 1
       end
-      date1 = (Date.current + days).strftime("%Y-%m-%d")
+      (Date.current + modified_days).strftime("%Y-%m-%d")
     end
 
-    def standardize_clause(clause, input)
+    def standardize_clause(input)
       modifier = input[:modifier]
       case clause
       when CLAUSE_GREATER_THAN
@@ -187,7 +201,7 @@ module Hammerstone::Refine::Conditions
     def start_of_day(day)
       # Returns the start of day in the user timezone
       # Day shifted to user time zone 00 based
-      day_in_user_tz = standardize_day(day).in_time_zone(user_timezone).beginning_of_day
+      day_in_user_tz = day.in_time_zone(user_timezone).beginning_of_day
 
       # Get day_in_user_tz in database time zone
       database_local = day_in_user_tz.in_time_zone(database_timezone)
@@ -199,7 +213,7 @@ module Hammerstone::Refine::Conditions
     end
 
     def end_of_day(day)
-      day_in_user_tz = standardize_day(day).in_time_zone(user_timezone)
+      day_in_user_tz = day.in_time_zone(user_timezone)
       end_of_day = day_in_user_tz.end_of_day
       database_local = end_of_day.in_time_zone(database_timezone)
       offset = database_local.utc_offset
@@ -225,7 +239,7 @@ module Hammerstone::Refine::Conditions
       utc_comparison_time + offset
     end
 
-    def apply_standardized_values_with_time(table, date1, date2, clause)
+    def apply_standardized_values_with_time(table)
       case clause
       when CLAUSE_EQUALS
         apply_clause_between(table, start_of_day(date1), end_of_day(date1))
@@ -242,41 +256,33 @@ module Hammerstone::Refine::Conditions
       end
     end
 
-    def standardize_day(date)
-      if date.respond_to? :to_date
-        date = Date.strptime(date, "%Y-%m-%d")
-      else
-        date
-      end
-    end
-
-    def apply_standardized_values(table, date1, date2, clause)
+    def apply_standardized_values(table)
       case clause
       when CLAUSE_EQUALS
-        apply_clause_equals(standardize_day(date1), table)
+        apply_clause_equals(date1, table)
 
       when CLAUSE_DOESNT_EQUAL
-        apply_clause_doesnt_equal(standardize_day(date1), table)
+        apply_clause_doesnt_equal(date1, table)
 
       when CLAUSE_LESS_THAN
-        apply_clause_less_than(standardize_day(date1), table)
+        apply_clause_less_than(date1, table)
 
       when CLAUSE_GREATER_THAN
-        apply_clause_greater_than(standardize_day(date1), table)
+        apply_clause_greater_than(date1, table)
 
       when CLAUSE_GREATER_THAN_OR_EQUAL
-        apply_clause_greater_than_or_equal(standardize_day(date1), table)
+        apply_clause_greater_than_or_equal(date1, table)
 
       when CLAUSE_LESS_THAN_OR_EQUAL
-        apply_clause_less_than_or_equal(standardize_day(date1), table)
+        apply_clause_less_than_or_equal(date1, table)
 
       when CLAUSE_BETWEEN
-        apply_clause_between(table, standardize_day(date1), standardize_day(date2))
+        apply_clause_between(table, date1, date2)
       end
     end
 
-    def apply_clause_between(table, date1, date2)
-      table.grouping(table[:"#{attribute}"].between(date1..date2))
+    def apply_clause_between(table, first_date, second_date)
+      table.grouping(table[:"#{attribute}"].between(first_date..second_date))
     end
 
     def apply_clause_equals(value, table)

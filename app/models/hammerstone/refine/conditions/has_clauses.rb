@@ -2,16 +2,22 @@ module Hammerstone::Refine::Conditions
   module HasClauses
 
     def boot_has_clauses
+      @show_clauses = {}
       add_rules({ clause: "required" })
       with_meta({ clauses: get_clauses })
-      @show_clauses = {}
+      add_ensurance(ensure_clauses)
+      before_validate(before_clause_validation)
     end
 
     #beforeValidationOfClause in PHP callback land
-    def add_clause_rules_to_condition(input)
-      current_clause = clauses.select{ |clause| clause.id == input[:clause] }
-      if current_clause.present?
-        add_rules(current_clause[0].rules)
+    def before_clause_validation(input = [])
+      proc do |input|
+        if input.present?
+          current_clause = clauses.select{ |clause| clause.id == input[:clause] }
+          if current_clause.present?
+            add_rules(current_clause[0].rules)
+          end
+        end
       end
     end
 
@@ -20,7 +26,9 @@ module Hammerstone::Refine::Conditions
     end
 
     def only_clauses(specific_clauses)
+      # Remove all clauses
       clauses.map(&:id).each {|clause_id| update_show_clauses(clause_id, false) }
+      # Add specific clauses by id, not by fully qualified clause
       specific_clauses.each {|clause| update_show_clauses(clause, true) }
       self
     end
@@ -39,7 +47,19 @@ module Hammerstone::Refine::Conditions
       @show_clauses.merge!({"#{clause}": value})
     end
 
-    def validate_clause(clause)
+    def ensure_clauses
+      proc do
+        clauses = get_clauses.call
+        if clauses.any?
+          clauses.each { |clause| ensure_clause(clause) }
+        else
+          errors.add(:base, "No clause could be determined?")
+          raise Errors::ConditionClauseError, "#{errors.full_messages}"
+        end
+      end
+    end
+
+    def ensure_clause(clause)
       if !clause.is_a? Clause
         errors.add(:base, "Every clause must be an instance of #{Clause::class}")
         raise Errors::ConditionClauseError, "#{errors.full_messages}"
@@ -51,11 +71,7 @@ module Hammerstone::Refine::Conditions
     end
 
     def get_clauses
-      Proc.new do
-        clauses.each do |clause|
-          validate_clause(clause)
-        end
-
+      proc do
         returned_clauses = clauses.dup
 
         @show_clauses.each do |clause_id, rule|

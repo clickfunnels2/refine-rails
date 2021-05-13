@@ -20,19 +20,18 @@ module Hammerstone::Refine::Conditions
 
     describe 'date format validations' do
       it 'throws errors for invalid date format for date1' do
-        skip "Revisit validations"
-        data = { clause: DateCondition::CLAUSE_EQUALS, date1: '2019-05-15' }
+        data = { clause: DateCondition::CLAUSE_EQUALS, date1: '05/15/2019' }
         exception =
-        assert_raises Hammerstone::Refine::Conditions::ConditionError do
+        assert_raises Hammerstone::Refine::Conditions::Errors::ConditionClauseError do
           apply_condition_on_test_filter(condition, data)
         end
-        assert_equal("[\"Every condition must have an ID\"]", exception.message)
+        assert_equal("[\"date1 is not a real date\"]", exception.message)
       end
     end
 
     describe 'clause application' do
       it 'correctly executes clause equals' do
-        data = { clause: DateCondition::CLAUSE_EQUALS, date1: "2019-05-15T00:00:00.000Z" }
+        data = { clause: DateCondition::CLAUSE_EQUALS, date1: "2019-05-15" }
         expected_sql = <<~SQL.squish
                         SELECT "t".* FROM "t" WHERE ("t"."date_to_test" = '2019-05-15')
                         SQL

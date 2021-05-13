@@ -1,7 +1,7 @@
 module Hammerstone::Refine::Conditions::HasMeta
 
   def meta
-    @meta ||={}
+    @meta ||= {}
   end
 
   def with_meta(value)
@@ -9,5 +9,4 @@ module Hammerstone::Refine::Conditions::HasMeta
     @meta.merge!(value)
     self
   end
-
 end

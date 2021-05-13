@@ -11,6 +11,20 @@ module Hammerstone::Refine::Conditions
       ApplicationRecord.connection.execute("DROP TABLE t;")
     end
 
+    describe 'ensurance (developer side) validations' do
+      it 'fails if no id is given by the developer' do
+        condition = ValidatesClausesTestCondition.new
+        user_input = { clause: 'eq', value: 'sample_value'}
+
+        exception =
+          assert_raises Hammerstone::Refine::Conditions::ConditionError do
+            condition.to_array
+          end
+        assert_equal("[\"Every condition must have an ID\", \"An attribute is required.\"]", exception.message)
+
+      end
+    end
+
     it 'fails with no clause id by raising error' do
       condition = ValidatesClausesTestCondition.new('text_test')
       user_input = { clause: 'eq', value: 'sample_value'}
@@ -36,9 +50,8 @@ module Hammerstone::Refine::Conditions
       exception =
         assert_raises Hammerstone::Refine::Conditions::Errors::ConditionClauseError do
           condition.apply_condition_on_test_filter(condition, user_input)
-          #condition.apply(FilterTestHelper::TestDouble.all, user_input)
         end
-      assert_equal("[\"The clause with id  was not found\"]", exception.message)
+      assert_equal("[\"A clause is required for clause with id \"]", exception.message)
     end
 
     it 'validates Text Condition Eq has a value' do
@@ -51,12 +64,12 @@ module Hammerstone::Refine::Conditions
     end
 
     it 'excludes clauses using without' do
-      skip 'validate after recieving as well'
       condition = ValidatesClausesTestCondition.new('text_test').without_clauses(['id_one'])
       data = { clause: 'id_one', value: 'foo' }
-      assert_raises Hammerstone::Refine::Conditions::Errors::ConditionClauseError do
+      exception = assert_raises Hammerstone::Refine::Conditions::Errors::ConditionClauseError do
         apply_condition_on_test_filter(condition, data)
       end
+      assert_equal("[\"The clause with id id_one was not found\"]", exception.message)
     end
   end
 

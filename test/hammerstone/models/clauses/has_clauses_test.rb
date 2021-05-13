@@ -84,6 +84,18 @@ module Hammerstone::Refine::Conditions
 
     end
 
+    describe 'clause ensurances' do
+      it 'must have a display' do
+        condition = HasClausesTestCondition.new('text_test')
+        condition.clauses=([Clause.new('id', nil)])
+        exception =
+          assert_raises Hammerstone::Refine::Conditions::Errors::ConditionClauseError do
+            condition.to_array
+          end
+        assert_equal("[\"A clause must have both id and display keys\"]", exception.message)
+      end
+    end
+
     def set_and_equal
       [
         {
@@ -264,5 +276,9 @@ module Hammerstone::Refine::Conditions
       ]
     end
 
+  end
+
+  class HasClausesTestCondition < Condition
+    attr_accessor :clauses
   end
 end

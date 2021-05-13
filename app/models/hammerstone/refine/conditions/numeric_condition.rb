@@ -1,5 +1,17 @@
 module Hammerstone::Refine::Conditions
   class NumericCondition < Condition
+    include ActiveModel::Validations
+    include HasClauses
+
+    validates :value1, numericality: true, allow_nil: true
+    validates :value2, numericality: true, allow_nil: true
+
+    with_options if: :floats_not_allowed? do
+      validates :value1, numericality: { only_integer: true }, allow_nil: true
+      validates :value2, numericality: { only_integer: true }, allow_nil: true
+    end
+
+    attr_reader :value1, :value2
 
     CLAUSE_EQUALS = Clauses::EQUALS
     CLAUSE_DOESNT_EQUAL = Clauses::DOESNT_EQUAL
@@ -16,7 +28,6 @@ module Hammerstone::Refine::Conditions
     CLAUSE_NOT_SET = Clauses::NOT_SET
 
     def boot
-      # TODO "Add some nullable rules here!"
       @floats = false
     end
 
@@ -53,10 +64,17 @@ module Hammerstone::Refine::Conditions
       self
     end
 
+    def floats_not_allowed?
+      !@floats
+    end
+
+    def set_input_parameters(input)
+      @value1 = input[:value1]
+      @value2 = input[:value2]
+    end
+
+    #Refactor to remove input here
     def apply_condition(input, table)
-      clause = input[:clause]
-      value1 = input[:value1]
-      value2 = input[:value2]
       #TODO check for custom clause
 
       case clause

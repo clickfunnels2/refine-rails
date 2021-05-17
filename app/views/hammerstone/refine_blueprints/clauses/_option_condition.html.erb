@@ -1,15 +1,22 @@
 <% selected = input.has_key?(:selected) ? input[:selected] : [] %>
+<%= tag.div data: {
+  action: "$change->refine--update#selected",
+  controller: 'fields--super-select',
+  fields__super_select_enable_search_value: 'true',
+} do %>
+ <select multiple
+    class="font-sans mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+    data-fields--super-select-target="select"
+  >
+    <% condition[:meta][:options].each do |option| %>
+      <option
+        value="<%= option[:id] %>"
+        <% if selected.find { |id|  id == option[:id] } %>selected<% end %>
+      >
+        <%= option[:display] %>
+      </option>
+    <% end %>
+  </select>
+<% end %>
+ 
 
-<select multiple
-        class="font-sans mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-        data-action="change->refine--update#option"
->
-  <% condition[:meta][:options].each do |option| %>
-    <option
-      value="<%= option[:id] %>"
-      <% if selected.find { |id|  id == option[:id] } %>selected<% end %>
-    >
-      <%= option[:display] %>
-    </option>
-  <% end %>
-</select>

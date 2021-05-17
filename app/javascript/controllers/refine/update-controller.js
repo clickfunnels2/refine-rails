@@ -32,15 +32,24 @@ export default class extends FormController {
     this.submitForm();
   }
 
+  selected(event) {
+    const { target: select } = event;
+    const options = Array.prototype.slice.call(select.options);
+    const selectedOptions = options.filter(option => option.selected);
+    const selected = selectedOptions.map(option => option.value);
+
+    this.value(event, selected, 'selected');
+  }
+
   date(event) {
     const { picker } = event.detail;
     const value = picker.startDate.format('YYYY-MM-DD');
     this.value(event, value);
   }
 
-  value(event, value) {
+  value(event, value, inputKey) {
     const { criterionIdValue, state } = this;
-    const inputKey = event.target.dataset.inputKey || 'value';
+    inputKey = inputKey || event.target.dataset.inputKey || 'value';
     value = value || event.target.value;
 
     state.updateInput(

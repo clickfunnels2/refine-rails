@@ -92,8 +92,7 @@ module Hammerstone::Refine::Conditions
 
         filter = TestFilter.new([])
         filter.conditions = [condition]
-
-        refinement_clauses = filter.configuration[:conditions][0][:refinements][:meta][:clauses]
+        refinement_clauses = filter.configuration[:conditions][0][:refinements][0][:meta][:clauses]
         expected_output =
           [{
             id: DateCondition::CLAUSE_BETWEEN,
@@ -152,15 +151,15 @@ module Hammerstone::Refine::Conditions
         assert_equal expected_sql, query.to_sql
       end
 
-      it 'can control clauses' do
+      it "can control clauses" do
         condition = text_condition.refine_by_count(proc {
-                                                    NumericCondition.new("clicked_on")
-                                                    .only_clauses([NumericCondition::CLAUSE_BETWEEN])
-                                                  })
+                                                     NumericCondition.new("clicked_on")
+                                                     .only_clauses([NumericCondition::CLAUSE_BETWEEN])
+                                                   })
 
         filter = TestFilter.new([])
         filter.conditions = [condition]
-        refinement_clauses = filter.configuration[:conditions][0][:refinements][:meta][:clauses]
+        refinement_clauses = filter.configuration[:conditions][0][:refinements][0][:meta][:clauses]
         expected_output =
           [{
             id: NumericCondition::CLAUSE_BETWEEN,
@@ -173,6 +172,16 @@ module Hammerstone::Refine::Conditions
     end
 
     describe "Date and Count refinements together" do
+      it "sends correct configuration to the front end" do
+        condition = text_condition.refine_by_date.refine_by_count
+
+        filter = TestFilter.new([])
+        filter.conditions = [condition]
+
+        refinement_array = filter.configuration[:conditions][0][:refinements]
+        assert_equal complete_refinement_config, refinement_array
+      end
+
       it "can use both" do
         condition = text_condition.refine_by_count.refine_by_date
         expected_sql = <<~SQL.squish
@@ -205,6 +214,10 @@ module Hammerstone::Refine::Conditions
 
     describe "Type Hinting" do
       # Note: Add later
+    end
+
+    def complete_refinement_config
+      [{id: "date_refinement", component: "date-condition", display: "Date Refinement", meta: {clauses: [{id: "eq", display: "Is Equal To", meta: {}}, {id: "dne", display: "Is Not Equal To", meta: {}}, {id: "lte", display: "Is On or Before", meta: {}}, {id: "gte", display: "Is On or After", meta: {}}, {id: "btwn", display: "Is Between", meta: {}}, {id: "gt", display: "Is More Than", meta: {}}, {id: "exct", display: "Is Exactly", meta: {}}, {id: "lt", display: "Is Less Than", meta: {}}, {id: "st", display: "Is Set", meta: {}}, {id: "nst", display: "Is Not Set", meta: {}}]}, refinements: []}, {id: "count_refinement", component: "numeric-condition", display: "Count Refinement", meta: {clauses: [{id: "eq", display: "Is Equal To", meta: {}}, {id: "dne", display: "Is Not Equal To", meta: {}}, {id: "gt", display: "Is Greater Than", meta: {}}, {id: "gte", display: "Is Greater Than Or Equal To", meta: {}}, {id: "lt", display: "Is Less Than", meta: {}}, {id: "lte", display: "Is Less Than Or Equal To", meta: {}}, {id: "btwn", display: "Is Between", meta: {}}, {id: "nbtwn", display: "Is Not Between", meta: {}}, {id: "st", display: "Is Set", meta: {}}, {id: "nst", display: "Is Not Set", meta: {}}]}, refinements: []}]
     end
   end
 

@@ -89,13 +89,16 @@ module Hammerstone::Refine::Conditions
 
     def refinements_to_array
       if is_refinement
-        {}
+        []
       else
+        refinement_array = []
         if @date_refinement_proc
-          get_date_refinement_condition.to_array
-        elsif @count_refinement_proc
-          get_count_refinement_condition.to_array
+          refinement_array << get_date_refinement_condition.to_array
         end
+        if @count_refinement_proc
+          refinement_array << get_count_refinement_condition.to_array
+        end
+        refinement_array
       end
     end
   end

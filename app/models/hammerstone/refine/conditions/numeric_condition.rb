@@ -7,8 +7,8 @@ module Hammerstone::Refine::Conditions
     validates :value2, numericality: true, allow_nil: true
 
     with_options if: :floats_not_allowed? do
-      validates :value1, numericality: { only_integer: true }, allow_nil: true
-      validates :value2, numericality: { only_integer: true }, allow_nil: true
+      validates :value1, numericality: {only_integer: true}, allow_nil: true
+      validates :value2, numericality: {only_integer: true}, allow_nil: true
     end
 
     attr_reader :value1, :value2
@@ -37,30 +37,30 @@ module Hammerstone::Refine::Conditions
     end
 
     def component
-      'numeric-condition'
+      "numeric-condition"
     end
 
     def clauses
       [
-        Clause.new(CLAUSE_EQUALS, 'Is Equal To').requires_inputs(['value1']),
+        Clause.new(CLAUSE_EQUALS, "Is Equal To").requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_DOESNT_EQUAL, 'Is Not Equal To').requires_inputs(['value1']),
+        Clause.new(CLAUSE_DOESNT_EQUAL, "Is Not Equal To").requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_GREATER_THAN, 'Is Greater Than').requires_inputs(['value1']),
+        Clause.new(CLAUSE_GREATER_THAN, "Is Greater Than").requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_GREATER_THAN_OR_EQUAL, 'Is Greater Than Or Equal To').requires_inputs(['value1']),
+        Clause.new(CLAUSE_GREATER_THAN_OR_EQUAL, "Is Greater Than Or Equal To").requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_LESS_THAN, 'Is Less Than').requires_inputs(['value1']),
+        Clause.new(CLAUSE_LESS_THAN, "Is Less Than").requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_LESS_THAN_OR_EQUAL, 'Is Less Than Or Equal To').requires_inputs(['value1']),
+        Clause.new(CLAUSE_LESS_THAN_OR_EQUAL, "Is Less Than Or Equal To").requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_BETWEEN, 'Is Between').requires_inputs(['value1', 'value2']),
+        Clause.new(CLAUSE_BETWEEN, "Is Between").requires_inputs(["value1", "value2"]),
 
-        Clause.new(CLAUSE_NOT_BETWEEN, 'Is Not Between').requires_inputs(['value1', 'value2']),
+        Clause.new(CLAUSE_NOT_BETWEEN, "Is Not Between").requires_inputs(["value1", "value2"]),
 
-        Clause.new(CLAUSE_SET, 'Is Set'),
+        Clause.new(CLAUSE_SET, "Is Set"),
 
-        Clause.new(CLAUSE_NOT_SET, 'Is Not Set'),
+        Clause.new(CLAUSE_NOT_SET, "Is Not Set"),
       ]
     end
 
@@ -73,9 +73,9 @@ module Hammerstone::Refine::Conditions
       !@floats
     end
 
-    #Refactor to remove input here
+    # Refactor to remove input here
     def apply_condition(input, table)
-      #TODO check for custom clause
+      # TODO check for custom clause
 
       case clause
       when CLAUSE_EQUALS
@@ -157,6 +157,5 @@ module Hammerstone::Refine::Conditions
     def apply_clause_not_set(table)
       table.grouping(table[:"#{attribute}"].eq(nil))
     end
-
   end
 end

@@ -4,11 +4,11 @@ module Hammerstone::Refine::Conditions
 
     CLAUSE_TRUE = Clauses::TRUE
     CLAUSE_FALSE = Clauses::FALSE
-    CLAUSE_SET = Clauses::SET #non null
-    CLAUSE_NOT_SET = Clauses::NOT_SET #null
+    CLAUSE_SET = Clauses::SET # non null
+    CLAUSE_NOT_SET = Clauses::NOT_SET # null
 
     def component
-      'boolean-condition'
+      "boolean-condition"
     end
 
     def boot
@@ -49,16 +49,15 @@ module Hammerstone::Refine::Conditions
 
     def clauses
       [
-        Clause.new(CLAUSE_TRUE, 'Is True'),
-        Clause.new(CLAUSE_FALSE, 'Is False'),
-        Clause.new(CLAUSE_SET, 'Is Not Set'),
-        Clause.new(CLAUSE_NOT_SET, 'Is Not Set'),
+        Clause.new(CLAUSE_TRUE, "Is True"),
+        Clause.new(CLAUSE_FALSE, "Is False"),
+        Clause.new(CLAUSE_SET, "Is Not Set"),
+        Clause.new(CLAUSE_NOT_SET, "Is Not Set"),
       ]
     end
 
     # TODO: Remove input here
     def apply_condition(input, table)
-
       case clause
       when CLAUSE_SET
         apply_clause_set(table)
@@ -73,7 +72,7 @@ module Hammerstone::Refine::Conditions
         apply_clause_false(table)
       end
 
-      #Apply a custom clause
+      # Apply a custom clause
     end
 
     def apply_clause_set(table)
@@ -89,7 +88,7 @@ module Hammerstone::Refine::Conditions
     end
 
     def apply_clause_bool(table, bool)
-      if @nulls_are ==  bool
+      if @nulls_are == bool
         table.grouping(table[:"#{attribute}"].eq(bool).or(table[:"#{attribute}"].eq(nil)))
       else
         table.grouping(table[:"#{attribute}"].eq(bool))
@@ -99,6 +98,5 @@ module Hammerstone::Refine::Conditions
     def apply_clause_false(table)
       apply_clause_bool(table, false)
     end
-
   end
 end

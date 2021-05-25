@@ -1,6 +1,5 @@
 module Hammerstone::Refine
   module TracksPendingRelationshipSubqueries
-
     def pending_relationship_subquery_depth
       @pending_relationship_subquery_depth ||= []
     end
@@ -19,7 +18,7 @@ module Hammerstone::Refine
       pending_relationship_subquery_depth.join(".children.").split(".").map(&:to_sym)
     end
 
-    def add_pending_relationship_subquery(subquery: , primary_key: , secondary_key: )
+    def add_pending_relationship_subquery(subquery:, primary_key:, secondary_key:)
       add_pending_relationship_subquery(subquery: subquery, primary_key: primary_key, secondary_key: secondary_key)
     end
 
@@ -34,20 +33,18 @@ module Hammerstone::Refine
         # If key exists, continue to next level (for nested relationships)
         if pending_relationship_subqueries.dig(key)
           next
-        else
+        elsif index == 0
           # Handle initial case
-          if index == 0
-            pending_relationship_subqueries[key] = {}
-          else
-            # Handle nested keys
-            existing_keys = array_of_keys[0..index-1]
-            pending_relationship_subqueries.dig(*existing_keys)[key] = {}
-          end
+          pending_relationship_subqueries[key] = {}
+        else
+          # Handle nested keys
+          existing_keys = array_of_keys[0..index - 1]
+          pending_relationship_subqueries.dig(*existing_keys)[key] = {}
         end
       end
     end
 
-    def add_pending_relationship_subquery(subquery:, primary_key: , secondary_key: nil)
+    def add_pending_relationship_subquery(subquery:, primary_key:, secondary_key: nil)
       # Add key, query, and secondary keys at the correct depth
       # Key path is built in set pending relationship
       pending_relationship_subqueries.dig(*get_current_relationship)[:key] = primary_key
@@ -94,7 +91,7 @@ module Hammerstone::Refine
       applied_query
     end
 
-    def commit_subset(query:nil, subset:)
+    def commit_subset(subset:, query: nil)
       # Turn pending subqueries into nodes to apply in the filter
       subset.each do |relation, subquery|
         child_nodes = subquery.dig(:children)
@@ -112,21 +109,21 @@ module Hammerstone::Refine
 
           if query.is_a? Arel::SelectManager
             # Where's called on AREL select managers modify the object in place
-            query.where(parent_table["#{linking_key}"].in(temp_query))
+            query.where(parent_table[linking_key.to_s].in(temp_query))
           else
             # Otherwise we are joining nodes, which requires an AND statement (ORs are immediately commited)
             # The group() in front of query is required for nested relationship attributes.
-            query = group(query).and(group(parent_table["#{linking_key}"].in(temp_query)))
+            query = group(query).and(group(parent_table[linking_key.to_s].in(temp_query)))
           end
         else
-          query = parent_table["#{linking_key}"].in(temp_query)
+          query = parent_table[linking_key.to_s].in(temp_query)
         end
       end
       query
     end
 
     def get_pending_relationship_subquery
-      get_pending_relationship_item('query')
+      get_pending_relationship_item("query")
     end
   end
 end

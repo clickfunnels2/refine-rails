@@ -17,38 +17,38 @@ module Hammerstone::Refine::Conditions
     CLAUSE_NOT_SET = Clauses::NOT_SET
 
     def component
-      'text-condition'
+      "text-condition"
     end
 
     def clauses
       [
-        Clause.new(CLAUSE_EQUALS, 'Equals')
-            .requires_inputs(['value']),
+        Clause.new(CLAUSE_EQUALS, "Equals")
+          .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_DOESNT_EQUAL, 'Does Not Equal')
-            .requires_inputs(['value']),
+        Clause.new(CLAUSE_DOESNT_EQUAL, "Does Not Equal")
+          .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_STARTS_WITH, 'Starts With')
-            .requires_inputs(['value']),
+        Clause.new(CLAUSE_STARTS_WITH, "Starts With")
+          .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_ENDS_WITH, 'Ends With')
-            .requires_inputs(['value']),
+        Clause.new(CLAUSE_ENDS_WITH, "Ends With")
+          .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_DOESNT_START_WITH, 'Does Not Start With')
-            .requires_inputs(['value']),
+        Clause.new(CLAUSE_DOESNT_START_WITH, "Does Not Start With")
+          .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_DOESNT_END_WITH, 'Does Not End With')
-            .requires_inputs(['value']),
+        Clause.new(CLAUSE_DOESNT_END_WITH, "Does Not End With")
+          .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_CONTAINS, 'Contains')
-            .requires_inputs(['value']),
+        Clause.new(CLAUSE_CONTAINS, "Contains")
+          .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_DOESNT_CONTAIN, 'Does Not Contain')
-            .requires_inputs(['value']),
+        Clause.new(CLAUSE_DOESNT_CONTAIN, "Does Not Contain")
+          .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_SET, 'Is Set'),
+        Clause.new(CLAUSE_SET, "Is Set"),
 
-        Clause.new(CLAUSE_NOT_SET, 'Is Not Set')
+        Clause.new(CLAUSE_NOT_SET, "Is Not Set")
       ]
     end
 

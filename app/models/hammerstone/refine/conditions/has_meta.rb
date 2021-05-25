@@ -1,5 +1,4 @@
 module Hammerstone::Refine::Conditions::HasMeta
-
   def meta
     @meta ||= {}
   end

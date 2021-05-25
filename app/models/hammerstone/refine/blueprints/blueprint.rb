@@ -1,47 +1,46 @@
 module Hammerstone::Refine::Blueprints
   class Blueprint
-
     def initialize
       @blueprint = []
       @depth = 0
     end
 
     def group(&block)
-      @depth = @depth+=1
+      @depth = @depth += 1
       instance_eval(&block)
-      @depth = @depth-=1
+      @depth = @depth -= 1
       self
     end
 
     def criterion(condition_id, input)
-      if !@blueprint.blank? && @blueprint.last[:type] == 'criterion'
-        raise 'Conjunction missing'
+      if !@blueprint.blank? && @blueprint.last[:type] == "criterion"
+        raise "Conjunction missing"
       end
 
       add({
-          type: 'criterion',
-          condition_id: condition_id,
-          depth: @depth,
-          input: input
-        })
+        type: "criterion",
+        condition_id: condition_id,
+        depth: @depth,
+        input: input
+      })
       self
     end
 
     def conjunction(word)
       add({
-        type: 'conjunction',
+        type: "conjunction",
         word: word,
         depth: @depth
       })
     end
 
     def and
-      conjunction('and')
+      conjunction("and")
       self
     end
 
     def or
-      conjunction('or')
+      conjunction("or")
       self
     end
 

@@ -19,14 +19,14 @@ module Hammerstone::Refine::Conditions
     CLAUSE_NOT_SET = Clauses::NOT_SET
 
     def component
-      'option-condition'
+      "option-condition"
     end
 
     def boot
       @nil_option_id = nil
       @options = nil
       @validate_selections = true
-      with_meta({ options: get_options })
+      with_meta({options: get_options})
       add_ensurance(ensure_options)
     end
 
@@ -57,7 +57,7 @@ module Hammerstone::Refine::Conditions
         developer_options = get_options.call
         # Options must be sent in as an array
         if !developer_options.is_a? Array
-          raise 'No options could be determined'
+          raise "No options could be determined"
         end
         # Each option must be a hash of values that includes :id and :display
         developer_options.each do |option|
@@ -71,7 +71,7 @@ module Hammerstone::Refine::Conditions
 
     def ensure_no_duplicates(developer_options)
       id_array = developer_options.map { |option| option[:id] }
-      duplicates = id_array.select{|id| id_array.count(id)>1 }.uniq
+      duplicates = id_array.select { |id| id_array.count(id) > 1 }.uniq
       if duplicates.present?
         raise Hammerstone::Refine::Conditions::Errors::OptionError.new("Options must have unique IDs. Duplicate #{duplicates} found.")
       end
@@ -79,26 +79,25 @@ module Hammerstone::Refine::Conditions
 
     def clauses
       [
-        Clause.new(CLAUSE_EQUALS, 'Is')
-            .requires_inputs(['selected']),
+        Clause.new(CLAUSE_EQUALS, "Is")
+          .requires_inputs(["selected"]),
 
-        Clause.new(CLAUSE_DOESNT_EQUAL, 'Is Not')
-            .requires_inputs(['selected']),
+        Clause.new(CLAUSE_DOESNT_EQUAL, "Is Not")
+          .requires_inputs(["selected"]),
 
-        Clause.new(CLAUSE_IN, 'Is One Of')
-            .requires_inputs(['selected']),
+        Clause.new(CLAUSE_IN, "Is One Of")
+          .requires_inputs(["selected"]),
 
-        Clause.new(CLAUSE_NOT_IN, 'Is Not One Of')
-            .requires_inputs(['selected']),
+        Clause.new(CLAUSE_NOT_IN, "Is Not One Of")
+          .requires_inputs(["selected"]),
 
-        Clause.new(CLAUSE_SET, 'Is Set'),
+        Clause.new(CLAUSE_SET, "Is Set"),
 
-        Clause.new(CLAUSE_NOT_SET, 'Is Not Set')
+        Clause.new(CLAUSE_NOT_SET, "Is Not Set")
       ]
     end
 
     def apply_condition(input, table)
-
       value = selected
 
       case clause
@@ -134,7 +133,7 @@ module Hammerstone::Refine::Conditions
 
     def nil_option_selected?(value)
       # Return false if no nil option id
-      return false if !nil_option_id
+      return false unless nil_option_id
       value.include? nil_option_id
     end
 
@@ -142,8 +141,8 @@ module Hammerstone::Refine::Conditions
       # Get developer configured options with nil_option_id removed and select only elements from requested ids
       # Extract values from either _value key or id key. _value can be a callable
       values = get_options.call.delete_if { |el| el[:id] == nil_option_id }
-              .select{|value| ids.include? value[:id]}
-              .map! { |value| (value.has_key? :_value) ? call_proc_if_callable(value[:_value]) : value[:id] }
+        .select { |value| ids.include? value[:id] }
+        .map! { |value| (value.has_key? :_value) ? call_proc_if_callable(value[:_value]) : value[:id] }
       single ? values[0] : values
     end
 

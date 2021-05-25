@@ -41,12 +41,12 @@ module Hammerstone::Refine
     def add_nodes_to_query(subquery:, nodes:, query_method:)
       # Apply existing nodes to existing subquery
       if subquery.present? && nodes.present?
-        if query_method == "and"
+        subquery = if query_method == "and"
           # Apply the nodes using the AREL AND method
-          subquery = subquery.send(query_method, group(nodes))
+          subquery.send(query_method, group(nodes))
         else
           # Override the AREL OR method in order to remove the automatic parens
-          subquery = Arel::Nodes::Or.new(subquery, group(nodes))
+          Arel::Nodes::Or.new(subquery, group(nodes))
         end
       # No nodes returned, do nothing
       elsif subquery.present? && nodes.blank?
@@ -73,10 +73,10 @@ module Hammerstone::Refine
         end
 
         # Check the word on the previous blueprint method. If it is not 'and'....?
-        if index == 0
-          query_method = "and"
+        query_method = if index == 0
+          "and"
         else
-          query_method = modified_blueprint[index - 1][:word] == "and" ? "and" : "or"
+          modified_blueprint[index - 1][:word] == "and" ? "and" : "or"
         end
 
         # If the new depth is deeper than our current depth, that means we're
@@ -92,7 +92,7 @@ module Hammerstone::Refine
           # Add the recursive subquery nodes to the existing query and modify the query
           subquery = add_nodes_to_query(subquery: subquery, nodes: recursive_nodes, query_method: query_method)
 
-          for cursor in index..modified_blueprint.length - 1 do
+          (index..modified_blueprint.length - 1).each do |cursor|
             if modified_blueprint[cursor][:depth] <= depth
               break
             end
@@ -103,10 +103,10 @@ module Hammerstone::Refine
           next
         end
         # If there are any ORs at this depth, commit subqueries
-        if modified_blueprint.select { |item| (item[:type] == "conjunction" && item[:word] == "or" && item[:depth] == depth) }.present?
-          @immediately_commit_pending_relationship_subqueries = true
+        @immediately_commit_pending_relationship_subqueries = if modified_blueprint.select { |item| (item[:type] == "conjunction" && item[:word] == "or" && item[:depth] == depth) }.present?
+          true
         else
-          @immediately_commit_pending_relationship_subqueries = false
+          false
         end
         # If it is a relationship attribute apply_condition will call apply_relationship_attribute which will set up the pending relationship
         # subquery but will not return a value.

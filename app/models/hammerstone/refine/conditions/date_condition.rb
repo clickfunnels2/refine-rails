@@ -5,8 +5,8 @@ module Hammerstone::Refine::Conditions
 
     validate :dates_must_be_real
 
-    cattr_accessor :default_user_timezone, default: 'UTC', instance_accessor: false
-    cattr_accessor :default_database_timezone, default: 'UTC', instance_accessor: false
+    cattr_accessor :default_user_timezone, default: "UTC", instance_accessor: false
+    cattr_accessor :default_database_timezone, default: "UTC", instance_accessor: false
     attr_reader :date1, :date2, :days
 
     CLAUSE_EQUALS = Clauses::EQUALS
@@ -29,8 +29,16 @@ module Hammerstone::Refine::Conditions
 
     def dates_must_be_real
       # If date parameter exists but cannot be coerce into a Date Object, add error
-      real_date1 = Date.strptime(date1, '%Y-%m-%d') rescue false
-      real_date2 = Date.strptime(date2, '%Y-%m-%d') rescue false
+      real_date1 = begin
+        Date.strptime(date1, "%Y-%m-%d")
+      rescue
+        false
+      end
+      real_date2 = begin
+        Date.strptime(date2, "%Y-%m-%d")
+      rescue
+        false
+      end
       if !real_date1 && date1
         errors.add(:base, "date1 is not a real date")
       end
@@ -63,7 +71,7 @@ module Hammerstone::Refine::Conditions
     end
 
     def component
-      'date-condition'
+      "date-condition"
     end
 
     def attribute_is_date
@@ -76,7 +84,7 @@ module Hammerstone::Refine::Conditions
       self
     end
 
-    def attribute_is_unix_timestamp #time
+    def attribute_is_unix_timestamp # time
       attribute_is(ATTRIBUTE_TYPE_UNIX_TIMESTAMP)
     end
 
@@ -109,33 +117,33 @@ module Hammerstone::Refine::Conditions
 
     def clauses
       [
-        Clause.new(CLAUSE_EQUALS, 'Is Equal To')
-                .requires_inputs('date1'),
+        Clause.new(CLAUSE_EQUALS, "Is Equal To")
+          .requires_inputs("date1"),
 
-        Clause.new(CLAUSE_DOESNT_EQUAL, 'Is Not Equal To')
-            .requires_inputs('date1'),
+        Clause.new(CLAUSE_DOESNT_EQUAL, "Is Not Equal To")
+          .requires_inputs("date1"),
 
-        Clause.new(CLAUSE_LESS_THAN_OR_EQUAL, 'Is On or Before')
-            .requires_inputs('date1'),
+        Clause.new(CLAUSE_LESS_THAN_OR_EQUAL, "Is On or Before")
+          .requires_inputs("date1"),
 
-        Clause.new(CLAUSE_GREATER_THAN_OR_EQUAL, 'Is On or After')
-            .requires_inputs('date1'),
+        Clause.new(CLAUSE_GREATER_THAN_OR_EQUAL, "Is On or After")
+          .requires_inputs("date1"),
 
-        Clause.new(CLAUSE_BETWEEN, 'Is Between')
-            .requires_inputs(['date1', 'date2']),
+        Clause.new(CLAUSE_BETWEEN, "Is Between")
+          .requires_inputs(["date1", "date2"]),
 
-        Clause.new(CLAUSE_GREATER_THAN, 'Is More Than')
-            .requires_inputs(['days', 'modifier']),
+        Clause.new(CLAUSE_GREATER_THAN, "Is More Than")
+          .requires_inputs(["days", "modifier"]),
 
-        Clause.new(CLAUSE_EXACTLY, 'Is Exactly')
-            .requires_inputs(['days', 'modifier']),
+        Clause.new(CLAUSE_EXACTLY, "Is Exactly")
+          .requires_inputs(["days", "modifier"]),
 
-        Clause.new(CLAUSE_LESS_THAN, 'Is Less Than')
-            .requires_inputs(['days', 'modifier']),
+        Clause.new(CLAUSE_LESS_THAN, "Is Less Than")
+          .requires_inputs(["days", "modifier"]),
 
-        Clause.new(CLAUSE_SET, 'Is Set'),
+        Clause.new(CLAUSE_SET, "Is Set"),
 
-        Clause.new(CLAUSE_NOT_SET, 'Is Not Set'),
+        Clause.new(CLAUSE_NOT_SET, "Is Not Set"),
 
       ]
     end
@@ -154,7 +162,6 @@ module Hammerstone::Refine::Conditions
     end
 
     def apply_condition(input, table)
-
       if clause == CLAUSE_SET
         return apply_clause_set(table)
       end
@@ -180,8 +187,8 @@ module Hammerstone::Refine::Conditions
       # If the user has requested a certain number of days 'ago',then value
       # needs to be negative
 
-      if modifier == 'ago'
-        modified_days *=- 1
+      if modifier == "ago"
+        modified_days *= - 1
       end
       (Date.current + modified_days).strftime("%Y-%m-%d")
     end
@@ -190,9 +197,9 @@ module Hammerstone::Refine::Conditions
       modifier = input[:modifier]
       case clause
       when CLAUSE_GREATER_THAN
-        modifier == 'ago' ? CLAUSE_LESS_THAN : CLAUSE_GREATER_THAN
+        modifier == "ago" ? CLAUSE_LESS_THAN : CLAUSE_GREATER_THAN
       when CLAUSE_LESS_THAN
-        modifier == 'ago' ? CLAUSE_GREATER_THAN : CLAUSE_LESS_THAN
+        modifier == "ago" ? CLAUSE_GREATER_THAN : CLAUSE_LESS_THAN
       when CLAUSE_EXACTLY
         CLAUSE_EQUALS
       end
@@ -208,7 +215,7 @@ module Hammerstone::Refine::Conditions
 
       offset = database_local.utc_offset
       # Arel will convert to UTC before seaching, so add offset to account for db timezone
-      utc_start = database_local.in_time_zone('UTC')
+      utc_start = database_local.in_time_zone("UTC")
       utc_start + offset
     end
 
@@ -217,7 +224,7 @@ module Hammerstone::Refine::Conditions
       end_of_day = day_in_user_tz.end_of_day
       database_local = end_of_day.in_time_zone(database_timezone)
       offset = database_local.utc_offset
-      utc_end = database_local.in_time_zone('UTC')
+      utc_end = database_local.in_time_zone("UTC")
       utc_end + offset
     end
 
@@ -228,14 +235,14 @@ module Hammerstone::Refine::Conditions
       # Day will be 00 based
       day_in_user_tz = day.to_time.in_time_zone(user_timezone)
 
-      options = { hour: current_time.hour, min: current_time.min, sec: current_time.sec }
+      options = {hour: current_time.hour, min: current_time.min, sec: current_time.sec}
 
       # The queried day shifted to local time hour::min::sec
       day_time_shifted = day_in_user_tz.change(options)
 
       database_local = day_time_shifted.in_time_zone(database_timezone)
       offset = database_local.utc_offset
-      utc_comparison_time = database_local.in_time_zone('UTC')
+      utc_comparison_time = database_local.in_time_zone("UTC")
       utc_comparison_time + offset
     end
 

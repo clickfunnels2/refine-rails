@@ -1,19 +1,18 @@
 module Hammerstone::Refine::Conditions
   module HasClauses
-
     def boot_has_clauses
       @show_clauses = {}
-      add_rules({ clause: "required" })
-      with_meta({ clauses: get_clauses })
+      add_rules({clause: "required"})
+      with_meta({clauses: get_clauses})
       add_ensurance(ensure_clauses)
       before_validate(before_clause_validation)
     end
 
-    #beforeValidationOfClause in PHP callback land
+    # beforeValidationOfClause in PHP callback land
     def before_clause_validation(input = [])
       proc do |input|
         if input.present?
-          current_clause = clauses.select{ |clause| clause.id == input[:clause] }
+          current_clause = clauses.select { |clause| clause.id == input[:clause] }
           if current_clause.present?
             add_rules(current_clause[0].rules)
           end
@@ -27,19 +26,19 @@ module Hammerstone::Refine::Conditions
 
     def only_clauses(specific_clauses)
       # Remove all clauses
-      clauses.map(&:id).each {|clause_id| update_show_clauses(clause_id, false) }
+      clauses.map(&:id).each { |clause_id| update_show_clauses(clause_id, false) }
       # Add specific clauses by id, not by fully qualified clause
-      specific_clauses.each {|clause| update_show_clauses(clause, true) }
+      specific_clauses.each { |clause| update_show_clauses(clause, true) }
       self
     end
 
     def with_clauses(clauses_to_include)
-      clauses_to_include.each {|clause| update_show_clauses(clause, true) }
+      clauses_to_include.each { |clause| update_show_clauses(clause, true) }
       self
     end
 
     def without_clauses(clauses_to_exclude)
-      clauses_to_exclude.each {|clause| update_show_clauses(clause, false) }
+      clauses_to_exclude.each { |clause| update_show_clauses(clause, false) }
       self
     end
 
@@ -54,19 +53,19 @@ module Hammerstone::Refine::Conditions
           clauses.each { |clause| ensure_clause(clause) }
         else
           errors.add(:base, "No clause could be determined?")
-          raise Errors::ConditionClauseError, "#{errors.full_messages}"
+          raise Errors::ConditionClauseError, errors.full_messages.to_s
         end
       end
     end
 
     def ensure_clause(clause)
       if !clause.is_a? Clause
-        errors.add(:base, "Every clause must be an instance of #{Clause::class}")
-        raise Errors::ConditionClauseError, "#{errors.full_messages}"
+        errors.add(:base, "Every clause must be an instance of #{Clause.class}")
+        raise Errors::ConditionClauseError, errors.full_messages.to_s
       end
       if clause.id.blank? || clause.display.blank?
         errors.add(:base, "A clause must have both id and display keys")
-        raise Errors::ConditionClauseError, "#{errors.full_messages}"
+        raise Errors::ConditionClauseError, errors.full_messages.to_s
       end
     end
 
@@ -75,12 +74,12 @@ module Hammerstone::Refine::Conditions
         returned_clauses = clauses.dup
 
         @show_clauses.each do |clause_id, rule|
-          filterable_clause_index = returned_clauses.index{ |clause| clause.id.to_sym == clause_id }
+          filterable_clause_index = returned_clauses.index { |clause| clause.id.to_sym == clause_id }
           if rule == false
             returned_clauses.delete_at(filterable_clause_index)
           elsif rule == true
-            add_clause = returned_clauses.find{|clause| clause.id.to_sym == clause_id }
-            returned_clauses << add_clause if !add_clause
+            add_clause = returned_clauses.find { |clause| clause.id.to_sym == clause_id }
+            returned_clauses << add_clause unless add_clause
           end
         end
         returned_clauses

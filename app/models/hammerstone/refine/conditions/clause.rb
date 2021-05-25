@@ -4,7 +4,7 @@ module Hammerstone::Refine::Conditions
 
     attr_reader :id, :display, :rules
 
-    def initialize(id=nil, display=nil)
+    def initialize(id = nil, display = nil)
       @id = id
       @display = display
       @rules = {}
@@ -25,7 +25,7 @@ module Hammerstone::Refine::Conditions
     def requires_inputs(fields)
       # Coerce field to an array
       [*fields].each do |field|
-        @rules.merge!({"#{field}": 'required'})
+        @rules.merge!({"#{field}": "required"})
       end
       self
     end

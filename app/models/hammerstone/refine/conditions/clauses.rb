@@ -1,37 +1,36 @@
 module Hammerstone::Refine::Conditions
-
   class Clauses
-    EQUALS = 'eq'
-    DOESNT_EQUAL = 'dne'
+    EQUALS = "eq"
+    DOESNT_EQUAL = "dne"
 
-    SET = 'st'
-    NOT_SET = 'nst'
+    SET = "st"
+    NOT_SET = "nst"
 
-    TRUE = 'true'
-    FALSE = 'false'
+    TRUE = "true"
+    FALSE = "false"
 
-    LESS_THAN_OR_EQUAL = 'lte'
-    LESS_THAN = 'lt'
-    BETWEEN = 'btwn'
-    NOT_BETWEEN = 'nbtwn'
-    GREATER_THAN = 'gt'
-    GREATER_THAN_OR_EQUAL = 'gte'
+    LESS_THAN_OR_EQUAL = "lte"
+    LESS_THAN = "lt"
+    BETWEEN = "btwn"
+    NOT_BETWEEN = "nbtwn"
+    GREATER_THAN = "gt"
+    GREATER_THAN_OR_EQUAL = "gte"
 
-    EXACTLY = 'exct'
+    EXACTLY = "exct"
 
-    EXISTS = 'exst'
-    DOESNT_EXIST = 'dexst'
+    EXISTS = "exst"
+    DOESNT_EXIST = "dexst"
 
-    IN = 'in'
-    NOT_IN = 'nin'
+    IN = "in"
+    NOT_IN = "nin"
 
-    CONTAINS = 'cont'
-    DOESNT_CONTAIN = 'dcont'
+    CONTAINS = "cont"
+    DOESNT_CONTAIN = "dcont"
 
-    STARTS_WITH = 'sw'
-    ENDS_WITH = 'ew'
+    STARTS_WITH = "sw"
+    ENDS_WITH = "ew"
 
-    DOESNT_START_WITH = 'dsw'
-    DOESNT_END_WITH = 'dew'
+    DOESNT_START_WITH = "dsw"
+    DOESNT_END_WITH = "dew"
   end
 end

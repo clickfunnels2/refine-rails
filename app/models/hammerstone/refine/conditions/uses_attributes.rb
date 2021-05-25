@@ -1,6 +1,5 @@
 module Hammerstone::Refine::Conditions
   module UsesAttributes
-
     def with_attribute(value)
       @attribute = value
       self
@@ -21,15 +20,15 @@ module Hammerstone::Refine::Conditions
 
       # Get the Reflection object aka the relationship.
       # First iteration pull relationship using base query which responds to model.
-      if query.respond_to? :model
-        instance = query.model.reflect_on_association(relation.to_sym)
+      instance = if query.respond_to? :model
+        query.model.reflect_on_association(relation.to_sym)
       else
         # When query is sent in as subquery (recursive) the query object is the model class pulled from the
         # previous instance value
-        instance = query.reflect_on_association(relation.to_sym)
+        query.reflect_on_association(relation.to_sym)
       end
 
-      raise "Relationship does not exist for #{relation}. Did you mistakenly configure your filter to use the plural form?" if !instance
+      raise "Relationship does not exist for #{relation}. Did you mistakenly configure your filter to use the plural form?" unless instance
 
       filter.set_pending_relationship(relation, instance)
 
@@ -62,16 +61,12 @@ module Hammerstone::Refine::Conditions
       end
     end
 
-    def create_pending_wherein_subquery(input:, relation:, instance:, query: )
+    def create_pending_wherein_subquery(input:, relation:, instance:, query:)
       query_class = instance.klass
 
       subquery_table = instance.klass.arel_table
 
-      if filter.get_pending_relationship_subquery
-        subquery = filter.get_pending_relationship_subquery
-      else
-        subquery = subquery_table.project(subquery_table["#{key_2(instance)}"])
-      end
+      subquery = filter.get_pending_relationship_subquery || subquery_table.project(subquery_table[key_2(instance).to_s])
       filter.add_pending_relationship_subquery(subquery: subquery, primary_key: key_1(instance), secondary_key: key_2(instance))
       # Apply condition scoped to existing subquery
       apply_and_add_to_query(query_class: query_class, table: subquery_table, input: input, subquery: subquery)
@@ -101,26 +96,22 @@ module Hammerstone::Refine::Conditions
 
       query_class = instance.klass
       # Keys to join users and countries
-      through_primary_key = instance.through_reflection.join_primary_key.to_sym #country_id
-      through_foreign_key = instance.through_reflection.join_foreign_key #id
+      through_primary_key = instance.through_reflection.join_primary_key.to_sym # country_id
+      through_foreign_key = instance.through_reflection.join_foreign_key # id
 
       # Keys to join users and posts
-      join_primary = instance.join_primary_key.to_sym #hmtt_user_id
-      join_foreign = instance.join_foreign_key.to_sym #id
+      join_primary = instance.join_primary_key.to_sym # hmtt_user_id
+      join_foreign = instance.join_foreign_key.to_sym # id
 
       # posts table
       subquery_table = instance.klass.arel_table
 
-      #base select manager
+      # base select manager
       base_select = through_table.project(through_table[through_primary_key])
 
       second_join = through_table[join_foreign].eq(subquery_table[join_primary])
 
-      if filter.get_pending_relationship_subquery
-        subquery = filter.get_pending_relationship_subquery
-      else
-        subquery = base_select.join(subquery_table).on(second_join)
-      end
+      subquery = filter.get_pending_relationship_subquery || base_select.join(subquery_table).on(second_join)
 
       filter.add_pending_relationship_subquery(subquery: subquery, primary_key: through_foreign_key, secondary_key: nil)
 

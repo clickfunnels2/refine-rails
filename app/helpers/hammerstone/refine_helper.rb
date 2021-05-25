@@ -9,9 +9,9 @@ module Hammerstone
       new_blueprint.push []
 
       @refine_filter.blueprint.each_with_index do |piece, index|
-        if piece[:word] == 'or'
+        if piece[:word] == "or"
           new_blueprint.push []
-        elsif piece[:word] == 'and'
+        elsif piece[:word] == "and"
           next
         else
           piece[:position] = index
@@ -59,7 +59,7 @@ module Hammerstone
     end
 
     def uncategorized_conditions
-      conditions.filter{ |condition| condition[:meta][:category].nil? }
+      conditions.filter { |condition| condition[:meta][:category].nil? }
     end
 
     def blueprint

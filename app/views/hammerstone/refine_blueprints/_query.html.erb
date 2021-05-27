@@ -23,6 +23,7 @@
     <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex items-center', data: {
       controller: "refine--add" }) do %>
       <button
+        id="open_filter"
         class="text-center px-4 py-2 border border-gray-300 shadow-sm text-md font-bold rounded-md text-gray-600 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 w-full mt-2"
         data-action="click->refine--add#group"
         type="submit"

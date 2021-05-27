@@ -92,6 +92,7 @@ module Hammerstone::Refine
           # Add the recursive subquery nodes to the existing query and modify the query
           subquery = add_nodes_to_query(subquery: subquery, nodes: recursive_nodes, query_method: query_method)
 
+          cursor = index
           (index..modified_blueprint.length - 1).each do |cursor|
             if modified_blueprint[cursor][:depth] <= depth
               break

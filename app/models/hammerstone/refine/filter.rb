@@ -92,15 +92,8 @@ module Hammerstone::Refine
           # Add the recursive subquery nodes to the existing query and modify the query
           subquery = add_nodes_to_query(subquery: subquery, nodes: recursive_nodes, query_method: query_method)
 
-          cursor = index
-          (index..modified_blueprint.length - 1).each do |cursor|
-            if modified_blueprint[cursor][:depth] <= depth
-              break
-            end
-          end
-
           # Skip indexes handled by recursive call
-          index = cursor + 1
+          index = fast_forward(index, modified_blueprint, depth) + 1
           next
         end
         # If there are any ORs at this depth, commit subqueries
@@ -127,6 +120,15 @@ module Hammerstone::Refine
       final_depth_nodes = commit_pending_relationship_subqueries
       # Add nodes to existing query and return existing query
       add_nodes_to_query(subquery: subquery, nodes: final_depth_nodes, query_method: query_method)
+    end
+
+    def fast_forward(index, modified_blueprint, depth)
+      fast_forward_index = (index..modified_blueprint.length - 1).each do |cursor|
+        break cursor if modified_blueprint[cursor][:depth] <= depth
+      end
+      # TODO refactor for clarity. If I break early from the iterator I have an int. If not,
+      # default to modfied_blueprint.length -1 as the correct value
+      (fast_forward_index.is_a? Integer) ? fast_forward_index : modified_blueprint.length - 1
     end
 
     def group(nodes)

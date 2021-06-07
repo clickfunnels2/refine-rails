@@ -2,20 +2,15 @@ module Hammerstone::Refine::Conditions
   class Clause
     include HasMeta
 
-    attr_reader :id, :display, :rules
+    attr_reader :id, :rules
+    attr_accessor :display
 
     def initialize(id = nil, display = nil)
       @id = id
-      @display = display
+      @display = display || id.humanize(keep_id_suffix: true).titleize
       @rules = {}
       @messages
     end
-
-    # def rules(rules, messages)
-    #   @rules = rules
-    #   @messages = messages
-    #   self
-    # end
 
     def with_rules(user_defined_hash)
       @rules.merge!(user_defined_hash)

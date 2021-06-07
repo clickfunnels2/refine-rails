@@ -3,6 +3,8 @@ module Hammerstone::Refine::Conditions
     include ActiveModel::Validations
     include HasClauses
 
+    cattr_accessor :default_clause_display_map, default: {}, instance_accessor: false
+
     validates :value1, numericality: true, allow_nil: true
     validates :value2, numericality: true, allow_nil: true
 

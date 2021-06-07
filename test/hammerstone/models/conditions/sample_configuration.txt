@@ -1,0 +1,96 @@
+@configuration = {
+    type: "Hammerstone Refine UserFilter",
+    blueprint: [[
+      {
+        depth: 1,
+        type: "criterion",
+        condition_id: "automation_emails",
+        input: {
+          clause: "eq",
+          selected: [
+            "my_new_automation"
+          ]
+        }
+      }], [
+        {
+          depth: 1,
+          type: "criterion",
+          condition_id: "most_recent_purchase",
+          input: {
+            clause: "eq",
+            date1: "2021-02-13"
+          }
+        }
+      ]],
+    conditions: [{
+                   id: "automation_emails",
+                   component: "option-condition",
+                   display: "Automation Emails",
+                   meta: {
+                     clauses: [{
+                                 id: "eq",
+                                 display: "has received",
+                                 meta: [],
+                               },{
+                                 id: "dne",
+                                 display: "has not received",
+                                 meta: [],
+                               }],
+                     options: [{
+                                 id: "my_new_automation",
+                                 display: "My New Automation"
+                               },{
+                                 id: "my_old_automation","display": "My Old Automation"
+                               }],
+                   }
+                 },{
+                   id: "most_recent_purchase",
+                   component: "date-condition",
+                   display: "Most Recent Purchase",
+                   meta: {
+                     clauses: [{
+                                 id: "eq",
+                                 display: "Is Equal To",
+                                 meta: [],
+                               },{
+                                 id: "dne",
+                                 display: "Is Not Equal To",
+                                 meta: [],
+                               },{
+                                 id: "lte",
+                                 display: "Is On or Before",
+                                 meta: [],
+                               },{
+                                 id: "gte",
+                                 display: "Is On or After",
+                                 meta: [],
+                               },{
+                                 id: "btwn",
+                                 display: "Is Between",
+                                 meta: [],
+                               },{
+                                 id: "gt",
+                                 display: "Is More Than",
+                                 meta: [],
+                               },{
+                                 id: "exct",
+                                 display: "Is Exactly",
+                                 meta: [],
+                               },{
+                                 id: "lt",
+                                 display: "Is Less Than",
+                                 meta: [],
+                               },{
+                                 id: "st",
+                                 display: "Is Set",
+                                 meta: [],
+                               },{
+                                 id: "nst",
+                                 display: "Is Not Set",
+                                 meta: [],
+                               }],
+                   },
+                 }],
+    stable_id: nil
+    }
+Co

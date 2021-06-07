@@ -4,8 +4,7 @@ module Hammerstone::Refine::Conditions::HasMeta
   end
 
   def with_meta(value)
-    @meta ||= {}
-    @meta.merge!(value)
+    meta.merge!(value)
     self
   end
 end

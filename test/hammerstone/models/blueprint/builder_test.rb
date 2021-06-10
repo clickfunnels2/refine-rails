@@ -91,68 +91,68 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
   def nested_condition_blueprint
     [
       {
-        'type': "criterion",
-        'condition_id': "id",
-        'depth': 0,
-        'input': {
-          'clause': "eq",
-          'value': "one",
+        type: "criterion",
+        condition_id: "id",
+        depth: 0,
+        input: {
+          clause: "eq",
+          value: "one",
         },
       },
       {
-        'type': "conjunction",
-        'word': "and",
-        'depth': 0,
+        type: "conjunction",
+        word: "and",
+        depth: 0,
       },
       {
-        'type': "criterion",
-        'condition_id': "id",
-        'depth': 2,
-        'input': {
-          'clause': "eq",
-          'value': "two",
+        type: "criterion",
+        condition_id: "id",
+        depth: 2,
+        input: {
+          clause: "eq",
+          value: "two",
         },
       },
       {
-        'type': "conjunction",
-        'word': "and",
-        'depth': 2,
+        type: "conjunction",
+        word: "and",
+        depth: 2,
       },
       {
-        'type': "criterion",
-        'condition_id': "id",
-        'depth': 2,
-        'input': {
-          'clause': "eq",
-          'value': "three",
+        type: "criterion",
+        condition_id: "id",
+        depth: 2,
+        input: {
+          clause: "eq",
+          value: "three",
         },
       },
       {
-        'type': "conjunction",
-        'word': "and",
-        'depth': 1,
+        type: "conjunction",
+        word: "and",
+        depth: 1,
       },
       {
-        'type': "criterion",
-        'condition_id': "id",
-        'depth': 1,
-        'input': {
-          'clause': "eq",
-          'value': "four",
+        type: "criterion",
+        condition_id: "id",
+        depth: 1,
+        input: {
+          clause: "eq",
+          value: "four",
         },
       },
       {
-        'type': "conjunction",
-        'word': "and",
-        'depth': 0,
+        type: "conjunction",
+        word: "and",
+        depth: 0,
       },
       {
-        'type': "criterion",
-        'condition_id': "id",
-        'depth': 0,
-        'input': {
-          'clause': "eq",
-          'value': "five",
+        type: "criterion",
+        condition_id: "id",
+        depth: 0,
+        input: {
+          clause: "eq",
+          value: "five",
         },
       }
     ]
@@ -161,40 +161,40 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
   def filter_with_groups_blueprint
     [
       {
-        'type': "criterion",
-        'condition_id': "id",
-        'depth': 0,
-        'input': {
-          'clause': "eq",
-          'value1': "one",
+        type: "criterion",
+        condition_id: "id",
+        depth: 0,
+        input: {
+          clause: "eq",
+          value1: "one",
         },
       },
       {
-        'type': "conjunction",
-        'word': "and",
-        'depth': 0,
+        type: "conjunction",
+        word: "and",
+        depth: 0,
       },
       {
-        'type': "criterion",
-        'condition_id': "id",
-        'depth': 1,
-        'input': {
-          'clause': "eq",
-          'value1': "two"
+        type: "criterion",
+        condition_id: "id",
+        depth: 1,
+        input: {
+          clause: "eq",
+          value1: "two"
         }
       },
       {
-        'type': "conjunction",
-        'word': "and",
-        'depth': 1,
+        type: "conjunction",
+        word: "and",
+        depth: 1,
       },
       {
-        'type': "criterion",
-        'condition_id': "id",
-        'depth': 1,
-        'input': {
-          'clause': "eq",
-          'value1': "three"
+        type: "criterion",
+        condition_id: "id",
+        depth: 1,
+        input: {
+          clause: "eq",
+          value1: "three"
         }
       }
     ]
@@ -203,12 +203,12 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
   def single_condition_blueprint
     [
       {
-        "depth": 0,
-        "type": "criterion",
-        "condition_id": "id",
-        "input": {
-          "clause": "eq",
-          "value1": "foo"
+        depth: 0,
+        type: "criterion",
+        condition_id: "id",
+        input: {
+          clause: "eq",
+          value1: "foo"
         }
       }
     ]
@@ -217,26 +217,26 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
   def and_condition_blueprint
     [
       {
-        "depth": 0,
-        "type": "criterion",
-        "condition_id": "id",
-        "input": {
-          "clause": "eq",
-          "value1": "fun"
+        depth: 0,
+        type: "criterion",
+        condition_id: "id",
+        input: {
+          clause: "eq",
+          value1: "fun"
         }
       },
       { # conjunction
-        "depth": 0,
-        "type": "conjunction",
-        "word": "and"
+        depth: 0,
+        type: "conjunction",
+        word: "and"
       },
       { # criterion
-        "depth": 0,
-        "type": "criterion",
-        "condition_id": "id",
-        "input": {
-          "clause": "eq",
-          "value1": "inthesun"
+        depth: 0,
+        type: "criterion",
+        condition_id: "id",
+        input: {
+          clause: "eq",
+          value1: "inthesun"
         }
       }
     ]
@@ -245,26 +245,26 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
   def or_condition_blueprint
     [
       {
-        "depth": 0,
-        "type": "criterion",
-        "condition_id": "id",
-        "input": {
-          "clause": "eq",
-          "value1": "dogs"
+        depth: 0,
+        type: "criterion",
+        condition_id: "id",
+        input: {
+          clause: "eq",
+          value1: "dogs"
         }
       },
       { # conjunction
-        "depth": 0,
-        "type": "conjunction",
-        "word": "or"
+        depth: 0,
+        type: "conjunction",
+        word: "or"
       },
       { # criterion
-        "depth": 0,
-        "type": "criterion",
-        "condition_id": "id",
-        "input": {
-          "clause": "eq",
-          "value1": "cats"
+        depth: 0,
+        type: "criterion",
+        condition_id: "id",
+        input: {
+          clause: "eq",
+          value1: "cats"
         }
       }
     ]

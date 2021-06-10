@@ -303,72 +303,72 @@ describe Hammerstone::Refine::Filter do
 
   def bad_id
     [{
-      "depth": 0,
-      "type": "criterion",
-      "condition_id": "fake",
-      "input": {
-        "clause": "eq",
-        "value": "aaron"
+      depth: 0,
+      type: "criterion",
+      condition_id: "fake",
+      input: {
+        clause: "eq",
+        value: "aaron"
       }
     }]
   end
 
   def single_condition_blueprint
     [{
-      "depth": 0,
-      "type": "criterion",
-      "condition_id": "text_field_value",
-      "input": {
-        "clause": "eq",
-        "value": "aaron"
+      depth: 0,
+      type: "criterion",
+      condition_id: "text_field_value",
+      input: {
+        clause: "eq",
+        value: "aaron"
       }
     }]
   end
 
   def and_condition_blueprint
     [{ # criterion aaron and aa
-      "depth": 0,
-      "type": "criterion",
-      "condition_id": "text_field_value",
-      "input": {
-        "clause": "eq",
-        "value": "aaron"
+      depth: 0,
+      type: "criterion",
+      condition_id: "text_field_value",
+      input: {
+        clause: "eq",
+        value: "aaron"
       }
     }, { # conjunction
-      "depth": 0,
-      "type": "conjunction",
-      "word": "and"
+      depth: 0,
+      type: "conjunction",
+      word: "and"
     }, { # criterion
-      "depth": 0,
-      "type": "criterion",
-      "condition_id": "text_field_value",
-      "input": {
-        "clause": "eq",
-        "value": "aa"
+      depth: 0,
+      type: "criterion",
+      condition_id: "text_field_value",
+      input: {
+        clause: "eq",
+        value: "aa"
       }
     }]
   end
 
   def or_condition_blueprint
     [{ # criterion aaron OR aa
-      "depth": 0,
-      "type": "criterion",
-      "condition_id": "text_field_value",
-      "input": {
-        "clause": "eq",
-        "value": "aaron"
+      depth: 0,
+      type: "criterion",
+      condition_id: "text_field_value",
+      input: {
+        clause: "eq",
+        value: "aaron"
       }
     }, { # conjunction
-      "depth": 0,
-      "type": "conjunction",
-      "word": "or"
+      depth: 0,
+      type: "conjunction",
+      word: "or"
     }, { # criterion
-      "depth": 0,
-      "type": "criterion",
-      "condition_id": "text_field_value",
-      "input": {
-        "clause": "eq",
-        "value": "aa"
+      depth: 0,
+      type: "criterion",
+      condition_id: "text_field_value",
+      input: {
+        clause: "eq",
+        value: "aa"
       }
     }]
   end

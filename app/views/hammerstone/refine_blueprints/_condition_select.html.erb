@@ -1,0 +1,36 @@
+<% selected_condition_id = first_condition[:id] if local_assigns[:selected_condition_id].nil? %>
+
+<%= tag.div data: {
+  action: "$change->refine--update#condition",
+  controller: 'fields--super-select',
+  fields__super_select_enable_search_value: 'false',
+  fields__super_select_container_width_value: 'resolve',
+} do %>
+  <select
+    data-fields--super-select-target="select"
+    data-condition-id="selected_condition_id"
+    name="conditions"
+    class="w-full sm:w-auto"
+  >
+    <% categories.each do |category| %>
+      <optgroup label="<%= category %>">
+        <% conditions_for_category(category).each do |condition_option| %>
+          <option
+            value="<%= condition_option[:id] %>"
+            <% if selected_condition_id == condition_option[:id] %>selected<% end %>
+          >
+            <%= condition_option[:display] %>
+          </option>
+        <% end %>
+      </optgroup>
+    <% end %>
+    <% uncategorized_conditions.each do |condition_option| %>
+      <option
+        value="<%= condition_option[:id] %>"
+        <% if selected_condition_id == condition_option[:id] %>selected<% end %>
+      >
+        <%= condition_option[:display] %>
+      </option>
+    <% end %>
+  </select>
+<% end %>

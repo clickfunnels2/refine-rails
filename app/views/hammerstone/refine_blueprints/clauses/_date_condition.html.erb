@@ -1,0 +1,68 @@
+<div class="flex items-center date-input mt-3 sm:mt-0">
+  <% if ['st', 'nst'].include? input[:clause] %>
+    <!-- render nothing -->
+  <% elsif ['exct', 'gt', 'lt'].include? input[:clause] %>
+    <div class="w-24">
+      <label for="<%= condition[:id] %>" class="sr-only">Number of days</label>
+      <input
+        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md w-full"
+        type="text"
+        value="<%= input[:days] %>"
+        placeholder="Number of days"
+        data-input-key="days"
+        data-action="input->refine--update#value"
+      />
+    </div>
+    <div class="px-2">
+      <span>days</span>
+    </div>
+    <div class="w-32">
+      <select
+        class="w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+        name="modifer"
+        <% if input[:modifier].blank? %>
+        data-controller="refine--defaults"
+        data-refine--defaults-input-value="{ &quot;modifier&quot;: &quot;ago&quot; }"
+        data-refine--defaults-criterion-id-value="<%= criterion_id %>"
+        <% end %>
+        data-input-key="modifier"
+        data-action="change->refine--update#value"
+      >
+        <option
+          <% if input[:modifier] == 'ago' %>selected<% end %>
+          value="ago"
+        >
+          ago
+        </option>
+        <option
+          <% if input[:modifier] == 'from_now' %>selected<% end %>
+          value="from_now"
+        >
+          from now
+        </option>
+      </select>
+    </div>
+  <% else %>
+    <div
+      class="<% if input[:clause] == 'btwn' %>flex-grow<% end %>"
+    >
+      <%= render partial: "hammerstone/refine_blueprints/clauses/date_picker", locals: {
+        label: "First Date",
+        condition_id: condition[:id],
+        date: input[:date1],
+        input_key: 'date1'
+      } %>
+    </div>
+    <% if input[:clause] == 'btwn' %>
+      <span class="px-2">and</span>
+      <div class="flex-grow">
+        <%= render partial: "hammerstone/refine_blueprints/clauses/date_picker", locals: {
+          label: "Second Date",
+          condition_id: condition[:id],
+          date: input[:date2],
+          input_key: 'date2'
+        } %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

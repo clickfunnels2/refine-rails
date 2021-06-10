@@ -1,0 +1,14 @@
+<div
+  data-controller="fields--date"
+>
+  <label for="<%= condition_id %>" class="sr-only"><%= label %></label>
+  <input
+    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+    name="<%= condition_id %>"
+    type="text"
+    value="<%= date&.to_date&.strftime('%m/%d/%y') %>"
+    data-fields--date-target="field"
+    data-input-key="<%= input_key %>"
+    data-action="$change->refine--update#date"
+  />
+</div>

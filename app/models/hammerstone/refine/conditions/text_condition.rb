@@ -14,6 +14,7 @@ module Hammerstone::Refine::Conditions
     CLAUSE_DOESNT_CONTAIN = Clauses::DOESNT_CONTAIN
 
     CLAUSE_SET = Clauses::SET
+
     CLAUSE_NOT_SET = Clauses::NOT_SET
 
     def component

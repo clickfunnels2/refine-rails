@@ -186,7 +186,6 @@ module Hammerstone::Refine::Conditions
       # Has clauses has already been called, so meta is populated with possible closures to evaluate
       # Run ensurance validations will populate the errors array on the object
       run_ensurance_validations
-
       if errors.empty?
         {
           id: id,
@@ -213,7 +212,6 @@ module Hammerstone::Refine::Conditions
     end
 
     # In HasCallbacks
-
     def recursively_evaluate_lazy_enumerable(enumerable)
       if enumerable.is_a? Hash
         enumerable.transform_values! do |value|

@@ -19,7 +19,6 @@ module Hammerstone::Refine::Conditions
       @clause_display_map ||= {}
     end
 
-    #beforeValidationOfClause in PHP callback land
     def before_clause_validation(input = [])
       proc do |input|
         if input.present?

@@ -10,7 +10,7 @@ module Hammerstone::Refine::Conditions
 
     around do |test|
       ApplicationRecord.connection.execute("CREATE TABLE c (id bigint primary key);")
-      ApplicationRecord.connection.execute("CREATE TABLE e (id bigint primary key, contact_id bigint, clicked_on datetime(6), created_at datetime(6), name varchar(256));")
+      ApplicationRecord.connection.execute("CREATE TABLE e (id bigint primary key, contact_id bigint, clicked_on datetime(6), created_at datetime(6), type varchar(256));")
       test.call
       ApplicationRecord.connection.execute("DROP TABLE c, e")
     end
@@ -208,6 +208,36 @@ module Hammerstone::Refine::Conditions
             date2: "2021-02-01"
           }
         }, Contact.all, Contact.arel_table)
+        assert_equal convert(expected_sql), query.to_sql
+      end
+    end
+
+    describe "Count Refinement Has Many With 0" do
+      it "adds a left joins" do
+        condition = text_condition.refine_by_count
+        expected_sql = <<~SQL.squish
+          SELECT "c".* FROM "c"
+          WHERE ("c"."id" IN
+          (SELECT "c"."id"
+          FROM "c"
+          LEFT OUTER JOIN
+          (SELECT "e"."contact_id",
+          COUNT(*) AS hs_refine_count_aggregate
+          FROM "e"
+          WHERE ("e"."type" = 'Networking Event')
+          GROUP BY "e"."contact_id") interim_table ON interim_table."contact_id" = "c"."id"
+          WHERE coalesce(hs_refine_count_aggregate, 0) = '0'))
+        SQL
+
+        query = apply_condition_on_test_filter(condition, {
+          clause: TextCondition::CLAUSE_EQUALS,
+          value: "Networking Event",
+          count_refinement: {
+            clause: NumericCondition::CLAUSE_EQUALS,
+            value1: "0"
+          }
+        }, Contact.all, Contact.arel_table)
+
         assert_equal convert(expected_sql), query.to_sql
       end
     end

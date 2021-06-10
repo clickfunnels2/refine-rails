@@ -67,6 +67,7 @@ module Hammerstone::Refine::Conditions
       subquery_table = instance.klass.arel_table
 
       subquery = filter.get_pending_relationship_subquery || subquery_table.project(subquery_table[key_2(instance).to_s])
+
       filter.add_pending_relationship_subquery(subquery: subquery, primary_key: key_1(instance), secondary_key: key_2(instance))
       # Apply condition scoped to existing subquery
       apply_and_add_to_query(query_class: query_class, table: subquery_table, input: input, subquery: subquery)
@@ -129,6 +130,10 @@ module Hammerstone::Refine::Conditions
       return false if @on_deepest_relationship
       # If the attribute includes a ., it's a relationship attribute
       @attribute.include?(".")
+    end
+
+    def raw_attribute(attribute)
+      @attribute = Arel.sql(attribute)
     end
   end
 end

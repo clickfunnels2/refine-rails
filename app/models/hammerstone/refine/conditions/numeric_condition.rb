@@ -75,7 +75,7 @@ module Hammerstone::Refine::Conditions
       !@floats
     end
 
-    # Refactor to remove input here
+    # TODO Refactor to remove input here
     def apply_condition(input, table)
       # TODO check for custom clause
 
@@ -112,41 +112,104 @@ module Hammerstone::Refine::Conditions
       end
     end
 
+    def input_could_include_zero?(input)
+      clause = input[:clause]
+      value1 = input[:value1].to_i
+      value2 = input[:value2].to_i
+      case clause
+      when CLAUSE_EQUALS
+        return value1 == 0
+
+      when CLAUSE_DOESNT_EQUAL
+        return value1 != 0
+
+      when CLAUSE_LESS_THAN_OR_EQUAL
+        return value1 >= 0
+
+      when CLAUSE_LESS_THAN
+        return value1 > 0
+
+      when CLAUSE_GREATER_THAN
+        return value1 < 0
+
+      when CLAUSE_GREATER_THAN_OR_EQUAL
+        return value1 <= 0
+
+      when CLAUSE_BETWEEN
+        return value1 <= 0 && value2 >= 0
+
+      when CLAUSE_NOT_BETWEEN
+        return (value1 > 0 && value2 > 0) || (value1 < 0 && value2 < 0)
+
+      when CLAUSE_SET
+        return false
+
+      when CLAUSE_NOT_SET
+        return false
+      end
+    end
+
     def apply_clause_equals(table, value)
-      table.grouping(table[:"#{attribute}"].eq(value))
+      # If the attribute is a raw attribute set in refinements or by user, return the attribute
+      # as a node to directly apply in a where condition without table reference
+      if @attribute.is_a? Arel::Nodes::SqlLiteral
+        @attribute.eq(value)
+      else
+        table.grouping(table[:"#{attribute}"].eq(value))
+      end
     end
 
     def apply_clause_doesnt_equal(table, value)
-      table.grouping(table[:"#{attribute}"].not_eq(value).or(table[:"#{attribute}"].eq(nil)))
+      if @attribute.is_a? Arel::Nodes::SqlLiteral
+        @attribute.not_eq(value)
+      else
+        table.grouping(table[:"#{attribute}"].not_eq(value).or(table[:"#{attribute}"].eq(nil)))
+      end
     end
 
     def apply_clause_greater_than(table, value)
-      table.grouping(table[:"#{attribute}"].gt(value))
+      if @attribute.is_a? Arel::Nodes::SqlLiteral
+        @attribute.gt(value)
+      else
+        table.grouping(table[:"#{attribute}"].gt(value))
+      end
     end
 
     def apply_clause_greater_than_or_equal(table, value)
-      table.grouping(table[:"#{attribute}"].gteq(value))
+      if @attribute.is_a? Arel::Nodes::SqlLiteral
+        @attribute.gteq(value)
+      else
+        table.grouping(table[:"#{attribute}"].gteq(value))
+      end
     end
 
     def apply_clause_less_than(table, value)
-      table.grouping(table[:"#{attribute}"].lt(value))
+      if @attribute.is_a? Arel::Nodes::SqlLiteral
+        @attribute.lt(value)
+      else
+        table.grouping(table[:"#{attribute}"].lt(value))
+      end
     end
 
     def apply_clause_less_than_or_equal(table, value)
-      table.grouping(table[:"#{attribute}"].lteq(value))
+      if @attribute.is_a? Arel::Nodes::SqlLiteral
+        @attribute.lteq(value)
+      else
+        table.grouping(table[:"#{attribute}"].lteq(value))
+      end
     end
 
     def apply_clause_between(table, value1, value2)
-      if is_refinement
-        Arel.star.count.between(value1..value2)
+      if @attribute.is_a? Arel::Nodes::SqlLiteral
+        @attribute.between(value1..value2)
       else
         table.grouping(table[:"#{attribute}"].between(value1..value2))
       end
     end
 
     def apply_clause_not_between(table, value1, value2)
-      if is_refinement
-        Arel.star.count.not_between(value1..value2)
+      if @attribute.is_a? Arel::Nodes::SqlLiteral
+        @attribute.not_between(value1..value2)
       else
         table.grouping(table[:"#{attribute}"].not_between(value1..value2))
       end

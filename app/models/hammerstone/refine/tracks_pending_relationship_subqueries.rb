@@ -60,6 +60,10 @@ module Hammerstone::Refine
       pending_relationship_subqueries.dig(*get_current_relationship, key.to_sym)
     end
 
+    def set_pending_relationship_subquery_wrapper(callback)
+      pending_relationship_subqueries.dig(*get_current_relationship)[:wrapper] = callback
+    end
+
     def relationship_supports_collapsing(instance)
       (instance.is_a? ActiveRecord::Reflection::BelongsToReflection) || (instance.is_a? ActiveRecord::Reflection::HasOneReflection)
     end
@@ -97,6 +101,11 @@ module Hammerstone::Refine
         child_nodes = subquery.dig(:children)
         if child_nodes.present?
           commit_subset(query: subquery[:query], subset: child_nodes)
+        end
+
+        # If the subquery has a wrapper we are dealing with a compare to 0 situation
+        if (subquery.dig(:wrapper).respond_to? :call)
+          subquery[:query] = subquery[:wrapper].call(subquery[:query], subquery[:key], subquery[:secondary])
         end
 
         parent_table = subquery[:instance].active_record.arel_table

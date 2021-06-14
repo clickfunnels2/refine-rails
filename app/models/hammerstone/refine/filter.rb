@@ -3,7 +3,7 @@ module Hammerstone::Refine
     include ActiveModel::Validations
     include ActiveModel::Callbacks
     include TracksPendingRelationshipSubqueries
-    # Revisit this validation structure
+    # TODO Revisit this validation structure
     define_model_callbacks :initialize, only: [:after]
     after_initialize :valid?
 
@@ -140,7 +140,7 @@ module Hammerstone::Refine
     end
 
     def get_condition_for_criterion(criterion)
-      # returns the object that matches the condition. Adds errors if not found.
+      # Returns the object that matches the condition. Adds errors if not found.
       # This checks the id on the condition such as text_test
       returned_object = conditions.find { |condition| condition.id == criterion[:condition_id] }
       if returned_object.nil?
@@ -179,6 +179,23 @@ module Hammerstone::Refine
       # But, ideally, they have locales defined and we can find one of those.
       label_fallback = {default: condition.id.humanize(keep_id_suffix: true).titleize}
       condition.display = condition.display || t(".filter.conditions.#{condition.id}.label", default: t(".fields.#{condition.id}.label", label_fallback))
+    end
+
+    def state
+      {
+        type: get_alias,
+        blueprint: blueprint
+      }.to_json
+    end
+
+    def get_alias
+      # TODO revisit this alias
+      self.class.name
+    end
+
+    def self.from_state(state)
+      klass = state[:type].constantize
+      filter = klass.new(state[:blueprint])
     end
   end
 end

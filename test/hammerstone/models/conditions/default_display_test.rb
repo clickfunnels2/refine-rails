@@ -1,6 +1,6 @@
 require "test_helper"
 require "support/hammerstone/blank_test_filter"
-require "support/hammerstone/test_filter"
+require "support/hammerstone/test_double_filter"
 # Note - this test uses the tangible things locale file currently. TODO make this more reusable
 
 module Hammerstone::Refine::Conditions
@@ -47,7 +47,7 @@ module Hammerstone::Refine::Conditions
   describe "Display with locales file" do
     before do
       # Test filter is defined to use the tangible things locale file
-      @filter = TestFilter.new("random id")
+      @filter = TestDoubleFilter.new("random id")
     end
 
     it "correctly translates string when locales file present" do

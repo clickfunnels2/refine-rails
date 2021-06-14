@@ -1,6 +1,6 @@
 require "test_helper"
 require "support/hammerstone/filter_test_helper"
-require "support/hammerstone/test_filter"
+require "support/hammerstone/test_double_filter"
 
 module Hammerstone::Refine::Conditions
   describe "Refinements" do
@@ -90,7 +90,7 @@ module Hammerstone::Refine::Conditions
                                                     .only_clauses([DateCondition::CLAUSE_BETWEEN])
                                                   })
 
-        filter = TestFilter.new([])
+        filter = TestDoubleFilter.new([])
         filter.conditions = [condition]
         refinement_clauses = filter.configuration[:conditions][0][:refinements][0][:meta][:clauses]
         expected_output =
@@ -157,7 +157,7 @@ module Hammerstone::Refine::Conditions
                                                      .only_clauses([NumericCondition::CLAUSE_BETWEEN])
                                                    })
 
-        filter = TestFilter.new([])
+        filter = TestDoubleFilter.new([])
         filter.conditions = [condition]
         refinement_clauses = filter.configuration[:conditions][0][:refinements][0][:meta][:clauses]
         expected_output =
@@ -175,7 +175,7 @@ module Hammerstone::Refine::Conditions
       it "sends correct configuration to the front end" do
         condition = text_condition.refine_by_date.refine_by_count
 
-        filter = TestFilter.new([])
+        filter = TestDoubleFilter.new([])
         filter.conditions = [condition]
 
         refinement_array = filter.configuration[:conditions][0][:refinements]

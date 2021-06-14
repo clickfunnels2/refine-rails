@@ -1,5 +1,5 @@
 require "test_helper"
-require "support/hammerstone/test_filter"
+require "support/hammerstone/test_double_filter"
 require "support/hammerstone/test_filter_with_meta"
 require "support/hammerstone/filter_test_helper"
 
@@ -22,28 +22,28 @@ describe Hammerstone::Refine::Filter do
     end
   end
 
-  # describe 'condition with wrong id' do
-  #   it 'adds error' do
-  #     query = TestFilter.new(bad_id)
-  #     query.conditions = [Hammerstone::Refine::Conditions::TextCondition.new('text_field_value')]
-  #     query.get_query
-  #     assert query.errors.added? :filter, "The condition ID fake was not found"
-  #   end
-  # end
+  describe "condition with wrong id" do
+    it "adds error" do
+      query = TestDoubleFilter.new(bad_id)
+      query.conditions = [Hammerstone::Refine::Conditions::TextCondition.new("text_field_value")]
+      query.get_query
+      assert query.errors.added? :filter, "The condition ID fake was not found"
+    end
+  end
 
-  # describe 'basic filters with ands' do
-  #   it 'gets correct query' do
-  #     query = create_filter(and_condition_blueprint)
-  #     assert_equal query.get_query.to_sql, convert(and_sql)
-  #   end
-  # end
+  describe "basic filters with ands" do
+    it "gets correct query" do
+      query = create_filter(and_condition_blueprint)
+      assert_equal query.get_query.to_sql, convert(and_sql)
+    end
+  end
 
-  # describe 'basic filters with ors' do
-  #   it 'gets correct query' do
-  #     query = create_filter(or_condition_blueprint)
-  #     assert_equal query.get_query.to_sql, convert(or_sql)
-  #   end
-  # end
+  describe "basic filters with ors" do
+    it "gets correct query" do
+      query = create_filter(or_condition_blueprint)
+      assert_equal query.get_query.to_sql, convert(or_sql)
+    end
+  end
 
   describe "basic filter with groups" do
     it "creates filter" do
@@ -52,46 +52,45 @@ describe Hammerstone::Refine::Filter do
     end
   end
 
-  # describe 'basic filters with nested groups' do
-  #   it 'creates filter' do
-  #     query = create_filter(nested_group_blueprint)
-  #     assert_equal query.get_query.to_sql, convert(nested_grouped_sql)
-  #   end
-  # end
+  describe "basic filters with nested groups" do
+    it "creates filter" do
+      query = create_filter(nested_group_blueprint)
+      assert_equal query.get_query.to_sql, convert(nested_grouped_sql)
+    end
+  end
 
-  # describe 'Configuration object - data going to frontend' do
+  describe "Configuration object - data going to frontend" do
+    describe "Text Condition - no meta, no clauses" do
+      it "returns correct json" do
+        filter = TestDoubleFilter.new([])
+        filter.conditions = [Hammerstone::Refine::Conditions::TextCondition.new("text_field_value")]
+        expected_value =
+          {
+            type: "Hammerstone",
+            class_name: "TestDoubleFilter",
+            blueprint: [],
+            conditions: expected_conditions,
+            stable_id: "dontcare",
+          }
+        assert_equal expected_value, filter.configuration
+      end
+    end
 
-  #   describe 'Text Condition - no meta, no clauses' do
-  #     it 'returns correct json' do
-  #       filter = TestFilter.new([])
-  #       filter.conditions = [Hammerstone::Refine::Conditions::TextCondition.new('text_field_value')]
-  #       expected_value =
-  #       {
-  #         type: "Hammerstone",
-  #         class_name: 'TestFilter',
-  #         blueprint: [],
-  #         conditions: expected_conditions,
-  #         stable_id: 'dontcare',
-  #       }
-  #       assert_equal expected_value, filter.configuration
-  #     end
-  #   end
-
-  #   describe 'Text Condition with meta, no clauses' do
-  #     it 'returns correct json' do
-  #       filter = TestFilterWithMeta.new([])
-  #       expected_value =
-  #       {
-  #         type: "Hammerstone",
-  #         class_name: 'TestFilterWithMeta',
-  #         blueprint: [],
-  #         conditions: expected_conditions_with_meta,
-  #         stable_id: 'dontcare'
-  #       }
-  #       assert_equal expected_value, filter.configuration
-  #     end
-  #   end
-  # end
+    describe "Text Condition with meta, no clauses" do
+      it "returns correct json" do
+        filter = TestFilterWithMeta.new([])
+        expected_value =
+          {
+            type: "Hammerstone",
+            class_name: "TestFilterWithMeta",
+            blueprint: [],
+            conditions: expected_conditions_with_meta,
+            stable_id: "dontcare"
+          }
+        assert_equal expected_value, filter.configuration
+      end
+    end
+  end
 
   def grouped_sql
     <<~SQL.squish

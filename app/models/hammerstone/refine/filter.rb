@@ -3,13 +3,16 @@ module Hammerstone::Refine
     include ActiveModel::Validations
     include ActiveModel::Callbacks
     include TracksPendingRelationshipSubqueries
+    include Stabilize
     # TODO Revisit this validation structure
     define_model_callbacks :initialize, only: [:after]
     after_initialize :valid?
 
+    cattr_accessor :default_stabilizer, default: nil, instance_accessor: false
+
     attr_reader :blueprint
 
-    def initialize(blueprint)
+    def initialize(blueprint = nil)
       run_callbacks :initialize do
         # If using this in test mode, `blueprint` will be an instance of
         # `Blueprint` and the value must be extracted
@@ -159,11 +162,12 @@ module Hammerstone::Refine
         class_name: self.class.name,
         blueprint: @blueprint,
         conditions: conditions_to_array,
-        stable_id: "dontcare"
+        stable_id: to_optional_stable_id
       }
     end
 
     def conditions_to_array
+      return nil unless conditions
       # Set filter object on condition and return to_array
       conditions.map { |condition| instantiate_condition(condition) }.map(&:to_array)
     end
@@ -196,6 +200,14 @@ module Hammerstone::Refine
     def self.from_state(state)
       klass = state[:type].constantize
       filter = klass.new(state[:blueprint])
+    end
+
+    def self.default_stable_id_generator(klass)
+      if klass.method_defined?(:to_stable_id) && klass.method_defined?(:from_stable_id)
+        @@default_stabilizer = klass
+      else
+        raise ArgumentError.new('Given class doesn\'t implement to_stable_id and from_stable_id!')
+      end
     end
   end
 end

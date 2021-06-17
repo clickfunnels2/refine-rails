@@ -8,11 +8,6 @@ module Hammerstone::Refine::Stabilizers
   include FilterTestHelper
 
   describe "Automatic Stabilization Test" do
-    around do |test|
-      test.call
-      AutomaticStabilizationTestFilter.class_variable_set :@@default_stabilizer, nil
-    end
-
     it "stabilizes when default stable id is used" do
       AutomaticStabilizationTestFilter.default_stable_id_generator(UrlEncodedStabilizer)
       builder = Hammerstone::Refine::Blueprints::Blueprint.new
@@ -41,6 +36,7 @@ module Hammerstone::Refine::Stabilizers
 
     it "throws error if automatic stabilization is true but nothing set" do
       filter = AutomaticStabilizationTestFilter.new
+      AutomaticStabilizationTestFilter.default_stabilizer = nil
       exception =
         assert_raises ArgumentError do
           filter.configuration

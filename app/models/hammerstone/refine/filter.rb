@@ -34,6 +34,7 @@ module Hammerstone::Refine
     end
 
     def get_query
+      raise "Initial query must exist" if initial_query.nil?
       if blueprint.present?
         @relation.where(group(make_sub_query(blueprint)))
       else

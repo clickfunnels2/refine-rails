@@ -20,11 +20,8 @@ module Hammerstone::Refine::Conditions
     describe "date format validations" do
       it "throws errors for invalid date format for date1" do
         data = {clause: DateCondition::CLAUSE_EQUALS, date1: "05/15/2019"}
-        exception =
-          assert_raises Hammerstone::Refine::Conditions::Errors::ConditionClauseError do
-            apply_condition_on_test_filter(condition, data)
-          end
-        assert_equal("[\"date1 is not a real date\"]", exception.message)
+        filter = apply_condition_and_return_filter(condition, data)
+        assert_equal("[\"date1 is not a real date\"]", filter.errors.full_messages[0])
       end
     end
 

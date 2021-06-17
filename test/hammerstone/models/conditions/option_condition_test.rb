@@ -273,11 +273,8 @@ module Hammerstone::Refine::Conditions
           )
 
         data = {clause: OptionCondition::CLAUSE_EQUALS, selected: ["option_7"]}
-        exception =
-          assert_raises Hammerstone::Refine::Conditions::Errors::ConditionClauseError do
-            apply_condition_on_test_filter(condition, data)
-          end
-        assert_equal("[\"Selected option_7 is not configured in options list\"]", exception.message)
+        filter = apply_condition_and_return_filter(condition, data)
+        assert_equal("[\"Selected option_7 is not configured in options list\"]", filter.errors.full_messages[0])
       end
     end
   end

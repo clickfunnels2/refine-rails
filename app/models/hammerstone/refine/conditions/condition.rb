@@ -151,16 +151,16 @@ module Hammerstone::Refine::Conditions
       # Set input parameters on the condition in order to use conditiion level validations
       @clause = input[:clause]
       set_input_parameters(input)
-      # TODO: Revisit this clause rules validation
+
       evaluated_rules.each_pair do |k, v|
         if input[k].blank?
           errors.add(:base, "A #{k} is required for clause with id #{input[:clause]}")
-          raise Errors::ConditionClauseError, errors.full_messages.to_s
         end
       end
 
-      if !valid?
-        raise Errors::ConditionClauseError, errors.full_messages.to_s
+      # Errors added to the errors array by individual conditions and standard rails validations
+      if errors.any? || !valid?
+        raise Errors::ConditionClauseError, errors.full_messages
       end
     end
 

@@ -1,1 +1,2 @@
-class Hammerstone::Refine::Conditions::Errors::ConditionClauseError < StandardError; end
+class Hammerstone::Refine::Conditions::Errors::ConditionClauseError < StandardError
+end

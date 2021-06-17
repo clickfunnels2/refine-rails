@@ -16,12 +16,8 @@ module Hammerstone::Refine::Conditions
 
       user_input = {clause: "clause_1", value: "sample_value"}
 
-      exception =
-        assert_raises Hammerstone::Refine::Conditions::Errors::ConditionClauseError do
-          condition.apply_condition_on_test_filter(condition, user_input)
-          # condition.apply(FilterTestHelper::TestDouble.all, user_input)
-        end
-      assert_equal("[\"A foo is required for clause with id clause_1\"]", exception.message)
+      filter = apply_condition_and_return_filter(condition, user_input)
+      assert_equal("[\"A foo is required for clause with id clause_1\"]", filter.errors.full_messages[0])
     end
   end
 

@@ -110,6 +110,11 @@ module Hammerstone::Refine
         # subquery but will not return a value.
         # apply condition is NOT idempotent, hence the placeholder var
         nodes_to_apply = apply_condition(criterion)
+        # If an error has been added to the errors array from apply_condition, do not continue execution at this level
+        if errors.any?
+          index += 1
+          next
+        end
 
         subquery = add_nodes_to_query(subquery: subquery, nodes: nodes_to_apply, query_method: query_method)
 
@@ -121,9 +126,11 @@ module Hammerstone::Refine
         index += 1
       end
 
-      final_depth_nodes = commit_pending_relationship_subqueries
-      # Add nodes to existing query and return existing query
-      add_nodes_to_query(subquery: subquery, nodes: final_depth_nodes, query_method: query_method)
+      unless errors.any?
+        final_depth_nodes = commit_pending_relationship_subqueries
+        # Add nodes to existing query and return existing query
+        add_nodes_to_query(subquery: subquery, nodes: final_depth_nodes, query_method: query_method)
+      end
     end
 
     def fast_forward(index, modified_blueprint, depth)
@@ -140,7 +147,11 @@ module Hammerstone::Refine
     end
 
     def apply_condition(criterion)
-      get_condition_for_criterion(criterion)&.apply(criterion[:input], table, initial_query)
+      begin
+        get_condition_for_criterion(criterion)&.apply(criterion[:input], table, initial_query)
+      rescue Hammerstone::Refine::Conditions::Errors::ConditionClauseError => e
+        errors.add(:base, e.message)
+      end
     end
 
     def get_condition_for_criterion(criterion)

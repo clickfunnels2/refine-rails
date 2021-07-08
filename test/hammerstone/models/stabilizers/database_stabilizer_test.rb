@@ -8,10 +8,8 @@ module Hammerstone::Refine::Stabilizers
   include FilterTestHelper
   describe "Database Stabilizers" do
     around do |test|
-      CreateStoredFiltersTable.new.up
       ApplicationRecord.connection.execute("CREATE TABLE t (text_test varchar(256));")
       test.call
-      CreateStoredFiltersTable.new.down
       ApplicationRecord.connection.execute("DROP TABLE t;")
     end
     it "stabilizes and can be reconstructed" do

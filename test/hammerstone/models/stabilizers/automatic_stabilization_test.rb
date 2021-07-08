@@ -1,6 +1,4 @@
 require "test_helper"
-require "support/hammerstone/filter_test_helper"
-require "support/hammerstone/test_double_filter"
 require "support/hammerstone/stored_filters_table"
 require "support/hammerstone/automatic_stabilization_test_filter"
 

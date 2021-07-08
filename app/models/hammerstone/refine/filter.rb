@@ -12,7 +12,12 @@ module Hammerstone::Refine
 
     attr_reader :blueprint
 
-    def initialize(blueprint = nil)
+    # TODO args allows the initializer to accept initial_query which is necessary for recreating the filters form
+    # stable ID in a BT context. Either don't send in initial_query if inheriting from ApplicationFilter,
+    # or refactor entire module to allow initial_query
+    # to be sent in as a parameter
+
+    def initialize(blueprint = nil, *args)
       run_callbacks :initialize do
         # If using this in test mode, `blueprint` will be an instance of
         # `Blueprint` and the value must be extracted
@@ -209,9 +214,9 @@ module Hammerstone::Refine
       self.class.name
     end
 
-    def self.from_state(state)
+    def self.from_state(state, initial_query=nil)
       klass = state[:type].constantize
-      filter = klass.new(state[:blueprint])
+      filter = klass.new(state[:blueprint], initial_query)
     end
 
     def self.default_stable_id_generator(klass)

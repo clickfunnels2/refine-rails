@@ -1,39 +1,41 @@
 
-<%= turbo_frame_tag 'refine', data: {
+<%= turbo_frame_tag :hammerstone_refine_query, class: 'relative', data: {
   controller: "refine--state",
-  refine__state_configuration_value: configuration.to_json } do %>
-  <div class="relative">
-    <div
-      class="flex items-center justify-center absolute left-0 top-0 w-full h-full bg-black bg-opacity-50 z-10 rounded hidden"
-      id="refine-loader"
-      data-refine--state-target="loading">
-      <p class="text-white text-xl">Loading icon here...</p>
-    </div>
-    <%= turbo_frame_tag 'groups' do %>
-      <% grouped_blueprint.each_with_index do |criteria, index| %>
-        <% if index > 0 %>
-          <p class="py-3">or</p>
-        <% end %>
-        <%= render partial: 'hammerstone/refine_blueprints/group', locals: {
-          criteria: criteria,
-          group_id: index }
-        %>
-      <% end %>
-    <% end %>
-    <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex items-center', data: {
-      controller: "refine--add" }) do %>
-      <button
-        id="open_filter"
-        class="text-center px-4 py-2 border border-gray-300 shadow-sm text-md font-bold rounded-md text-gray-600 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 w-full mt-2"
-        data-action="click->refine--add#group"
-        type="submit"
-      >
-        <% if grouped_blueprint.any? %>
-          <%= t(".buttons.add_or") %>
-        <% else %>
-          <%= t(".buttons.create_filter") %>
-        <% end %>
-      </button>
-    <% end %>
+  refine__state_conditions_value: conditions.to_json,
+  refine__state_blueprint_value: blueprint.to_json,
+  refine__state_class_name_value: configuration[:class_name],
+  refine__state_stable_id_value: stable_id } do %>
+  <div
+    class="flex items-center justify-center absolute left-0 top-0 w-full h-full bg-black bg-opacity-50 z-10 rounded hidden"
+    id="refine-loader"
+    data-refine--state-target="loading">
+    <p class="text-white text-xl">Loading icon here...</p>
   </div>
+  <%= turbo_frame_tag 'groups' do %>
+    <% grouped_blueprint.each_with_index do |criteria, index| %>
+      <% if index > 0 %>
+        <p class="py-3">or</p>
+      <% end %>
+      <%= render partial: 'hammerstone/refine_blueprints/group', locals: {
+        criteria: criteria,
+        group_id: index }
+      %>
+    <% end %>
+  <% end %>
+  <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex items-center', data: {
+    controller: 'refine--add'
+  }) do %>
+    <button
+      class="text-blue-600 background-transparent font-bold underline pt-4 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+      data-action="click->refine--add#group"
+      type="submit"
+    >
+      <% if grouped_blueprint.any? %>
+        <%= t(".buttons.add_or") %>
+      <% else %>
+        <%= t(".buttons.create_filter") %>
+      <% end %>
+    </button>
+  <% end %>
 <% end %>
+

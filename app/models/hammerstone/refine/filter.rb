@@ -12,13 +12,14 @@ module Hammerstone::Refine
 
     attr_reader :blueprint
 
-    def initialize(blueprint = nil)
+    def initialize(blueprint = nil, query_scope = nil)
       run_callbacks :initialize do
         # If using this in test mode, `blueprint` will be an instance of
         # `Blueprint` and the value must be extracted
         if blueprint.is_a? Blueprints::Blueprint
           blueprint = blueprint.to_array
         end
+        @initial_query = query_scope
         @blueprint = blueprint
         @relation = initial_query
         @immediately_commit_pending_relationship_subqueries = false
@@ -26,7 +27,9 @@ module Hammerstone::Refine
     end
 
     def initial_query
-      raise NotImplementedError
+      raise NotImplementedError if @initial_query.nil?
+
+      @initial_query
     end
 
     def table
@@ -209,9 +212,9 @@ module Hammerstone::Refine
       self.class.name
     end
 
-    def self.from_state(state)
+    def self.from_state(state, initial_query = nil)
       klass = state[:type].constantize
-      klass.new(state[:blueprint])
+      filter = klass.new(state[:blueprint], initial_query)
     end
 
     def self.default_stable_id_generator(klass)

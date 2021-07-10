@@ -1,5 +1,4 @@
 class BlankTestFilter < Hammerstone::Refine::Filter
-  attr_reader :initial_query
   attr_accessor :conditions
 
   def t(key, options = {})
@@ -7,10 +6,9 @@ class BlankTestFilter < Hammerstone::Refine::Filter
   end
 
   def initialize(blueprint = nil, initial_query = nil, conditions = nil, table = nil)
-    @initial_query = initial_query || Scaffolding::CompletelyConcrete::TangibleThing.all
     @table = table
     @conditions = conditions
-    super(blueprint)
+    super(blueprint, initial_query || Scaffolding::CompletelyConcrete::TangibleThing.all)
   end
 
   attr_reader :table

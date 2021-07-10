@@ -1,14 +1,12 @@
 module Hammerstone
   module RefineHelper
     def grouped_blueprint
-      return [] unless @refine_filter.blueprint.any?
-
       new_blueprint = []
 
       # start with an empty group
       new_blueprint.push []
 
-      @refine_filter.blueprint.each_with_index do |piece, index|
+      blueprint.each_with_index do |piece, index|
         if piece[:word] == "or"
           new_blueprint.push []
         elsif piece[:word] == "and"
@@ -63,11 +61,27 @@ module Hammerstone
     end
 
     def blueprint
+      first_condition = conditions[0]
+      meta = first_condition[:meta]
+
+      unless @refine_filter.blueprint&.any?
+        return [{
+          depth: 1,
+          type: "criterion",
+          condition_id: first_condition[:id],
+          input: {clause: meta[:clauses][0][:id]},
+        }]
+      end
+
       @refine_filter.blueprint
     end
 
     def configuration
       @refine_filter.configuration
+    end
+
+    def stable_id
+      configuration[:stable_id]
     end
   end
 end

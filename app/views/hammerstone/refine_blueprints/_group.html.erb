@@ -1,20 +1,25 @@
 <%= turbo_frame_tag "group_#{group_id}" do %>
   <div class="bg-gray-50 rounded p-4 font-sans">
-    <% criteria&.each_with_index do |criterion| %>
-      <%= render partial: 'hammerstone/refine_blueprints/criterion', locals: {
+    <% criteria&.each_with_index do |criterion, index| %>
+      <div class="flex items-start pb-3">
+        <%= render partial: 'hammerstone/refine_blueprints/criterion', locals: {
         criterion: criterion, criterion_id: criterion[:position] } %>
+      </div>
+      <% if criteria.count > 1 && index < criteria.count - 1 %>
+        <p class="text-gray-400 pl-2">and</p>
+      <% end %>
     <% end %>
-    <%= form_tag(hammerstone_refine_blueprint_path, method: :get, data: {
+    <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: "pt-4", data: {
       controller: "refine--add",
       refine__add_previous_criterion_id_value: criteria.last[:position],
     }) do %>
       <button
-        class="background-transparent text-blue-600 text-xs outline-none focus:outline-none"
+        class="button-secondary text-gray-900 uppercase font-semibold text-center px-3 block"
         type="submit"
         style="transition: all .15s ease"
         data-action="click->refine--add#criterion"
       >
-        <i class="far fa-plus align-middle"></i> <%= t(".buttons.add_and") %>
+        <span><%= t(".buttons.add_and") %></span><i class="fal fa-plus pl-2 text-gray-500"></i> 
       </button>
     <% end %>
   </div>

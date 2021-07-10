@@ -8,12 +8,26 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
   private
 
   def filter
-    blueprint = JSON.parse(filter_params[:blueprint]).map(&:deep_symbolize_keys)
-    filterClass = filter_params[:filter].constantize
-    filterClass.new(blueprint)
+    if stable_id
+      Hammerstone::Refine::Stabilizers::UrlEncodedStabilizer.new.from_stable_id(id: stable_id)
+    else
+      filterClass = filter_params[:filter].constantize
+      filterClass.new blueprint
+    end
+
   end
 
   def filter_params
-    params.permit(:filter, :blueprint)
+    params.permit(:filter, :stable_id, :blueprint)
+  end
+
+  def blueprint
+    return [] unless filter_params[:blueprint]
+
+    JSON.parse(filter_params[:blueprint]).map(&:deep_symbolize_keys)
+  end
+
+  def stable_id
+    filter_params[:stable_id]
   end
 end

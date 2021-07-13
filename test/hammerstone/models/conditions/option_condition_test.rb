@@ -274,7 +274,7 @@ module Hammerstone::Refine::Conditions
 
         data = {clause: OptionCondition::CLAUSE_EQUALS, selected: ["option_7"]}
         filter = apply_condition_and_return_filter(condition, data)
-        assert_equal("[\"Selected option_7 is not configured in options list\"]", filter.errors.full_messages[0])
+        assert_equal("0 [\"Selected option_7 is not configured in options list\"]", filter.errors.full_messages[0])
       end
     end
   end

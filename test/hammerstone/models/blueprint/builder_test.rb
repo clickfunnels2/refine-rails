@@ -6,7 +6,7 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
       builder = Hammerstone::Refine::Blueprints::Blueprint.new.criterion("id",
         clause: Hammerstone::Refine::Conditions::TextCondition::CLAUSE_EQUALS,
         value1: "foo",)
-      assert_equal builder.to_array, single_condition_blueprint
+      assert_equal single_condition_blueprint, builder.to_array
     end
   end
 
@@ -20,7 +20,7 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
         .criterion("id",
           clause: Hammerstone::Refine::Conditions::TextCondition::CLAUSE_EQUALS,
           value1: "inthesun",)
-      assert_equal builder.to_array, and_condition_blueprint
+      assert_equal and_condition_blueprint, builder.to_array
     end
   end
 
@@ -54,7 +54,7 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
             clause: Hammerstone::Refine::Conditions::TextCondition::CLAUSE_EQUALS,
             value1: "three",)
       }
-      assert_equal builder.to_array, filter_with_groups_blueprint
+      assert_equal filter_with_groups_blueprint, builder.to_array
     end
   end
 
@@ -84,7 +84,7 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
         .criterion("id",
           clause: Hammerstone::Refine::Conditions::TextCondition::CLAUSE_EQUALS,
           value: "five")
-      assert_equal builder.to_array, nested_condition_blueprint
+      assert_equal nested_condition_blueprint, builder.to_array
     end
   end
 
@@ -94,6 +94,7 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
         type: "criterion",
         condition_id: "id",
         depth: 0,
+        index: 0,
         input: {
           clause: "eq",
           value: "one",
@@ -103,11 +104,13 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
         type: "conjunction",
         word: "and",
         depth: 0,
+        index: 1
       },
       {
         type: "criterion",
         condition_id: "id",
         depth: 2,
+        index: 2,
         input: {
           clause: "eq",
           value: "two",
@@ -117,11 +120,13 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
         type: "conjunction",
         word: "and",
         depth: 2,
+        index: 3
       },
       {
         type: "criterion",
         condition_id: "id",
         depth: 2,
+        index: 4,
         input: {
           clause: "eq",
           value: "three",
@@ -131,11 +136,13 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
         type: "conjunction",
         word: "and",
         depth: 1,
+        index: 5
       },
       {
         type: "criterion",
         condition_id: "id",
         depth: 1,
+        index: 6,
         input: {
           clause: "eq",
           value: "four",
@@ -145,11 +152,13 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
         type: "conjunction",
         word: "and",
         depth: 0,
+        index: 7
       },
       {
         type: "criterion",
         condition_id: "id",
         depth: 0,
+        index: 8,
         input: {
           clause: "eq",
           value: "five",
@@ -164,6 +173,7 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
         type: "criterion",
         condition_id: "id",
         depth: 0,
+        index: 0,
         input: {
           clause: "eq",
           value1: "one",
@@ -173,11 +183,13 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
         type: "conjunction",
         word: "and",
         depth: 0,
+        index: 1
       },
       {
         type: "criterion",
         condition_id: "id",
         depth: 1,
+        index: 2,
         input: {
           clause: "eq",
           value1: "two"
@@ -187,11 +199,13 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
         type: "conjunction",
         word: "and",
         depth: 1,
+        index: 3
       },
       {
         type: "criterion",
         condition_id: "id",
         depth: 1,
+        index: 4,
         input: {
           clause: "eq",
           value1: "three"
@@ -204,6 +218,7 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
     [
       {
         depth: 0,
+        index: 0,
         type: "criterion",
         condition_id: "id",
         input: {
@@ -218,6 +233,7 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
     [
       {
         depth: 0,
+        index: 0,
         type: "criterion",
         condition_id: "id",
         input: {
@@ -227,11 +243,13 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
       },
       { # conjunction
         depth: 0,
+        index: 1,
         type: "conjunction",
         word: "and"
       },
       { # criterion
         depth: 0,
+        index: 2,
         type: "criterion",
         condition_id: "id",
         input: {
@@ -246,6 +264,7 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
     [
       {
         depth: 0,
+        index: 0,
         type: "criterion",
         condition_id: "id",
         input: {
@@ -255,11 +274,13 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
       },
       { # conjunction
         depth: 0,
+        index: 1,
         type: "conjunction",
         word: "or"
       },
       { # criterion
         depth: 0,
+        index: 2,
         type: "criterion",
         condition_id: "id",
         input: {

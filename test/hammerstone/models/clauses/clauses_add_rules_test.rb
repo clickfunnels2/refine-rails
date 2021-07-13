@@ -17,7 +17,7 @@ module Hammerstone::Refine::Conditions
       user_input = {clause: "clause_1", value: "sample_value"}
 
       filter = apply_condition_and_return_filter(condition, user_input)
-      assert_equal("[\"A foo is required for clause with id clause_1\"]", filter.errors.full_messages[0])
+      assert_equal("0 [\"A foo is required for clause with id clause_1\"]", filter.errors.full_messages[0])
     end
   end
 

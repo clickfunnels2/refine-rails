@@ -1,4 +1,5 @@
 require "support/hammerstone/blank_test_filter"
+require "support/hammerstone/cf2_blank_test_filter"
 
 module FilterTestHelper
   class TestDouble < ActiveRecord::Base
@@ -18,5 +19,10 @@ module FilterTestHelper
     filter = BlankTestFilter.new(blueprint, query || TestDouble.all, [condition], table)
     filter.get_query
     filter
+  end
+
+  def create_filter_CF2(condition, input)
+    blueprint = Hammerstone::Refine::Blueprints::Blueprint.new.criterion(condition.id, input)
+    Cf2BlankTestFilter.new(blueprint, [condition])
   end
 end

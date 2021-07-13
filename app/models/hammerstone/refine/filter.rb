@@ -32,8 +32,15 @@ module Hammerstone::Refine
       @initial_query
     end
 
+    def validate_only
+      @blueprint.each do |criterion|
+        next if criterion[:type] == "conjunction"
+        apply_condition(criterion)
+      end
+    end
+
     def table
-      @table ||= initial_query.model.arel_table
+      initial_query.model.arel_table
     end
 
     def get_query
@@ -153,7 +160,7 @@ module Hammerstone::Refine
       begin
         get_condition_for_criterion(criterion)&.apply(criterion[:input], table, initial_query)
       rescue Hammerstone::Refine::Conditions::Errors::ConditionClauseError => e
-        errors.add(:base, e.message)
+        errors.add(criterion[:index].to_s, e.message)
       end
     end
 

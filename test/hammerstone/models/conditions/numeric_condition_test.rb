@@ -16,7 +16,7 @@ module Hammerstone::Refine::Conditions
     it "adds error if value is float without explicitly setting floats" do
       data = {clause: NumericCondition::CLAUSE_EQUALS, value1: 5.3}
       filter = apply_condition_and_return_filter(condition, data)
-      assert_equal("[\"Value1 must be an integer\"]", filter.errors.full_messages[0])
+      assert_equal("0 [\"Value1 must be an integer\"]", filter.errors.full_messages[0])
     end
 
     it "allows floats if floats are set" do

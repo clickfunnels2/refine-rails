@@ -18,7 +18,7 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
   end
 
   def filter_params
-    params.permit(:filter, :stable_id, :blueprint)
+    params.permit(:filter, :stable_id, :blueprint, :conditions, :clauses, :name)
   end
 
   def blueprint

@@ -154,7 +154,7 @@ describe Hammerstone::Refine::Filter do
       {
         id: "text_field_value",
         component: "text-condition",
-        display: "Text field value",
+        display: "Text Field Value",
         meta: {
           clauses: [
             {

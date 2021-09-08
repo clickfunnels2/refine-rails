@@ -21,5 +21,11 @@ module Hammerstone::Refine::Stabilizers
       reconstructed_filter = UrlEncodedStabilizer.new.from_stable_id(id: filter_id)
       assert_equal state, reconstructed_filter.state
     end
+
+    it "raises an error if id is blank or nil" do
+      assert_raises Hammerstone::Refine::Stabilizers::Errors::UrlStabilizerError do
+        UrlEncodedStabilizer.new.from_stable_id(id: nil)
+      end
+    end
   end
 end

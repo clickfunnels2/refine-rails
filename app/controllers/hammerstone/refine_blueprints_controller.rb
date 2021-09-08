@@ -9,12 +9,11 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
 
   def filter
     if stable_id
-      Hammerstone::Refine::Stabilizers::UrlEncodedStabilizer.new.from_stable_id(id: stable_id)
+      Stabilizers::UrlEncodedStabilizer.new.from_stable_id(id: stable_id)
     else
       filterClass = filter_params[:filter].constantize
       filterClass.new blueprint
     end
-
   end
 
   def filter_params

@@ -8,6 +8,7 @@ module Hammerstone::Refine::Stabilizers
     end
 
     def from_stable_id(id:, initial_query: nil)
+      raise Hammerstone::Refine::Stabilizers::Errors::UrlStabilizerError if id.blank?
       url_decoded = CGI.unescape(id)
       base_64_decoded = Base64.decode64(url_decoded)
       uncompress = ActiveSupport::Gzip.decompress(base_64_decoded)

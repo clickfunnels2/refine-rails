@@ -5,12 +5,13 @@ module Hammerstone::Refine
     end
 
     def pending_relationship_subqueries
-      @pending_relationship_subqueries ||= {}
+      # The Hash.new block will dynamically created multi-level nested keys
+      # Note: Will create a value of {} when accessed with `dig`
+      @pending_relationship_subqueries ||= Hash.new { |h, k| h[k] = h.dup.clear }
     end
 
     def set_pending_relationship(relation, instance)
-      pending_relationship_subquery_depth << relation
-      build_keys_for_pending_relationship_subqueries(get_current_relationship)
+      pending_relationship_subquery_depth << relation.to_sym
       pending_relationship_subqueries.dig(*get_current_relationship)[:instance] = instance
     end
 
@@ -26,27 +27,8 @@ module Hammerstone::Refine
       add_pending_relationship_subquery(subquery: subquery, primary_key: JOINS)
     end
 
-    def build_keys_for_pending_relationship_subqueries(array_of_keys)
-      # Example array of keys [:user, :children, :notes]
-      # This will give the values a default value of hash and overwrite existing values if they exist
-      array_of_keys.each_with_index do |key, index|
-        # If key exists, continue to next level (for nested relationships)
-        if pending_relationship_subqueries.dig(key)
-          next
-        elsif index == 0
-          # Handle initial case
-          pending_relationship_subqueries[key] = {}
-        else
-          # Handle nested keys
-          existing_keys = array_of_keys[0..index - 1]
-          pending_relationship_subqueries.dig(*existing_keys)[key] = {}
-        end
-      end
-    end
-
     def add_pending_relationship_subquery(subquery:, primary_key:, secondary_key: nil)
       # Add key, query, and secondary keys at the correct depth
-      # Key path is built in set pending relationship
       pending_relationship_subqueries.dig(*get_current_relationship)[:key] = primary_key
       pending_relationship_subqueries.dig(*get_current_relationship)[:query] = subquery
       pending_relationship_subqueries.dig(*get_current_relationship)[:secondary] = secondary_key
@@ -57,7 +39,12 @@ module Hammerstone::Refine
     end
 
     def get_pending_relationship_item(key)
-      pending_relationship_subqueries.dig(*get_current_relationship, key.to_sym)
+      # Digging for a particular key will create a {} value, must check presence
+      if pending_relationship_subqueries.dig(*get_current_relationship, key.to_sym).present?
+        pending_relationship_subqueries.dig(*get_current_relationship, key.to_sym)
+      else
+        nil
+      end
     end
 
     def set_pending_relationship_subquery_wrapper(callback)
@@ -70,11 +57,8 @@ module Hammerstone::Refine
 
     def release_pending_relationship
       instance = get_pending_relationship_instance
-      subset_hash_values = pending_relationship_subqueries.dig(*get_current_relationship)
-      popped = pending_relationship_subquery_depth.pop
-
-      subset_hash = {}
-      subset_hash[popped] = subset_hash_values
+      # Pop off the last key (last relationship)
+      popped = pending_relationship_subquery_depth.pop.to_sym
 
       return if relationship_supports_collapsing(instance)
 
@@ -83,22 +67,33 @@ module Hammerstone::Refine
         @immediately_commit_pending_relationship_subqueries = true
         return
       end
+      # Grab the query one level higher than the current stack (removed during pop)
       query = pending_relationship_subqueries.dig(*current)[:query]
-
-      pending_relationship_subqueries.dig(*current)[:children].except!(popped.to_sym)
-      pending_relationship_subqueries.dig(*current)[:query] = commit_subset(query: query, subset: subset_hash)
+      # Build hash to send to commit_subset with popped -> value at popped
+      subset = {}
+      subset[popped] = pending_relationship_subqueries.dig(*current)[:children][popped]
+      # Remove popped from pending relationships subqueries -> handled in commit_subset
+      pending_relationship_subqueries.dig(*current)[:children].except!(popped)
+      pending_relationship_subqueries.dig(*current)[:query] = commit_subset(subset: subset, query: query)
     end
 
     def commit_pending_relationship_subqueries
       applied_query = commit_subset(subset: pending_relationship_subqueries)
-      @pending_relationship_subqueries = {}
+      @pending_relationship_subqueries = Hash.new { |h, k| h[k] = h.dup.clear }
       applied_query
     end
 
     def commit_subset(subset:, query: nil)
       # Turn pending subqueries into nodes to apply in the filter
       subset.each do |relation, subquery|
-        child_nodes = subquery.dig(:children)
+        if subquery.dig(:children).present?
+          # Send in the values at children as the subset hash and remove from existing subquery
+          child_nodes = subquery.delete(:children)
+        end
+
+        # If there are children, we recursively call this method again
+        # to build up the inner (child) queries first. This allows us
+        # to intelligently nest multiple levels of relationships.
         if child_nodes.present?
           commit_subset(query: subquery[:query], subset: child_nodes)
         end
@@ -111,7 +106,6 @@ module Hammerstone::Refine
         parent_table = subquery[:instance].active_record.arel_table
         linking_key = subquery[:key]
         temp_query = subquery[:query]
-
         if query.present?
           # If query is a Select Manager ("SELECT....") we are deeply nested and need to build the query
           # with a WHERE statement

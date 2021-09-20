@@ -1,25 +1,6 @@
 import { Controller } from 'stimulus'
 import { delegate, abnegate } from 'jquery-events-to-dom-events'
-
-// Polyfill for custom events in IE9-11
-// https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#polyfill
-;(function () {
-  if (typeof window.CustomEvent === 'function') return false
-
-  function CustomEvent(event, params) {
-    params = params || { bubbles: false, cancelable: false, detail: undefined }
-    var evt = document.createEvent('CustomEvent')
-    evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail)
-    return evt
-  }
-
-  CustomEvent.prototype = window.Event.prototype
-
-  window.CustomEvent = CustomEvent
-
-  // eslint expects a return here
-  return true
-})()
+import { filterUnstableEvent, filterStabilizedEvent } from 'refine/helpers'
 
 const criterion = (id, depth, meta) => {
   return {
@@ -46,26 +27,6 @@ const and = function (depth) {
     type: 'conjunction',
     word: 'and',
   }
-}
-
-const filterStabilizedEvent = (stableId, filterName, initialLoad) => {
-  const event = new CustomEvent('filter-stabilized', {
-    detail: {
-      stableId,
-      filterName,
-      initialLoad,
-    },
-  })
-  window.dispatchEvent(event)
-}
-
-const filterUnstableEvent = (blueprint) => {
-  const event = new CustomEvent('filter-unstable', {
-    detail: {
-      blueprint,
-    },
-  })
-  window.dispatchEvent(event)
 }
 
 export default class extends Controller {

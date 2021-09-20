@@ -5,6 +5,14 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
     @refine_filter = filter
   end
 
+  def update_stable_id
+    filterClass = filter_params[:filter].constantize
+    blueprint_details = params.to_unsafe_h.slice(:blueprint)
+    filter = filterClass.new blueprint_details
+    filter_id = Stabilizers::UrlEncodedStabilizer.new.to_stable_id(filter: filter)
+    render json: { filter_id: filter_id }, status: :ok
+  end
+
   private
 
   def filter
@@ -22,7 +30,6 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
 
   def blueprint
     return [] unless filter_params[:blueprint]
-
     JSON.parse(filter_params[:blueprint]).map(&:deep_symbolize_keys)
   end
 

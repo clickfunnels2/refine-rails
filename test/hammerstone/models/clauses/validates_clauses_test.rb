@@ -27,7 +27,7 @@ module Hammerstone::Refine::Conditions
       condition = ValidatesClausesTestCondition.new("text_test")
       user_input = {clause: "eq", value: "sample_value"}
       filter = apply_condition_and_return_filter(condition, user_input)
-      assert_equal("0 [\"The clause with id eq was not found\"]", filter.errors.full_messages[0])
+      assert_equal(["The clause with id eq was not found"], filter.errors.full_messages)
     end
 
     it "passes with clause id" do
@@ -41,21 +41,21 @@ module Hammerstone::Refine::Conditions
       condition = ValidatesClausesTestCondition.new("text_test")
       user_input = {clause: nil}
       filter = apply_condition_and_return_filter(condition, user_input)
-      assert_equal("0 [\"A clause is required for clause with id \"]", filter.errors.full_messages[0])
+      assert_equal(["A clause is required for clause with id "], filter.errors.full_messages)
     end
 
     it "validates Text Condition Eq has a value" do
       condition = TextCondition.new("text_test") # Automatically have all the clauses with all the rules
       data = {clause: "eq", value: nil}
       filter = apply_condition_and_return_filter(condition, data)
-      assert_equal("0 [\"A value is required for clause with id eq\"]", filter.errors.full_messages[0])
+      assert_equal(["A value is required for clause with id eq"], filter.errors.full_messages)
     end
 
     it "excludes clauses using without" do
       condition = ValidatesClausesTestCondition.new("text_test").without_clauses(["id_one"])
       data = {clause: "id_one", value: "foo"}
       filter = apply_condition_and_return_filter(condition, data)
-      assert_equal("0 [\"The clause with id id_one was not found\"]", filter.errors.full_messages[0])
+      assert_equal(["The clause with id id_one was not found"], filter.errors.full_messages)
     end
 
     it "Returns condition and clause errors when multiple issues" do
@@ -94,7 +94,7 @@ module Hammerstone::Refine::Conditions
         FilterTestHelper::TestDouble.arel_table)
       filter.get_query
       filter_errors = filter.errors.full_messages.map { |el| el.tr("\"", "`") }
-      assert_equal(["0 [`A value is required for clause with id eq`]", "2 [`The clause with id id_one was not found`]"], filter_errors)
+      assert_equal(["A value is required for clause with id eq", "The clause with id id_one was not found"], filter_errors)
     end
   end
 

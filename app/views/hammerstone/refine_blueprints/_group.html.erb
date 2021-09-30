@@ -1,7 +1,7 @@
 <%= turbo_frame_tag "group_#{group_id}" do %>
   <div class="bg-gray-50 rounded p-4 font-sans">
     <% criteria&.each_with_index do |criterion, index| %>
-      <div class="flex items-start pb-3">
+      <div class="flex items-start pb-3 flex-wrap">
         <%= render partial: 'hammerstone/refine_blueprints/criterion', locals: {
         criterion: criterion, criterion_id: criterion[:position] } %>
       </div>

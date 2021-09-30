@@ -23,7 +23,7 @@ module Hammerstone::Refine::Conditions
       @attribute = id
       @rules = {}
 
-      # Ensurance validations -> ever condition must have an id and an attribute evaluated after
+      # Ensurance validations -> every condition must have an id and an attribute evaluated after
       # developer configuration
       @ensurances = []
       add_ensurance(ensure_id)
@@ -160,7 +160,8 @@ module Hammerstone::Refine::Conditions
 
       # Errors added to the errors array by individual conditions and standard rails validations
       if errors.any? || !valid?
-        raise Errors::ConditionClauseError, errors.full_messages
+        # When the error is rescued, it will stringify the message.
+        raise Errors::ConditionClauseError, errors.attribute_names.map{|name| errors[name].join}.to_sentence
       end
     end
 

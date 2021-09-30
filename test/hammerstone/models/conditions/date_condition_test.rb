@@ -21,7 +21,7 @@ module Hammerstone::Refine::Conditions
       it "throws errors for invalid date format for date1" do
         data = {clause: DateCondition::CLAUSE_EQUALS, date1: "05/15/2019"}
         filter = apply_condition_and_return_filter(condition, data)
-        assert_equal("0 [\"date1 is not a real date\"]", filter.errors.full_messages[0])
+        assert_equal(["date1 is not a real date"], filter.errors.full_messages)
       end
     end
 

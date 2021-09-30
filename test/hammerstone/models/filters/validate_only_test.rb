@@ -18,7 +18,7 @@ describe Hammerstone::Refine::Filter do
       exception = assert_raises(Exception) { filter.get_query }
       assert_equal(exception.message, "Initial query must exist")
       filter.validate_only
-      assert_equal(["[\"A value is required for clause with id eq\"]"], filter.errors[:"0"])
+      assert_equal(["A value is required for clause with id eq"], filter.errors.full_messages)
     end
   end
 end

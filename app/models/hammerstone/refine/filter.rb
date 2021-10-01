@@ -160,7 +160,8 @@ module Hammerstone::Refine
       begin
         get_condition_for_criterion(criterion)&.apply(criterion[:input], table, initial_query)
       rescue Hammerstone::Refine::Conditions::Errors::ConditionClauseError => e
-        errors.add(criterion[:index].to_s, e.message)
+        # TODO criterion used to have an index?
+        errors.add(:base, e.message)
       end
     end
 

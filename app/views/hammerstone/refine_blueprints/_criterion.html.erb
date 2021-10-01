@@ -1,5 +1,5 @@
-<%= turbo_frame_tag "criterion_#{criterion_id}" do %>
-  <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex flex-wrap flex-grow items-center w-full sm:w-auto sm:pr-12', data: {
+<%= turbo_frame_tag("criterion_#{criterion_id}")  do %>
+  <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex flex-wrap flex-grow w-full sm:w-auto sm:pr-12', data: {
     controller: 'refine--update',
     refine__update_criterion_id_value: criterion_id,
     refine__update_stable_id_value: stable_id,
@@ -33,7 +33,7 @@
     <!-- End Refinements -->
   <% end %>  
 <% end %>
-<%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'pt-5 ml-auto', data: {
+<%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'pt-5 ml-auto flex-0', data: {
   controller: 'refine--delete',
   refine__delete_criterion_id_value: criterion_id,
   turbo_frame: 'hammerstone_refine_query',
@@ -42,7 +42,7 @@
     action: "click->refine--delete#criterion",
   } do %>
     <i class="text-gray-600 fas fa-trash-alt"></i>
-    <span class="text-black-500 pl-2 sm:hidden">Remove filter</span>
+    <span class="text-black-500 pl-2 hidden">Remove filter</span>
   <% end %>
 <% end %>
 

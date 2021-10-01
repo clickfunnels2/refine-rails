@@ -5,6 +5,7 @@
   refine__state_blueprint_value: blueprint.to_json,
   refine__state_class_name_value: configuration[:class_name],
   refine__state_stable_id_value: stable_id } do %>
+
   <div
     class="flex items-center justify-center absolute left-0 top-0 w-full h-full bg-black bg-opacity-50 z-10 rounded hidden"
     id="refine-loader"
@@ -25,6 +26,7 @@
   <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex items-center', data: {
     controller: 'refine--add'
   }) do %>
+
     <button
       class="text-blue-600 background-transparent font-bold underline pt-4 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
       data-action="click->refine--add#group"

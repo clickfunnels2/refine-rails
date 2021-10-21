@@ -64,27 +64,27 @@ module Hammerstone::Refine::Conditions
 
       blueprint =
         [{
-          "depth": 0,
+          depth: 0,
           index: 0,
-          "type": "criterion",
-          "condition_id": "text_field_value",
-          "input": {
-            "clause": "eq",
-            "value": nil
+          type: "criterion",
+          condition_id: "text_field_value",
+          input: {
+            clause: "eq",
+            value: nil
           }
         }, {
-          "depth": 0,
+          depth: 0,
           index: 1,
-          "type": "conjunction",
-          "word": "and"
+          type: "conjunction",
+          word: "and"
         }, {
-          "depth": 0,
+          depth: 0,
           index: 2,
-          "type": "criterion",
-          "condition_id": "text_test",
-          "input": {
-            "clause": "id_one",
-            "value": "aa"
+          type: "criterion",
+          condition_id: "text_test",
+          input: {
+            clause: "id_one",
+            value: "aa"
           }
         }]
 

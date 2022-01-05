@@ -1,5 +1,7 @@
 module Hammerstone::Refine::Blueprints
   class Blueprint
+    attr_reader :blueprint
+
     def initialize
       @blueprint = []
       @depth = 0

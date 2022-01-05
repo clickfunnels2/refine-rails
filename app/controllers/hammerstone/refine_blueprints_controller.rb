@@ -3,7 +3,7 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
 
   def show
     @refine_filter = filter
-    @refine_filter.validate_only
+    #@refine_filter.validate_only
   end
 
   def update_stable_id

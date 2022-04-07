@@ -1,5 +1,10 @@
 module Hammerstone::Refine::Conditions
   module HasRefinements
+    def refine_by_filter(filter_condition)
+      @filter_refinement_proc = proc { filter_condition }
+      self
+    end
+
     def refine_by_date(callable = nil)
       # Developer can send in a string that represents the attribute or a proc that is a fully qualified class
       # If a callable is given and it is a string, we assume that is the desired attribute. Otherwise we use
@@ -75,8 +80,7 @@ module Hammerstone::Refine::Conditions
         # to 0. That gives us a true count for every contact, even if the count is 0. Then we can use
         # the Numeric Condition as usual.
         # Wrap the existing subquery - subquery is an AREL Select manager and modified in place
-        subquery.project((Arel.star.count).as('hs_refine_count_aggregate'))
-
+        subquery.project((Arel.star.count).as("hs_refine_count_aggregate"))
 
         # The table that owns the relationship
         # TODO This is redundant
@@ -88,13 +92,13 @@ module Hammerstone::Refine::Conditions
 
         callable_subquery =
           proc do |inner_query, primary_key, foreign_key|
-            interim_table = inner_query.as('interim_table')
+            interim_table = inner_query.as("interim_table")
             outer_query.join(interim_table, Arel::Nodes::OuterJoin).on(interim_table[foreign_key.to_sym].eq(parent_table[primary_key.to_sym]))
           end
 
         filter.set_pending_relationship_subquery_wrapper(callable_subquery)
 
-        condition.raw_attribute('coalesce(hs_refine_count_aggregate, 0)')
+        condition.raw_attribute("coalesce(hs_refine_count_aggregate, 0)")
 
         node = condition.apply(input, table, nil)
         outer_query.where(node)
@@ -122,7 +126,7 @@ module Hammerstone::Refine::Conditions
       # Overwrite any passed in id's with count_refinement
       condition.id = "count_refinement"
       condition.is_refinement = true
-      condition.raw_attribute('COUNT(*)')
+      condition.raw_attribute("COUNT(*)")
       filter.instantiate_condition(condition)
     end
 

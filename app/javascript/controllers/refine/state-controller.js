@@ -2,12 +2,33 @@ import { Controller } from 'stimulus'
 import { delegate, abnegate } from 'jquery-events-to-dom-events'
 import { filterUnstableEvent, filterStabilizedEvent } from 'refine/helpers'
 
-const criterion = (id, depth, meta) => {
+const criterion = (id, depth, condition) => {
+  const { meta, refinements, component } = condition
+  const { clauses, options } = meta
+  const isOptionCondition = component === 'option-condition'
+  // Set newInput based on component
+
+  let newInput = {
+    clause: clauses[0].id,
+    selected: isOptionCondition ? [options[0].id] : undefined,
+  }
+
+  // If refinements are present, add to input array
+  refinements.forEach((refinement) => {
+    const { meta, component } = refinement
+    const { clauses, options } = meta
+    const isOptionCondition = component === 'option-condition'
+    newInput[refinement.id] = {
+      clause: clauses[0].id,
+      selected: isOptionCondition ? [options[0].id] : undefined,
+    }
+  })
+
   return {
     depth,
     type: 'criterion',
     condition_id: id,
-    input: { clause: meta.clauses[0].id },
+    input: newInput,
   }
 }
 
@@ -51,7 +72,8 @@ export default class extends Controller {
     }, {})
     this.loadingTimeout = null
 
-    filterStabilizedEvent(this.stableId, this.filterName, true)
+    filterStabilizedEvent(this.element, this.stableId, this.filterName, true)
+    filterStabilizedEvent(window, this.stableId, this.filterName, true)
   }
 
   disconnect() {
@@ -67,7 +89,7 @@ export default class extends Controller {
     this.loadingTimeout = window.setTimeout(() => {
       document.activeElement.blur()
       this.loadingTarget.classList.remove('hidden')
-    }, 500)
+    }, 1000)
   }
 
   finishUpdate() {
@@ -84,7 +106,8 @@ export default class extends Controller {
   updateStableId(newUrl) {
     if (newUrl !== this.stableId) {
       this.stableId = newUrl
-      filterStabilizedEvent(this.stableId, this.filterName, true)
+      filterStabilizedEvent(this.element, this.stableId, this.filterName)
+      filterStabilizedEvent(window, this.stableId, this.filterName)
     }
   }
 
@@ -96,7 +119,7 @@ export default class extends Controller {
     if (this.blueprint.length > 0) {
       this.blueprint.push(or())
     }
-    this.blueprint.push(criterion(condition.id, 1, meta))
+    this.blueprint.push(criterion(condition.id, 1, condition))
     filterUnstableEvent(this.blueprint)
   }
 
@@ -104,8 +127,7 @@ export default class extends Controller {
     const { blueprint, conditions } = this
     const condition = conditions[0]
     const { meta } = condition
-
-    blueprint.splice(previousCriterionId + 1, 0, and(), criterion(condition.id, 1, meta))
+    blueprint.splice(previousCriterionId + 1, 0, and(), criterion(condition.id, 1, condition))
     filterUnstableEvent(this.blueprint)
   }
 
@@ -159,35 +181,36 @@ export default class extends Controller {
       const condition = this.conditions[0]
       const { meta } = condition
 
-      this.blueprint.push(criterion(condition.id, 1, meta))
+      this.blueprint.push(criterion(condition.id, 1, condition))
     }
 
     filterUnstableEvent(this.blueprint)
   }
 
-  updateConditionId(criterionId, conditionId) {
-    const criterion = this.blueprint[criterionId]
-    if (criterion.type !== 'criterion') {
+  replaceCriterion(criterionId, conditionId, condition) {
+    const criterionRow = this.blueprint[criterionId]
+    if (criterionRow.type !== 'criterion') {
       throw new Error(
         `You can't call updateConditionId on a non-criterion type. Trying to update ${JSON.stringify(criterion)}`
       )
     }
-    criterion.condition_id = conditionId
-    filterUnstableEvent(this.blueprint)
-  }
-
-  replaceInput(criterionId, input) {
-    const { blueprint } = this
-    const criterion = blueprint[criterionId]
-    criterion.input = input
+    // Build out a default criterion.
+    this.blueprint[criterionId] = criterion(conditionId, criterionRow.depth, condition)
     filterUnstableEvent(this.blueprint)
   }
 
   updateInput(criterionId, input, inputId) {
+    // Input id is an array of hash keys that define the path for this input such as ["input", "date_refinement"]
     const { blueprint } = this
     const criterion = blueprint[criterionId]
     inputId = inputId || 'input'
-    criterion[inputId] = { ...criterion[inputId], ...input }
+    const blueprintPath = inputId.split(', ')
+    // If the inputId contains more than one element, add input at appropriate depth
+    if (blueprintPath.length > 1) {
+      criterion[blueprintPath[0]][blueprintPath[1]] = { ...criterion[blueprintPath[0]][blueprintPath[1]], ...input }
+    } else {
+      criterion[inputId] = { ...criterion[inputId], ...input }
+    }
     filterUnstableEvent(this.blueprint)
   }
 }

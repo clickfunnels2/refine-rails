@@ -71,6 +71,7 @@ describe Hammerstone::Refine::Filter do
             blueprint: [],
             conditions: expected_conditions,
             stable_id: nil,
+
           }
         assert_equal expected_value, filter.configuration
       end
@@ -85,7 +86,7 @@ describe Hammerstone::Refine::Filter do
             class_name: "TestFilterWithMeta",
             blueprint: [],
             conditions: expected_conditions_with_meta,
-            stable_id: nil
+            stable_id: nil,
           }
         assert_equal expected_value, filter.configuration
       end

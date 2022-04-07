@@ -3,13 +3,13 @@
     <% criteria&.each_with_index do |criterion, index| %>
       <div class="flex items-start pb-3 flex-wrap">
         <%= render partial: 'hammerstone/refine_blueprints/criterion', locals: {
-        criterion: criterion, criterion_id: criterion[:position] } %>
+          criterion: criterion, criterion_id: criterion[:position] } %>
       </div>
       <% if criteria.count > 1 && index < criteria.count - 1 %>
         <p class="text-gray-400 pl-2">and</p>
       <% end %>
     <% end %>
-    <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: "pt-4", data: {
+    <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: "pt-4 flex", data: {
       controller: "refine--add",
       refine__add_previous_criterion_id_value: criteria.last[:position],
     }) do %>

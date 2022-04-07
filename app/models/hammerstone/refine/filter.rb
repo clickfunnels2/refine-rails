@@ -28,7 +28,6 @@ module Hammerstone::Refine
 
     def initial_query
       raise NotImplementedError if @initial_query.nil?
-
       @initial_query
     end
 
@@ -65,8 +64,9 @@ module Hammerstone::Refine
       # No nodes returned, do nothing
       elsif subquery.present? && nodes.blank?
         subquery
-      # Subquery has not yet been initialized, initialize with new nodes
-      elsif subquery.blank? && nodes.present?
+      # Subquery has not yet been initialized, initialize with new nodes - must use !nil? here, present/exists/blank etc don't 
+      # account for AR::Relation object. 
+      elsif subquery.blank? && !nodes.nil?
         subquery = group(nodes)
       end
       subquery
@@ -116,6 +116,7 @@ module Hammerstone::Refine
         else
           false
         end
+
         # If it is a relationship attribute apply_condition will call apply_relationship_attribute which will set up the pending relationship
         # subquery but will not return a value.
         # apply condition is NOT idempotent, hence the placeholder var
@@ -130,9 +131,9 @@ module Hammerstone::Refine
 
         if @immediately_commit_pending_relationship_subqueries.present?
           committed_nodes_from_pending = commit_pending_relationship_subqueries
-
           subquery = add_nodes_to_query(subquery: subquery, nodes: committed_nodes_from_pending, query_method: query_method)
         end
+
         index += 1
       end
 
@@ -160,7 +161,6 @@ module Hammerstone::Refine
       begin
         get_condition_for_criterion(criterion)&.apply(criterion[:input], table, initial_query)
       rescue Hammerstone::Refine::Conditions::Errors::ConditionClauseError => e
-        # TODO criterion used to have an index?
         errors.add(:base, e.message)
       end
     end
@@ -210,13 +210,12 @@ module Hammerstone::Refine
 
     def state
       {
-        type: get_alias,
+        type: type,
         blueprint: blueprint
       }.to_json
     end
 
-    def get_alias
-      # TODO revisit this alias
+    def type
       self.class.name
     end
 

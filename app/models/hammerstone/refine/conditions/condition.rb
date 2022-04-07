@@ -11,8 +11,8 @@ module Hammerstone::Refine::Conditions
     include UsesAttributes
     include HasRefinements
 
-    attr_reader :attribute, :ensurances, :before_validations, :clause, :filter
-    attr_accessor :display, :id, :is_refinement
+    attr_reader :ensurances, :before_validations, :clause, :filter
+    attr_accessor :display, :id, :is_refinement, :attribute
 
     def initialize(id = nil, display = nil)
       # Capture display value if sent it. Not translated, takes precedence
@@ -41,6 +41,7 @@ module Hammerstone::Refine::Conditions
       # Refinements variables
       @date_refinement_proc = nil
       @count_refinement_proc = nil
+      @filter_refinement_proc = nil
     end
 
     def before_validate(callable)
@@ -75,7 +76,6 @@ module Hammerstone::Refine::Conditions
     # Boot the traits first, so any extended conditions
     # can override the traits if they need to.
     def boot_traits
-      # ?
     end
 
     def boot
@@ -118,15 +118,31 @@ module Hammerstone::Refine::Conditions
       # Ensurance validations are checking the developer configured correctly
       run_ensurance_validations
       # Allow developer to modify user input
-      # run_before_validate(input) -> what is this for?
+      # TODO run_before_validate(input) -> what is this for?
+
       run_before_validate_validations(input)
+
+      # TODO Determine right place to set the clause
       validate_user_input(input)
+      if input.dig(:filter_refinement).present?
+
+        filter_condition = call_proc_if_callable(@filter_refinement_proc)
+        # Set the filter on the filter_condition to be the current_condition's filter
+        filter_condition.set_filter(filter)
+        filter_condition.is_refinement = true
+
+        # Applying the filter condition will modify pending relationship subqueries in place
+        filter_condition.apply(input.dig(:filter_refinement), table, initial_query)
+        input.delete(:filter_refinement)
+      end
 
       if is_relationship_attribute?
         apply_relationship_attribute(input: input, query: initial_query)
         return
       end
+      # No longer a relationship attribute, apply condition normally 
       nodes = apply_condition(input, table)
+
       if !is_refinement && has_any_refinements?
         refined_node = apply_refinements(input)
         # Count refinement will return nil because it directly modified pending relationship subquery
@@ -151,7 +167,6 @@ module Hammerstone::Refine::Conditions
       # Set input parameters on the condition in order to use conditiion level validations
       @clause = input[:clause]
       set_input_parameters(input)
-
       evaluated_rules.each_pair do |k, v|
         if input[k].blank?
           errors.add(:base, "A #{k} is required for clause with id #{input[:clause]}")

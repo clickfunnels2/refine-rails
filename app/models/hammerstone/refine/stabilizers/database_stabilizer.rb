@@ -1,9 +1,9 @@
 module Hammerstone::Refine::Stabilizers
   class DatabaseStabilizer
 
-    def to_stable_id(filter:)
+    def to_stable_id(filter:, name: nil)
       # Serialize the filter class and blueprint. Reference via id.
-      model.find_or_create_by!(state: filter.state).id
+      model.find_or_create_by!(state: filter.state, name: name).id
     end
 
     def from_stable_id(id:, initial_query: nil)
@@ -13,7 +13,7 @@ module Hammerstone::Refine::Stabilizers
     end
 
     def model
-      Hammerstone::Refine::Stabilizers::StoredFilter
+      Hammerstone::Refine::StoredFilter
     end
   end
 end

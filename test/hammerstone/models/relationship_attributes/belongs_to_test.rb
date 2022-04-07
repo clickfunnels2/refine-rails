@@ -6,13 +6,29 @@ module Hammerstone::Refine::Conditions
     include FilterTestHelper
 
     around do |test|
-      ApplicationRecord.connection.execute("CREATE TABLE btt_notes (id bigint primary key, btt_user_id bigint);")
-      ApplicationRecord.connection.execute("CREATE TABLE btt_users (id bigint primary key, name varchar(256));")
-      ApplicationRecord.connection.execute("CREATE TABLE btt_phones (id bigint primary key, btt_user_id bigint);")
+      ActiveRecord::Base.connection.execute("CREATE TABLE btt_notes (id bigint primary key, btt_user_id bigint, body varchar(256));")
+      ActiveRecord::Base.connection.execute("CREATE TABLE btt_users (id bigint primary key, name varchar(256));")
+      ActiveRecord::Base.connection.execute("CREATE TABLE btt_phones (id bigint primary key, btt_user_id bigint, number varchar(256));")
       test.call
-      ApplicationRecord.connection.execute("DROP TABLE btt_notes, btt_users, btt_phones")
+      ActiveRecord::Base.connection.execute("DROP TABLE btt_notes, btt_users, btt_phones")
     end
 
+    before do
+      # TODO why isn't Rails setting the primary key?
+      @aaron = BttUser.find_or_create_by(name: "Aaron", id: 1)
+      @francis = BttUser.find_or_create_by(name: "Francis", id: 2)
+      @sally = BttUser.find_or_create_by(name: "Sally", id: 3)
+      @colleen = BttUser.find_or_create_by(name: "Colleen", id: 4)
+      @aaronfrancis = BttUser.find_or_create_by(name: "AaronFrancis", id: 5)
+
+      @sally_phone = BttPhone.find_or_create_by(number: "214", btt_user_id: @sally.id, id: 1)
+      @aaron_phone_1 = BttPhone.find_or_create_by(number: "aaron-1111", btt_user_id: @aaron.id, id: 2)
+      @aaron_phone_2 = BttPhone.find_or_create_by(number: "aaron-222", btt_user_id: @aaron.id, id: 3)
+      @colleen_phone = BttPhone.find_or_create_by(number: "colleen-and-aaron", btt_user_id: @colleen.id, id: 4)
+      @another_phone = BttPhone.find_or_create_by(number: "214", btt_user_id: @aaronfrancis.id, id: 5)
+    end
+    # Get all phone record with users having name == aaron
+    # AR: BttPhone.where(btt_user_id: BttUser.where(name: ‘aaron')).to_sql
     it "uses where in for belongs to" do
       query = create_filter(single_builder)
       expected_sql = <<~SQL.squish
@@ -21,6 +37,7 @@ module Hammerstone::Refine::Conditions
         (SELECT "btt_users"."id" FROM "btt_users" WHERE ("btt_users"."name" = 'aaron')))
       SQL
       assert_equal convert(expected_sql), query.get_query.to_sql
+      assert_equal [@aaron_phone_1, @aaron_phone_2], query.get_query.all
     end
 
     it "can handle nested relationships" do
@@ -34,17 +51,21 @@ module Hammerstone::Refine::Conditions
       assert_equal convert(expected_sql), query.get_query.to_sql
     end
 
+    # User intent: All phone records for users with an "o" and an "n". Should return all aaron records and colleen
     it "collapses two attributes on belongs to relationships" do
       query = create_filter(two_attributes_adjacent_blueprint)
       expected_sql = <<~SQL.squish
         SELECT "btt_phones".* FROM "btt_phones"
         WHERE ("btt_phones"."btt_user_id" IN
         (SELECT "btt_users"."id" FROM "btt_users"
-        WHERE ("btt_users"."name" LIKE \'%Aaron%\') AND ("btt_users"."name" = \'Francis\')))
+        WHERE ("btt_users"."name" LIKE \'%o%\') AND ("btt_users"."name" LIKE \'%n%\')))
       SQL
       assert_equal convert(expected_sql), query.get_query.to_sql
+      assert_equal [@aaron_phone_1, @aaron_phone_2, @colleen_phone, @another_phone], query.get_query.all
     end
 
+    # User intent: Return all phone numbers where the number contains 214 AND where the user.name
+    # contains Aaron AND where the user.name contains Francis
     it "collapses two attributes on belongs to when not adjacent" do
       query = create_filter(two_attributes_not_adjacent_blueprint)
       expected_sql = <<~SQL.squish
@@ -55,6 +76,8 @@ module Hammerstone::Refine::Conditions
         WHERE ("btt_users"."name" LIKE \'%Aaron%\') AND ("btt_users"."name" LIKE \'%Francis%\'))))
       SQL
       assert_equal convert(expected_sql), query.get_query.to_sql
+      # Note, does not include @sally_phone (number 214)
+      assert_equal [@another_phone], query.get_query.all
     end
 
     it "does not mix up belongs to in groups" do
@@ -239,11 +262,11 @@ module Hammerstone::Refine::Conditions
       Hammerstone::Refine::Blueprints::Blueprint.new
         .criterion("user_name",
           clause: TextCondition::CLAUSE_CONTAINS,
-          value: "Aaron")
+          value: "o")
         .and
         .criterion("user_name",
-          clause: TextCondition::CLAUSE_EQUALS,
-          value: "Francis")
+          clause: TextCondition::CLAUSE_CONTAINS,
+          value: "n")
     end
 
     def nested_builder

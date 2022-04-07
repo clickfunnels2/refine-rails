@@ -1,9 +1,10 @@
 <div
   data-controller="fields--date"
+  class="relative"
 >
   <label for="<%= condition_id %>" class="sr-only"><%= label %></label>
   <input
-    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-36 sm:text-sm border-gray-300 rounded-md"
+    class="rounded w-36 border border-solid border-coolGray-200 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
     name="<%= condition_id %>"
     type="text"
     value="<%= date&.to_date&.strftime('%m/%d/%y') %>"

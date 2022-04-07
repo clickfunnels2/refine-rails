@@ -1,5 +1,5 @@
 <% selected = input.has_key?(:selected) ? input[:selected] : [] %>
-<% multiple = meta_clause[:multiple] ? "multiple" : "" %>
+
 <% if ['st', 'nst'].include? input[:clause] %>
 <!-- Render nothing -->
 <% elsif %>
@@ -10,7 +10,7 @@
       fields__super_select_enable_search_value: 'true',
       fields__super_select_container_width_value: 'resolve',
     } do %>
-      <select <%=multiple%>
+      <select 
         class="font-sans mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
         data-fields--super-select-target="select"
         name="values"

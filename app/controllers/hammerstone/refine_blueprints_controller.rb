@@ -3,12 +3,15 @@ class Hammerstone::RefineBlueprintsController < Account::ApplicationController
 
   def show
     @refine_filter = filter
-    #@refine_filter.validate_only
+    # TODO: Fix validation
+    # @refine_filter.validate_only
   end
 
   def update_stable_id
     filterClass = filter_params[:filter].constantize
-    blueprint_details = params.to_unsafe_h.slice(:blueprint)
+    # TODO can't re-use blueprint method here b/c the params are coming in as a nested params hash, 
+    # in the show method they are a string. 
+    blueprint_details = params.to_unsafe_h[:blueprint]
     filter = filterClass.new blueprint_details
     filter_id = Stabilizers::UrlEncodedStabilizer.new.to_stable_id(filter: filter)
     render json: { filter_id: filter_id }, status: :ok

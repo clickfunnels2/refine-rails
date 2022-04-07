@@ -25,7 +25,7 @@ module Hammerstone::Refine::Conditions
     def boot
       @nil_option_id = nil
       @options = nil
-      @validate_selections = true
+      # TODO @validate_selections = true
       with_meta({options: get_options})
       add_ensurance(ensure_options)
     end
@@ -39,7 +39,9 @@ module Hammerstone::Refine::Conditions
     end
 
     def option_in_approved_list?
+      # TODO allow this to accept strings as well as integers
       selected.each do |select|
+        select.join if select.is_a? Array 
         unless get_options.call.map { |option| option[:id] }.include? select
           errors.add(:base, "Selected #{select} is not configured in options list")
         end
@@ -80,16 +82,20 @@ module Hammerstone::Refine::Conditions
     def clauses
       [
         Clause.new(CLAUSE_EQUALS, "Is")
-          .requires_inputs(["selected"]),
+          .requires_inputs(["selected"])
+          .with_meta({multiple: false}),
 
         Clause.new(CLAUSE_DOESNT_EQUAL, "Is Not")
-          .requires_inputs(["selected"]),
+          .requires_inputs(["selected"])
+          .with_meta({multiple: false}),
 
         Clause.new(CLAUSE_IN, "Is One Of")
-          .requires_inputs(["selected"]),
+          .requires_inputs(["selected"])
+          .with_meta({multiple: true}),
 
         Clause.new(CLAUSE_NOT_IN, "Is Not One Of")
-          .requires_inputs(["selected"]),
+          .requires_inputs(["selected"])
+          .with_meta({multiple:true}),
 
         Clause.new(CLAUSE_SET, "Is Set"),
 
@@ -98,7 +104,7 @@ module Hammerstone::Refine::Conditions
     end
 
     def apply_condition(input, table)
-      value = selected
+      value = input[:selected]
 
       case clause
       when CLAUSE_SET
@@ -134,7 +140,7 @@ module Hammerstone::Refine::Conditions
     def nil_option_selected?(value)
       # Return false if no nil option id
       return false unless nil_option_id
-      value.include? nil_option_id
+      value&.include? nil_option_id
     end
 
     def values_for_application(ids, single = false)

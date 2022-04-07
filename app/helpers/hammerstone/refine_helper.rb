@@ -16,8 +16,21 @@ module Hammerstone
           new_blueprint.last.push piece
         end
       end
-
       new_blueprint
+    end
+
+    def filter_title
+      return t("global.buttons.filter") if @stored_filter.nil?
+
+      @stored_filter.name
+    end
+
+    def show_delete_button?
+      # don't show the delete button if there is only one group and only one criterion
+      # in the group
+      return true unless grouped_blueprint.length == 1 && grouped_blueprint.first.length == 1
+
+      false
     end
 
     def filter_class_name
@@ -30,7 +43,28 @@ module Hammerstone
 
     def meta_for_criterion(criterion)
       condition = condition_for_criterion criterion
+      meta_for_condition(condition)
+    end
+
+    def meta_for_condition(condition)
       condition[:meta]
+    end
+
+    def meta_for_refinement_clause(condition, criterion)
+      condition_meta = meta_for_condition(condition)
+      # condition[:id] is the refinement such as date_refinement, condition_refinement
+      selected_clause_id = criterion[:input][condition[:id].to_sym][:clause]
+      clauses = condition_meta[:clauses]
+      selected_clause = clauses.find { |clause| clause[:id] == selected_clause_id }
+      selected_clause[:meta]
+    end
+
+    def meta_for_clause(criterion)
+      meta = meta_for_criterion(criterion)
+      selected_clause_id = criterion[:input][:clause]
+      clauses = meta[:clauses]
+      selected_clause = clauses.find { |clause| clause[:id] == selected_clause_id }
+      selected_clause[:meta]
     end
 
     def clause_for_criterion(criterion)

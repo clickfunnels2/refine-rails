@@ -6,11 +6,11 @@ module Hammerstone::Refine::Conditions
     include FilterTestHelper
 
     around do |test|
-      ApplicationRecord.connection.execute("CREATE TABLE hmt_notes (id bigint primary key, hmt_user_id bigint, hmt_invoice_id bigint);")
-      ApplicationRecord.connection.execute("CREATE TABLE hmt_users (id bigint primary key, name varchar(255));")
-      ApplicationRecord.connection.execute("CREATE TABLE hmt_invoices (id bigint primary key, hmt_user_id bigint, amount bigint);")
+      ActiveRecord::Base.connection.execute("CREATE TABLE hmt_notes (id bigint primary key, hmt_user_id bigint, hmt_invoice_id bigint, body varchar(255));")
+      ActiveRecord::Base.connection.execute("CREATE TABLE hmt_users (id bigint primary key, name varchar(255));")
+      ActiveRecord::Base.connection.execute("CREATE TABLE hmt_invoices (id bigint primary key, hmt_user_id bigint, amount bigint);")
       test.call
-      ApplicationRecord.connection.execute("DROP TABLE hmt_notes, hmt_users, hmt_invoices")
+      ActiveRecord::Base.connection.execute("DROP TABLE hmt_notes, hmt_users, hmt_invoices;")
     end
 
     it "uses where in for has many users" do

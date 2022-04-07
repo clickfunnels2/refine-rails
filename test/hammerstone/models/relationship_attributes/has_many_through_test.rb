@@ -15,30 +15,48 @@ module Hammerstone::Refine::Conditions
       ApplicationRecord.connection.execute("DROP TABLE hmtt_owners, hmtt_countries, hmtt_users, hmtt_posts, hmtt_categories")
     end
 
-    it "uses where in and join for has many through" do
+    it "defaults to using active record for has many through relationships" do
       query = create_filter(single_builder)
       expected_sql = <<~SQL.squish
-        SELECT "hmtt_countries".* FROM "hmtt_countries"
-        WHERE ("hmtt_countries"."id" IN
-        (SELECT "hmtt_users"."hmtt_country_id" FROM "hmtt_users"
-        INNER JOIN "hmtt_posts" ON "hmtt_users"."id" = "hmtt_posts"."hmtt_user_id"
-        WHERE ("hmtt_posts"."name" = 'Foo')))
+        SELECT
+          `hmtt_countries`.*
+        FROM
+          `hmtt_countries`
+        WHERE
+          (`hmtt_countries`.`id` IN (SELECT
+                `hmtt_countries`.`id`
+              FROM
+                `hmtt_countries`
+                INNER JOIN `hmtt_users` ON `hmtt_users`.`hmtt_country_id` = `hmtt_countries`.`id`
+                INNER JOIN `hmtt_posts` ON `hmtt_posts`.`hmtt_user_id` = `hmtt_users`.`id`
+              WHERE
+                (`hmtt_posts`.`name` = 'Foo')))
+
       SQL
       assert_equal convert(expected_sql), query.get_query.to_sql
     end
 
-    it "cannot collapse ands" do
+    it "does not collapse ands" do
       query = create_filter(double_builder)
       expected_sql = <<~SQL.squish
         SELECT "hmtt_countries".* FROM "hmtt_countries"
-        WHERE (("hmtt_countries"."id" IN
-        (SELECT "hmtt_users"."hmtt_country_id" FROM "hmtt_users"
-        INNER JOIN "hmtt_posts" ON "hmtt_users"."id" = "hmtt_posts"."hmtt_user_id"
-        WHERE ("hmtt_posts"."name" = 'Foo')))
-        AND ("hmtt_countries"."id" IN
-        (SELECT "hmtt_users"."hmtt_country_id" FROM "hmtt_users"
-        INNER JOIN "hmtt_posts" ON "hmtt_users"."id" = "hmtt_posts"."hmtt_user_id"
-        WHERE ("hmtt_posts"."name" = 'Bar'))))
+        WHERE (("hmtt_countries"."id" IN (SELECT
+            `hmtt_countries`.`id`
+          FROM
+            `hmtt_countries`
+            INNER JOIN `hmtt_users` ON `hmtt_users`.`hmtt_country_id` = `hmtt_countries`.`id`
+            INNER JOIN `hmtt_posts` ON `hmtt_posts`.`hmtt_user_id` = `hmtt_users`.`id`
+          WHERE
+            (`hmtt_posts`.`name` = 'Foo')))
+          AND (`hmtt_countries`.`id` IN (SELECT
+            `hmtt_countries`.`id`
+          FROM
+            `hmtt_countries`
+            INNER JOIN `hmtt_users` ON `hmtt_users`.`hmtt_country_id` = `hmtt_countries`.`id`
+            INNER JOIN `hmtt_posts` ON `hmtt_posts`.`hmtt_user_id` = `hmtt_users`.`id`
+          WHERE
+            (`hmtt_posts`.`name` = 'Bar'))))
+
       SQL
       assert_equal convert(expected_sql), query.get_query.to_sql
     end
@@ -47,14 +65,22 @@ module Hammerstone::Refine::Conditions
       query = create_filter(ors_builder)
       expected_sql = <<~SQL.squish
         SELECT "hmtt_countries".* FROM "hmtt_countries"
-        WHERE (("hmtt_countries"."id" IN
-        (SELECT "hmtt_users"."hmtt_country_id" FROM "hmtt_users"
-        INNER JOIN "hmtt_posts" ON "hmtt_users"."id" = "hmtt_posts"."hmtt_user_id"
-        WHERE ("hmtt_posts"."name" = 'Foo')))
-        OR ("hmtt_countries"."id" IN
-        (SELECT "hmtt_users"."hmtt_country_id" FROM "hmtt_users"
-        INNER JOIN "hmtt_posts" ON "hmtt_users"."id" = "hmtt_posts"."hmtt_user_id"
-        WHERE ("hmtt_posts"."name" = 'Bar'))))
+        WHERE (("hmtt_countries"."id" IN (SELECT
+            `hmtt_countries`.`id`
+          FROM
+            `hmtt_countries`
+            INNER JOIN `hmtt_users` ON `hmtt_users`.`hmtt_country_id` = `hmtt_countries`.`id`
+            INNER JOIN `hmtt_posts` ON `hmtt_posts`.`hmtt_user_id` = `hmtt_users`.`id`
+          WHERE
+            (`hmtt_posts`.`name` = 'Foo')))
+          OR (`hmtt_countries`.`id` IN (SELECT
+            `hmtt_countries`.`id`
+          FROM
+            `hmtt_countries`
+            INNER JOIN `hmtt_users` ON `hmtt_users`.`hmtt_country_id` = `hmtt_countries`.`id`
+            INNER JOIN `hmtt_posts` ON `hmtt_posts`.`hmtt_user_id` = `hmtt_users`.`id`
+          WHERE
+            (`hmtt_posts`.`name` = 'Bar'))))      
       SQL
       assert_equal convert(expected_sql), query.get_query.to_sql
     end
@@ -66,10 +92,15 @@ module Hammerstone::Refine::Conditions
         WHERE (("hmtt_countries"."id" IN
         (SELECT "hmtt_owners"."hmtt_country_id" FROM "hmtt_owners"
         WHERE ("hmtt_owners"."name" = 'Foo')))
-        AND ("hmtt_countries"."id" IN
-        (SELECT "hmtt_users"."hmtt_country_id" FROM "hmtt_users"
-        INNER JOIN "hmtt_posts" ON "hmtt_users"."id" = "hmtt_posts"."hmtt_user_id"
-        WHERE ("hmtt_posts"."name" = 'Bar'))))
+        AND ("hmtt_countries"."id" IN (SELECT
+            `hmtt_countries`.`id`
+          FROM
+            `hmtt_countries`
+            INNER JOIN `hmtt_users` ON `hmtt_users`.`hmtt_country_id` = `hmtt_countries`.`id`
+            INNER JOIN `hmtt_posts` ON `hmtt_posts`.`hmtt_user_id` = `hmtt_users`.`id`
+          WHERE
+            (`hmtt_posts`.`name` = 'Bar'))))
+
       SQL
       assert_equal convert(expected_sql), query.get_query.to_sql
     end

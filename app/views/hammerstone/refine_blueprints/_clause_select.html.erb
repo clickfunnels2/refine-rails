@@ -17,10 +17,8 @@
     <% meta[:clauses].each do |clause| %>
       <option
         value="<%= clause[:id] %>"
-        <% if input[:clause] == clause[:id] %>selected<% end %>
-      >
-        <%= clause[:display] %>
-      </option>
+        <% if selected_clause == clause[:id] %>selected<% end %>
+      ><%= clause[:display] %></option>
     <% end %>
   </select>
 <% end %>

@@ -1,15 +1,23 @@
 module Hammerstone::Refine::Conditions
   module UsesAttributes
+
     def with_attribute(value)
       @attribute = value
       self
     end
 
+    def apply_and_add_to_query(query_class:, table:, input:, subquery:)
+      node = apply(input, table, query_class)
+      if node
+        subquery.where(node)
+      else
+        node
+      end
+    end
+
     def apply_relationship_attribute(input:, query:)
       # Split on first .
       decompose_attribute = @attribute.split(".", 2)
-      # Relation to be handled
-      relation = decompose_attribute[0]
       # Attribute now is the back half of the initial attribute
       @attribute = decompose_attribute[1]
 
@@ -17,8 +25,10 @@ module Hammerstone::Refine::Conditions
         # No more .s, deepest level
         @on_deepest_relationship = true
       end
+      # Relation to be handled
+      relation = decompose_attribute[0]
 
-      # Get the Reflection object aka the relationship.
+      # Get the Reflection object which defines the relationship between query and relation
       # First iteration pull relationship using base query which responds to model.
       instance = if query.respond_to? :model
         query.model.reflect_on_association(relation.to_sym)
@@ -28,9 +38,16 @@ module Hammerstone::Refine::Conditions
         query.reflect_on_association(relation.to_sym)
       end
 
-      raise "Relationship does not exist for #{relation}. Did you mistakenly configure your filter to use the plural form?" unless instance
+      unless instance
+        raise "Relationship does not exist for #{relation}."
+      end
 
       filter.set_pending_relationship(relation, instance)
+      
+      # If the current condition is a refinement (filter refinement) set collapsible to true 
+      if is_refinement
+        filter.allow_pending_relationship_to_collapse
+      end
 
       if can_use_where_in_relationship_subquery?(instance)
         create_pending_wherein_subquery(input: input, relation: relation, instance: instance, query: query)
@@ -39,7 +56,7 @@ module Hammerstone::Refine::Conditions
       end
 
       filter.release_pending_relationship
-      # This is an odd case where we want the method to return nil for relationship attributes
+      # We want the method to return nil for relationship attributes
       # The purpose of this method is to populate pending relationship subqueries
       nil
     end
@@ -49,74 +66,52 @@ module Hammerstone::Refine::Conditions
       if instance.is_a? ActiveRecord::Reflection::BelongsToReflection
         instance.foreign_key.to_sym
       else
-        instance.active_record.primary_key.to_sym
+        instance.active_record_primary_key.to_sym
       end
     end
 
     def key_2(instance)
       if instance.is_a? ActiveRecord::Reflection::BelongsToReflection
-        instance.active_record.primary_key.to_sym
+        instance.active_record_primary_key.to_sym
       else
         instance.foreign_key.to_sym
       end
     end
 
     def create_pending_wherein_subquery(input:, relation:, instance:, query:)
-      query_class = instance.klass
+      # This method builds out the linking keys between the provided query model and the relation 
+      # and saves it to pending relationship subqueries
+      # Class of the relation as held in the AR::Relation object 
+      relation_class = instance.klass
 
-      subquery_table = instance.klass.arel_table
-
-      subquery = filter.get_pending_relationship_subquery || subquery_table.project(subquery_table[key_2(instance).to_s])
-
+      # Pull what's already in the tracker at this depth if already traversed
+      subquery = filter.get_pending_relationship_subquery || relation_class.select([key_2(instance)]).arel
+      # Primary/secondary keys keep track of how to link workspace to parent (workspaces to contact in this example)
+      # Add to tracker/does nothing if already have a value at this level
       filter.add_pending_relationship_subquery(subquery: subquery, primary_key: key_1(instance), secondary_key: key_2(instance))
       # Apply condition scoped to existing subquery
-      apply_and_add_to_query(query_class: query_class, table: subquery_table, input: input, subquery: subquery)
+      apply_and_add_to_query(query_class: relation_class, table: relation_class.arel_table, input: input, subquery: subquery)
     end
 
-    def apply_and_add_to_query(query_class:, table:, input:, subquery:)
-      node = apply(input, table, query_class)
-      # This modifies the object in pending relationship subqueries when given an AREL node
-      if node
-        subquery.where(node)
-      else
-        node
-      end
+    def group(nodes)
+      Arel::Nodes::Grouping.new(nodes)
     end
 
     def create_pending_has_many_through_subquery(input:, relation:, instance:, query:)
       # Ex: A country has many posts through hmtt_users.
-      # If querying posts from countries, the instance
-      # is a through reflection with a name of posts
+      # Use AR to properly join the relation to the base query provided
+      # Convert to AREL to use with nodes 
+      subquery_path = query.model.select(key_1(instance)).joins(relation.to_sym).arel
+      relation_table_being_queried = instance.klass.arel_table
 
-      # We can get the through class using the through_reflection method, get the class, and
-      # convert to an AREL table
-      # In a typical HMT relationship, instance.through_reflection is a HasManyReflection
+      relation_class = instance.klass
+      
+      node_to_apply = apply(input, relation_table_being_queried, relation_class)
 
-      # hmtt_users table
-      through_table = instance.through_reflection.klass.arel_table
+      complete_subquery = subquery_path.where(node_to_apply)
+      subquery = filter.get_pending_relationship_subquery || complete_subquery
 
-      query_class = instance.klass
-      # Keys to join users and countries
-      through_primary_key = instance.through_reflection.join_primary_key.to_sym # country_id
-      through_foreign_key = instance.through_reflection.join_foreign_key # id
-
-      # Keys to join users and posts
-      join_primary = instance.join_primary_key.to_sym # hmtt_user_id
-      join_foreign = instance.join_foreign_key.to_sym # id
-
-      # posts table
-      subquery_table = instance.klass.arel_table
-
-      # base select manager
-      base_select = through_table.project(through_table[through_primary_key])
-
-      second_join = through_table[join_foreign].eq(subquery_table[join_primary])
-
-      subquery = filter.get_pending_relationship_subquery || base_select.join(subquery_table).on(second_join)
-
-      filter.add_pending_relationship_subquery(subquery: subquery, primary_key: through_foreign_key, secondary_key: nil)
-
-      apply_and_add_to_query(query_class: query_class, table: subquery_table, input: input, subquery: subquery)
+      filter.add_pending_relationship_subquery(subquery: subquery, primary_key: key_1(instance), secondary_key: nil)
     end
 
     def can_use_where_in_relationship_subquery?(instance)
@@ -135,5 +130,20 @@ module Hammerstone::Refine::Conditions
     def raw_attribute(attribute)
       @attribute = Arel.sql(attribute)
     end
+
+    # TODO Examine the existing relationships and suggest model names if not instance is found 
+    # def get_relationships(query)
+      # if query.respond_to? :model
+      #   associations = query.model.reflect_on_all_associations
+      # else
+      #   associations = query.reflect_on_all_associations
+      # end
+      # associations.map{|entry| puts entry.class, entry.foreign_key, entry.klass }
+      # differences=[]
+      # associations.each do association
+      #   differences << String::Similarity.levenshtein_distance(relation, association )
+      # end
+      # differences
+    # end
   end
 end

@@ -1,0 +1,28 @@
+<%= turbo_frame_tag :stored_filter_head do %>
+  <%= content_tag :div, class: "flex w-full py-4" do %>
+    <%= form_tag(hammerstone_refine_stored_filters_path, method: :get, 
+      class: "flex w-full", data: { turbo_frame: :stored_filters }) do %>
+      <!-- Saved filter selector -->
+        <%= tag.div class: 'w-full mr-4', data: {
+          controller: 'fields--super-select',
+          fields__super_select_enable_search_value: 'true'
+        } do %>
+          <select
+            data-fields--super-select-target="select"
+            name="id"
+          >
+            <option disabled selected value>&mdash; Select a saved filter &mdash;</option>
+            <% @stored_filters.each do |filter| %>
+              <option
+                value="<%= filter.id %>"
+              >
+                <%= filter.name %>
+              </option>
+            <% end %>
+          </select>
+        <% end %>
+        <%= link_to t('global.buttons.back'), @back_link, class: "button-secondary ml-auto mr-4", data: { turbo_frame: stored_filters } %>
+        <%= button_tag t('global.buttons.choose_filter'), type: "submit", class: "button text-center" %>
+      <% end %>
+    <% end %>
+<% end%>

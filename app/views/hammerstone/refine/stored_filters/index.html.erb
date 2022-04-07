@@ -1,0 +1,3 @@
+<%= turbo_frame_tag :stored_filters do %>
+  <%= render partial: "find", locals: { stored_filters: @stored_filters } %>
+<% end %>

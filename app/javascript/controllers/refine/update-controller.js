@@ -1,6 +1,5 @@
 import FormController from './form-controller'
 import { debounce } from 'lodash'
-import { filterUnstableEvent, filterStabilizedEvent } from 'refine/helpers'
 
 export default class extends FormController {
   static values = {
@@ -8,16 +7,37 @@ export default class extends FormController {
     stableId: String,
   }
 
+  initialize() {
+    this.updateBlueprint = debounce((event, value, inputKey) => {
+      this.value(event, value, inputKey)
+      this.createStableId(this.state.blueprint, this.state.filterName)
+    }, 500)
+  }
+
   connect() {
     FormController.prototype.connect.apply(this)
     this.state.updateStableId(this.stableIdValue)
+  }
+
+  refinedFilter(event) {
+    const { criterionIdValue, state } = this
+    const dataset = event.target.dataset
+    const inputId = dataset.inputId
+
+    state.updateInput(
+      criterionIdValue,
+      {
+        id: event.target.value,
+      },
+      inputId
+    )
+    this.submitForm()
   }
 
   clause(event) {
     const { criterionIdValue, state } = this
     const dataset = event.target.dataset
     const inputId = dataset.inputId
-
     state.updateInput(
       criterionIdValue,
       {
@@ -33,25 +53,30 @@ export default class extends FormController {
     const options = Array.prototype.slice.call(select.options)
     const selectedOptions = options.filter((option) => option.selected)
     const selected = selectedOptions.map((option) => option.value)
-
     this.value(event, selected, 'selected')
+    this.createStableId(this.state.blueprint, this.state.filterName)
+  }
+
+  value(event, value, inputKey) {
+    const { criterionIdValue, state } = this
+    const dataset = event.target.dataset
+    const inputId = dataset.inputId
+    inputKey = inputKey || dataset.inputKey || 'value'
+    value = value || event.target.value
+    state.updateInput(
+      criterionIdValue,
+      {
+        [inputKey]: value,
+      },
+      inputId
+    )
   }
 
   date(event) {
     const { picker } = event.detail
     const value = picker.startDate.format('YYYY-MM-DD')
     this.value(event, value)
-
     this.submitForm()
-  }
-
-  updateBlueprint(event, value, inputKey) {
-    const debouncedCreateStableId = debounce((event, value, inputKey) => {
-      this.value(event, value, inputKey)
-      this.createStableId(this.state.blueprint, this.state.filterName)
-    }, 500)
-
-    debouncedCreateStableId(event, value, inputKey)
   }
 
   createStableId(blueprint, filter) {
@@ -74,39 +99,12 @@ export default class extends FormController {
     })
   }
 
-  value(event, value, inputKey) {
-    // Updates state with value
-    const { criterionIdValue, state } = this
-    const dataset = event.target.dataset
-    const inputId = dataset.inputId
-
-    inputKey = inputKey || dataset.inputKey || 'value'
-    value = value || event.target.value
-
-    state.updateInput(
-      criterionIdValue,
-      {
-        [inputKey]: value,
-      },
-      inputId
-    )
-  }
-
   condition(event) {
     const { criterionIdValue, state } = this
     const element = event.target
     const newConditionId = element.value
     const config = this.state.conditionConfigFor(newConditionId)
-
-    // set selected clause to the first clause by default
-    const newInput = {
-      clause: config.meta.clauses[0].id,
-    }
-
-    state.updateConditionId(criterionIdValue, newConditionId)
-
-    state.replaceInput(criterionIdValue, newInput)
-
+    state.replaceCriterion(criterionIdValue, newConditionId, config)
     this.submitForm()
   }
 }

@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.homepage    = "https://hammerstone.dev"
   spec.summary     = "Visual query builder for Rails"
   spec.description = "Refine is a flexible query builder for your apps. It lets your users filter down to exactly what they're looking for. Completely configured on the backend."
-  spec.license     = "Commercial"
+  spec.license     = "Nonstandard"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
   # to allow pushing to a single host or delete this section to allow pushing to any host.

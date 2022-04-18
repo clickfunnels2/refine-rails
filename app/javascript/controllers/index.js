@@ -11,8 +11,8 @@ import UpdateController from './refine/update-controller'
 export const controllerDefinitions = [
   [AddController, 'refine/add-controller.js'],
   [DefaultsController, 'refine/defaults-controller.js'],
-  [DeleteController, 'refine/refine/delete-controller.js'],
-  [FormController, 'refine/refine/form-controller'],
+  [DeleteController, 'refine/delete-controller.js'],
+  [FormController, 'refine/form-controller.js'],
   [StateController, 'refine/state-controller.js'],
   [StoredFilterController, 'refine/stored-filter-controller.js'],
   [UpdateController, 'refine/update-controller.js']

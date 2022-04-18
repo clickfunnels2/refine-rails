@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite time='0.003717' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::OptionCondition::Clause Equals" assertions='4' tests='4' timestamp="2022-04-14T21:03:53-07:00">
+  <testcase time='0.000992' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0003_handles nil condition" assertions='1'>
+  </testcase>
+  <testcase time='0.001161' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0001_correctly executes with one condition" assertions='1'>
+  </testcase>
+  <testcase time='0.000785' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0002_defaults to first condition if 2 are passed in" assertions='1'>
+  </testcase>
+  <testcase time='0.000779' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0004_handles special conditions" assertions='1'>
+  </testcase>
+</testsuite>

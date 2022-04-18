@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite time='0.008300' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateWithTimeCondition::simple clause test" assertions='7' tests='7' timestamp="2022-04-14T21:03:53-07:00">
+  <testcase time='0.001263' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0006_executes clause greater or equal" assertions='1'>
+  </testcase>
+  <testcase time='0.001403' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0007_executes clause less than or equal" assertions='1'>
+  </testcase>
+  <testcase time='0.001334' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0001_executes clause between" assertions='1'>
+  </testcase>
+  <testcase time='0.001188' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0004_executes clause less than ago" assertions='1'>
+  </testcase>
+  <testcase time='0.001089' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0005_executes clause less than from now" assertions='1'>
+  </testcase>
+  <testcase time='0.000981' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0002_executes clause greater than ago" assertions='1'>
+  </testcase>
+  <testcase time='0.001042' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0003_executes clause greater than from now" assertions='1'>
+  </testcase>
+</testsuite>

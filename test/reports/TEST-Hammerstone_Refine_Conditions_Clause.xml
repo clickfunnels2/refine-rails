@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite time='0.001764' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::Clause" assertions='3' tests='3' timestamp="2022-04-14T21:03:53-07:00">
+  <testcase time='0.000607' file="test/hammerstone/models/clauses/clause_test.rb" name="test_0002_can add rules manually" assertions='1'>
+  </testcase>
+  <testcase time='0.000572' file="test/hammerstone/models/clauses/clause_test.rb" name="test_0001_add rule to clause with required input" assertions='1'>
+  </testcase>
+  <testcase time='0.000585' file="test/hammerstone/models/clauses/clause_test.rb" name="test_0003_can add rules later in lifecycle" assertions='1'>
+  </testcase>
+</testsuite>

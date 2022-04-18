@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite time='0.003192' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::OptionCondition::Clause In" assertions='4' tests='4' timestamp="2022-04-14T21:03:53-07:00">
+  <testcase time='0.000983' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0002_works with null condition" assertions='1'>
+  </testcase>
+  <testcase time='0.000750' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0004_works with null condition only" assertions='1'>
+  </testcase>
+  <testcase time='0.000710' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0001_works with two parameters" assertions='1'>
+  </testcase>
+  <testcase time='0.000749' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0003_works with special condition" assertions='1'>
+  </testcase>
+</testsuite>

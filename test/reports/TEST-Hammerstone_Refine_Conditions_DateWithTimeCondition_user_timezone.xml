@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite time='0.004138' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateWithTimeCondition::user timezone" assertions='4' tests='4' timestamp="2022-04-14T21:03:53-07:00">
+  <testcase time='0.000999' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0001_defaults to user timezone of utc" assertions='1'>
+  </testcase>
+  <testcase time='0.000954' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0002_shifts query based on user timezone of America/Chicago" assertions='1'>
+  </testcase>
+  <testcase time='0.001040' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0003_can be set globally" assertions='1'>
+  </testcase>
+  <testcase time='0.001145' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0004_can be a callback" assertions='1'>
+  </testcase>
+</testsuite>

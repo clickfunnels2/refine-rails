@@ -1,4 +1,4 @@
-class HammerstoneProductsFilter < ApplicationFilter
+class HammerstoneProductsFilter < Hammerstone::Refine::Filter
   def automatically_stabilize?
     true
   end

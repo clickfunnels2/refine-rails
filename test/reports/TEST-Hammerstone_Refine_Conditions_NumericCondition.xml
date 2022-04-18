@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite time='0.012467' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::NumericCondition" assertions='12' tests='12' timestamp="2022-04-14T21:03:53-07:00">
+  <testcase time='0.001192' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0011_handles clause CLAUSE DOESNT EQUAL" assertions='1'>
+  </testcase>
+  <testcase time='0.001035' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0009_handles clause CLAUSE SET" assertions='1'>
+  </testcase>
+  <testcase time='0.001011' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0003_handles clause EQUALS" assertions='1'>
+  </testcase>
+  <testcase time='0.001007' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0006_handles clause LESS THAN" assertions='1'>
+  </testcase>
+  <testcase time='0.001166' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0007_handles clause LESS THAN OR EQUAL" assertions='1'>
+  </testcase>
+  <testcase time='0.001034' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0008_handles clause CLAUSE BETWEEN" assertions='1'>
+  </testcase>
+  <testcase time='0.000988' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0004_handles clause GREATER THAN" assertions='1'>
+  </testcase>
+  <testcase time='0.000836' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0005_handles clause GREATER THAN OR EQUAL" assertions='1'>
+  </testcase>
+  <testcase time='0.000754' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0010_handles clause CLAUSE NOT SET" assertions='1'>
+  </testcase>
+  <testcase time='0.000981' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0012_handles clause CLAUSE NOT BETWEEN" assertions='1'>
+  </testcase>
+  <testcase time='0.000884' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0002_allows floats if floats are set" assertions='1'>
+  </testcase>
+  <testcase time='0.001579' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0001_adds error if value is float without explicitly setting floats" assertions='1'>
+  </testcase>
+</testsuite>

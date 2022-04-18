@@ -1,0 +1,1 @@
+{"version":3,"file":"refine-rails.js","sources":["../../javascript/index.js"],"sourcesContent":["// assemble everything here\nconsole.log('refine-rails!')"],"names":["console","log"],"mappings":"AACAA,QAAQC,IAAI"}

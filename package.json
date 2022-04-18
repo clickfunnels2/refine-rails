@@ -2,13 +2,22 @@
   "name": "refine-rails",
   "version": "1.0.0",
   "description": "Refine is a flexible query builder for your apps. It lets your users filter down to exactly what they're looking for. Completely configured on the backend.",
-  "main": "index.js",
+  "source": "app/javascript/index.js",
+  "module": "app/assets/javascripts/refine-rails.esm.js",
+  "main": "app/assets/javascripts/refine-rails.js",
+  "files": [
+    "app/assets/javascripts/*.js",
+    "app/assets/javascripts/*.js.map",
+    "app/javascript/**/*.js"
+  ],
+  "scripts": {
+    "prebuild": "$npm_execpath run clean",
+    "build": "microbundle",
+    "clean": "rimraf app/assets/javascripts"
+  },
   "directories": {
     "lib": "lib",
     "test": "test"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -20,6 +29,17 @@
     "url": "https://github.com/hammerstonedev/refine-rails/issues"
   },
   "homepage": "https://github.com/hammerstonedev/refine-rails#readme",
+  "devDependencies": {
+    "@babel/core": "^7.13.16",
+    "@babel/plugin-proposal-export-default-from": "^7.16.7",
+    "@babel/plugin-transform-runtime": "^7.13.15",
+    "@babel/preset-env": "^7.13.15",
+    "@babel/runtime": "^7.13.17",
+    "@stimulus/webpack-helpers": "^2.0.0",
+    "babel-loader": "^8.2.2",
+    "microbundle": "^0.13.0",
+    "rimraf": "^3.0.2"
+  },
   "dependencies": {
     "jquery-events-to-dom-events": "^1.1.0",
     "lodash": "^4.17.21",

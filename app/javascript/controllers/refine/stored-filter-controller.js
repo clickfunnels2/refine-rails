@@ -1,5 +1,5 @@
 import { Controller } from 'stimulus'
-import { filterStoredEvent } from 'refine/helpers'
+import { filterStoredEvent } from '../../refine/helpers'
 
 export default class extends Controller {
   static targets = ['enabledSaveLink', 'disabledSaveLink', 'stableIdField']

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite time='0.003531' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateCondition::clause application" assertions='4' tests='4' timestamp="2022-04-14T21:03:53-07:00">
+  <testcase time='0.000929' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0003_correctly executes clause greater than or equal" assertions='1'>
+  </testcase>
+  <testcase time='0.000799' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0004_correctly executes clause less than or equal" assertions='1'>
+  </testcase>
+  <testcase time='0.000922' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0001_correctly executes clause equals" assertions='1'>
+  </testcase>
+  <testcase time='0.000881' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0002_correctly executes clause doesnt equals" assertions='1'>
+  </testcase>
+</testsuite>

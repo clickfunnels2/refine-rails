@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite time='0.001984' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateCondition::clause application::Set/Not Set" assertions='2' tests='2' timestamp="2022-04-14T21:03:53-07:00">
+  <testcase time='0.001108' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0002_executes not set" assertions='1'>
+  </testcase>
+  <testcase time='0.000876' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0001_executes set" assertions='1'>
+  </testcase>
+</testsuite>

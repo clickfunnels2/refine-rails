@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite time='0.005643' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateCondition::clause application::Relative dates with modifiers" assertions='6' tests='6' timestamp="2022-04-14T21:03:53-07:00">
+  <testcase time='0.001236' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0005_correctly executes clause less than 3 days ago" assertions='1'>
+  </testcase>
+  <testcase time='0.000826' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0003_correctly executes clause exactly 3 days ago" assertions='1'>
+  </testcase>
+  <testcase time='0.000859' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0006_correctly executes clause less than 3 days from now" assertions='1'>
+  </testcase>
+  <testcase time='0.000961' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0001_correctly executes clause greater than 3 days ago" assertions='1'>
+  </testcase>
+  <testcase time='0.000885' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0002_correctly executes clause greater than 3 days from now" assertions='1'>
+  </testcase>
+  <testcase time='0.000876' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0004_correctly executes clause exactly 3 days from now" assertions='1'>
+  </testcase>
+</testsuite>

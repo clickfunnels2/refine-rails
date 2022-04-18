@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite time='0.001060' skipped='0' failures='0' errors='10' name="Belongs to test" assertions='0' tests='10' timestamp="2022-04-14T21:03:53-07:00">
+  <testcase time='0.000307' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0003_collapses two attributes on belongs to relationships" assertions='0'>
+    <error type='ActiveRecord::StatementInvalid' message="SQLite3::SQLException: table btt_notes already exists">/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `initialize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `new&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `prepare&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:193:in `execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:32:in `block (2 levels) in execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/share_lock.rb:187:in `yield_shares&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/dependencies/interlock.rb:41:in `permit_concurrent_loads&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:31:in `block in execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `handle_interrupt&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `block in synchronize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `handle_interrupt&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `synchronize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:765:in `block in log&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/notifications/instrumenter.rb:24:in `instrument&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:756:in `log&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:30:in `execute&#39;
+/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/relationship_attributes/belongs_to_test.rb:9:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </error>
+  </testcase>
+  <testcase time='0.000086' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0006_Does not collapse ORs with varying depths" assertions='0'>
+    <error type='ActiveRecord::StatementInvalid' message="SQLite3::SQLException: table btt_notes already exists">/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `initialize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `new&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `prepare&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:193:in `execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:32:in `block (2 levels) in execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/share_lock.rb:187:in `yield_shares&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/dependencies/interlock.rb:41:in `permit_concurrent_loads&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:31:in `block in execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `handle_interrupt&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `block in synchronize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `handle_interrupt&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `synchronize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:765:in `block in log&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/notifications/instrumenter.rb:24:in `instrument&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:756:in `log&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:30:in `execute&#39;
+/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/relationship_attributes/belongs_to_test.rb:9:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </error>
+  </testcase>
+  <testcase time='0.000126' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0010_does not support refinements" assertions='0'>
+    <error type='ActiveRecord::StatementInvalid' message="SQLite3::SQLException: table btt_notes already exists">/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `initialize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `new&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `prepare&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:193:in `execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:32:in `block (2 levels) in execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/share_lock.rb:187:in `yield_shares&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/dependencies/interlock.rb:41:in `permit_concurrent_loads&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:31:in `block in execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `handle_interrupt&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `block in synchronize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `handle_interrupt&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `synchronize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:765:in `block in log&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/notifications/instrumenter.rb:24:in `instrument&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:756:in `log&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:30:in `execute&#39;
+/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/relationship_attributes/belongs_to_test.rb:9:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </error>
+  </testcase>
+  <testcase time='0.000091' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0004_collapses two attributes on belongs to when not adjacent" assertions='0'>
+    <error type='ActiveRecord::StatementInvalid' message="SQLite3::SQLException: table btt_notes already exists">/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `initialize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `new&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `prepare&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:193:in `execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:32:in `block (2 levels) in execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/share_lock.rb:187:in `yield_shares&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/dependencies/interlock.rb:41:in `permit_concurrent_loads&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:31:in `block in execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `handle_interrupt&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `block in synchronize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `handle_interrupt&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `synchronize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:765:in `block in log&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/notifications/instrumenter.rb:24:in `instrument&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:756:in `log&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:30:in `execute&#39;
+/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/relationship_attributes/belongs_to_test.rb:9:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </error>
+  </testcase>
+  <testcase time='0.000103' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0009_collapses first and second level belongs to in opposite order" assertions='0'>
+    <error type='ActiveRecord::StatementInvalid' message="SQLite3::SQLException: table btt_notes already exists">/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `initialize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `new&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `prepare&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:193:in `execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:32:in `block (2 levels) in execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/share_lock.rb:187:in `yield_shares&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/dependencies/interlock.rb:41:in `permit_concurrent_loads&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:31:in `block in execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `handle_interrupt&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `block in synchronize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `handle_interrupt&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `synchronize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:765:in `block in log&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/notifications/instrumenter.rb:24:in `instrument&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:756:in `log&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:30:in `execute&#39;
+/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/relationship_attributes/belongs_to_test.rb:9:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </error>
+  </testcase>
+  <testcase time='0.000074' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0008_collapses first and second level belongs to" assertions='0'>
+    <error type='ActiveRecord::StatementInvalid' message="SQLite3::SQLException: table btt_notes already exists">/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `initialize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `new&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `prepare&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:193:in `execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:32:in `block (2 levels) in execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/share_lock.rb:187:in `yield_shares&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/dependencies/interlock.rb:41:in `permit_concurrent_loads&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:31:in `block in execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `handle_interrupt&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `block in synchronize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `handle_interrupt&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `synchronize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:765:in `block in log&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/notifications/instrumenter.rb:24:in `instrument&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:756:in `log&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:30:in `execute&#39;
+/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/relationship_attributes/belongs_to_test.rb:9:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </error>
+  </testcase>
+  <testcase time='0.000069' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0002_can handle nested relationships" assertions='0'>
+    <error type='ActiveRecord::StatementInvalid' message="SQLite3::SQLException: table btt_notes already exists">/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `initialize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `new&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `prepare&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:193:in `execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:32:in `block (2 levels) in execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/share_lock.rb:187:in `yield_shares&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/dependencies/interlock.rb:41:in `permit_concurrent_loads&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:31:in `block in execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `handle_interrupt&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `block in synchronize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `handle_interrupt&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `synchronize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:765:in `block in log&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/notifications/instrumenter.rb:24:in `instrument&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:756:in `log&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:30:in `execute&#39;
+/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/relationship_attributes/belongs_to_test.rb:9:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </error>
+  </testcase>
+  <testcase time='0.000070' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0001_uses where in for belongs to" assertions='0'>
+    <error type='ActiveRecord::StatementInvalid' message="SQLite3::SQLException: table btt_notes already exists">/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `initialize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `new&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `prepare&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:193:in `execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:32:in `block (2 levels) in execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/share_lock.rb:187:in `yield_shares&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/dependencies/interlock.rb:41:in `permit_concurrent_loads&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:31:in `block in execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `handle_interrupt&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `block in synchronize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `handle_interrupt&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `synchronize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:765:in `block in log&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/notifications/instrumenter.rb:24:in `instrument&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:756:in `log&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:30:in `execute&#39;
+/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/relationship_attributes/belongs_to_test.rb:9:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </error>
+  </testcase>
+  <testcase time='0.000066' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0005_does not mix up belongs to in groups" assertions='0'>
+    <error type='ActiveRecord::StatementInvalid' message="SQLite3::SQLException: table btt_notes already exists">/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `initialize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `new&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `prepare&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:193:in `execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:32:in `block (2 levels) in execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/share_lock.rb:187:in `yield_shares&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/dependencies/interlock.rb:41:in `permit_concurrent_loads&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:31:in `block in execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `handle_interrupt&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `block in synchronize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `handle_interrupt&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `synchronize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:765:in `block in log&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/notifications/instrumenter.rb:24:in `instrument&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:756:in `log&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:30:in `execute&#39;
+/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/relationship_attributes/belongs_to_test.rb:9:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </error>
+  </testcase>
+  <testcase time='0.000068' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0007_can handle deeply nested belongs to relationships" assertions='0'>
+    <error type='ActiveRecord::StatementInvalid' message="SQLite3::SQLException: table btt_notes already exists">/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `initialize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `new&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `prepare&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:193:in `execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:32:in `block (2 levels) in execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/share_lock.rb:187:in `yield_shares&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/dependencies/interlock.rb:41:in `permit_concurrent_loads&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:31:in `block in execute&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `handle_interrupt&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `block in synchronize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `handle_interrupt&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `synchronize&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:765:in `block in log&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/notifications/instrumenter.rb:24:in `instrument&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:756:in `log&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:30:in `execute&#39;
+/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/relationship_attributes/belongs_to_test.rb:9:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </error>
+  </testcase>
+</testsuite>

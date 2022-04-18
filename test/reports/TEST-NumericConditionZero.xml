@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite time='0.007014' skipped='0' failures='0' errors='0' name="NumericConditionZero" assertions='8' tests='8' timestamp="2022-04-14T21:03:53-07:00">
+  <testcase time='0.001747' file="test/hammerstone/models/conditions/numeric_condition_spans_zero_test.rb" name="test_0006_clause less than or equal and 0" assertions='1'>
+  </testcase>
+  <testcase time='0.000972' file="test/hammerstone/models/conditions/numeric_condition_spans_zero_test.rb" name="test_0002_clause equals and 1" assertions='1'>
+  </testcase>
+  <testcase time='0.000793' file="test/hammerstone/models/conditions/numeric_condition_spans_zero_test.rb" name="test_0007_clause less than or equal and 1" assertions='1'>
+  </testcase>
+  <testcase time='0.000791' file="test/hammerstone/models/conditions/numeric_condition_spans_zero_test.rb" name="test_0003_clause equals and -1" assertions='1'>
+  </testcase>
+  <testcase time='0.000710' file="test/hammerstone/models/conditions/numeric_condition_spans_zero_test.rb" name="test_0001_clause equals and 0" assertions='1'>
+  </testcase>
+  <testcase time='0.000708' file="test/hammerstone/models/conditions/numeric_condition_spans_zero_test.rb" name="test_0008_clause less than or equal and -1" assertions='1'>
+  </testcase>
+  <testcase time='0.000623' file="test/hammerstone/models/conditions/numeric_condition_spans_zero_test.rb" name="test_0004_clause doesn&#39;t equal and 0" assertions='1'>
+  </testcase>
+  <testcase time='0.000670' file="test/hammerstone/models/conditions/numeric_condition_spans_zero_test.rb" name="test_0005_clause doesn&#39;t equal and 1" assertions='1'>
+  </testcase>
+</testsuite>

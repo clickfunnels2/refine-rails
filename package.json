@@ -1,0 +1,23 @@
+{
+  "name": "refine-rails",
+  "version": "1.0.0",
+  "description": "Refine is a flexible query builder for your apps. It lets your users filter down to exactly what they're looking for. Completely configured on the backend.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hammerstonedev/refine-rails.git"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/hammerstonedev/refine-rails/issues"
+  },
+  "homepage": "https://github.com/hammerstonedev/refine-rails#readme"
+}

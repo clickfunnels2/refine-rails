@@ -42,6 +42,29 @@ import { controllerDefinitions as refineControllers } from "@hammerstone/refine-
 Stimulus.load(refineControllers)
 ```
 
+To manually register (or extend or provide your own replacement for) each Stimulus controller:
+
+```js
+// import { Application } from "@hotwired/stimulus"
+import {
+  AddController,
+  DefaultsController,
+  DeleteController,
+  FormController,
+  StateController,
+  StoredFilterController,
+  UpdateController
+} from "@hammerstone/refine-stimulus"
+// window.Stimulus = Application.start()
+Stimulus.register('refine--add', AddController)
+Stimulus.register('refine--defaults', DefaultsController)
+Stimulus.register('refine--delete', DeleteController)
+Stimulus.register('refine--form', FormController)
+Stimulus.register('refine--state', StateController)
+Stimulus.register('refine--stored-filter', StoredFilterController)
+Stimulus.register('refine--update', UpdateController)
+```
+
 ## Contributing
 Contribution directions go here.
 

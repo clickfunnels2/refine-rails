@@ -31,6 +31,17 @@ Also, make sure that your project uses `jquery` and binds it as `window.$`. Requ
 
 Also note that there's currently a bug with esbuild and stimulus 3.0 compatibility.
 
+### Importing and Registering the Stimulus Controllers
+
+Where you normally import your Stimulus controllers, add the following lines:
+
+```js
+// import { Application } from "@hotwired/stimulus"
+import { controllerDefinitions as refineControllers } from "@hammerstone/refine-stimulus"
+// window.Stimulus = Application.start()
+Stimulus.load(refineControllers)
+```
+
 ## Contributing
 Contribution directions go here.
 

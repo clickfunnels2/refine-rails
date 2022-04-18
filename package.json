@@ -19,5 +19,10 @@
   "bugs": {
     "url": "https://github.com/hammerstonedev/refine-rails/issues"
   },
-  "homepage": "https://github.com/hammerstonedev/refine-rails#readme"
+  "homepage": "https://github.com/hammerstonedev/refine-rails#readme",
+  "dependencies": {
+    "jquery-events-to-dom-events": "^1.1.0",
+    "lodash": "^4.17.21",
+    "stimulus": "^2.0.0"
+  }
 }

@@ -1,6 +1,6 @@
-import { Controller } from 'stimulus'
+import { Controller } from "stimulus"
 import { delegate, abnegate } from 'jquery-events-to-dom-events'
-import { filterUnstableEvent, filterStabilizedEvent } from 'refine/helpers'
+import { filterUnstableEvent, filterStabilizedEvent } from '../../refine/helpers'
 
 const criterion = (id, depth, condition) => {
   const { meta, refinements, component } = condition

@@ -98,7 +98,10 @@ Note: Because of a weird behavior in how `yarn link` works, you might have to ma
 
 1. Publish the gem with a new version number
 2. Copy the version number in package.json
-3. run `yarn release`
+3. run `yarn build`. This will prepare the different javascript outputs
+4. run `yarn pack`. This will create a new `.tgz` file for the new version
+5. run `yarn publish <tgz filename> --new-version <version number in package.json>`
+6. remove the `*.tgz` file
 
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).

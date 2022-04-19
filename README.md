@@ -36,7 +36,7 @@ Also note that there's currently a bug with esbuild and stimulus 3.0 compatibili
 Where you normally import your Stimulus controllers, add the following lines:
 
 ```js
-// import { Application } from "@hotwired/stimulus"
+// import { Application } from "stimulus"
 import { controllerDefinitions as refineControllers } from "@hammerstone/refine-stimulus"
 // window.Stimulus = Application.start()
 Stimulus.load(refineControllers)
@@ -45,7 +45,7 @@ Stimulus.load(refineControllers)
 To manually register (or extend or provide your own replacement for) each Stimulus controller:
 
 ```js
-// import { Application } from "@hotwired/stimulus"
+// import { Application } from "stimulus"
 import {
   AddController,
   DefaultsController,

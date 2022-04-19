@@ -1,4 +1,4 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "stimulus"
 import { delegate, abnegate } from 'jquery-events-to-dom-events'
 import { filterUnstableEvent, filterStabilizedEvent } from '../../refine/helpers'
 

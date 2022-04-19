@@ -28,7 +28,7 @@
     "Colleen Schnettler <colleen@hammerstone.dev>",
     "Aaron Francis <aaron@hammerstone.dev>"
   ],
-  "homepage": "https://hammerstone.dev/"
+  "homepage": "https://hammerstone.dev/",
   "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/hammerstonedev/refine-rails/issues"

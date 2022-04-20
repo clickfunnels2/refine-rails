@@ -21,6 +21,11 @@ end
 ### TO FIX
 5. Add helper file (why isn't this coming through in the gem)?
 
+### TO FIX
+6. Add filter helper partial and render it from index page 
+
+7. Add search controller.js 
+
 
 
 ## Installation

@@ -42,6 +42,9 @@ import { controllerDefinitions as refineControllers } from "@hammerstone/refine-
 Stimulus.load(refineControllers)
 ```
 
+If loading in Bullet Train,the load command is 
+`application.load(refineControllers)`
+
 To manually register (or extend or provide your own replacement for) each Stimulus controller:
 
 ```js

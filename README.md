@@ -4,30 +4,6 @@ Short description and motivation.
 ## Usage
 How to use my plugin.
 
-## Bullet Train Installation
-1. Add ruby gem 
-```
-source "https://yourAPIKey@gem.fury.io/hammerstonedev" do
-  gem "refine-rails"
-end
-```
-
-2. Add front end packages via yarn (see yarn instructions) 
-### TO FIX 
-3. Add Hammerstone routes (these should be in the gem) 
-### TO FIX
-4. Add `_loading` partial 
-
-### TO FIX
-5. Add helper file (why isn't this coming through in the gem)?
-
-### TO FIX
-6. Add filter helper partial and render it from index page 
-
-7. Add search controller.js 
-
-
-
 ## Installation
 Add this line to your application's Gemfile:
 
@@ -131,7 +107,22 @@ Note: Because of a weird behavior in how `yarn link` works, you might have to ma
 6. remove the `*.tgz` file
 
 ## Integrating in a clean BT clone
-- Add gem and npm package as described above 
+
+## Bullet Train Installation
+- Add ruby gem 
+```
+source "https://yourAPIKey@gem.fury.io/hammerstonedev" do
+  gem "refine-rails"
+end
+```
+
+- Add front end packages via yarn (see yarn instructions) 
+### TO FIX 
+- Add Hammerstone routes (these should be in the gem) 
+
+### TO FIX
+- Add helper file (why isn't this coming through in the gem)?
+
 - Add necessary methods to `application_controller` 
   - `child_filter_class` (extracts the filter class name)
   - `apply_filter` - include stored id if desired (not included for workshop, only stable id)

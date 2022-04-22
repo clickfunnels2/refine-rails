@@ -106,5 +106,23 @@ Note: Because of a weird behavior in how `yarn link` works, you might have to ma
 5. run `yarn publish <tgz filename> --new-version <version number in package.json>`
 6. remove the `*.tgz` file
 
-## License
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+## Integrating in a clean BT clone
+- Add gem and npm package as described above 
+- Add necessary methods to `application_controller` 
+  - `child_filter_class` (extracts the filter class name)
+  - `apply_filter` - include stored id if desired (not included for workshop, only stable id)
+  - `def filter_params` 
+  - `def stable_id`
+  - `def children_instance_variable_name`
+  - `def children_instance_variable`
+- Add `ApplicationFilter` class 
+- Handle javascript
+  - Add `filter_link_controller` to enable/disable the Apply button 
+  - Add `search_filter_controller` (or different controller) to respond to javascript events (force page reload for simplicity at this point) - add back in the stored filter stuff for a BT integration (removed for workshop) 
+  - Add `stored_filter.rb`
+  - Render the filter builder partial. `<%= render partial: 'shared/filter_builder_dropdown' %>`
+  - Include `_loading.html.erb or an equivalent`
+  - `Add filter_builder_dropdown` or appropriate controller to respond to events 
+- Add locales files
+## Do we want to include the partial?
+ 

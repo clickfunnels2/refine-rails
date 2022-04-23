@@ -241,6 +241,7 @@ end
   - Include `_loading.html.erb or an equivalent`
   - `Add filter_builder_dropdown` or appropriate controller to respond to events 
   - Call `apply_filter` from the index action of the controller you want to use 
+  - Add the filter in `filters/modelnameplural_filter.rb` and inherit from `ApplicationFilter` 
 ## TODO move locales files to gem?
 - Add locales files 
 ## Do we want to include the filter_link_controller, filter_builder_partial when releasing to non BT customers?

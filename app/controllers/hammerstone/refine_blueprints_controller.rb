@@ -3,6 +3,7 @@ class Hammerstone::RefineBlueprintsController < Account::ApplicationController
 
   def show
     @refine_filter = filter
+    @method = filter_params[:method]
     # TODO: Fix validation
     # @refine_filter.validate_only
   end
@@ -29,7 +30,7 @@ class Hammerstone::RefineBlueprintsController < Account::ApplicationController
   end
 
   def filter_params
-    params.permit(:filter, :stable_id, :blueprint)
+    params.permit(:filter, :stable_id, :blueprint, :method)
   end
 
   def blueprint

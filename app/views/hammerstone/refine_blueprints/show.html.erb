@@ -1,3 +1,5 @@
-<%= turbo_frame_tag :hammerstone_refine do %>
+<% frame_id = "hammerstone_refine_#{@method}" %>
+
+<%= turbo_frame_tag frame_id do %>
   <%= render partial: 'query' %>
 <% end %>

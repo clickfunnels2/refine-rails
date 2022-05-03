@@ -56,6 +56,7 @@ export default class extends Controller {
     conditions: Array,
     className: String,
     stableId: String,
+    method: String,
   }
   static targets = ['loading']
 

@@ -5,6 +5,7 @@ export default class extends FormController {
   static values = {
     criterionId: Number,
     stableId: String,
+    method: String
   }
 
   initialize() {

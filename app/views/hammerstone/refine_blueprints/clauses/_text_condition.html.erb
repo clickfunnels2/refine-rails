@@ -11,7 +11,7 @@
       name="<%= condition[:id] %>"
       type="text"
       value="<%= input[:value] %>"
-      data-action="input->refine--update#updateBlueprint"
+      data-action="input->refine--update#updateBlueprint keydown->refine--update#cancelEnter"
     />
 
     <% # any error messages. %>

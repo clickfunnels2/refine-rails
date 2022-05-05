@@ -3,7 +3,6 @@
     controller: 'refine--update',
     refine__update_criterion_id_value: criterion_id,
     refine__update_stable_id_value: stable_id,
-    refine__update_method_value: @method,
     action: "submit->refine--update#submitForm",
     position: criterion[:position]}) do %>
 
@@ -41,12 +40,10 @@
 
 <%# Delete the filter %>
 <% if show_delete_button? %>
-  <% query_frame_id = "hammerstone_refine_query_#{@method}" %>
   <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'pt-5 ml-auto flex-0', data: {
     controller: 'refine--delete',
     refine__delete_criterion_id_value: criterion_id,
-    refine__delete_method_value: @method,
-    turbo_frame: query_frame_id,
+    turbo_frame: create_id("hammerstone_refine_query"),
   }) do %>
     <%= button_tag type: 'submit', class: 'ml-auto flex items-center', data: {
       action: "click->refine--delete#criterion",

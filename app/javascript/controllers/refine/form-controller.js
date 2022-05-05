@@ -2,12 +2,26 @@ import { Controller } from "stimulus"
 
 export default class extends Controller {
   connect() {
-    const refineElement = document.getElementById('hammerstone_refine_query')
-
-    this.state = this.application.getControllerForElementAndIdentifier(refineElement, 'refine--state')
+    this.state = this.getStateController()
     this.blueprintInput = this.addHiddenInput('blueprint')
     this.addHiddenInput('filter', this.state.filterName)
+    this.addHiddenInput('id_suffix', this.state.idSuffix)
     this.finishUpdate()
+  }
+
+  getStateController() {
+    let currentElement = this.element
+
+    while(currentElement !== document.body) {
+      const controller = this.application.getControllerForElementAndIdentifier(currentElement, 'refine--state')
+      if (controller) {
+        return controller
+      } else {
+        currentElement = currentElement.parentNode
+      }
+    }
+
+    return null
   }
 
   addHiddenInput(name, initialValue) {

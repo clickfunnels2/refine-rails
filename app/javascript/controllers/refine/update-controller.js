@@ -4,7 +4,7 @@ import { debounce } from 'lodash'
 export default class extends FormController {
   static values = {
     criterionId: Number,
-    stableId: String,
+    stableId: String
   }
 
   initialize() {

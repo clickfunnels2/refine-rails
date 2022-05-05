@@ -56,6 +56,7 @@ export default class extends Controller {
     conditions: Array,
     className: String,
     stableId: String,
+    idSuffix: String,
   }
   static targets = ['loading']
 
@@ -65,6 +66,7 @@ export default class extends Controller {
     this.blueprint = this.blueprintValue
     this.conditions = this.conditionsValue
     this.filterName = this.classNameValue
+    this.idSuffix = this.idSuffixValue
     this.stableId = this.stableIdValue
     this.conditionsLookup = this.conditions.reduce((lookup, condition) => {
       lookup[condition.id] = condition
@@ -106,6 +108,7 @@ export default class extends Controller {
   updateStableId(newUrl) {
     if (newUrl !== this.stableId) {
       this.stableId = newUrl
+      console.log(this.blueprint)
       filterStabilizedEvent(this.element, this.stableId, this.filterName)
       filterStabilizedEvent(window, this.stableId, this.filterName)
     }

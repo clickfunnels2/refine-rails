@@ -107,4 +107,12 @@ export default class extends FormController {
     state.replaceCriterion(criterionIdValue, newConditionId, config)
     this.submitForm()
   }
+
+  // Prevent form submission when hitting enter in a text box
+  cancelEnter(event) {
+    if (event.code === "Enter") {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+  }
 }

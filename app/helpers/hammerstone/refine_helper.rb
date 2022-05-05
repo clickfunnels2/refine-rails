@@ -117,5 +117,13 @@ module Hammerstone
     def stable_id
       configuration[:stable_id]
     end
+
+    def id_suffix
+      @id_suffix
+    end
+
+    def create_id(value)
+      "#{value}_#{id_suffix}"
+    end
   end
 end

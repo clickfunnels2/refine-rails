@@ -3,7 +3,6 @@ import FormController from './form-controller'
 export default class extends FormController {
   static values = {
     previousCriterionId: Number,
-    method: String,
   }
 
   criterion() {

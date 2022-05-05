@@ -1,11 +1,9 @@
-<% query_frame_id = "hammerstone_refine_query_#{@method}" %>
-<% group_frame_id = "groups_#{@method}" %>
-
-<%= turbo_frame_tag query_frame_id, class: 'relative', data: {
+<%= turbo_frame_tag create_id("hammerstone_refine_query"), class: 'relative', data: {
   controller: "refine--state",
   refine__state_conditions_value: conditions.to_json,
   refine__state_blueprint_value: blueprint.to_json,
   refine__state_class_name_value: configuration[:class_name],
+  refine__state_id_suffix_value: id_suffix,
   refine__state_stable_id_value: stable_id } do %>
   <%= content_tag :div, class: "relative w-full h-full" do %>
     <div
@@ -14,7 +12,7 @@
       data-refine--state-target="loading">
       <p class="text-black text-xl">Loading...</p>
     </div>
-    <%= turbo_frame_tag "groups" do %>
+    <%= turbo_frame_tag create_id("groups") do %>
 
       <% grouped_blueprint.each_with_index do |criteria, index| %>
         <% if index > 0 %>

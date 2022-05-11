@@ -83,7 +83,7 @@ export default class extends FormController {
     // Create stableId on debounced input and update stable id to allow for form submission
     const { state } = this
     let post_data = JSON.stringify({ blueprint, filter })
-    let token = document.querySelector("meta[name='csrf-token']").content
+    let token = document.querySelector("meta[name='csrf-token']")?.content
     $.ajax({
       type: 'PUT',
       url: '/hammerstone/update_stable_id',

@@ -73,7 +73,7 @@ module Hammerstone::Refine::Conditions
 
     def apply_condition(input, table)
       filter_id = input[:selected].first.to_i
-      filter = Stabilizers::DatabaseStabilizer.new.from_stable_id(id: filter_id)
+      filter = Hammerstone.stabilizer_class('Stabilizers::DatabaseStabilizer').new.from_stable_id(id: filter_id)
       # TODO handle this more elegantly
       raise "Filter not found" if filter.blank?
       # TODO - Filter initial query is currently handled on the filter class. ProductFilter.where....

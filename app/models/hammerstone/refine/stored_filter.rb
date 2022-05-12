@@ -9,7 +9,7 @@ module Hammerstone::Refine
     end
 
     def refine_filter
-      Stabilizers::DatabaseStabilizer.new.from_stable_id(id: id)
+      Hammerstone.stabilizer_class('Stabilizers::DatabaseStabilizer').new.from_stable_id(id: id)
     end
   end
 end

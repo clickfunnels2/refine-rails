@@ -99,7 +99,7 @@ module Hammerstone::Refine
 
     def refine_filter
       if stable_id
-        Stabilizers::UrlEncodedStabilizer.new.from_stable_id(id: stable_id)
+        Hammerstone.stabilizer_class('Stabilizers::UrlEncodedStabilizer').new.from_stable_id(id: stable_id)
       elsif filter_class
         filterClass = filter_class.constantize
         filterClass.new []

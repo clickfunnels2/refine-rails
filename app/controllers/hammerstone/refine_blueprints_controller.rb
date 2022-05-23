@@ -14,7 +14,7 @@ class Hammerstone::RefineBlueprintsController < Account::ApplicationController
     # in the show method they are a string. 
     blueprint_details = params.to_unsafe_h[:blueprint]
     filter = filterClass.new blueprint_details
-    filter_id = Stabilizers::UrlEncodedStabilizer.new.to_stable_id(filter: filter)
+    filter_id = Hammerstone.stabilizer_class('Stabilizers::UrlEncodedStabilizer').new.to_stable_id(filter: filter)
     render json: { filter_id: filter_id }, status: :ok
   end
 
@@ -22,7 +22,7 @@ class Hammerstone::RefineBlueprintsController < Account::ApplicationController
 
   def filter
     if stable_id
-      Stabilizers::UrlEncodedStabilizer.new.from_stable_id(id: stable_id)
+      Hammerstone.stabilizer_class('Stabilizers::UrlEncodedStabilizer').new.from_stable_id(id: stable_id)
     else
       filterClass = filter_params[:filter].constantize
       filterClass.new blueprint

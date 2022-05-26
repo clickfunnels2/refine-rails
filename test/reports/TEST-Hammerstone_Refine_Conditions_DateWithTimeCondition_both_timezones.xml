@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.007087' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateWithTimeCondition::both timezones" assertions='1' tests='1' timestamp="2022-05-26T16:22:44-07:00">
-  <testcase time='0.007087' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0001_can set both database and user timezone" assertions='1'>
-  </testcase>
-</testsuite>

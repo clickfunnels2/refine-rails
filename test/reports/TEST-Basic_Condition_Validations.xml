@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.008770' skipped='0' failures='0' errors='0' name="Basic Condition Validations" assertions='4' tests='2' timestamp="2022-05-26T16:22:44-07:00">
-  <testcase time='0.004669' file="test/hammerstone/models/conditions/validations_test.rb" name="test_0001_raises an error if no id is set on the way to front end" assertions='2'>
-  </testcase>
-  <testcase time='0.004101' file="test/hammerstone/models/conditions/validations_test.rb" name="test_0002_raises an error if no id and no attribute" assertions='2'>
-  </testcase>
-</testsuite>

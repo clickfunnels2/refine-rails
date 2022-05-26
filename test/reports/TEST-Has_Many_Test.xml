@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.067422' skipped='0' failures='0' errors='0' name="Has Many Test" assertions='3' tests='3' timestamp="2022-05-26T16:22:44-07:00">
-  <testcase time='0.026040' file="test/hammerstone/models/relationship_attributes/has_many_test.rb" name="test_0002_does not collapse two attributes on a has_many" assertions='1'>
-  </testcase>
-  <testcase time='0.028436' file="test/hammerstone/models/relationship_attributes/has_many_test.rb" name="test_0003_can handle deeply nested has many relationships" assertions='1'>
-  </testcase>
-  <testcase time='0.012946' file="test/hammerstone/models/relationship_attributes/has_many_test.rb" name="test_0001_uses where in for has many users" assertions='1'>
-  </testcase>
-</testsuite>

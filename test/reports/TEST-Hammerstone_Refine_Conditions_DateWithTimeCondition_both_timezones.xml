@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.008696' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateWithTimeCondition::both timezones" assertions='1' tests='1' timestamp="2022-04-14T21:03:53-07:00">
-  <testcase time='0.008696' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0001_can set both database and user timezone" assertions='1'>
+<testsuite time='0.026356' skipped='0' failures='1' errors='0' name="Hammerstone::Refine::Conditions::DateWithTimeCondition::both timezones" assertions='1' tests='1' timestamp="2022-05-26T16:07:14-07:00">
+  <testcase time='0.026356' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0001_can set both database and user timezone" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;date_test\\&quot; BETWEEN &#39;2019-05-15 01:00:00&#39; AND &#39;2019-05-16 00:59:59.999999&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`date_test` BETWEEN &#39;2019-05-15 01:00:00&#39; AND &#39;2019-05-16 00:59:59.999999&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_with_time_condition_test.rb:99:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
   </testcase>
 </testsuite>

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.001736' skipped='1' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateCondition::clause application::Between" assertions='1' tests='2' timestamp="2022-04-14T21:03:53-07:00">
-  <testcase time='0.000766' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0002_throws error if dates are not in correct order" assertions='0'>
+<testsuite time='0.012888' skipped='1' failures='1' errors='0' name="Hammerstone::Refine::Conditions::DateCondition::clause application::Between" assertions='1' tests='2' timestamp="2022-05-26T16:07:14-07:00">
+  <testcase time='0.009726' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0001_correctly executes clause between" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;date_to_test\\&quot; BETWEEN &#39;2019-05-15&#39; AND &#39;2019-05-30&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`date_to_test` BETWEEN &#39;2019-05-15&#39; AND &#39;2019-05-30&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_condition_test.rb:121:in `block (4 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.003162' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0002_throws error if dates are not in correct order" assertions='0'>
     <skipped type='Minitest::Skip' message="revist when finishing up validations">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_condition_test.rb:125:in `block (4 levels) in &lt;module:Conditions&gt;&#39;
     </skipped>
-  </testcase>
-  <testcase time='0.000970' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0001_correctly executes clause between" assertions='1'>
   </testcase>
 </testsuite>

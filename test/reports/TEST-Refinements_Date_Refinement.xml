@@ -1,83 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.000595' skipped='0' failures='0' errors='4' name="Refinements::Date Refinement" assertions='0' tests='4' timestamp="2022-04-14T21:03:53-07:00">
-  <testcase time='0.000203' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0002_can set attribute as string shorthand" assertions='0'>
-    <error type='ActiveRecord::StatementInvalid' message="SQLite3::SQLException: table hammerstone_contacts already exists">/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `initialize&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `new&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `prepare&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:193:in `execute&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:32:in `block (2 levels) in execute&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/share_lock.rb:187:in `yield_shares&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/dependencies/interlock.rb:41:in `permit_concurrent_loads&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:31:in `block in execute&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `handle_interrupt&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `block in synchronize&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `handle_interrupt&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `synchronize&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:765:in `block in log&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/notifications/instrumenter.rb:24:in `instrument&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:756:in `log&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:30:in `execute&#39;
-/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/refinement_test.rb:13:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
-    </error>
+<testsuite time='0.054358' skipped='0' failures='3' errors='0' name="Refinements::Date Refinement" assertions='4' tests='4' timestamp="2022-05-26T16:07:14-07:00">
+  <testcase time='0.008014' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0004_can control clauses" assertions='1'>
   </testcase>
-  <testcase time='0.000123' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0004_can control clauses" assertions='0'>
-    <error type='ActiveRecord::StatementInvalid' message="SQLite3::SQLException: table hammerstone_contacts already exists">/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `initialize&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `new&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `prepare&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:193:in `execute&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:32:in `block (2 levels) in execute&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/share_lock.rb:187:in `yield_shares&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/dependencies/interlock.rb:41:in `permit_concurrent_loads&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:31:in `block in execute&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `handle_interrupt&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `block in synchronize&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `handle_interrupt&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `synchronize&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:765:in `block in log&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/notifications/instrumenter.rb:24:in `instrument&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:756:in `log&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:30:in `execute&#39;
-/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/refinement_test.rb:13:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
-    </error>
+  <testcase time='0.013068' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0002_can set attribute as string shorthand" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;hammerstone_contacts\\&quot;.* FROM \\&quot;hammerstone_contacts\\&quot; WHERE (\\&quot;hammerstone_contacts\\&quot;.\\&quot;id\\&quot; IN (SELECT \\&quot;hammerstone_events\\&quot;.\\&quot;hammerstone_contact_id\\&quot; FROM \\&quot;hammerstone_events\\&quot; WHERE (\\&quot;hammerstone_events\\&quot;.\\&quot;type\\&quot; = &#39;Networking Event&#39;) AND (\\&quot;hammerstone_events\\&quot;.\\&quot;clicked_on\\&quot; BETWEEN &#39;2021-01-01 00:00:00&#39; AND &#39;2021-02-01 23:59:59.999999&#39;)))&quot;&#13;&#10;+&quot;SELECT `hammerstone_contacts`.* FROM `hammerstone_contacts` WHERE (`hammerstone_contacts`.`id` IN (SELECT `hammerstone_events`.`hammerstone_contact_id` FROM `hammerstone_events` WHERE (`hammerstone_events`.`type` = &#39;Networking Event&#39;) AND (`hammerstone_events`.`clicked_on` BETWEEN &#39;2021-01-01 00:00:00&#39; AND &#39;2021-02-01 23:59:59.999999&#39;)))&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/refinement_test.rb:61:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
   </testcase>
-  <testcase time='0.000134' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0001_can set attribute as fully qualified condition" assertions='0'>
-    <error type='ActiveRecord::StatementInvalid' message="SQLite3::SQLException: table hammerstone_contacts already exists">/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `initialize&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `new&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `prepare&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:193:in `execute&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:32:in `block (2 levels) in execute&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/share_lock.rb:187:in `yield_shares&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/dependencies/interlock.rb:41:in `permit_concurrent_loads&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:31:in `block in execute&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `handle_interrupt&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `block in synchronize&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `handle_interrupt&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `synchronize&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:765:in `block in log&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/notifications/instrumenter.rb:24:in `instrument&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:756:in `log&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:30:in `execute&#39;
-/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/refinement_test.rb:13:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
-    </error>
+  <testcase time='0.011603' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0003_defaults to created at - enable date shorthand in PHP" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;hammerstone_contacts\\&quot;.* FROM \\&quot;hammerstone_contacts\\&quot; WHERE (\\&quot;hammerstone_contacts\\&quot;.\\&quot;id\\&quot; IN (SELECT \\&quot;hammerstone_events\\&quot;.\\&quot;hammerstone_contact_id\\&quot; FROM \\&quot;hammerstone_events\\&quot; WHERE (\\&quot;hammerstone_events\\&quot;.\\&quot;type\\&quot; = &#39;Networking Event&#39;) AND (\\&quot;hammerstone_events\\&quot;.\\&quot;created_at\\&quot; BETWEEN &#39;2021-01-01 00:00:00&#39; AND &#39;2021-02-01 23:59:59.999999&#39;)))&quot;&#13;&#10;+&quot;SELECT `hammerstone_contacts`.* FROM `hammerstone_contacts` WHERE (`hammerstone_contacts`.`id` IN (SELECT `hammerstone_events`.`hammerstone_contact_id` FROM `hammerstone_events` WHERE (`hammerstone_events`.`type` = &#39;Networking Event&#39;) AND (`hammerstone_events`.`created_at` BETWEEN &#39;2021-01-01 00:00:00&#39; AND &#39;2021-02-01 23:59:59.999999&#39;)))&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/refinement_test.rb:85:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
   </testcase>
-  <testcase time='0.000135' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0003_defaults to created at - enable date shorthand in PHP" assertions='0'>
-    <error type='ActiveRecord::StatementInvalid' message="SQLite3::SQLException: table hammerstone_contacts already exists">/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `initialize&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `new&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `prepare&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:193:in `execute&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:32:in `block (2 levels) in execute&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/share_lock.rb:187:in `yield_shares&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/dependencies/interlock.rb:41:in `permit_concurrent_loads&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:31:in `block in execute&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `handle_interrupt&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `block in synchronize&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `handle_interrupt&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `synchronize&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:765:in `block in log&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/notifications/instrumenter.rb:24:in `instrument&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:756:in `log&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:30:in `execute&#39;
-/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/refinement_test.rb:13:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
-    </error>
+  <testcase time='0.021673' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0001_can set attribute as fully qualified condition" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;hammerstone_contacts\\&quot;.* FROM \\&quot;hammerstone_contacts\\&quot; WHERE (\\&quot;hammerstone_contacts\\&quot;.\\&quot;id\\&quot; IN (SELECT \\&quot;hammerstone_events\\&quot;.\\&quot;hammerstone_contact_id\\&quot; FROM \\&quot;hammerstone_events\\&quot; WHERE (\\&quot;hammerstone_events\\&quot;.\\&quot;type\\&quot; = &#39;Networking Event&#39;) AND (\\&quot;hammerstone_events\\&quot;.\\&quot;clicked_on\\&quot; BETWEEN &#39;2021-01-01 00:00:00&#39; AND &#39;2021-02-01 23:59:59.999999&#39;)))&quot;&#13;&#10;+&quot;SELECT `hammerstone_contacts`.* FROM `hammerstone_contacts` WHERE (`hammerstone_contacts`.`id` IN (SELECT `hammerstone_events`.`hammerstone_contact_id` FROM `hammerstone_events` WHERE (`hammerstone_events`.`type` = &#39;Networking Event&#39;) AND (`hammerstone_events`.`clicked_on` BETWEEN &#39;2021-01-01 00:00:00&#39; AND &#39;2021-02-01 23:59:59.999999&#39;)))&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/refinement_test.rb:39:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
   </testcase>
 </testsuite>

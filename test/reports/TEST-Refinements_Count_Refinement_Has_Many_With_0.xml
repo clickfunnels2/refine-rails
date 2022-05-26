@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.000132' skipped='0' failures='0' errors='1' name="Refinements::Count Refinement Has Many With 0" assertions='0' tests='1' timestamp="2022-04-14T21:03:53-07:00">
-  <testcase time='0.000132' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0001_adds a left joins" assertions='0'>
-    <error type='ActiveRecord::StatementInvalid' message="SQLite3::SQLException: table hammerstone_contacts already exists">/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `initialize&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `new&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:147:in `prepare&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/sqlite3-1.4.2/lib/sqlite3/database.rb:193:in `execute&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:32:in `block (2 levels) in execute&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/share_lock.rb:187:in `yield_shares&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/dependencies/interlock.rb:41:in `permit_concurrent_loads&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:31:in `block in execute&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `handle_interrupt&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `block in synchronize&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `handle_interrupt&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `synchronize&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:765:in `block in log&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/notifications/instrumenter.rb:24:in `instrument&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:756:in `log&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/sqlite3/database_statements.rb:30:in `execute&#39;
-/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/refinement_test.rb:13:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
-    </error>
+<testsuite time='0.018031' skipped='0' failures='1' errors='0' name="Refinements::Count Refinement Has Many With 0" assertions='1' tests='1' timestamp="2022-05-26T16:07:14-07:00">
+  <testcase time='0.018031' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0001_adds a left joins" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;hammerstone_contacts\\&quot;.* FROM \\&quot;hammerstone_contacts\\&quot; WHERE (\\&quot;hammerstone_contacts\\&quot;.\\&quot;id\\&quot; IN (SELECT \\&quot;hammerstone_contacts\\&quot;.\\&quot;id\\&quot; FROM \\&quot;hammerstone_contacts\\&quot; LEFT OUTER JOIN (SELECT \\&quot;hammerstone_events\\&quot;.\\&quot;hammerstone_contact_id\\&quot;, COUNT(*) AS hs_refine_count_aggregate FROM \\&quot;hammerstone_events\\&quot; WHERE (\\&quot;hammerstone_events\\&quot;.\\&quot;type\\&quot; = &#39;Networking Event&#39;) GROUP BY \\&quot;hammerstone_events\\&quot;.\\&quot;hammerstone_contact_id\\&quot;) interim_table ON interim_table.\\&quot;hammerstone_contact_id\\&quot; = \\&quot;hammerstone_contacts\\&quot;.\\&quot;id\\&quot; WHERE coalesce(hs_refine_count_aggregate, 0) = &#39;0&#39;))&quot;&#13;&#10;+&quot;SELECT `hammerstone_contacts`.* FROM `hammerstone_contacts` WHERE (`hammerstone_contacts`.`id` IN (SELECT `hammerstone_contacts`.`id` FROM `hammerstone_contacts` LEFT OUTER JOIN (SELECT `hammerstone_events`.`hammerstone_contact_id`, COUNT(*) AS hs_refine_count_aggregate FROM `hammerstone_events` WHERE (`hammerstone_events`.`type` = &#39;Networking Event&#39;) GROUP BY `hammerstone_events`.`hammerstone_contact_id`) interim_table ON interim_table.`hammerstone_contact_id` = `hammerstone_contacts`.`id` WHERE coalesce(hs_refine_count_aggregate, 0) = &#39;0&#39;))&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/refinement_test.rb:242:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
   </testcase>
 </testsuite>

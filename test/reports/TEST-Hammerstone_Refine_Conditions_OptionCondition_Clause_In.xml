@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.003192' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::OptionCondition::Clause In" assertions='4' tests='4' timestamp="2022-04-14T21:03:53-07:00">
-  <testcase time='0.000983' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0002_works with null condition" assertions='1'>
+<testsuite time='0.056851' skipped='0' failures='4' errors='0' name="Hammerstone::Refine::Conditions::OptionCondition::Clause In" assertions='4' tests='4' timestamp="2022-05-26T16:07:14-07:00">
+  <testcase time='0.016309' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0001_works with two parameters" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;o\\&quot;.* FROM \\&quot;o\\&quot; WHERE (\\&quot;o\\&quot;.\\&quot;option_test\\&quot; IN (&#39;option_1&#39;, &#39;option_2&#39;))&quot;&#13;&#10;+&quot;SELECT `o`.* FROM `o` WHERE (`o`.`option_test` IN (&#39;option_1&#39;, &#39;option_2&#39;))&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/option_condition_test.rb:109:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
   </testcase>
-  <testcase time='0.000750' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0004_works with null condition only" assertions='1'>
+  <testcase time='0.012244' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0004_works with null condition only" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;o\\&quot;.* FROM \\&quot;o\\&quot; WHERE (1=0 OR \\&quot;o\\&quot;.\\&quot;option_test\\&quot; IS NULL)&quot;&#13;&#10;+&quot;SELECT `o`.* FROM `o` WHERE (1=0 OR `o`.`option_test` IS NULL)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/option_condition_test.rb:133:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
   </testcase>
-  <testcase time='0.000710' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0001_works with two parameters" assertions='1'>
+  <testcase time='0.014460' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0003_works with special condition" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;o\\&quot;.* FROM \\&quot;o\\&quot; WHERE (\\&quot;o\\&quot;.\\&quot;option_test\\&quot; IN (&#39;3&#39;))&quot;&#13;&#10;+&quot;SELECT `o`.* FROM `o` WHERE (`o`.`option_test` IN (&#39;3&#39;))&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/option_condition_test.rb:125:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
   </testcase>
-  <testcase time='0.000749' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0003_works with special condition" assertions='1'>
+  <testcase time='0.013838' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0002_works with null condition" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;o\\&quot;.* FROM \\&quot;o\\&quot; WHERE (\\&quot;o\\&quot;.\\&quot;option_test\\&quot; IN (&#39;option_1&#39;, &#39;option_2&#39;) OR \\&quot;o\\&quot;.\\&quot;option_test\\&quot; IS NULL)&quot;&#13;&#10;+&quot;SELECT `o`.* FROM `o` WHERE (`o`.`option_test` IN (&#39;option_1&#39;, &#39;option_2&#39;) OR `o`.`option_test` IS NULL)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/option_condition_test.rb:117:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
   </testcase>
 </testsuite>

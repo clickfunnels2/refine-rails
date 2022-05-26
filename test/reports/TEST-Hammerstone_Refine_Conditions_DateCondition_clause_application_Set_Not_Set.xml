@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.001984' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateCondition::clause application::Set/Not Set" assertions='2' tests='2' timestamp="2022-04-14T21:03:53-07:00">
-  <testcase time='0.001108' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0002_executes not set" assertions='1'>
+<testsuite time='0.025775' skipped='0' failures='2' errors='0' name="Hammerstone::Refine::Conditions::DateCondition::clause application::Set/Not Set" assertions='2' tests='2' timestamp="2022-05-26T16:07:14-07:00">
+  <testcase time='0.012155' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0001_executes set" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;date_to_test\\&quot; IS NOT NULL)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`date_to_test` IS NOT NULL)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_condition_test.rb:141:in `block (4 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
   </testcase>
-  <testcase time='0.000876' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0001_executes set" assertions='1'>
+  <testcase time='0.013620' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0002_executes not set" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;date_to_test\\&quot; IS NULL)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`date_to_test` IS NULL)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_condition_test.rb:149:in `block (4 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
   </testcase>
 </testsuite>

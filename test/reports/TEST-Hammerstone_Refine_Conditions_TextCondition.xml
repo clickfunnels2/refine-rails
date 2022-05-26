@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.052982' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::TextCondition" assertions='11' tests='11' timestamp="2022-05-26T16:16:01-07:00">
-  <testcase time='0.004146' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0006_correctly executes clause doesn&#39;t contains" assertions='1'>
+<testsuite time='0.050176' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::TextCondition" assertions='11' tests='11' timestamp="2022-05-26T16:22:44-07:00">
+  <testcase time='0.004173' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0004_correctly executes clause ends with" assertions='1'>
   </testcase>
-  <testcase time='0.005117' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0009_correctly executes clause not set" assertions='1'>
+  <testcase time='0.003489' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0008_correctly executes clause not set" assertions='1'>
   </testcase>
-  <testcase time='0.004682' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0011_correctly executes clause doesn&#39;t end with" assertions='1'>
+  <testcase time='0.004226' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0011_correctly executes clause doesn&#39;t end with" assertions='1'>
   </testcase>
-  <testcase time='0.004694' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0008_correctly executes clause not set" assertions='1'>
+  <testcase time='0.003758' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0006_correctly executes clause doesn&#39;t contains" assertions='1'>
   </testcase>
-  <testcase time='0.004913' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0004_correctly executes clause ends with" assertions='1'>
+  <testcase time='0.003887' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0009_correctly executes clause not set" assertions='1'>
   </testcase>
-  <testcase time='0.005358' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0003_correctly executes clause starts with" assertions='1'>
+  <testcase time='0.005028' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0003_correctly executes clause starts with" assertions='1'>
   </testcase>
-  <testcase time='0.004391' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0005_correctly executes clause contains" assertions='1'>
+  <testcase time='0.005011' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0005_correctly executes clause contains" assertions='1'>
   </testcase>
-  <testcase time='0.004628' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0001_correctly executes clause equals" assertions='1'>
+  <testcase time='0.005874' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0001_correctly executes clause equals" assertions='1'>
   </testcase>
-  <testcase time='0.005635' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0010_correctly executes clause doesn&#39;t start with" assertions='1'>
+  <testcase time='0.005943' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0002_correctly executes clause doesnt equals" assertions='1'>
   </testcase>
-  <testcase time='0.004684' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0007_correctly executes clause set" assertions='1'>
+  <testcase time='0.004170' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0007_correctly executes clause set" assertions='1'>
   </testcase>
-  <testcase time='0.004734' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0002_correctly executes clause doesnt equals" assertions='1'>
+  <testcase time='0.004617' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0010_correctly executes clause doesn&#39;t start with" assertions='1'>
   </testcase>
 </testsuite>

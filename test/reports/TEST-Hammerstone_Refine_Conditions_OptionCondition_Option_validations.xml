@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.004378' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::OptionCondition::Option validations" assertions='1' tests='1' timestamp="2022-05-26T16:16:01-07:00">
-  <testcase time='0.004378' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0001_only accepts options in the set of ids" assertions='1'>
+<testsuite time='0.007106' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::OptionCondition::Option validations" assertions='1' tests='1' timestamp="2022-05-26T16:22:44-07:00">
+  <testcase time='0.007106' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0001_only accepts options in the set of ids" assertions='1'>
   </testcase>
 </testsuite>

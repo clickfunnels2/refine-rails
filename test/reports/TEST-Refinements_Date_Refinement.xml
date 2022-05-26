@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.034613' skipped='0' failures='0' errors='0' name="Refinements::Date Refinement" assertions='4' tests='4' timestamp="2022-05-26T16:16:01-07:00">
-  <testcase time='0.009624' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0001_can set attribute as fully qualified condition" assertions='1'>
+<testsuite time='0.039189' skipped='0' failures='0' errors='0' name="Refinements::Date Refinement" assertions='4' tests='4' timestamp="2022-05-26T16:22:44-07:00">
+  <testcase time='0.011312' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0003_defaults to created at - enable date shorthand in PHP" assertions='1'>
   </testcase>
-  <testcase time='0.008622' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0003_defaults to created at - enable date shorthand in PHP" assertions='1'>
+  <testcase time='0.008893' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0004_can control clauses" assertions='1'>
   </testcase>
-  <testcase time='0.008314' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0002_can set attribute as string shorthand" assertions='1'>
+  <testcase time='0.009284' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0001_can set attribute as fully qualified condition" assertions='1'>
   </testcase>
-  <testcase time='0.008053' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0004_can control clauses" assertions='1'>
+  <testcase time='0.009700' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0002_can set attribute as string shorthand" assertions='1'>
   </testcase>
 </testsuite>

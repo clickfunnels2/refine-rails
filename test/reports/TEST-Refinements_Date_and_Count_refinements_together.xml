@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.019547' skipped='0' failures='0' errors='0' name="Refinements::Date and Count refinements together" assertions='2' tests='2' timestamp="2022-05-26T16:16:01-07:00">
-  <testcase time='0.012837' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0002_can use both" assertions='1'>
+<testsuite time='0.019099' skipped='0' failures='0' errors='0' name="Refinements::Date and Count refinements together" assertions='2' tests='2' timestamp="2022-05-26T16:22:44-07:00">
+  <testcase time='0.008293' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0001_sends correct configuration to the front end" assertions='1'>
   </testcase>
-  <testcase time='0.006710' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0001_sends correct configuration to the front end" assertions='1'>
+  <testcase time='0.010806' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0002_can use both" assertions='1'>
   </testcase>
 </testsuite>

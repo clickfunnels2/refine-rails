@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.003547' skipped='0' failures='0' errors='0' name="Validates Clause::ensurance (developer side) validations" assertions='2' tests='1' timestamp="2022-05-26T16:16:01-07:00">
-  <testcase time='0.003547' file="test/hammerstone/models/clauses/validates_clauses_test.rb" name="test_0001_fails if no id is given by the developer" assertions='2'>
+<testsuite time='0.004643' skipped='0' failures='0' errors='0' name="Validates Clause::ensurance (developer side) validations" assertions='2' tests='1' timestamp="2022-05-26T16:22:44-07:00">
+  <testcase time='0.004643' file="test/hammerstone/models/clauses/validates_clauses_test.rb" name="test_0001_fails if no id is given by the developer" assertions='2'>
   </testcase>
 </testsuite>

@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.257893' skipped='0' failures='0' errors='0' name="Belongs to test" assertions='14' tests='10' timestamp="2022-05-26T16:16:01-07:00">
-  <testcase time='0.034001' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0006_Does not collapse ORs with varying depths" assertions='1'>
+<testsuite time='0.330204' skipped='0' failures='0' errors='0' name="Belongs to test" assertions='14' tests='10' timestamp="2022-05-26T16:22:44-07:00">
+  <testcase time='0.041554' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0010_does not support refinements" assertions='2'>
   </testcase>
-  <testcase time='0.019898' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0007_can handle deeply nested belongs to relationships" assertions='1'>
+  <testcase time='0.018977' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0003_collapses two attributes on belongs to relationships" assertions='2'>
   </testcase>
-  <testcase time='0.018795' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0008_collapses first and second level belongs to" assertions='1'>
+  <testcase time='0.020899' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0004_collapses two attributes on belongs to when not adjacent" assertions='2'>
   </testcase>
-  <testcase time='0.018895' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0005_does not mix up belongs to in groups" assertions='1'>
+  <testcase time='0.029335' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0006_Does not collapse ORs with varying depths" assertions='1'>
   </testcase>
-  <testcase time='0.021533' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0001_uses where in for belongs to" assertions='2'>
+  <testcase time='0.027385' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0008_collapses first and second level belongs to" assertions='1'>
   </testcase>
-  <testcase time='0.023494' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0002_can handle nested relationships" assertions='1'>
+  <testcase time='0.019598' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0007_can handle deeply nested belongs to relationships" assertions='1'>
   </testcase>
-  <testcase time='0.029125' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0009_collapses first and second level belongs to in opposite order" assertions='1'>
+  <testcase time='0.075969' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0002_can handle nested relationships" assertions='1'>
   </testcase>
-  <testcase time='0.036337' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0010_does not support refinements" assertions='2'>
+  <testcase time='0.031661' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0009_collapses first and second level belongs to in opposite order" assertions='1'>
   </testcase>
-  <testcase time='0.031357' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0004_collapses two attributes on belongs to when not adjacent" assertions='2'>
+  <testcase time='0.035289' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0005_does not mix up belongs to in groups" assertions='1'>
   </testcase>
-  <testcase time='0.024458' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0003_collapses two attributes on belongs to relationships" assertions='2'>
+  <testcase time='0.029537' file="test/hammerstone/models/relationship_attributes/belongs_to_test.rb" name="test_0001_uses where in for belongs to" assertions='2'>
   </testcase>
 </testsuite>

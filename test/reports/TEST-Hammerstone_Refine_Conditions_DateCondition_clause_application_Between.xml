@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.009905' skipped='1' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateCondition::clause application::Between" assertions='1' tests='2' timestamp="2022-05-26T16:16:01-07:00">
-  <testcase time='0.004994' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0001_correctly executes clause between" assertions='1'>
+<testsuite time='0.008138' skipped='1' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateCondition::clause application::Between" assertions='1' tests='2' timestamp="2022-05-26T16:22:44-07:00">
+  <testcase time='0.003881' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0001_correctly executes clause between" assertions='1'>
   </testcase>
-  <testcase time='0.004911' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0002_throws error if dates are not in correct order" assertions='0'>
+  <testcase time='0.004257' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0002_throws error if dates are not in correct order" assertions='0'>
     <skipped type='Minitest::Skip' message="revist when finishing up validations">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_condition_test.rb:125:in `block (4 levels) in &lt;module:Conditions&gt;&#39;
     </skipped>
   </testcase>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.030404' skipped='0' failures='0' errors='0' name="Validates Clause" assertions='6' tests='6' timestamp="2022-05-26T16:16:01-07:00">
-  <testcase time='0.004364' file="test/hammerstone/models/clauses/validates_clauses_test.rb" name="test_0002_passes with clause id" assertions='1'>
+<testsuite time='0.029769' skipped='0' failures='0' errors='0' name="Validates Clause" assertions='6' tests='6' timestamp="2022-05-26T16:22:44-07:00">
+  <testcase time='0.004311' file="test/hammerstone/models/clauses/validates_clauses_test.rb" name="test_0001_fails with no clause id by raising error" assertions='1'>
   </testcase>
-  <testcase time='0.004917' file="test/hammerstone/models/clauses/validates_clauses_test.rb" name="test_0001_fails with no clause id by raising error" assertions='1'>
+  <testcase time='0.005078' file="test/hammerstone/models/clauses/validates_clauses_test.rb" name="test_0002_passes with clause id" assertions='1'>
   </testcase>
-  <testcase time='0.006280' file="test/hammerstone/models/clauses/validates_clauses_test.rb" name="test_0004_validates Text Condition Eq has a value" assertions='1'>
+  <testcase time='0.005703' file="test/hammerstone/models/clauses/validates_clauses_test.rb" name="test_0006_Returns condition and clause errors when multiple issues" assertions='1'>
   </testcase>
-  <testcase time='0.004724' file="test/hammerstone/models/clauses/validates_clauses_test.rb" name="test_0005_excludes clauses using without" assertions='1'>
+  <testcase time='0.004989' file="test/hammerstone/models/clauses/validates_clauses_test.rb" name="test_0004_validates Text Condition Eq has a value" assertions='1'>
   </testcase>
-  <testcase time='0.005033' file="test/hammerstone/models/clauses/validates_clauses_test.rb" name="test_0006_Returns condition and clause errors when multiple issues" assertions='1'>
+  <testcase time='0.004670' file="test/hammerstone/models/clauses/validates_clauses_test.rb" name="test_0003_validates a clause exists (a clause is required)" assertions='1'>
   </testcase>
-  <testcase time='0.005086' file="test/hammerstone/models/clauses/validates_clauses_test.rb" name="test_0003_validates a clause exists (a clause is required)" assertions='1'>
+  <testcase time='0.005018' file="test/hammerstone/models/clauses/validates_clauses_test.rb" name="test_0005_excludes clauses using without" assertions='1'>
   </testcase>
 </testsuite>

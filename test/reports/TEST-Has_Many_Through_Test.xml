@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.080106' skipped='0' failures='0' errors='0' name="Has Many Through Test" assertions='4' tests='4' timestamp="2022-05-26T16:16:01-07:00">
-  <testcase time='0.022660' file="test/hammerstone/models/relationship_attributes/has_many_through_test.rb" name="test_0003_cannot collapse ors" assertions='1'>
+<testsuite time='0.078657' skipped='0' failures='0' errors='0' name="Has Many Through Test" assertions='4' tests='4' timestamp="2022-05-26T16:22:44-07:00">
+  <testcase time='0.026387' file="test/hammerstone/models/relationship_attributes/has_many_through_test.rb" name="test_0004_can mix pending relationship types" assertions='1'>
   </testcase>
-  <testcase time='0.017004' file="test/hammerstone/models/relationship_attributes/has_many_through_test.rb" name="test_0001_defaults to using active record for has many through relationships" assertions='1'>
+  <testcase time='0.017090' file="test/hammerstone/models/relationship_attributes/has_many_through_test.rb" name="test_0001_defaults to using active record for has many through relationships" assertions='1'>
   </testcase>
-  <testcase time='0.015983' file="test/hammerstone/models/relationship_attributes/has_many_through_test.rb" name="test_0002_does not collapse ands" assertions='1'>
+  <testcase time='0.017381' file="test/hammerstone/models/relationship_attributes/has_many_through_test.rb" name="test_0002_does not collapse ands" assertions='1'>
   </testcase>
-  <testcase time='0.024459' file="test/hammerstone/models/relationship_attributes/has_many_through_test.rb" name="test_0004_can mix pending relationship types" assertions='1'>
+  <testcase time='0.017799' file="test/hammerstone/models/relationship_attributes/has_many_through_test.rb" name="test_0003_cannot collapse ors" assertions='1'>
   </testcase>
 </testsuite>

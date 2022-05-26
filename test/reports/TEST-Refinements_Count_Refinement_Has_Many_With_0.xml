@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.008478' skipped='0' failures='0' errors='0' name="Refinements::Count Refinement Has Many With 0" assertions='1' tests='1' timestamp="2022-05-26T16:16:01-07:00">
-  <testcase time='0.008478' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0001_adds a left joins" assertions='1'>
+<testsuite time='0.008774' skipped='0' failures='0' errors='0' name="Refinements::Count Refinement Has Many With 0" assertions='1' tests='1' timestamp="2022-05-26T16:22:44-07:00">
+  <testcase time='0.008774' file="test/hammerstone/models/conditions/refinement_test.rb" name="test_0001_adds a left joins" assertions='1'>
   </testcase>
 </testsuite>

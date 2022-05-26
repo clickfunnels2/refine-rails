@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.011771' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateWithTimeCondition::database timezone" assertions='2' tests='2' timestamp="2022-05-26T16:16:01-07:00">
-  <testcase time='0.005243' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0002_can be set globally" assertions='1'>
+<testsuite time='0.010448' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateWithTimeCondition::database timezone" assertions='2' tests='2' timestamp="2022-05-26T16:22:44-07:00">
+  <testcase time='0.004803' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0001_can be set and correctly shifts query" assertions='1'>
   </testcase>
-  <testcase time='0.006528' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0001_can be set and correctly shifts query" assertions='1'>
+  <testcase time='0.005645' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0002_can be set globally" assertions='1'>
   </testcase>
 </testsuite>

@@ -1,6 +1,5 @@
 require "test_helper"
 require "support/hammerstone/test_double_filter"
-require "support/hammerstone/test_filter_with_meta"
 require "support/hammerstone/filter_test_helper"
 
 describe Hammerstone::Refine::Filter do
@@ -79,11 +78,13 @@ describe Hammerstone::Refine::Filter do
 
     describe "Text Condition with meta, no clauses" do
       it "returns correct json" do
-        filter = TestFilterWithMeta.new([])
+        filter = TestDoubleFilter.new([])
+        filter.conditions =  
+          [Hammerstone::Refine::Conditions::TextCondition.new("text_field_value").with_meta({hint: "password"})]
         expected_value =
           {
             type: "Hammerstone",
-            class_name: "TestFilterWithMeta",
+            class_name: "TestDoubleFilter",
             blueprint: [],
             conditions: expected_conditions_with_meta,
             stable_id: nil,
@@ -221,7 +222,7 @@ describe Hammerstone::Refine::Filter do
       {
         id: "text_field_value",
         component: "text-condition",
-        display: "Text field value",
+        display: "Text Field Value",
         meta: {
           clauses: [
             {

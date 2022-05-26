@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.018538' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateWithTimeCondition::user timezone" assertions='4' tests='4' timestamp="2022-05-26T16:16:01-07:00">
-  <testcase time='0.004822' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0002_shifts query based on user timezone of America/Chicago" assertions='1'>
+<testsuite time='0.025825' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateWithTimeCondition::user timezone" assertions='4' tests='4' timestamp="2022-05-26T16:22:44-07:00">
+  <testcase time='0.006732' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0002_shifts query based on user timezone of America/Chicago" assertions='1'>
   </testcase>
-  <testcase time='0.004621' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0001_defaults to user timezone of utc" assertions='1'>
+  <testcase time='0.006935' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0003_can be set globally" assertions='1'>
   </testcase>
-  <testcase time='0.004023' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0003_can be set globally" assertions='1'>
+  <testcase time='0.005668' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0001_defaults to user timezone of utc" assertions='1'>
   </testcase>
-  <testcase time='0.005072' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0004_can be a callback" assertions='1'>
+  <testcase time='0.006490' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0004_can be a callback" assertions='1'>
   </testcase>
 </testsuite>

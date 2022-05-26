@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.003657' skipped='0' failures='0' errors='1' name="Hammerstone::Refine::Filter::Configuration object - data going to frontend::Text Condition with meta, no clauses" assertions='0' tests='1' timestamp="2022-05-26T16:16:01-07:00">
-  <testcase time='0.003657' file="test/hammerstone/models/filters/basic_filter_test.rb" name="test_0001_returns correct json" assertions='0'>
-    <error type='NameError' message="uninitialized constant TestFilterWithMeta::Scaffolding">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/support/hammerstone/test_filter_with_meta.rb:3:in `initial_query&#39;
-/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/app/models/hammerstone/refine/filter.rb:24:in `block in initialize&#39;
-/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/callbacks.rb:107:in `run_callbacks&#39;
-/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/app/models/hammerstone/refine/filter.rb:16:in `initialize&#39;
-/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/filters/basic_filter_test.rb:82:in `new&#39;
-/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/filters/basic_filter_test.rb:82:in `block (4 levels) in &lt;top (required)&gt;&#39;
-    </error>
+<testsuite time='0.004466' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Filter::Configuration object - data going to frontend::Text Condition with meta, no clauses" assertions='1' tests='1' timestamp="2022-05-26T16:22:44-07:00">
+  <testcase time='0.004466' file="test/hammerstone/models/filters/basic_filter_test.rb" name="test_0001_returns correct json" assertions='1'>
   </testcase>
 </testsuite>

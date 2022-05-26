@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.031849' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateCondition::clause application::Relative dates with modifiers" assertions='6' tests='6' timestamp="2022-05-26T16:16:01-07:00">
-  <testcase time='0.005325' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0003_correctly executes clause exactly 3 days ago" assertions='1'>
+<testsuite time='0.033498' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateCondition::clause application::Relative dates with modifiers" assertions='6' tests='6' timestamp="2022-05-26T16:22:44-07:00">
+  <testcase time='0.005763' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0001_correctly executes clause greater than 3 days ago" assertions='1'>
   </testcase>
-  <testcase time='0.005817' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0001_correctly executes clause greater than 3 days ago" assertions='1'>
+  <testcase time='0.004695' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0002_correctly executes clause greater than 3 days from now" assertions='1'>
   </testcase>
-  <testcase time='0.005343' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0002_correctly executes clause greater than 3 days from now" assertions='1'>
+  <testcase time='0.004885' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0005_correctly executes clause less than 3 days ago" assertions='1'>
   </testcase>
-  <testcase time='0.004957' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0006_correctly executes clause less than 3 days from now" assertions='1'>
+  <testcase time='0.006192' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0004_correctly executes clause exactly 3 days from now" assertions='1'>
   </testcase>
-  <testcase time='0.004673' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0004_correctly executes clause exactly 3 days from now" assertions='1'>
+  <testcase time='0.005048' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0006_correctly executes clause less than 3 days from now" assertions='1'>
   </testcase>
-  <testcase time='0.005734' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0005_correctly executes clause less than 3 days ago" assertions='1'>
+  <testcase time='0.006915' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0003_correctly executes clause exactly 3 days ago" assertions='1'>
   </testcase>
 </testsuite>

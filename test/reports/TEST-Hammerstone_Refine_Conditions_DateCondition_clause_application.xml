@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.016978' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateCondition::clause application" assertions='4' tests='4' timestamp="2022-05-26T16:16:01-07:00">
-  <testcase time='0.004232' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0002_correctly executes clause doesnt equals" assertions='1'>
+<testsuite time='0.017878' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateCondition::clause application" assertions='4' tests='4' timestamp="2022-05-26T16:22:44-07:00">
+  <testcase time='0.005170' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0001_correctly executes clause equals" assertions='1'>
   </testcase>
-  <testcase time='0.004050' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0003_correctly executes clause greater than or equal" assertions='1'>
+  <testcase time='0.004368' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0003_correctly executes clause greater than or equal" assertions='1'>
   </testcase>
-  <testcase time='0.004816' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0001_correctly executes clause equals" assertions='1'>
+  <testcase time='0.003992' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0004_correctly executes clause less than or equal" assertions='1'>
   </testcase>
-  <testcase time='0.003880' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0004_correctly executes clause less than or equal" assertions='1'>
+  <testcase time='0.004348' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0002_correctly executes clause doesnt equals" assertions='1'>
   </testcase>
 </testsuite>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.003200' skipped='1' failures='0' errors='0' name="Hammerstone::Refine::Conditions::BooleanCondition" assertions='0' tests='1' timestamp="2022-05-26T16:16:01-07:00">
-  <testcase time='0.003200' file="test/hammerstone/models/conditions/boolean_condition_test.rb" name="test_0001_shows_true_and_false_by_default" assertions='0'>
+<testsuite time='0.004474' skipped='1' failures='0' errors='0' name="Hammerstone::Refine::Conditions::BooleanCondition" assertions='0' tests='1' timestamp="2022-05-26T16:22:44-07:00">
+  <testcase time='0.004474' file="test/hammerstone/models/conditions/boolean_condition_test.rb" name="test_0001_shows_true_and_false_by_default" assertions='0'>
     <skipped type='Minitest::Skip' message="revisit purpose of this test">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/boolean_condition_test.rb:15:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
     </skipped>
   </testcase>

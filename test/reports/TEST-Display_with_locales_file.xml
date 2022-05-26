@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.000192' skipped='1' failures='0' errors='0' name="Display with locales file" assertions='1' tests='2' timestamp="2022-05-26T16:16:01-07:00">
-  <testcase time='0.000049' file="test/hammerstone/models/conditions/default_display_test.rb" name="test_0001_correctly translates string when locales file present" assertions='0'>
+<testsuite time='0.000343' skipped='1' failures='0' errors='0' name="Display with locales file" assertions='1' tests='2' timestamp="2022-05-26T16:22:44-07:00">
+  <testcase time='0.000098' file="test/hammerstone/models/conditions/default_display_test.rb" name="test_0001_correctly translates string when locales file present" assertions='0'>
     <skipped type='Minitest::Skip' message="Create test local file">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/default_display_test.rb:54:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
     </skipped>
   </testcase>
-  <testcase time='0.000143' file="test/hammerstone/models/conditions/default_display_test.rb" name="test_0002_uses human readable id when id is not in local file" assertions='1'>
+  <testcase time='0.000245' file="test/hammerstone/models/conditions/default_display_test.rb" name="test_0002_uses human readable id when id is not in local file" assertions='1'>
   </testcase>
 </testsuite>

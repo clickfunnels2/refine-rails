@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.042828' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::OptionCondition::Clause In" assertions='4' tests='4' timestamp="2022-05-26T16:16:01-07:00">
-  <testcase time='0.018799' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0001_works with two parameters" assertions='1'>
+<testsuite time='0.017774' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::OptionCondition::Clause In" assertions='4' tests='4' timestamp="2022-05-26T16:22:44-07:00">
+  <testcase time='0.005421' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0003_works with special condition" assertions='1'>
   </testcase>
-  <testcase time='0.008659' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0002_works with null condition" assertions='1'>
+  <testcase time='0.004429' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0001_works with two parameters" assertions='1'>
   </testcase>
-  <testcase time='0.010375' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0003_works with special condition" assertions='1'>
+  <testcase time='0.003824' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0002_works with null condition" assertions='1'>
   </testcase>
-  <testcase time='0.004995' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0004_works with null condition only" assertions='1'>
+  <testcase time='0.004100' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0004_works with null condition only" assertions='1'>
   </testcase>
 </testsuite>

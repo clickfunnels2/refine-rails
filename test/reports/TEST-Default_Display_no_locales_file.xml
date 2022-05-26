@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.000163' skipped='0' failures='0' errors='5' name="Default Display no locales file" assertions='0' tests='5' timestamp="2022-05-26T16:16:01-07:00">
-  <testcase time='0.000057' file="test/hammerstone/models/conditions/default_display_test.rb" name="test_0002_correctly handles underscores" assertions='0'>
+<testsuite time='0.000154' skipped='0' failures='0' errors='5' name="Default Display no locales file" assertions='0' tests='5' timestamp="2022-05-26T16:22:44-07:00">
+  <testcase time='0.000036' file="test/hammerstone/models/conditions/default_display_test.rb" name="test_0003_correctly handles set values" assertions='0'>
     <error type='NameError' message="uninitialized constant BlankTestFilter::Scaffolding">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/support/hammerstone/blank_test_filter.rb:11:in `initialize&#39;
 /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/default_display_test.rb:9:in `new&#39;
 /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/default_display_test.rb:9:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
     </error>
   </testcase>
-  <testcase time='0.000034' file="test/hammerstone/models/conditions/default_display_test.rb" name="test_0005_can set at the class level" assertions='0'>
+  <testcase time='0.000031' file="test/hammerstone/models/conditions/default_display_test.rb" name="test_0001_correctly displays string" assertions='0'>
     <error type='NameError' message="uninitialized constant BlankTestFilter::Scaffolding">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/support/hammerstone/blank_test_filter.rb:11:in `initialize&#39;
 /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/default_display_test.rb:9:in `new&#39;
 /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/default_display_test.rb:9:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
     </error>
   </testcase>
-  <testcase time='0.000025' file="test/hammerstone/models/conditions/default_display_test.rb" name="test_0001_correctly displays string" assertions='0'>
+  <testcase time='0.000033' file="test/hammerstone/models/conditions/default_display_test.rb" name="test_0002_correctly handles underscores" assertions='0'>
     <error type='NameError' message="uninitialized constant BlankTestFilter::Scaffolding">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/support/hammerstone/blank_test_filter.rb:11:in `initialize&#39;
 /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/default_display_test.rb:9:in `new&#39;
 /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/default_display_test.rb:9:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
     </error>
   </testcase>
-  <testcase time='0.000022' file="test/hammerstone/models/conditions/default_display_test.rb" name="test_0004_can set display directly" assertions='0'>
+  <testcase time='0.000023' file="test/hammerstone/models/conditions/default_display_test.rb" name="test_0004_can set display directly" assertions='0'>
     <error type='NameError' message="uninitialized constant BlankTestFilter::Scaffolding">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/support/hammerstone/blank_test_filter.rb:11:in `initialize&#39;
 /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/default_display_test.rb:9:in `new&#39;
 /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/default_display_test.rb:9:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
     </error>
   </testcase>
-  <testcase time='0.000025' file="test/hammerstone/models/conditions/default_display_test.rb" name="test_0003_correctly handles set values" assertions='0'>
+  <testcase time='0.000031' file="test/hammerstone/models/conditions/default_display_test.rb" name="test_0005_can set at the class level" assertions='0'>
     <error type='NameError' message="uninitialized constant BlankTestFilter::Scaffolding">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/support/hammerstone/blank_test_filter.rb:11:in `initialize&#39;
 /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/default_display_test.rb:9:in `new&#39;
 /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/default_display_test.rb:9:in `block (2 levels) in &lt;module:Conditions&gt;&#39;

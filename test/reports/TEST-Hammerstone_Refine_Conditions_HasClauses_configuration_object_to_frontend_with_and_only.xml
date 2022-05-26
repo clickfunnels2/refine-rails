@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.006934' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::HasClauses::configuration object to frontend::with and only" assertions='2' tests='2' timestamp="2022-05-26T16:07:14-07:00">
-  <testcase time='0.003813' file="test/hammerstone/models/clauses/has_clauses_test.rb" name="test_0001_can add back after only" assertions='1'>
+<testsuite time='0.010919' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::HasClauses::configuration object to frontend::with and only" assertions='2' tests='2' timestamp="2022-05-26T16:16:01-07:00">
+  <testcase time='0.006855' file="test/hammerstone/models/clauses/has_clauses_test.rb" name="test_0001_can exclude from only" assertions='1'>
   </testcase>
-  <testcase time='0.003121' file="test/hammerstone/models/clauses/has_clauses_test.rb" name="test_0001_can exclude from only" assertions='1'>
+  <testcase time='0.004064' file="test/hammerstone/models/clauses/has_clauses_test.rb" name="test_0001_can add back after only" assertions='1'>
   </testcase>
 </testsuite>

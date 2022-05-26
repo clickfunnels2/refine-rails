@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.004845' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateCondition::date format validations" assertions='1' tests='1' timestamp="2022-05-26T16:07:14-07:00">
-  <testcase time='0.004845' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0001_throws errors for invalid date format for date1" assertions='1'>
+<testsuite time='0.006926' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateCondition::date format validations" assertions='1' tests='1' timestamp="2022-05-26T16:16:01-07:00">
+  <testcase time='0.006926' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0001_throws errors for invalid date format for date1" assertions='1'>
   </testcase>
 </testsuite>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.006420' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::HasClauses::configuration object to frontend" assertions='1' tests='1' timestamp="2022-05-26T16:07:14-07:00">
-  <testcase time='0.006420' file="test/hammerstone/models/clauses/has_clauses_test.rb" name="test_0001_adds Clause to Meta" assertions='1'>
+<testsuite time='0.004613' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::HasClauses::configuration object to frontend" assertions='1' tests='1' timestamp="2022-05-26T16:16:01-07:00">
+  <testcase time='0.004613' file="test/hammerstone/models/clauses/has_clauses_test.rb" name="test_0001_adds Clause to Meta" assertions='1'>
   </testcase>
 </testsuite>

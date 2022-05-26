@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.013630' skipped='0' failures='0' errors='1' name="Refinements::Filter Refinement" assertions='0' tests='1' timestamp="2022-05-26T16:07:14-07:00">
-  <testcase time='0.013630' file="test/hammerstone/models/conditions/filter_refinement_test.rb" name="test_0001_works" assertions='0'>
+<testsuite time='0.021269' skipped='0' failures='0' errors='1' name="Refinements::Filter Refinement" assertions='0' tests='1' timestamp="2022-05-26T16:16:01-07:00">
+  <testcase time='0.021269' file="test/hammerstone/models/conditions/filter_refinement_test.rb" name="test_0001_works" assertions='0'>
     <error type='NameError' message="uninitialized constant Hammerstone::Refine::WorkspaceRecord">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/app/models/hammerstone/refine/stored_filter.rb:2:in `&lt;module:Refine&gt;&#39;
 /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/app/models/hammerstone/refine/stored_filter.rb:1:in `&lt;top (required)&gt;&#39;
 /Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/zeitwerk-2.5.4/lib/zeitwerk/kernel.rb:27:in `require&#39;

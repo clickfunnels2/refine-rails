@@ -1,31 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.093308' skipped='0' failures='7' errors='0' name="Hammerstone::Refine::Conditions::DateWithTimeCondition::simple clause test" assertions='7' tests='7' timestamp="2022-05-26T16:07:14-07:00">
-  <testcase time='0.019598' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0004_executes clause less than ago" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;date_test\\&quot; &gt; &#39;2019-05-12 12:02:34&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`date_test` &gt; &#39;2019-05-12 12:02:34&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_with_time_condition_test.rb:136:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+<testsuite time='0.031934' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateWithTimeCondition::simple clause test" assertions='7' tests='7' timestamp="2022-05-26T16:16:01-07:00">
+  <testcase time='0.005118' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0003_executes clause greater than from now" assertions='1'>
   </testcase>
-  <testcase time='0.012036' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0005_executes clause less than from now" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;date_test\\&quot; &lt; &#39;2019-05-18 12:02:34&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`date_test` &lt; &#39;2019-05-18 12:02:34&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_with_time_condition_test.rb:145:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+  <testcase time='0.004153' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0004_executes clause less than ago" assertions='1'>
   </testcase>
-  <testcase time='0.009441' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0007_executes clause less than or equal" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;date_test\\&quot; &lt;= &#39;2019-05-15 12:02:34&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`date_test` &lt;= &#39;2019-05-15 12:02:34&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_with_time_condition_test.rb:163:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+  <testcase time='0.004254' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0006_executes clause greater or equal" assertions='1'>
   </testcase>
-  <testcase time='0.012562' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0001_executes clause between" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;date_test\\&quot; BETWEEN &#39;2019-05-15 00:00:00&#39; AND &#39;2019-05-25 23:59:59.999999&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`date_test` BETWEEN &#39;2019-05-15 00:00:00&#39; AND &#39;2019-05-25 23:59:59.999999&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_with_time_condition_test.rb:110:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+  <testcase time='0.004512' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0001_executes clause between" assertions='1'>
   </testcase>
-  <testcase time='0.013518' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0002_executes clause greater than ago" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;date_test\\&quot; &lt; &#39;2019-05-12 12:02:34&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`date_test` &lt; &#39;2019-05-12 12:02:34&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_with_time_condition_test.rb:118:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+  <testcase time='0.004544' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0005_executes clause less than from now" assertions='1'>
   </testcase>
-  <testcase time='0.013108' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0003_executes clause greater than from now" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;date_test\\&quot; &gt; &#39;2019-05-18 12:02:34&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`date_test` &gt; &#39;2019-05-18 12:02:34&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_with_time_condition_test.rb:127:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+  <testcase time='0.004476' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0002_executes clause greater than ago" assertions='1'>
   </testcase>
-  <testcase time='0.013045' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0006_executes clause greater or equal" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;date_test\\&quot; &gt;= &#39;2019-05-15 12:02:34&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`date_test` &gt;= &#39;2019-05-15 12:02:34&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_with_time_condition_test.rb:154:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+  <testcase time='0.004877' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0007_executes clause less than or equal" assertions='1'>
   </testcase>
 </testsuite>

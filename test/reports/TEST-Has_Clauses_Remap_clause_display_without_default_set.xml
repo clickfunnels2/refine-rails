@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.000194' skipped='0' failures='0' errors='0' name="Has Clauses::Remap clause display without default set" assertions='4' tests='2' timestamp="2022-05-26T16:07:14-07:00">
-  <testcase time='0.000106' file="test/hammerstone/models/clauses/display_remapping_test.rb" name="test_0001_can remap a single clause" assertions='2'>
+<testsuite time='0.000136' skipped='0' failures='0' errors='0' name="Has Clauses::Remap clause display without default set" assertions='4' tests='2' timestamp="2022-05-26T16:16:01-07:00">
+  <testcase time='0.000083' file="test/hammerstone/models/clauses/display_remapping_test.rb" name="test_0002_can remap multiple clauses" assertions='2'>
   </testcase>
-  <testcase time='0.000088' file="test/hammerstone/models/clauses/display_remapping_test.rb" name="test_0002_can remap multiple clauses" assertions='2'>
+  <testcase time='0.000053' file="test/hammerstone/models/clauses/display_remapping_test.rb" name="test_0001_can remap a single clause" assertions='2'>
   </testcase>
 </testsuite>

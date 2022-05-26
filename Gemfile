@@ -7,6 +7,7 @@ gemspec
 gem "mysql2"
 
 gem "sprockets-rails"
+gem "byebug"
 
 group :test do 
 	gem "minitest-around"

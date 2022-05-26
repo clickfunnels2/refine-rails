@@ -1,27 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.098862' skipped='0' failures='6' errors='0' name="Hammerstone::Refine::Conditions::BooleanCondition::clause application" assertions='6' tests='6' timestamp="2022-05-26T16:07:14-07:00">
-  <testcase time='0.016228' file="test/hammerstone/models/conditions/boolean_condition_test.rb" name="test_0002_handles clause false" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;test_bool\\&quot; = FALSE)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`test_bool` = FALSE)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/boolean_condition_test.rb:36:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+<testsuite time='0.021655' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::BooleanCondition::clause application" assertions='6' tests='6' timestamp="2022-05-26T16:16:01-07:00">
+  <testcase time='0.003686' file="test/hammerstone/models/conditions/boolean_condition_test.rb" name="test_0001_handles clause true" assertions='1'>
   </testcase>
-  <testcase time='0.012945' file="test/hammerstone/models/conditions/boolean_condition_test.rb" name="test_0006_handles false nulls" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;test_bool\\&quot; = FALSE OR \\&quot;t\\&quot;.\\&quot;test_bool\\&quot; IS NULL)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`test_bool` = FALSE OR `t`.`test_bool` IS NULL)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/boolean_condition_test.rb:75:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+  <testcase time='0.002851' file="test/hammerstone/models/conditions/boolean_condition_test.rb" name="test_0006_handles false nulls" assertions='1'>
   </testcase>
-  <testcase time='0.015420' file="test/hammerstone/models/conditions/boolean_condition_test.rb" name="test_0003_handles clause not set" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;test_bool\\&quot; IS NULL)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`test_bool` IS NULL)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/boolean_condition_test.rb:46:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+  <testcase time='0.003062' file="test/hammerstone/models/conditions/boolean_condition_test.rb" name="test_0002_handles clause false" assertions='1'>
   </testcase>
-  <testcase time='0.026625' file="test/hammerstone/models/conditions/boolean_condition_test.rb" name="test_0005_handles true nulls" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;test_bool\\&quot; = TRUE OR \\&quot;t\\&quot;.\\&quot;test_bool\\&quot; IS NULL)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`test_bool` = TRUE OR `t`.`test_bool` IS NULL)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/boolean_condition_test.rb:66:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+  <testcase time='0.004226' file="test/hammerstone/models/conditions/boolean_condition_test.rb" name="test_0003_handles clause not set" assertions='1'>
   </testcase>
-  <testcase time='0.012635' file="test/hammerstone/models/conditions/boolean_condition_test.rb" name="test_0001_handles clause true" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;test_bool\\&quot; = TRUE)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`test_bool` = TRUE)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/boolean_condition_test.rb:26:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+  <testcase time='0.003975' file="test/hammerstone/models/conditions/boolean_condition_test.rb" name="test_0005_handles true nulls" assertions='1'>
   </testcase>
-  <testcase time='0.015009' file="test/hammerstone/models/conditions/boolean_condition_test.rb" name="test_0004_handles clause set" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;test_bool\\&quot; IS NOT NULL)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`test_bool` IS NOT NULL)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/boolean_condition_test.rb:56:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+  <testcase time='0.003855' file="test/hammerstone/models/conditions/boolean_condition_test.rb" name="test_0004_handles clause set" assertions='1'>
   </testcase>
 </testsuite>

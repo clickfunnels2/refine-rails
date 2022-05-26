@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.036434' skipped='0' failures='4' errors='0' name="Hammerstone::Refine::Conditions::DateWithTimeCondition::user timezone" assertions='4' tests='4' timestamp="2022-05-26T16:07:14-07:00">
-  <testcase time='0.009077' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0002_shifts query based on user timezone of America/Chicago" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;date_test\\&quot; BETWEEN &#39;2019-05-15 05:00:00&#39; AND &#39;2019-05-16 04:59:59.999999&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`date_test` BETWEEN &#39;2019-05-15 05:00:00&#39; AND &#39;2019-05-16 04:59:59.999999&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_with_time_condition_test.rb:47:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+<testsuite time='0.018538' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateWithTimeCondition::user timezone" assertions='4' tests='4' timestamp="2022-05-26T16:16:01-07:00">
+  <testcase time='0.004822' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0002_shifts query based on user timezone of America/Chicago" assertions='1'>
   </testcase>
-  <testcase time='0.008616' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0003_can be set globally" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;date_test\\&quot; BETWEEN &#39;2019-05-15 05:00:00&#39; AND &#39;2019-05-16 04:59:59.999999&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`date_test` BETWEEN &#39;2019-05-15 05:00:00&#39; AND &#39;2019-05-16 04:59:59.999999&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_with_time_condition_test.rb:57:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+  <testcase time='0.004621' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0001_defaults to user timezone of utc" assertions='1'>
   </testcase>
-  <testcase time='0.008445' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0001_defaults to user timezone of utc" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;date_test\\&quot; BETWEEN &#39;2019-05-15 00:00:00&#39; AND &#39;2019-05-15 23:59:59.999999&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`date_test` BETWEEN &#39;2019-05-15 00:00:00&#39; AND &#39;2019-05-15 23:59:59.999999&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_with_time_condition_test.rb:38:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+  <testcase time='0.004023' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0003_can be set globally" assertions='1'>
   </testcase>
-  <testcase time='0.010296' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0004_can be a callback" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;date_test\\&quot; BETWEEN &#39;2019-05-15 05:00:00&#39; AND &#39;2019-05-16 04:59:59.999999&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`date_test` BETWEEN &#39;2019-05-15 05:00:00&#39; AND &#39;2019-05-16 04:59:59.999999&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_with_time_condition_test.rb:67:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+  <testcase time='0.005072' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0004_can be a callback" assertions='1'>
   </testcase>
 </testsuite>

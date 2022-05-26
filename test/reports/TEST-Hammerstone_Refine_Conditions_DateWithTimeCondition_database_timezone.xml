@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.029826' skipped='0' failures='2' errors='0' name="Hammerstone::Refine::Conditions::DateWithTimeCondition::database timezone" assertions='2' tests='2' timestamp="2022-05-26T16:07:14-07:00">
-  <testcase time='0.015864' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0001_can be set and correctly shifts query" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;date_test\\&quot; BETWEEN &#39;2019-05-14 19:00:00&#39; AND &#39;2019-05-15 18:59:59.999999&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`date_test` BETWEEN &#39;2019-05-14 19:00:00&#39; AND &#39;2019-05-15 18:59:59.999999&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_with_time_condition_test.rb:78:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+<testsuite time='0.011771' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::DateWithTimeCondition::database timezone" assertions='2' tests='2' timestamp="2022-05-26T16:16:01-07:00">
+  <testcase time='0.005243' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0002_can be set globally" assertions='1'>
   </testcase>
-  <testcase time='0.013962' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0002_can be set globally" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;date_test\\&quot; BETWEEN &#39;2019-05-14 19:00:00&#39; AND &#39;2019-05-15 18:59:59.999999&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`date_test` BETWEEN &#39;2019-05-14 19:00:00&#39; AND &#39;2019-05-15 18:59:59.999999&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_with_time_condition_test.rb:88:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+  <testcase time='0.006528' file="test/hammerstone/models/conditions/date_with_time_condition_test.rb" name="test_0001_can be set and correctly shifts query" assertions='1'>
   </testcase>
 </testsuite>

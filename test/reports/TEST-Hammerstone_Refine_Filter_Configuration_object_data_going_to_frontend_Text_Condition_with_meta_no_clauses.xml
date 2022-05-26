@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.001125' skipped='0' failures='0' errors='1' name="Hammerstone::Refine::Filter::Configuration object - data going to frontend::Text Condition with meta, no clauses" assertions='0' tests='1' timestamp="2022-04-14T21:03:53-07:00">
-  <testcase time='0.001125' file="test/hammerstone/models/filters/basic_filter_test.rb" name="test_0001_returns correct json" assertions='0'>
+<testsuite time='0.009607' skipped='0' failures='0' errors='1' name="Hammerstone::Refine::Filter::Configuration object - data going to frontend::Text Condition with meta, no clauses" assertions='0' tests='1' timestamp="2022-05-26T16:07:14-07:00">
+  <testcase time='0.009607' file="test/hammerstone/models/filters/basic_filter_test.rb" name="test_0001_returns correct json" assertions='0'>
     <error type='NameError' message="uninitialized constant TestFilterWithMeta::Scaffolding">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/support/hammerstone/test_filter_with_meta.rb:3:in `initial_query&#39;
 /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/app/models/hammerstone/refine/filter.rb:24:in `block in initialize&#39;
 /Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activesupport-7.0.2.3/lib/active_support/callbacks.rb:107:in `run_callbacks&#39;

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    refine-rails (1.0.0)
+    refine-rails (1.2.0)
       rails (>= 6.0)
 
 GEM
@@ -95,6 +95,7 @@ GEM
       minitest (~> 5.0)
     minitest-ci (3.4.0)
       minitest (>= 5.0.6)
+    mysql2 (0.5.3)
     net-imap (0.2.3)
       digest
       net-protocol
@@ -151,7 +152,6 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.2)
     strscan (3.0.1)
     thor (1.2.1)
     timeout (0.2.0)
@@ -168,9 +168,9 @@ PLATFORMS
 DEPENDENCIES
   minitest-around
   minitest-ci
+  mysql2
   refine-rails!
   sprockets-rails
-  sqlite3
 
 BUNDLED WITH
    2.2.31

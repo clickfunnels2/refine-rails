@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.000066' skipped='0' failures='0' errors='0' name="Has Clauses::No remapping" assertions='2' tests='1' timestamp="2022-04-14T21:03:53-07:00">
-  <testcase time='0.000066' file="test/hammerstone/models/clauses/display_remapping_test.rb" name="test_0001_sticks to humanized id" assertions='2'>
+<testsuite time='0.000362' skipped='0' failures='0' errors='0' name="Has Clauses::No remapping" assertions='2' tests='1' timestamp="2022-05-26T16:07:14-07:00">
+  <testcase time='0.000362' file="test/hammerstone/models/clauses/display_remapping_test.rb" name="test_0001_sticks to humanized id" assertions='2'>
   </testcase>
 </testsuite>

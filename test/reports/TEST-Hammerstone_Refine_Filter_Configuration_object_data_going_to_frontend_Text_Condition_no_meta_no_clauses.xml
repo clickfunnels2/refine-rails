@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.008219' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Filter::Configuration object - data going to frontend::Text Condition - no meta, no clauses" assertions='1' tests='1' timestamp="2022-05-26T16:24:36-07:00">
-  <testcase time='0.008219' file="test/hammerstone/models/filters/basic_filter_test.rb" name="test_0001_returns correct json" assertions='1'>
-  </testcase>
-</testsuite>

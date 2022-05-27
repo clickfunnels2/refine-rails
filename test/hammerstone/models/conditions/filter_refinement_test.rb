@@ -2,10 +2,20 @@ require "test_helper"
 require "support/hammerstone/hammerstone_products_filter"
 require "support/hammerstone/hammerstone_contacts_filter_test_helper"
 require "support/hammerstone/hammerstone_product_contact_relationships"
+# Temporarily create a stored_filters_table to test saved filters 
+require "support/hammerstone/stored_filters_table"
+# Mock stored_filter class, this class needs to be added to each customer's repo as needed. 
+require "support/hammerstone/refine/stored_filter"
 
 module Hammerstone::Refine::Conditions
   describe "Refinements" do
     include HammerstoneContactsFilterTestHelper
+    around do |test|
+      Hammerstone::Refine::Stabilizers.CreateStoredFiltersTable.new.up
+      test.call
+      Hammerstone::Refine::Stabilizers.CreateStoredFiltersTable.new.down
+    end
+
     # This is an option condition with the path events.type_id and filter refinement
     # of product filters
     let(:option_condition) {

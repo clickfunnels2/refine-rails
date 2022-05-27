@@ -7,7 +7,7 @@ module Hammerstone::Refine::Stabilizers
     end
 
     def from_stable_id(id:, initial_query: nil)
-      # Find the associated StoredFiler by id and return state. Decode to create blueprint
+      # Find the associated StoredFilter by id and return state. Decode to create blueprint
       state = ActiveSupport::JSON.decode(model.find(id).state).deep_symbolize_keys
       Hammerstone::Refine::Filter.from_state(state, initial_query)
     end

@@ -11,4 +11,6 @@
 /node_modules
 /test/reports/*
 /app/assets/javascripts
+.byebug_history
+
 *.tgz

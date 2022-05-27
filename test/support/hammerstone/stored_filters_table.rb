@@ -4,6 +4,7 @@ class CreateStoredFiltersTable < ActiveRecord::Migration[6.1]
       t.json :state
       t.bigint "workspace_id", null: false
       t.string "filter_type"
+      t.string "name"
       t.timestamps
     end
   end

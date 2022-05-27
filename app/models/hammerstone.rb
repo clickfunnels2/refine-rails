@@ -1,5 +1,6 @@
 module Hammerstone
   def stabilizer_class(class_name)
+    byebug
     my_class_name = if ENV['NAMESPACE_REFINE_STABILIZERS']
                       'Hammerstone::Refine::' + class_name
                     else

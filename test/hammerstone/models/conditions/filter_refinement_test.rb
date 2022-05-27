@@ -4,18 +4,10 @@ require "support/hammerstone/hammerstone_contacts_filter_test_helper"
 require "support/hammerstone/hammerstone_product_contact_relationships"
 # Temporarily create a stored_filters_table to test saved filters 
 require "support/hammerstone/stored_filters_table"
-# Mock stored_filter class, this class needs to be added to each customer's repo as needed. 
-require "support/hammerstone/refine/stored_filter"
 
 module Hammerstone::Refine::Conditions
   describe "Refinements" do
     include HammerstoneContactsFilterTestHelper
-    around do |test|
-      Hammerstone::Refine::Stabilizers.CreateStoredFiltersTable.new.up
-      test.call
-      Hammerstone::Refine::Stabilizers.CreateStoredFiltersTable.new.down
-    end
-
     # This is an option condition with the path events.type_id and filter refinement
     # of product filters
     let(:option_condition) {
@@ -38,12 +30,16 @@ module Hammerstone::Refine::Conditions
       ActiveRecord::Base.connection.execute("CREATE TABLE hammerstone_products (id bigint primary key, hammerstone_contact_id bigint);")
       ActiveRecord::Base.connection.execute("CREATE TABLE hammerstone_types (id bigint primary key);")
       ActiveRecord::Base.connection.execute("CREATE TABLE hammerstone_events (id bigint primary key, hammerstone_contact_id bigint, hammerstone_type_id bigint, hammerstone_product_id bigint);")
+      CreateStoredFiltersTable.new.up
       test.call
+      CreateStoredFiltersTable.new.down
       ActiveRecord::Base.connection.execute("DROP TABLE hammerstone_contacts, hammerstone_products, hammerstone_types, hammerstone_events;")
     end
 
     describe "Filter Refinement" do
       it "works" do
+        # Use the full Hammerstone::Refine namespace for stabilizers for test environment 
+        ENV['NAMESPACE_REFINE_STABILIZERS'] = 1
         state = {"type" => "HammerstoneProductsFilter", "blueprint" => [{"depth" => 1, "type" => "criterion", "condition_id" => "name", "input" => {"clause" => "eq", "value" => "AwesomeCourse"}, "position" => 0}]}.to_json.to_s
         Hammerstone::Refine::StoredFilter.destroy_all
         Hammerstone::Refine::StoredFilter.create(name: "A filter of an awesome product", state: state, id: 2, workspace_id: 2)
@@ -73,3 +69,4 @@ module Hammerstone::Refine::Conditions
     end
   end
 end
+

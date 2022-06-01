@@ -20,7 +20,7 @@
 
     <!-- Render correct type of condition --> 
     <%= render partial: "hammerstone/refine_blueprints/clauses/#{clause_for_criterion(criterion)}", locals: {
-      condition: condition_for_criterion(criterion), input: criterion[:input], criterion_id: criterion_id, meta: meta_for_criterion(criterion), meta_clause: meta_for_clause(criterion), input_id: nil, } %>
+      condition: condition_for_criterion(criterion), input: criterion[:input], criterion_id: criterion_id, meta: meta_for_criterion(criterion), meta_clause: meta_for_clause(criterion), input_id: nil, errors: criterion[:errors].to_a} %>
 
     <!-- Refinements -->
     <% condition_for_criterion(criterion)[:refinements].each do |refinement|%>
@@ -31,7 +31,7 @@
       </div>
 
       <%= render partial: "hammerstone/refine_blueprints/clauses/#{refinement[:component].underscore}", locals: {
-        condition: refinement, input: criterion[:input][refinement[:id].to_sym] || {}, criterion_id: criterion_id, meta: refinement[:meta], input_id: "input, #{refinement[:id]}", meta_clause: meta_for_refinement_clause(refinement, criterion) } %>
+        condition: refinement, input: criterion[:input][refinement[:id].to_sym] || {}, criterion_id: criterion_id, meta: refinement[:meta], input_id: "input, #{refinement[:id]}", meta_clause: meta_for_refinement_clause(refinement, criterion), errors: criterion[:errors].to_a } %>
     <% end %>
     <!-- End Refinements -->
     

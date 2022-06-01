@@ -12,7 +12,7 @@ module Hammerstone
         elsif piece[:word] == "and"
           next
         else
-          piece[:position] = index
+          piece[:position] = piece[:uid] = index
           new_blueprint.last.push piece
         end
       end

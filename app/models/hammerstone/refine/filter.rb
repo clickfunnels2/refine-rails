@@ -4,7 +4,7 @@ module Hammerstone::Refine
     include ActiveModel::Callbacks
     include TracksPendingRelationshipSubqueries
     include Stabilize
-    # TODO Revisit this validation structure
+    # This validation structure sents `initial_query` as the method to validate against 
     define_model_callbacks :initialize, only: [:after]
     after_initialize :valid?
 
@@ -26,7 +26,13 @@ module Hammerstone::Refine
       end
     end
 
+    def validate
+      byebug
+      super 
+    end
+
     def initial_query
+      byebug
       raise NotImplementedError if @initial_query.nil?
       @initial_query
     end
@@ -43,6 +49,7 @@ module Hammerstone::Refine
     end
 
     def get_query
+      byebug
       raise "Initial query must exist" if initial_query.nil?
       if blueprint.present?
         @relation.where(group(make_sub_query(blueprint)))

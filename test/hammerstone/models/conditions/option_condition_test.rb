@@ -109,6 +109,14 @@ module Hammerstone::Refine::Conditions
         assert_equal convert(expected_sql), apply_condition_on_test_filter(condition_under_test, data).to_sql
       end
 
+      it "works with two ints as strings" do
+        data = {clause: OptionCondition::CLAUSE_IN, selected: ["11", "12"]}
+        expected_sql = <<~SQL.squish
+          SELECT "o".* FROM "o" WHERE ("o"."option_test" IN ('11', '12'))
+        SQL
+        assert_equal convert(expected_sql), apply_condition_on_test_filter(condition_under_test, data).to_sql
+      end
+
       it "works with null condition" do
         data = {clause: OptionCondition::CLAUSE_IN, selected: ["option_1", "option_2", "null"]}
         expected_sql = <<~SQL.squish

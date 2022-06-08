@@ -1,19 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.056851' skipped='0' failures='4' errors='0' name="Hammerstone::Refine::Conditions::OptionCondition::Clause In" assertions='4' tests='4' timestamp="2022-05-26T16:07:14-07:00">
-  <testcase time='0.016309' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0001_works with two parameters" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;o\\&quot;.* FROM \\&quot;o\\&quot; WHERE (\\&quot;o\\&quot;.\\&quot;option_test\\&quot; IN (&#39;option_1&#39;, &#39;option_2&#39;))&quot;&#13;&#10;+&quot;SELECT `o`.* FROM `o` WHERE (`o`.`option_test` IN (&#39;option_1&#39;, &#39;option_2&#39;))&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/option_condition_test.rb:109:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+<testsuite time='0.020433' skipped='0' failures='0' errors='1' name="Hammerstone::Refine::Conditions::OptionCondition::Clause In" assertions='4' tests='5' timestamp="2022-06-08T12:51:14-07:00">
+  <testcase time='0.003673' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0002_works with two ints as strings" assertions='0'>
+    <error type='Arel::Visitors::UnsupportedVisitError' message="Unsupported argument type: NilClass. Construct an Arel node instead.">/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/arel/visitors/to_sql.rb:760:in `unsupported&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/arel/visitors/visitor.rb:30:in `visit&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/arel/visitors/to_sql.rb:329:in `visit_Arel_Nodes_Grouping&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/arel/visitors/visitor.rb:30:in `visit&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/arel/visitors/to_sql.rb:827:in `block in inject_join&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/arel/visitors/to_sql.rb:825:in `each&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/arel/visitors/to_sql.rb:825:in `each_with_index&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/arel/visitors/to_sql.rb:825:in `inject_join&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/arel/visitors/to_sql.rb:179:in `collect_nodes_for&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/arel/visitors/to_sql.rb:159:in `visit_Arel_Nodes_SelectCore&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/arel/visitors/mysql.rb:30:in `visit_Arel_Nodes_SelectCore&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/arel/visitors/to_sql.rb:124:in `block in visit_Arel_Nodes_SelectStatement&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/arel/visitors/to_sql.rb:123:in `each&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/arel/visitors/to_sql.rb:123:in `inject&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/arel/visitors/to_sql.rb:123:in `visit_Arel_Nodes_SelectStatement&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/arel/visitors/mysql.rb:25:in `visit_Arel_Nodes_SelectStatement&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/arel/visitors/visitor.rb:30:in `visit&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/arel/visitors/visitor.rb:11:in `accept&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/arel/visitors/to_sql.rb:18:in `compile&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract/database_statements.rb:37:in `to_sql_and_binds&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract/database_statements.rb:13:in `to_sql&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/relation.rb:731:in `block in to_sql&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/connection_adapters/abstract_adapter.rb:285:in `unprepared_statement&#39;
+/Users/colleenschnettler/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems/activerecord-7.0.2.3/lib/active_record/relation.rb:731:in `to_sql&#39;
+/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/option_condition_test.rb:117:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
+    </error>
   </testcase>
-  <testcase time='0.012244' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0004_works with null condition only" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;o\\&quot;.* FROM \\&quot;o\\&quot; WHERE (1=0 OR \\&quot;o\\&quot;.\\&quot;option_test\\&quot; IS NULL)&quot;&#13;&#10;+&quot;SELECT `o`.* FROM `o` WHERE (1=0 OR `o`.`option_test` IS NULL)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/option_condition_test.rb:133:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+  <testcase time='0.005563' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0005_works with null condition only" assertions='1'>
   </testcase>
-  <testcase time='0.014460' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0003_works with special condition" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;o\\&quot;.* FROM \\&quot;o\\&quot; WHERE (\\&quot;o\\&quot;.\\&quot;option_test\\&quot; IN (&#39;3&#39;))&quot;&#13;&#10;+&quot;SELECT `o`.* FROM `o` WHERE (`o`.`option_test` IN (&#39;3&#39;))&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/option_condition_test.rb:125:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+  <testcase time='0.003905' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0001_works with two parameters" assertions='1'>
   </testcase>
-  <testcase time='0.013838' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0002_works with null condition" assertions='1'>
-    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;o\\&quot;.* FROM \\&quot;o\\&quot; WHERE (\\&quot;o\\&quot;.\\&quot;option_test\\&quot; IN (&#39;option_1&#39;, &#39;option_2&#39;) OR \\&quot;o\\&quot;.\\&quot;option_test\\&quot; IS NULL)&quot;&#13;&#10;+&quot;SELECT `o`.* FROM `o` WHERE (`o`.`option_test` IN (&#39;option_1&#39;, &#39;option_2&#39;) OR `o`.`option_test` IS NULL)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/option_condition_test.rb:117:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
-    </failure>
+  <testcase time='0.003761' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0004_works with special condition" assertions='1'>
+  </testcase>
+  <testcase time='0.003531' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0003_works with null condition" assertions='1'>
   </testcase>
 </testsuite>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.001423' skipped='0' failures='0' errors='0' name="URL Encode Stabilizers" assertions='2' tests='2' timestamp="2022-05-26T16:07:14-07:00">
-  <testcase time='0.000799' file="test/hammerstone/models/stabilizers/url_encode_stabilizer_test.rb" name="test_0001_stabilizes and can be reconstructed" assertions='1'>
-  </testcase>
-  <testcase time='0.000624' file="test/hammerstone/models/stabilizers/url_encode_stabilizer_test.rb" name="test_0002_raises an error if id is blank or nil" assertions='1'>
-  </testcase>
-</testsuite>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.006581' skipped='1' failures='0' errors='0' name="Hammerstone::Refine::Conditions::OptionCondition::Configuration Object from options" assertions='1' tests='2' timestamp="2022-05-26T16:07:14-07:00">
-  <testcase time='0.003231' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0001_correctly sends configurations to front end with standard syntax" assertions='1'>
-  </testcase>
-  <testcase time='0.003350' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0002_can handle hash shorthand" assertions='0'>
-    <skipped type='Minitest::Skip' message="revisit this">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/option_condition_test.rb:195:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
+<testsuite time='0.015479' skipped='1' failures='0' errors='0' name="Hammerstone::Refine::Conditions::OptionCondition::Configuration Object from options" assertions='1' tests='2' timestamp="2022-06-08T12:51:14-07:00">
+  <testcase time='0.009068' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0002_can handle hash shorthand" assertions='0'>
+    <skipped type='Minitest::Skip' message="revisit this">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/option_condition_test.rb:203:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
     </skipped>
+  </testcase>
+  <testcase time='0.006411' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0001_correctly sends configurations to front end with standard syntax" assertions='1'>
   </testcase>
 </testsuite>

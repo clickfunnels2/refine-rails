@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite time='0.131928' skipped='0' failures='11' errors='0' name="Hammerstone::Refine::Conditions::NumericCondition" assertions='12' tests='12' timestamp="2022-05-26T16:07:14-07:00">
+  <testcase time='0.007852' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0001_adds error if value is float without explicitly setting floats" assertions='1'>
+  </testcase>
+  <testcase time='0.010727' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0002_allows floats if floats are set" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;numeric_float\\&quot; = 5.3)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`numeric_float` = 5.3)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/numeric_condition_test.rb:28:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.008190' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0008_handles clause CLAUSE BETWEEN" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;numeric_test\\&quot; BETWEEN 5 AND 10)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`numeric_test` BETWEEN 5 AND 10)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/numeric_condition_test.rb:82:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.011757' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0007_handles clause LESS THAN OR EQUAL" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;numeric_test\\&quot; &lt;= 5)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`numeric_test` &lt;= 5)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/numeric_condition_test.rb:73:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.008133' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0012_handles clause CLAUSE NOT BETWEEN" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;numeric_test\\&quot; &lt; 5 OR \\&quot;t\\&quot;.\\&quot;numeric_test\\&quot; &gt; 10)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`numeric_test` &lt; 5 OR `t`.`numeric_test` &gt; 10)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/numeric_condition_test.rb:118:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.011250' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0006_handles clause LESS THAN" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;numeric_test\\&quot; &lt; 5)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`numeric_test` &lt; 5)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/numeric_condition_test.rb:64:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.007932' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0009_handles clause CLAUSE SET" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;numeric_test\\&quot; IS NOT NULL)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`numeric_test` IS NOT NULL)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/numeric_condition_test.rb:91:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.012216' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0005_handles clause GREATER THAN OR EQUAL" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;numeric_test\\&quot; &gt;= 5)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`numeric_test` &gt;= 5)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/numeric_condition_test.rb:55:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.011771' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0003_handles clause EQUALS" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;numeric_test\\&quot; = 5)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`numeric_test` = 5)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/numeric_condition_test.rb:37:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.012394' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0010_handles clause CLAUSE NOT SET" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;numeric_test\\&quot; IS NULL)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`numeric_test` IS NULL)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/numeric_condition_test.rb:100:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.016012' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0004_handles clause GREATER THAN" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;numeric_test\\&quot; &gt; 5)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`numeric_test` &gt; 5)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/numeric_condition_test.rb:46:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.013694' file="test/hammerstone/models/conditions/numeric_condition_test.rb" name="test_0011_handles clause CLAUSE DOESNT EQUAL" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;numeric_test\\&quot; != 5 OR \\&quot;t\\&quot;.\\&quot;numeric_test\\&quot; IS NULL)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`numeric_test` != 5 OR `t`.`numeric_test` IS NULL)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/numeric_condition_test.rb:109:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+</testsuite>

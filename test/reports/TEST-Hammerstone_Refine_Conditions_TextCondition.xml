@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite time='0.178956' skipped='0' failures='11' errors='0' name="Hammerstone::Refine::Conditions::TextCondition" assertions='11' tests='11' timestamp="2022-05-26T16:07:14-07:00">
+  <testcase time='0.012983' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0011_correctly executes clause doesn&#39;t end with" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;text_test\\&quot; NOT LIKE &#39;%foo&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`text_test` NOT LIKE &#39;%foo&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/text_condition_test.rb:81:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.012251' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0001_correctly executes clause equals" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;text_test\\&quot; = &#39;foo&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`text_test` = &#39;foo&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/text_condition_test.rb:21:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.011051' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0004_correctly executes clause ends with" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;text_test\\&quot; LIKE &#39;%foo&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`text_test` LIKE &#39;%foo&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/text_condition_test.rb:39:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.040150' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0007_correctly executes clause set" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;text_test\\&quot; IS NOT NULL OR \\&quot;t\\&quot;.\\&quot;text_test\\&quot; != &#39;&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`text_test` IS NOT NULL OR `t`.`text_test` != &#39;&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/text_condition_test.rb:57:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.012911' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0005_correctly executes clause contains" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;text_test\\&quot; LIKE &#39;%foo%&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`text_test` LIKE &#39;%foo%&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/text_condition_test.rb:45:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.015622' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0009_correctly executes clause not set" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;text_test\\&quot; IS NULL OR \\&quot;t\\&quot;.\\&quot;text_test\\&quot; = &#39;&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`text_test` IS NULL OR `t`.`text_test` = &#39;&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/text_condition_test.rb:69:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.014736' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0006_correctly executes clause doesn&#39;t contains" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;text_test\\&quot; NOT LIKE &#39;%foo%&#39; OR \\&quot;t\\&quot;.\\&quot;text_test\\&quot; IS NULL)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`text_test` NOT LIKE &#39;%foo%&#39; OR `t`.`text_test` IS NULL)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/text_condition_test.rb:51:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.015787' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0002_correctly executes clause doesnt equals" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;text_test\\&quot; != &#39;foo&#39; OR \\&quot;t\\&quot;.\\&quot;text_test\\&quot; IS NULL)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`text_test` != &#39;foo&#39; OR `t`.`text_test` IS NULL)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/text_condition_test.rb:27:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.014856' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0003_correctly executes clause starts with" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;text_test\\&quot; LIKE &#39;foo%&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`text_test` LIKE &#39;foo%&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/text_condition_test.rb:33:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.013957' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0010_correctly executes clause doesn&#39;t start with" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;text_test\\&quot; NOT LIKE &#39;foo%&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`text_test` NOT LIKE &#39;foo%&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/text_condition_test.rb:75:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.014652' file="test/hammerstone/models/conditions/text_condition_test.rb" name="test_0008_correctly executes clause not set" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;text_test\\&quot; IS NULL OR \\&quot;t\\&quot;.\\&quot;text_test\\&quot; = &#39;&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`text_test` IS NULL OR `t`.`text_test` = &#39;&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/text_condition_test.rb:63:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+</testsuite>

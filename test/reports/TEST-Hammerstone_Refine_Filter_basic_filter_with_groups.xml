@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite time='0.009907' skipped='0' failures='1' errors='0' name="Hammerstone::Refine::Filter::basic filter with groups" assertions='1' tests='1' timestamp="2022-05-26T16:07:14-07:00">
+  <testcase time='0.009907' file="test/hammerstone/models/filters/basic_filter_test.rb" name="test_0001_creates filter" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT `t`.* FROM `t` WHERE ((`t`.`text_field_value` = &#39;one&#39;) AND ((`t`.`text_field_value` = &#39;two&#39;) AND (`t`.`text_field_value` = &#39;three&#39;)))&quot;&#13;&#10;+&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE ((\\&quot;t\\&quot;.\\&quot;text_field_value\\&quot; = &#39;one&#39;) AND ((\\&quot;t\\&quot;.\\&quot;text_field_value\\&quot; = &#39;two&#39;) AND (\\&quot;t\\&quot;.\\&quot;text_field_value\\&quot; = &#39;three&#39;)))&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/filters/basic_filter_test.rb:51:in `block (3 levels) in &lt;top (required)&gt;&#39;
+    </failure>
+  </testcase>
+</testsuite>

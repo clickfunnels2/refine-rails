@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite time='0.055033' skipped='0' failures='4' errors='0' name="Hammerstone::Refine::Conditions::DateCondition::clause application" assertions='4' tests='4' timestamp="2022-05-26T16:07:14-07:00">
+  <testcase time='0.015865' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0001_correctly executes clause equals" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;date_to_test\\&quot; = &#39;2019-05-15&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`date_to_test` = &#39;2019-05-15&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_condition_test.rb:34:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.014666' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0002_correctly executes clause doesnt equals" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;date_to_test\\&quot; != &#39;2019-05-15&#39; OR \\&quot;t\\&quot;.\\&quot;date_to_test\\&quot; IS NULL)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`date_to_test` != &#39;2019-05-15&#39; OR `t`.`date_to_test` IS NULL)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_condition_test.rb:42:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.014101' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0003_correctly executes clause greater than or equal" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;date_to_test\\&quot; &gt;= &#39;2019-05-15&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`date_to_test` &gt;= &#39;2019-05-15&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_condition_test.rb:50:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+  <testcase time='0.010401' file="test/hammerstone/models/conditions/date_condition_test.rb" name="test_0004_correctly executes clause less than or equal" assertions='1'>
+    <failure type='Minitest::Assertion' message="--- expected&#13;&#10;+++ actual&#13;&#10;@@ -1 +1 @@&#13;&#10;-&quot;SELECT \\&quot;t\\&quot;.* FROM \\&quot;t\\&quot; WHERE (\\&quot;t\\&quot;.\\&quot;date_to_test\\&quot; &lt;= &#39;2019-05-15&#39;)&quot;&#13;&#10;+&quot;SELECT `t`.* FROM `t` WHERE (`t`.`date_to_test` &lt;= &#39;2019-05-15&#39;)&quot;&#13;&#10;">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/date_condition_test.rb:58:in `block (3 levels) in &lt;module:Conditions&gt;&#39;
+    </failure>
+  </testcase>
+</testsuite>

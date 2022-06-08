@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite time='0.000203' skipped='0' failures='0' errors='5' name="Default Display no locales file" assertions='0' tests='5' timestamp="2022-05-26T16:07:14-07:00">
+  <testcase time='0.000062' file="test/hammerstone/models/conditions/default_display_test.rb" name="test_0003_correctly handles set values" assertions='0'>
+    <error type='NameError' message="uninitialized constant BlankTestFilter::Scaffolding">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/support/hammerstone/blank_test_filter.rb:11:in `initialize&#39;
+/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/default_display_test.rb:9:in `new&#39;
+/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/default_display_test.rb:9:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </error>
+  </testcase>
+  <testcase time='0.000065' file="test/hammerstone/models/conditions/default_display_test.rb" name="test_0001_correctly displays string" assertions='0'>
+    <error type='NameError' message="uninitialized constant BlankTestFilter::Scaffolding">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/support/hammerstone/blank_test_filter.rb:11:in `initialize&#39;
+/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/default_display_test.rb:9:in `new&#39;
+/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/default_display_test.rb:9:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </error>
+  </testcase>
+  <testcase time='0.000029' file="test/hammerstone/models/conditions/default_display_test.rb" name="test_0002_correctly handles underscores" assertions='0'>
+    <error type='NameError' message="uninitialized constant BlankTestFilter::Scaffolding">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/support/hammerstone/blank_test_filter.rb:11:in `initialize&#39;
+/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/default_display_test.rb:9:in `new&#39;
+/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/default_display_test.rb:9:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </error>
+  </testcase>
+  <testcase time='0.000021' file="test/hammerstone/models/conditions/default_display_test.rb" name="test_0004_can set display directly" assertions='0'>
+    <error type='NameError' message="uninitialized constant BlankTestFilter::Scaffolding">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/support/hammerstone/blank_test_filter.rb:11:in `initialize&#39;
+/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/default_display_test.rb:9:in `new&#39;
+/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/default_display_test.rb:9:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </error>
+  </testcase>
+  <testcase time='0.000026' file="test/hammerstone/models/conditions/default_display_test.rb" name="test_0005_can set at the class level" assertions='0'>
+    <error type='NameError' message="uninitialized constant BlankTestFilter::Scaffolding">/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/support/hammerstone/blank_test_filter.rb:11:in `initialize&#39;
+/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/default_display_test.rb:9:in `new&#39;
+/Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/refine-rails/test/hammerstone/models/conditions/default_display_test.rb:9:in `block (2 levels) in &lt;module:Conditions&gt;&#39;
+    </error>
+  </testcase>
+</testsuite>

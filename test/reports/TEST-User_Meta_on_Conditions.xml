@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite time='0.000083' skipped='0' failures='0' errors='0' name="User Meta on Conditions" assertions='4' tests='3' timestamp="2022-05-26T16:07:14-07:00">
+  <testcase time='0.000066' file="test/hammerstone/models/conditions/meta_test.rb" name="test_0001_deconstructs meta single level" assertions='2'>
+  </testcase>
+  <testcase time='0.000011' file="test/hammerstone/models/conditions/meta_test.rb" name="test_0002_handles nested procs" assertions='1'>
+  </testcase>
+  <testcase time='0.000006' file="test/hammerstone/models/conditions/meta_test.rb" name="test_0003_can add meta later in lifecycle" assertions='1'>
+  </testcase>
+</testsuite>

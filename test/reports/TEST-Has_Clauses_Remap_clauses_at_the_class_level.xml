@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite time='0.000252' skipped='0' failures='0' errors='0' name="Has Clauses::Remap clauses at the class level" assertions='4' tests='2' timestamp="2022-05-26T16:07:14-07:00">
+  <testcase time='0.000162' file="test/hammerstone/models/clauses/display_remapping_test.rb" name="test_0001_can set default mapping" assertions='2'>
+  </testcase>
+  <testcase time='0.000090' file="test/hammerstone/models/clauses/display_remapping_test.rb" name="test_0002_can override default mapping" assertions='2'>
+  </testcase>
+</testsuite>

@@ -38,7 +38,7 @@ module Hammerstone
     end
 
     def condition_for_criterion(criterion)
-      conditions.find { |condition| condition[:id] == criterion[:condition_id] }
+      conditions.find { |condition| condition[:id] == criterion.condition_id }
     end
 
     def meta_for_criterion(criterion)
@@ -61,7 +61,7 @@ module Hammerstone
 
     def meta_for_clause(criterion)
       meta = meta_for_criterion(criterion)
-      selected_clause_id = criterion[:input][:clause]
+      selected_clause_id = criterion.input[:clause]
       clauses = meta[:clauses]
       selected_clause = clauses.find { |clause| clause[:id] == selected_clause_id }
       selected_clause[:meta]

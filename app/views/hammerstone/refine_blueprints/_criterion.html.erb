@@ -1,7 +1,7 @@
 <% criterion_id = criterion.position %>
 
 <%= turbo_frame_tag create_id("criterion_#{criterion_id}")  do %>
-  <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex flex-wrap flex-grow items-center w-full sm:w-auto sm:pr-12', data: {
+  <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex flex-wrap flex-grow items-baseline w-full sm:w-auto sm:pr-12', data: {
     controller: 'refine--update',
     refine__update_criterion_id_value: criterion_id,
     refine__update_stable_id_value: stable_id,

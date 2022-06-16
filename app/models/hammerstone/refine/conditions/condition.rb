@@ -169,7 +169,7 @@ module Hammerstone::Refine::Conditions
       set_input_parameters(input)
       evaluated_rules.each_pair do |k, v|
         if input[k].blank?
-          errors.add(:base, "A #{k} is required for clause with id #{input[:clause]}")
+          errors.add(:base, "A #{k} is required")
         end
       end
 

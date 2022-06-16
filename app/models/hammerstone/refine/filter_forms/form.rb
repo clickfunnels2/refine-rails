@@ -1,5 +1,5 @@
 class Hammerstone::Refine::FilterForms::Form
-  # Presenter model for Blueprint Data
+  # View Model that holds the state of the entire filter
 
   attr_reader :filter
 

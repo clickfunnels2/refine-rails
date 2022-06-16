@@ -1,4 +1,5 @@
 class Hammerstone::Refine::FilterForms::Criterion
+  # View model that holds the state of individual criteria within the Filter form
   include ActiveModel::Model
   include ActiveModel::Attributes
 

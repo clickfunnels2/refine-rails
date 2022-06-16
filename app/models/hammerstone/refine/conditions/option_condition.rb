@@ -39,7 +39,7 @@ module Hammerstone::Refine::Conditions
     end
 
     def option_in_approved_list?
-      # TODO allow this to accept strings as well as integers
+      # TODO allow this to accept integers as well as strings. Right now must be a string. 
       selected.each do |select|
         select.join if select.is_a? Array 
         unless get_options.call.map { |option| option[:id] }.include? select
@@ -146,6 +146,7 @@ module Hammerstone::Refine::Conditions
     def values_for_application(ids, single = false)
       # Get developer configured options with nil_option_id removed and select only elements from requested ids
       # Extract values from either _value key or id key. _value can be a callable
+      byebug
       values = get_options.call.delete_if { |el| el[:id] == nil_option_id }
         .select { |value| ids.include? value[:id] }
         .map! { |value| (value.has_key? :_value) ? call_proc_if_callable(value[:_value]) : value[:id] }

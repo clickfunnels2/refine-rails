@@ -101,7 +101,7 @@ module Hammerstone::Refine::Conditions
       # Ex: A country has many posts through hmtt_users.
       # Use AR to properly join the relation to the base query provided
       # Convert to AREL to use with nodes 
-      subquery_path = query.model.select(key_1(instance)).joins(relation.to_sym).arel
+      subquery_path = query.model.select(key_1(instance)).left_joins(relation.to_sym).arel
       relation_table_being_queried = instance.klass.arel_table
 
       relation_class = instance.klass

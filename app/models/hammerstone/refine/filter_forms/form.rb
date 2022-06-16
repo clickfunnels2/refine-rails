@@ -1,6 +1,8 @@
 class Hammerstone::Refine::FilterForms::Form
   # Presenter model for Blueprint Data
 
+  attr_reader :filter
+
   def initialize(filter)
     @filter = filter
     add_criteria!
@@ -34,6 +36,10 @@ class Hammerstone::Refine::FilterForms::Form
     end
   end
 
+  def conditions
+    @filter.conditions
+  end
+
   private
 
   def blueprint
@@ -55,12 +61,8 @@ class Hammerstone::Refine::FilterForms::Form
   def add_criteria!
     @criteria = []
     blueprint.each do |criterion_attrs|
-      @criteria << Hammerstone::Refine::FilterForms::Criterion.new(**criterion_attrs)
+      @criteria << Hammerstone::Refine::FilterForms::Criterion.new(**criterion_attrs.merge(form: self))
     end
-  end
-
-  def conditions
-    @filter.conditions
   end
 
   def conditions_attributes

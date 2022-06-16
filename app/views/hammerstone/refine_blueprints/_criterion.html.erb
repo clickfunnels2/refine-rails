@@ -17,16 +17,16 @@
     <!-- Select Clause -->
     <div class="w-full pt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3">
       <%= render partial: 'hammerstone/refine_blueprints/clause_select', locals: {
-          meta: meta_for_criterion(criterion), selected_clause: criterion.input[:clause]} %>
+          meta: criterion.meta, selected_clause: criterion.input[:clause]} %>
     </div>
 
     <!-- Render correct type of condition --> 
     <%= render partial: "hammerstone/refine_blueprints/clauses/#{clause_for_criterion(criterion)}", locals: {
       criterion: criterion,
-      condition: condition_for_criterion(criterion), input: criterion.input, criterion_id: criterion_id, meta: meta_for_criterion(criterion), meta_clause: meta_for_clause(criterion), input_id: nil } %>
+      condition: condition_for_criterion(criterion), input: criterion.input, criterion_id: criterion_id, meta: criterion.meta, meta_clause: criterion.selected_clause_meta, input_id: nil } %>
 
     <!-- Refinements -->
-    <% condition_for_criterion(criterion)[:refinements].each do |refinement|%>
+    <% criterion.refinements.each do |refinement|%>
 
       <div class="w-full pt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3">
         <%= render partial: 'hammerstone/refine_blueprints/clause_select', locals: {

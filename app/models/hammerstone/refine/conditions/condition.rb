@@ -198,21 +198,22 @@ module Hammerstone::Refine::Conditions
       self
     end
 
-    def to_array
+    def to_array(allow_errors: false)
       # Has clauses has already been called, so meta is populated with possible closures to evaluate
       # Run ensurance validations will populate the errors array on the object
       run_ensurance_validations
-      if errors.empty?
-        {
-          id: id,
-          component: component,
-          display: @display,
-          meta: evaluated_meta,
-          refinements: refinements_to_array
-        }
-      else
-        raise ConditionError, errors.full_messages.to_s
+
+      if errors.any? && !allow_errors
+        raise ConditionError, errors.full_messages.join(". ")
       end
+
+      {
+        id: id,
+        component: component,
+        display: @display,
+        meta: evaluated_meta,
+        refinements: refinements_to_array
+      }
     end
 
     def evaluated_meta

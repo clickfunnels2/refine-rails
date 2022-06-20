@@ -1,7 +1,6 @@
 <%= turbo_frame_tag create_id("group_#{group_id}") do %>
   <div class="bg-gray-50 rounded p-4 font-sans">
     <% criteria&.each_with_index do |criterion, index| %>
-      <%- condition = @refine_filter.conditions[criterion.position.to_i] %>
       <div class="flex items-start pb-3 flex-wrap">
         <%= render "hammerstone/refine_blueprints/criterion", criterion: criterion %>
       </div>

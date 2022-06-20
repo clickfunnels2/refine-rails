@@ -13,23 +13,27 @@ class Hammerstone::Refine::FilterForms::Criterion
   attribute :uid, :string
 
   attr_accessor :form
+  delegate :filter, to: :form, allow_nil: true
 
-  def filter
-    form.filter
+  attr_reader :condition
+
+  def initialize(**attrs)
+    super
+    initialize_condition!
   end
 
-  def condition
-    @_condition ||= begin
-      result = form.conditions.find { |condition| condition.id == condition_id }
-      if result
-        instantiate_condition(result)
-      end
-      result.dup
+  def validate!
+    errors.clear
+    return true if type == "conjunction"
+    begin
+      condition&.apply(input, filter.table, filter.initial_query)
+    rescue Hammerstone::Refine::Conditions::Errors::ConditionClauseError => e
+      errors.add :base, e.message
     end
   end
 
   def condition_attributes
-    condition.to_array
+    condition.to_array(allow_errors: true)
   end
 
   def meta
@@ -50,19 +54,19 @@ class Hammerstone::Refine::FilterForms::Criterion
 
   private
 
-  def instantiate_condition(condition_class)
-    condition_class.set_filter(filter)
-    translate_display(condition_class)
-    condition_class
-  end
+  def initialize_condition!
+    @condition = form
+      .available_conditions
+      .find { |condition| condition.id == condition_id }
+      .dup
 
-  def translate_display(condition)
-    # If there are no locale definitions for this condition's subject, we can allow I18n to use a human-readable version of the ID.
-    # But, ideally, they have locales defined and we can find one of those.
-    label_fallback = {default: condition.id.humanize(keep_id_suffix: true).titleize}
-    condition.display ||= I18n.t(
-      ".filter.conditions.#{condition.id}.label",
-      default: I18n.t(".fields.#{condition.id}.label", **label_fallback)
-    )
+    if @condition
+      @condition.set_filter(filter)
+      label_fallback = {default: condition.id.humanize(keep_id_suffix: true).titleize}
+      @condition.display ||= I18n.t(
+        ".filter.conditions.#{@condition.id}.label",
+        default: I18n.t(".fields.#{@condition.id}.label", **label_fallback)
+      )
+    end
   end
 end

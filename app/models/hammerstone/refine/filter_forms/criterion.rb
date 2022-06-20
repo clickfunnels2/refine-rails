@@ -14,10 +14,6 @@ class Hammerstone::Refine::FilterForms::Criterion
 
   attr_accessor :form
 
-  def to_partial_path
-    "hammerstone/refine_blueprints/criterion"
-  end
-
   def filter
     form.filter
   end

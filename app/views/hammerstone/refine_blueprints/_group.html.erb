@@ -3,7 +3,7 @@
     <% criteria&.each_with_index do |criterion, index| %>
       <%- condition = @refine_filter.conditions[criterion.position.to_i] %>
       <div class="flex items-start pb-3 flex-wrap">
-        <%= render criterion %>
+        <%= render "hammerstone/refine_blueprints/criterion", criterion: criterion %>
       </div>
       <% if criteria.count > 1 && index < criteria.count - 1 %>
         <p class="text-gray-400 pl-2">and</p>

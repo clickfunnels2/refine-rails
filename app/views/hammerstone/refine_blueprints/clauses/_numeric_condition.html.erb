@@ -9,5 +9,6 @@
       data-action="input->refine--update#value blur->refine--update#submitForm"
       data-input-id="<%= defined?(input_id) && input_id %>"
     />
+    <%= render partial: 'hammerstone/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
   </div>
 <% end %>

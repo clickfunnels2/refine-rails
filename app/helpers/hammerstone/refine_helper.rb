@@ -60,7 +60,7 @@ module Hammerstone
     end
 
     def meta_for_clause(criterion)
-      meta = meta_for_criterion(criterion)
+      meta = criterion.meta
       selected_clause_id = criterion.input[:clause]
       clauses = meta[:clauses]
       selected_clause = clauses.find { |clause| clause[:id] == selected_clause_id }

@@ -8,10 +8,6 @@
       value="<%= input[:value] %>"
       data-action="input->refine--update#updateBlueprint keydown->refine--update#cancelEnter"
     />
-    <% if criterion.errors.any? %>
-      <p class="mt-2 text-xs text-red">
-        <%= criterion.errors.full_messages.join(", ") %>
-      </p>
-    <% end %>
+    <%= render partial: 'hammerstone/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
   </div>
 <% end %>

@@ -21,7 +21,7 @@ module Hammerstone::Refine::Conditions
         )
         .refine_by_filter(
           FilterCondition.new("hammerstone_events.hammerstone_product._fake")
-          .with_scope(Hammerstone::Refine::StoredFilter.where(workspace_id: 2).where(filter_type: "HammerstoneProductsFilter"))
+          .with_scope(Hammerstone::Refine::StoredFilter.where(filter_type: "HammerstoneProductsFilter"))
         )
     }
 
@@ -39,10 +39,9 @@ module Hammerstone::Refine::Conditions
     describe "Filter Refinement" do
       it "works" do
         # Use the full Hammerstone::Refine namespace for stabilizers for test environment 
-        ENV['NAMESPACE_REFINE_STABILIZERS'] = 1
-        state = {"type" => "HammerstoneProductsFilter", "blueprint" => [{"depth" => 1, "type" => "criterion", "condition_id" => "name", "input" => {"clause" => "eq", "value" => "AwesomeCourse"}, "position" => 0}]}.to_json.to_s
-        Hammerstone::Refine::StoredFilter.destroy_all
-        Hammerstone::Refine::StoredFilter.create(name: "A filter of an awesome product", state: state, id: 2, workspace_id: 2)
+        ENV['NAMESPACE_REFINE_STABILIZERS'] = "1"
+        # Must set id here to mimic selecting filter with id "2" on the front-end
+        Hammerstone::Refine::StoredFilter.find_or_create_by(name: "A filter of an awesome product", state: filter_state, id: 2)
         expected_sql = <<~SQL.squish
           SELECT
             `hammerstone_contacts`.*
@@ -66,6 +65,27 @@ module Hammerstone::Refine::Conditions
         }, HammerstoneContact.all, HammerstoneContact.arel_table)
         assert_equal convert(expected_sql), query.to_sql
       end
+    end
+
+    def filter_state
+      {
+        type: "HammerstoneProductsFilter",
+        blueprint: blueprint
+      }.to_json
+    end
+
+    def blueprint
+     {
+       "depth": 1,
+       "type": "criterion",
+       "condition_id": "name",
+       "input":
+       {
+         "clause": "eq",
+         "value": "AwesomeCourse"
+       },
+       "position": 0
+     }
     end
   end
 end

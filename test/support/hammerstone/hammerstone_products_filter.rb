@@ -15,7 +15,7 @@ class HammerstoneProductsFilter < Hammerstone::Refine::Filter
   def conditions
     [
       # 🚅 super scaffolding will insert new fields above this line.
-      TextCondition.new("name"),
+      Hammerstone::Refine::Conditions::TextCondition.new("name"),
     ]
   end
 end

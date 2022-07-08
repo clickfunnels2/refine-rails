@@ -210,7 +210,7 @@ module Hammerstone::Refine
       # If there are no locale definitions for this condition's subject, we can allow I18n to use a human-readable version of the ID.
       # But, ideally, they have locales defined and we can find one of those.
       label_fallback = {default: condition.id.humanize(keep_id_suffix: true).titleize}
-      condition.display = condition.display || t(".filter.conditions.#{condition.id}.label", default: t(".fields.#{condition.id}.label", label_fallback))
+      condition.display = condition.display || I18n.t(".filter.conditions.#{condition.id}.label", default: I18n.t(".fields.#{condition.id}.label", **label_fallback))
     end
 
     def state

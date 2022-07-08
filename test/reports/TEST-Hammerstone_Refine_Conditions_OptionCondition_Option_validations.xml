@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.787583' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::OptionCondition::Option validations" assertions='1' tests='1' timestamp="2022-06-08T13:07:34-07:00">
-  <testcase time='0.787583' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0001_only accepts options in the set of ids" assertions='1'>
-  </testcase>
-</testsuite>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite time='0.034270' skipped='0' failures='0' errors='0' name="Hammerstone::Refine::Conditions::OptionCondition::Option ensurances" assertions='6' tests='3' timestamp="2022-06-08T13:07:34-07:00">
-  <testcase time='0.017796' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0002_must have a display" assertions='2'>
-  </testcase>
-  <testcase time='0.012041' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0001_must have id" assertions='2'>
-  </testcase>
-  <testcase time='0.004433' file="test/hammerstone/models/conditions/option_condition_test.rb" name="test_0003_does not allow for duplicates" assertions='2'>
-  </testcase>
-</testsuite>

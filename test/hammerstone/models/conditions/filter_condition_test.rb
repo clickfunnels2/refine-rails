@@ -24,9 +24,8 @@ module Hammerstone::Refine::Conditions
 
     it "accepts a filter" do
       ENV['NAMESPACE_REFINE_STABILIZERS'] = "1"
-      state = {"type" => "HammerstoneProductsFilter", "blueprint" => [{"depth" => 1, "type" => "criterion", "condition_id" => "name", "input" => {"clause" => "eq", "value" => "AwesomeCourse"}, "position" => 0}]}.to_json.to_s
       Hammerstone::Refine::StoredFilter.destroy_all
-      Hammerstone::Refine::StoredFilter.create(name: "A filter of an awesome product", state: state, id: 2,filter_type: "HammerstoneProductsFilter")
+      Hammerstone::Refine::StoredFilter.create(name: "A filter of an awesome product", state: filter_state, id: 2,filter_type: "HammerstoneProductsFilter")
       puts "filter condition test"
 
       data = {clause: FilterCondition::CLAUSE_IN, selected: ["2"]}
@@ -41,6 +40,27 @@ module Hammerstone::Refine::Conditions
       SQL
 
       assert_equal convert(expected_sql), apply_condition_on_test_filter(condition_under_test, data).to_sql
+    end
+
+    def filter_state
+      {
+        type: "HammerstoneProductsFilter",
+        blueprint: blueprint
+      }.to_json
+    end
+
+    def blueprint
+     [{
+       "depth": 1,
+       "type": "criterion",
+       "condition_id": "name",
+       "input":
+       {
+         "clause": "eq",
+         "value": "AwesomeCourse"
+       },
+       "position": 0
+     }]
     end
   end
 end

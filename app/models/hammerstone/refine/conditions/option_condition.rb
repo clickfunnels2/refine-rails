@@ -146,7 +146,6 @@ module Hammerstone::Refine::Conditions
     def values_for_application(ids, single = false)
       # Get developer configured options with nil_option_id removed and select only elements from requested ids
       # Extract values from either _value key or id key. _value can be a callable
-      byebug
       values = get_options.call.delete_if { |el| el[:id] == nil_option_id }
         .select { |value| ids.include? value[:id] }
         .map! { |value| (value.has_key? :_value) ? call_proc_if_callable(value[:_value]) : value[:id] }

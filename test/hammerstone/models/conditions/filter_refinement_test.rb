@@ -75,7 +75,7 @@ module Hammerstone::Refine::Conditions
     end
 
     def blueprint
-     {
+     [{
        "depth": 1,
        "type": "criterion",
        "condition_id": "name",
@@ -85,7 +85,7 @@ module Hammerstone::Refine::Conditions
          "value": "AwesomeCourse"
        },
        "position": 0
-     }
+     }]
     end
   end
 end

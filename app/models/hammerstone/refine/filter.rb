@@ -26,21 +26,9 @@ module Hammerstone::Refine
       end
     end
 
-    def validate
-      byebug
-      super 
-    end
-
     def initial_query
       raise NotImplementedError if @initial_query.nil?
       @initial_query
-    end
-
-    def validate_only
-      @blueprint.each do |criterion|
-        next if criterion[:type] == "conjunction"
-        apply_condition(criterion)
-      end
     end
 
     def table

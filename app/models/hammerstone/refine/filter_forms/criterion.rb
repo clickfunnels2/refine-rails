@@ -52,6 +52,18 @@ class Hammerstone::Refine::FilterForms::Criterion
     condition.refinements_to_array
   end
 
+  def meta_for_refinement_clause(refinement)
+    refinement_meta = refinement[:meta]
+    selected_clause_id = input[refinement[:id].to_sym][:clause]
+    clauses = refinement_meta[:clauses]
+    selected_clause = clauses.find { |clause| clause[:id] == selected_clause_id }
+    selected_clause[:meta]
+  end
+
+  def component
+    condition.component.underscore
+  end
+
   private
 
   def initialize_condition!
@@ -62,11 +74,7 @@ class Hammerstone::Refine::FilterForms::Criterion
 
     if @condition
       @condition.set_filter(filter)
-      label_fallback = {default: condition.id.humanize(keep_id_suffix: true).titleize}
-      @condition.display ||= I18n.t(
-        ".filter.conditions.#{@condition.id}.label",
-        default: I18n.t(".fields.#{@condition.id}.label", **label_fallback)
-      )
+      filter.translate_display(@condition)
     end
   end
 end

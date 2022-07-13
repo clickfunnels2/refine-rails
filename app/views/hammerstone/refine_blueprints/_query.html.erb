@@ -33,7 +33,7 @@
         data-action="click->refine--add#group"
         type="submit"
       >
-        <% if grouped_blueprint.any? %>
+        <% if @form.grouped_criteria.any? %>
           <%= t(".buttons.add_or") %>
         <% else %>
           <%= t(".buttons.create_filter") %>

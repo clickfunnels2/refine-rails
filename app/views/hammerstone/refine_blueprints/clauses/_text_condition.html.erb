@@ -1,9 +1,9 @@
 <% unless ['st', 'nst'].include? input[:clause] %>
   <div class="mt-3 mr-3">
-    <label for="<%= condition[:id] %>" class="sr-only"><%= condition[:display] %></label>
+    <label for="<%= condition.id %>" class="sr-only"><%= condition.display %></label>
     <input
       class="rounded border border-solid border-coolGray-200 focus:ring-blue-500 focus:border-blue-500 sm:text-sm <%="has-error" if criterion.errors.any? %> "
-      name="<%= condition[:id] %>"
+      name="<%= condition.id %>"
       type="text"
       value="<%= input[:value] %>"
       data-action="input->refine--update#updateBlueprint keydown->refine--update#cancelEnter"

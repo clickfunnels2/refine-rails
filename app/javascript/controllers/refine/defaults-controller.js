@@ -1,5 +1,4 @@
 import { Controller } from "stimulus";
-import FormController from './form-controller'
 
 export default class extends Controller {
   static values = {

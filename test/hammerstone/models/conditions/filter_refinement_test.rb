@@ -2,6 +2,8 @@ require "test_helper"
 require "support/hammerstone/hammerstone_products_filter"
 require "support/hammerstone/hammerstone_contacts_filter_test_helper"
 require "support/hammerstone/hammerstone_product_contact_relationships"
+# Temporarily create a stored_filters_table to test saved filters 
+require "support/hammerstone/stored_filters_table"
 
 module Hammerstone::Refine::Conditions
   describe "Refinements" do
@@ -19,7 +21,7 @@ module Hammerstone::Refine::Conditions
         )
         .refine_by_filter(
           FilterCondition.new("hammerstone_events.hammerstone_product._fake")
-          .with_scope(Hammerstone::Refine::StoredFilter.where(workspace_id: 2).where(filter_type: "HammerstoneProductsFilter"))
+          .with_scope(Hammerstone::Refine::StoredFilter.where(filter_type: "HammerstoneProductsFilter"))
         )
     }
 
@@ -28,15 +30,18 @@ module Hammerstone::Refine::Conditions
       ActiveRecord::Base.connection.execute("CREATE TABLE hammerstone_products (id bigint primary key, hammerstone_contact_id bigint);")
       ActiveRecord::Base.connection.execute("CREATE TABLE hammerstone_types (id bigint primary key);")
       ActiveRecord::Base.connection.execute("CREATE TABLE hammerstone_events (id bigint primary key, hammerstone_contact_id bigint, hammerstone_type_id bigint, hammerstone_product_id bigint);")
+      CreateStoredFiltersTable.new.up
       test.call
+      CreateStoredFiltersTable.new.down
       ActiveRecord::Base.connection.execute("DROP TABLE hammerstone_contacts, hammerstone_products, hammerstone_types, hammerstone_events;")
     end
 
     describe "Filter Refinement" do
       it "works" do
-        state = {"type" => "HammerstoneProductsFilter", "blueprint" => [{"depth" => 1, "type" => "criterion", "condition_id" => "name", "input" => {"clause" => "eq", "value" => "AwesomeCourse"}, "position" => 0}]}.to_json.to_s
-        Hammerstone::Refine::StoredFilter.destroy_all
-        Hammerstone::Refine::StoredFilter.create(name: "A filter of an awesome product", state: state, id: 2, workspace_id: 2)
+        # Use the full Hammerstone::Refine namespace for stabilizers for test environment 
+        ENV['NAMESPACE_REFINE_STABILIZERS'] = "1"
+        # Must set id here to mimic selecting filter with id "2" on the front-end
+        Hammerstone::Refine::StoredFilter.find_or_create_by(name: "A filter of an awesome product", state: filter_state, id: 2)
         expected_sql = <<~SQL.squish
           SELECT
             `hammerstone_contacts`.*
@@ -61,5 +66,27 @@ module Hammerstone::Refine::Conditions
         assert_equal convert(expected_sql), query.to_sql
       end
     end
+
+    def filter_state
+      {
+        type: "HammerstoneProductsFilter",
+        blueprint: blueprint
+      }.to_json
+    end
+
+    def blueprint
+     [{
+       "depth": 1,
+       "type": "criterion",
+       "condition_id": "name",
+       "input":
+       {
+         "clause": "eq",
+         "value": "AwesomeCourse"
+       },
+       "position": 0
+     }]
+    end
   end
 end
+

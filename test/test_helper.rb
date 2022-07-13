@@ -12,3 +12,13 @@ if ActiveSupport::TestCase.respond_to?(:fixture_path=)
   ActiveSupport::TestCase.file_fixture_path = ActiveSupport::TestCase.fixture_path + "/files"
   ActiveSupport::TestCase.fixtures :all
 end
+
+require "minitest/mock"
+
+def convert(string)
+  # MySQL-specific SQL conversions.
+  string.gsub("\"", "`").gsub("59:59.999999", "59:59")
+  string.tr("\"", "`")
+  # string.gsub("\"", "`").gsub("59:59.999999", "59:59")
+  # string.tr("\"", "`")
+end

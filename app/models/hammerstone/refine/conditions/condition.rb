@@ -142,7 +142,6 @@ module Hammerstone::Refine::Conditions
       end
       # No longer a relationship attribute, apply condition normally 
       nodes = apply_condition(input, table)
-
       if !is_refinement && has_any_refinements?
         refined_node = apply_refinements(input)
         # Count refinement will return nil because it directly modified pending relationship subquery

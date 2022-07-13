@@ -1,4 +1,4 @@
-class HammerstoneProductsFilter < ApplicationFilter
+class HammerstoneProductsFilter < Hammerstone::Refine::Filter
   def automatically_stabilize?
     true
   end
@@ -15,7 +15,7 @@ class HammerstoneProductsFilter < ApplicationFilter
   def conditions
     [
       # 🚅 super scaffolding will insert new fields above this line.
-      TextCondition.new("name"),
+      Hammerstone::Refine::Conditions::TextCondition.new("name"),
     ]
   end
 end

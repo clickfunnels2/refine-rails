@@ -10,11 +10,12 @@ describe Hammerstone::Refine::Filter do
       test.call
       ApplicationRecord.connection.execute("DROP TABLE t;")
     end
-
-    it "throws an error if not initial query is sent in but can still validate" do
+    # Removing validate only method, will use the new form object pattern going forward. Keep for now to write additional tests. 
+    it "throws an error if no initial query is sent in but can still validate" do
+      skip
       condition = Hammerstone::Refine::Conditions::TextCondition.new("text_test")
       data = {clause: "eq", value: nil}
-      filter = create_filter_CF2(condition, data)
+      filter = create_filter_nil_initial_query(condition, data)
       exception = assert_raises(Exception) { filter.get_query }
       assert_equal(exception.message, "Initial query must exist")
       filter.validate_only

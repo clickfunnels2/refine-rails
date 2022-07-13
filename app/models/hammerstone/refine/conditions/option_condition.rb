@@ -39,7 +39,7 @@ module Hammerstone::Refine::Conditions
     end
 
     def option_in_approved_list?
-      # TODO allow this to accept strings as well as integers
+      # TODO allow this to accept integers as well as strings. Right now must be a string. 
       selected.each do |select|
         select.join if select.is_a? Array 
         unless get_options.call.map { |option| option[:id] }.include? select

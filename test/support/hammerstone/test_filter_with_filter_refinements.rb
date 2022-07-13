@@ -1,4 +1,4 @@
-class TestFilterWithFilterRefinements < ApplicationFilter
+class TestFilterWithFilterRefinements < Hammerstone::Refine::Filter
   def automatically_stabilize?
     true
   end

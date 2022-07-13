@@ -10,11 +10,10 @@ module Hammerstone::Refine::Conditions
       ActiveRecord::Base.connection.execute("CREATE TABLE btt_users (id bigint primary key, name varchar(256));")
       ActiveRecord::Base.connection.execute("CREATE TABLE btt_phones (id bigint primary key, btt_user_id bigint, number varchar(256));")
       test.call
-      ActiveRecord::Base.connection.execute("DROP TABLE btt_notes, btt_users, btt_phones")
+      ActiveRecord::Base.connection.execute("DROP TABLE btt_notes, btt_users, btt_phones;")
     end
 
     before do
-      # TODO why isn't Rails setting the primary key?
       @aaron = BttUser.find_or_create_by(name: "Aaron", id: 1)
       @francis = BttUser.find_or_create_by(name: "Francis", id: 2)
       @sally = BttUser.find_or_create_by(name: "Sally", id: 3)
@@ -293,7 +292,6 @@ module Hammerstone::Refine::Conditions
         .criterion("user_name",
           clause: TextCondition::CLAUSE_EQUALS,
           value: "aaron")
-      # @blueprint=[{:type=>"criterion", :condition_id=>"user_name", :depth=>0, :input=>{:clause=>"eq", :value=>"Aaron"}}], @depth=0>
     end
 
     def create_filter(blueprint)

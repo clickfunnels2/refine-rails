@@ -4,7 +4,7 @@ module Hammerstone::Refine
     include ActiveModel::Callbacks
     include TracksPendingRelationshipSubqueries
     include Stabilize
-    # TODO Revisit this validation structure
+    # This validation structure sents `initial_query` as the method to validate against 
     define_model_callbacks :initialize, only: [:after]
     after_initialize :valid?
 
@@ -29,13 +29,6 @@ module Hammerstone::Refine
     def initial_query
       raise NotImplementedError if @initial_query.nil?
       @initial_query
-    end
-
-    def validate_only
-      @blueprint.each do |criterion|
-        next if criterion[:type] == "conjunction"
-        apply_condition(criterion)
-      end
     end
 
     def table
@@ -205,7 +198,7 @@ module Hammerstone::Refine
       # If there are no locale definitions for this condition's subject, we can allow I18n to use a human-readable version of the ID.
       # But, ideally, they have locales defined and we can find one of those.
       label_fallback = {default: condition.id.humanize(keep_id_suffix: true).titleize}
-      condition.display = condition.display || t(".filter.conditions.#{condition.id}.label", default: t(".fields.#{condition.id}.label", label_fallback))
+      condition.display = condition.display || I18n.t(".filter.conditions.#{condition.id}.label", default: I18n.t(".fields.#{condition.id}.label", **label_fallback))
     end
 
     def state

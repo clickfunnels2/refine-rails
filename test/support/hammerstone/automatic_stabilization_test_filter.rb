@@ -8,7 +8,7 @@ class AutomaticStabilizationTestFilter < Hammerstone::Refine::Filter
   end
 
   def t(key, options = {})
-    I18n.t("scaffolding/completely_concrete/tangible_things#{key}", options)
+    I18n.t("#{key}", options)
   end
 
   def table

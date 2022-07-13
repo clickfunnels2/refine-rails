@@ -1,4 +1,4 @@
-class HammerstoneCoursesFilter < ApplicationFilter
+class HammerstoneCoursesFilter < Hammerstone::Refine::Filter
   def automatically_stabilize?
     true
   end
@@ -6,6 +6,10 @@ class HammerstoneCoursesFilter < ApplicationFilter
   # TODO revisit the test using this
   def initial_query
     @intial_query || HammerstoneCourse.all
+  end
+
+  def t(key, options = {})
+    key
   end
 
   def table

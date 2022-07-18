@@ -39,6 +39,7 @@ jobs:
     - name: Run Tests
       run: |
         sudo service mysql start
+        bundle exec rails db:create
         bundle exec rails db:prepare
         bundle exec rails test
       env:

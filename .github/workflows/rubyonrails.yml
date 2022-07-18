@@ -41,7 +41,7 @@ jobs:
         bundle install --jobs 4 --retry 3
     - name: Run Tests
       run: |
-        mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 
+        mysql -h 127.0.0.1 --port 8888 -u root -p root
         bundle exec rails db:create
         bundle exec rails db:prepare
         bundle exec rails test

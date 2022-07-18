@@ -4,8 +4,8 @@ class Hammerstone::RefineBlueprintsController < Account::ApplicationController
   def show
     @refine_filter = filter
     @id_suffix = filter_params[:id_suffix]
-    # TODO: Fix validation
-    # @refine_filter.validate_only
+    @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter)
+    @form.validate!
   end
 
   def update_stable_id

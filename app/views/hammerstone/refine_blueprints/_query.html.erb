@@ -13,8 +13,7 @@
       <p class="text-black text-xl">Loading...</p>
     </div>
     <%= turbo_frame_tag create_id("groups") do %>
-
-      <% grouped_blueprint.each_with_index do |criteria, index| %>
+      <% @form.grouped_criteria.each_with_index do |criteria, index| %>
         <% if index > 0 %>
           <p class="py-3">or</p>
         <% end %>
@@ -34,7 +33,7 @@
         data-action="click->refine--add#group"
         type="submit"
       >
-        <% if grouped_blueprint.any? %>
+        <% if @form.grouped_criteria.any? %>
           <%= t(".buttons.add_or") %>
         <% else %>
           <%= t(".buttons.create_filter") %>

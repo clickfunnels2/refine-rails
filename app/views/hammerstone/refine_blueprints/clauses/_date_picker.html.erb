@@ -13,4 +13,5 @@
     data-input-id="<%= defined?(input_id) && input_id %>"
     data-action="$change->refine--update#date"
   />
+  <%= render partial: 'hammerstone/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
 </div>

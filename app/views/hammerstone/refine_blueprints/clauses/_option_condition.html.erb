@@ -16,7 +16,7 @@
         name="values"
         data-input-id='<%= input_id if input_id%>'
       >
-      <% condition[:meta][:options].each do |option| %>
+      <% condition.meta[:options].each do |option| %>
         <option
           value="<%= option[:id] %>"
           <% if selected.find { |id|  id == option[:id] } %>selected<% end %>
@@ -30,6 +30,7 @@
     <% if meta[:postfix] %>
       <span class="flex-shrink-0 bg-gray-50 border border-gray-300 rounded-md rounded-l-none p-2"><%= meta[:postfix] %></span>
     <% end %>
+    <%= render partial: 'hammerstone/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
   <% end %>
 <% end %>
  

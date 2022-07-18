@@ -26,6 +26,7 @@ module Hammerstone::Refine
       @refine_filter = refine_filter
       @save_button_active = !!stable_id
       @return_params = return_params
+      @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter)
       render "show"
     end
 

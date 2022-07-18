@@ -1,0 +1,5 @@
+<% if criterion.errors.any? %>
+  <p class="mt-2 text-xs text-red">
+    <%= criterion.errors.full_messages.join(", ") %>
+  </p>
+<% end %>

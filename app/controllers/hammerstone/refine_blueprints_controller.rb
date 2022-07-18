@@ -1,4 +1,4 @@
-class Hammerstone::RefineBlueprintsController < Account::ApplicationController
+class Hammerstone::RefineBlueprintsController < ApplicationController
   layout false
 
   def show

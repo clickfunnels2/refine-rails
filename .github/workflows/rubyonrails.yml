@@ -24,12 +24,14 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=3
-    steps:
+    steps:   
     - uses: actions/checkout@v2
-    - name: Set up Ruby 2.6
-      uses: actions/setup-ruby@v1
+    - name: Set up Ruby 2.7
+      uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.7.4
+        bundler: default
+        bundler-cache: true 
     - name: Install dependencies
       run: |
         gem install bundler

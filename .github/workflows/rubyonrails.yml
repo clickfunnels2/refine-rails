@@ -21,7 +21,7 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_DATABASE: refine-rails_test
-          MYSQL_ROOT_PASSWORD: root
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
         ports:
           - 3306
         options: >-
@@ -44,7 +44,6 @@ jobs:
         RAILS_ENV: test
         DATABASE_PORT: 3306
       run: |
-        service mysql start
         bin/rails db:create
         bin/rails db:schema:load
         bin/rails test

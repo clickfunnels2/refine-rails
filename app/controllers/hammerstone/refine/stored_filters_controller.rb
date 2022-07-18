@@ -1,5 +1,5 @@
 module Hammerstone::Refine
-  class StoredFiltersController < Account::ApplicationController
+  class StoredFiltersController < ApplicationController
     layout false
 
     def index

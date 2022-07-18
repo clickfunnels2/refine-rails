@@ -17,11 +17,9 @@ jobs:
         env:
           MYSQL_DATABASE: refine-rails_test
           MYSQL_HOST: 127.0.0.1
-          MYSQL_USER: test
-          MYSQL_PASSWORD: root
-          MYSQL_ROOT_PASSWORD: root
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
         ports:
-          - '8888:3306'
+          - '3306:3306'
         options: >-
           --health-cmd="mysqladmin ping"
           --health-interval=10s
@@ -41,7 +39,7 @@ jobs:
         bundle install --jobs 4 --retry 3
     - name: Run Tests
       run: |
-        mysql -h 127.0.0.1 --port 8888 -u root -p root
+        mysql -h 127.0.0.1 -u root 
         bundle exec rails db:create
         bundle exec rails db:prepare
         bundle exec rails test

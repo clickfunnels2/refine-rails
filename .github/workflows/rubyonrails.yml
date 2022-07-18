@@ -38,7 +38,9 @@ jobs:
         ruby-version: '2.7.4'
         bunder: default
         bundler-cache: true
-        
+    - name: Install dependencies
+      run: |
+        sudo apt-get -yqq install default-libmysqlclient-dev default-mysql-client
     - name: Run tests
       env:
         RAILS_ENV: test

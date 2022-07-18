@@ -21,7 +21,7 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_DATABASE: refine-rails_test
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_ROOT_PASSWORD: root
         ports:
           - 3306
         options: >-

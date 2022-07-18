@@ -1,0 +1,59 @@
+# This workflow uses actions that are not certified by GitHub.  They are
+# provided by a third-party and are governed by separate terms of service,
+# privacy policy, and support documentation.
+#
+# This workflow will install a prebuilt Ruby version, install dependencies, and
+# run tests and linters.
+name: "Ruby on Rails CI"
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  test:
+    name: CI
+    runs-on: ubuntu-latest
+    
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+        - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+        
+    - uses: ruby/setup-ruby@v1
+      with: 
+        ruby-version: '2.7.4'
+        bunder: default
+        bundler-cache: true
+        
+    - name: Verify MySQL connection from host
+      run: |
+        sudo apt-get install -y mysql-client libmysqlclient-dev
+        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "SHOW GRANTS FOR 'root'@'localhost'"
+        mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot mysql
+
+    - name: Bundle Install and Create DB
+      env:
+        RAILS_ENV: test
+        DB_PASSWORD: root
+        # tell Rails to use proper port for MySQL
+        DB_PORT: ${{ job.services.mysql.ports[3306] }}
+      run: |
+        bin/rails db:create
+        bin/rails db:schema:load
+    - name: Run tests
+      env:
+        DB_PASSWORD: root
+        DB_PORT: ${{ job.services.mysql.ports[3306] }} # get randomly assigned published port
+        RAILS_ENV: test
+      run: bin/rails test
+
+        

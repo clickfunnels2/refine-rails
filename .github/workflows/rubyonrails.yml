@@ -1,53 +1,37 @@
-# This workflow uses actions that are not certified by GitHub.  They are
-# provided by a third-party and are governed by separate terms of service,
-# privacy policy, and support documentation.
-#
-# This workflow will install a prebuilt Ruby version, install dependencies, and
-# run tests and linters.
-name: "Ruby on Rails CI"
+name: github-actions-rails-mysql
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
+    branches: ['*']
+  push:
+    branches: [main]
 jobs:
   test:
-    name: CI
     runs-on: ubuntu-latest
-    
     services:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_DATABASE: refine-rails_test
+          MYSQL_HOST: 127.0.0.1
+          MYSQL_DB: refine-rails_test
+          MYSQL_USER: root
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_PASSWORD:
         ports:
-          - 3306
-        options: >-
-          --health-cmd="mysqladmin ping"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
+          - "3306:3306"
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-        
-    - uses: ruby/setup-ruby@v1
-      with: 
-        ruby-version: '2.7.4'
-        bunder: default
-        bundler-cache: true
-    - name: Install dependencies
-      run: |
-        sudo apt-get -yqq install default-libmysqlclient-dev default-mysql-client
-    - name: Run tests
-      env:
-        RAILS_ENV: test
-        DATABASE_PORT: 3306
-      run: |
-        bin/rails db:create
-        bin/rails db:schema:load
-        bin/rails test
-
-        
+      - uses: actions/checkout@v2
+      - name: Setup Ruby 2.7
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+          bundler: default
+          bundler-cache: true
+      - name: Run tests
+        env:
+          RAILS_ENV: test
+          DATABASE_PORT: 3306
+        run: |
+          bin/rails db:create
+          bin/rails db:schema:load
+          bin/rails test

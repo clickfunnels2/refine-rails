@@ -28,10 +28,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
         
-    - name: Install Ruby and gems
-      uses: ruby/setup-ruby@8f312efe1262fb463d906e9bf040319394c18d3e # v1.92
-      with:
-        bundler-cache: true
+    - name: Set up Ruby 
+      uses: actions/setup-ruby@v1
+      with: 
+        ruby-version: 2.7.4
         
     - name: Verify MySQL connection from host
       run: |

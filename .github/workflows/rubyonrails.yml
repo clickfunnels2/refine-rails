@@ -22,11 +22,15 @@ jobs:
         env:
           MYSQL_HOST: 127.0.0.1
           MYSQL_DB: refine-rails_test
-          MYSQL_USERNAME: root
+          MYSQL_USER: root
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_PASSWORD:
         ports:
-        - "3306:3306"
+          - 3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -42,6 +46,7 @@ jobs:
         RAILS_ENV: test
         DATABASE_PORT: 3306
       run: |
+        sudo service mysql start
         bin/rails db:create
         bin/rails db:schema:load
         bin/rails test

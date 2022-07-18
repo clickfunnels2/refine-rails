@@ -22,7 +22,7 @@ jobs:
         env:
           MYSQL_HOST: 127.0.0.1
           MYSQL_DB: refine-rails_test
-          MYSQL_USER: root
+          MYSQL_USERNAME: root
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_PASSWORD:
         ports:

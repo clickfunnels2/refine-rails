@@ -40,8 +40,6 @@ jobs:
     - name: Run Tests
       run: |
         mysql -h 127.0.0.1 -u root 
-        bundle exec rails db:create
-        bundle exec rails db:prepare
         bundle exec rails test
       env:
         DB_PORT: 3306

@@ -41,14 +41,14 @@ module Hammerstone::Refine::Conditions
       condition = ValidatesClausesTestCondition.new("text_test")
       user_input = {clause: nil}
       filter = apply_condition_and_return_filter(condition, user_input)
-      assert_equal(["A clause is required for clause with id "], filter.errors.full_messages)
+      assert_equal(["A clause is required"], filter.errors.full_messages)
     end
 
     it "validates Text Condition Eq has a value" do
       condition = TextCondition.new("text_test") # Automatically have all the clauses with all the rules
       data = {clause: "eq", value: nil}
       filter = apply_condition_and_return_filter(condition, data)
-      assert_equal(["A value is required for clause with id eq"], filter.errors.full_messages)
+      assert_equal(["A value is required"], filter.errors.full_messages)
     end
 
     it "excludes clauses using without" do

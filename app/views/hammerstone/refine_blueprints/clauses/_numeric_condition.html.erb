@@ -1,11 +1,12 @@
 <% unless ['st', 'nst'].include? input[:clause] %>
   <div class="mt-3">
-    <label for="<%= condition[:id] %>" class="sr-only"><%= condition[:display] %></label>
+    <label for="<%= condition.id %>" class="sr-only"><%= condition.display %></label>
     <input
       class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-      name="<%= condition[:id] %>"
+      name="<%= condition.id %>"
       type="text"
-      value="<%= input[:value] %>"
+      value="<%= input[:value1] %>"
+      data-input-key="value1"
       data-action="input->refine--update#value blur->refine--update#submitForm"
       data-input-id="<%= defined?(input_id) && input_id %>"
     />

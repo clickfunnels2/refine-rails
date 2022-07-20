@@ -19,7 +19,7 @@ module Hammerstone::Refine::Conditions
           assert_raises Hammerstone::Refine::Conditions::ConditionError do
             condition.to_array
           end
-        assert_equal("[\"Every condition must have an ID\", \"An attribute is required.\"]", exception.message)
+        assert_equal("Every condition must have an ID. An attribute is required.", exception.message)
       end
     end
 
@@ -94,7 +94,7 @@ module Hammerstone::Refine::Conditions
         FilterTestHelper::TestDouble.arel_table)
       filter.get_query
       filter_errors = filter.errors.full_messages.map { |el| el.tr("\"", "`") }
-      assert_equal(["A value is required for clause with id eq", "The clause with id id_one was not found"], filter_errors)
+      assert_equal(["A value is required", "The clause with id id_one was not found"], filter_errors)
     end
   end
 

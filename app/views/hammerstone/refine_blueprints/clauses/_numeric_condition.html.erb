@@ -1,3 +1,4 @@
+<% condition_id = condition.try(:id) || condition[:id] %>
 <% if ['st', 'nst'].include? input[:clause] %>
   <!-- render nothing -->
 <% else %>
@@ -5,7 +6,7 @@
     
       <input
         class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-        name="<%= condition.id %>"
+        name="<%= condition_id %>"
         type="text"
         value="<%= input[:value1] %>"
         data-input-key="value1"
@@ -22,7 +23,7 @@
 
         <input
           class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-          name="<%= condition.id %>"
+          name="<%= condition_id %>"
           type="text"
           value="<%= input[:value2] %>"
           data-input-key="value2"

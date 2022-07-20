@@ -20,7 +20,7 @@ module Hammerstone::Refine::Conditions
         assert_raises Hammerstone::Refine::Conditions::ConditionError do
           condition.to_array
         end
-      assert_equal("[\"Every condition must have an ID\"]", exception.message)
+      assert_equal("Every condition must have an ID", exception.message)
     end
 
     it "raises an error if no id and no attribute" do
@@ -30,7 +30,7 @@ module Hammerstone::Refine::Conditions
         assert_raises Hammerstone::Refine::Conditions::ConditionError do
           condition.to_array
         end
-      assert_equal("[\"Every condition must have an ID\", \"An attribute is required.\"]", exception.message)
+      assert_equal("Every condition must have an ID. An attribute is required.", exception.message)
     end
   end
 end

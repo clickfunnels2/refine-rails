@@ -50,6 +50,7 @@
     class="flex-grow-0 mt-3 <% if input[:clause] != 'btwn' %>sm:mr-3<% end %>"
   >
     <%= render partial: "hammerstone/refine_blueprints/clauses/date_picker", locals: {
+      criterion: criterion,
       label: "First Date",
       condition_id: condition.id,
       date: input[:date1],
@@ -61,6 +62,7 @@
     <span class="px-2 mt-3">and</span>
     <div class="flex-grow-0 mt-3 sm:mr-3">
       <%= render partial: "hammerstone/refine_blueprints/clauses/date_picker", locals: {
+        criterion: criterion,
         label: "Second Date",
         condition_id: condition.id,
         date: input[:date2],

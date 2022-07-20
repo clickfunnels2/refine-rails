@@ -7,15 +7,26 @@ export default class extends Controller {
   };
 
   connect() {
-    const refineElement = document.getElementById('refine');
-    this.state = this.application.getControllerForElementAndIdentifier(
-      refineElement,
-      'refine--state',
-    );
+    this.state = this.getStateController()
 
     this.state.updateInput(
       this.criterionIdValue,
       this.inputValue,
     );
+  }
+
+  getStateController() {
+    let currentElement = this.element
+
+    while(currentElement !== document.body) {
+      const controller = this.application.getControllerForElementAndIdentifier(currentElement, 'refine--state')
+      if (controller) {
+        return controller
+      } else {
+        currentElement = currentElement.parentNode
+      }
+    }
+
+    return null
   }
 }

@@ -117,10 +117,10 @@ module Hammerstone::Refine::Conditions
 
     def clauses
       [
-        Clause.new(CLAUSE_EQUALS, "Is Equal To")
+        Clause.new(CLAUSE_EQUALS, "On date")
           .requires_inputs("date1"),
 
-        Clause.new(CLAUSE_DOESNT_EQUAL, "Is Not Equal To")
+        Clause.new(CLAUSE_DOESNT_EQUAL, "Not on date")
           .requires_inputs("date1"),
 
         Clause.new(CLAUSE_LESS_THAN_OR_EQUAL, "Is On or Before")

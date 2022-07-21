@@ -11,11 +11,16 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
     @refine_filter = filter
     @id_suffix = filter_params[:id_suffix]
     @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter)
-    if @form.valid?
-      redirect_to params[:success_url]
-    else
-      render :show, status: :unprocessable_entity
+    respond_to do |format|
+      format.turbo_stream do
+        render :create
+      end
     end
+    # if @form.valid?
+    #   redirect_to params[:success_url]
+    # else
+    #   render :create, status: :unprocessable_entity
+    # end
   end
 
   def update_stable_id

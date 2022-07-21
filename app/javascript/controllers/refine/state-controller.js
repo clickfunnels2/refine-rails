@@ -49,7 +49,6 @@ const and = function (depth) {
     word: 'and',
   }
 }
-
 export default class extends Controller {
   static values = {
     blueprint: Array,
@@ -60,8 +59,10 @@ export default class extends Controller {
   }
   static targets = ['loading']
 
+
   connect() {
     // for select2 jquery events and datepicker
+    this.element.refineStateController = this
     this.changeDelegate = delegate('change', ['event', 'picker'])
     this.blueprint = this.blueprintValue
     this.conditions = this.conditionsValue
@@ -108,7 +109,6 @@ export default class extends Controller {
   updateStableId(newUrl) {
     if (newUrl !== this.stableId) {
       this.stableId = newUrl
-      console.log(this.blueprint)
       filterStabilizedEvent(this.element, this.stableId, this.filterName)
       filterStabilizedEvent(window, this.stableId, this.filterName)
     }

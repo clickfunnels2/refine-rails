@@ -12,6 +12,11 @@ class Hammerstone::Refine::FilterForms::Form
     @criteria.each(&:validate!)
   end
 
+  def valid?
+    validate!
+    @criteria.all? { |c| c.errors.empty? }
+  end
+
   def grouped_criteria
     [].tap do |result|
       # start with an empty group

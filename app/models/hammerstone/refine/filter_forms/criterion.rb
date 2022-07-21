@@ -23,7 +23,7 @@ class Hammerstone::Refine::FilterForms::Criterion
   end
 
   def validate!
-    return if (input.has_key?(:count_refinement) || input.has_key?(:date_refinement))
+    return if (input&.has_key?(:count_refinement) || input&.has_key?(:date_refinement))
     errors.clear
     return true if type == "conjunction"
     begin

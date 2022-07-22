@@ -48,3 +48,12 @@ export const filterStoredEvent = (storedFilterId) => {
   })
   window.dispatchEvent(event)
 }
+
+export const blueprintUpdatedEvent = (blueprint) => {
+  const event = new CustomEvent('blueprint-updated', {
+    detail: {
+      blueprint,
+    },
+  })
+  window.dispatchEvent(event)
+}

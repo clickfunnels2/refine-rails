@@ -7,7 +7,7 @@
   refine__state_stable_id_value: stable_id } do %>
   <%= content_tag :div, class: "relative w-full h-full" do %>
     <div
-      class="flex items-center justify-center absolute left-0 top-0 w-full h-full bg-gray bg-opacity-50 z-10 rounded hidden"
+      class="flex items-center justify-center absolute left-0 top-0 w-full h-full bg-gray bg-opacity-50 z-10 rounded <%= "hidden" unless action_name == "create" %>"
       id="refine-loader"
       data-refine--state-target="loading">
       <p class="text-black text-xl">Loading...</p>

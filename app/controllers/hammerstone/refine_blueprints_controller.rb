@@ -1,11 +1,34 @@
 class Hammerstone::RefineBlueprintsController < ApplicationController
   layout false
+  include Hammerstone::RefineHelper # for create_id
 
   def show
     @refine_filter = filter
     @id_suffix = filter_params[:id_suffix]
     @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter)
-    @form.validate!
+  end
+
+  def create
+    @refine_filter = filter
+    @id_suffix = filter_params[:id_suffix]
+    @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter)
+
+    if @form.valid?
+      status = :ok
+      payload = {}
+    else
+      status = :unprocessable_entity
+      payload = {
+        action: "replace",
+        target: create_id("hammerstone_refine_query"),
+        template: self.class.render(
+          partial: "hammerstone/refine_blueprints/query",
+          assigns: {refine_filter: @refine_filter, id_suffix: @id_suffix, form: @form}
+        )
+      }
+    end
+
+    render json: payload, status: status
   end
 
   def update_stable_id

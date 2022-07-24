@@ -2,6 +2,7 @@ import { Controller } from "stimulus"
 
 export default class extends Controller {
   connect() {
+    console.log('Form Controller Connected')
     this.state = this.getStateController()
     this.blueprintInput = this.addHiddenInput('blueprint')
     this.addHiddenInput('filter', this.state.filterName)

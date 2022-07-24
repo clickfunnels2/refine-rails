@@ -1,0 +1,32 @@
+<%
+  style ||= ""
+
+  case style
+  when "tr"
+    classes = "rounded-sm p-1 w-full mx-auto mt-0"
+    spacing = "2"
+    rows = 1
+  when "large"
+    classes = "rounded-md shadow p-12 w-full mx-auto mt-6"
+    spacing = "6"
+    rows = 5
+  else
+    classes = "rounded-sm shadow-sm p-4 w-full mx-auto mt-4"
+    spacing = "4"
+    rows = 3
+  end
+%>
+<div class="<%= classes %>">
+  <div class="animate-pulse flex space-x-<%= spacing %>">
+    <div class="rounded-full bg-gray-400 h-12 w-12"></div>
+    <div class="flex-1 space-y-<%= spacing %> py-1">
+      <div class="h-4 bg-gray-400 rounded w-3/4"></div>
+      <div class="space-y-<%= spacing.to_i / 2 %>">
+        <% rows.times do %>
+          <div class="h-4 bg-gray-400 rounded"></div>
+        <% end %>
+          <div class="h-4 bg-gray-400 rounded w-5/6"></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,8 @@
+
+### 2.0.1 2022-07-24
+	* bug-fix
+		* _date_picker.html.erb remove `blur` listener, keep `$change` and add `change` to comply with updated bullet-train_fields npm package.
+
 ### 2.0.0 2022-07-24
 * enhancements
 	* Create app/controllers/concerns/hammerstone_filter.rb that the client can include in their application_controller. This can then be referenced in their controller they want filtered with something like @refine_filter = apply_filter(DevelopersFilter) (If in the developer_controller and want to apply DevelopersFilter)

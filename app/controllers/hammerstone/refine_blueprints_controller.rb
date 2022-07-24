@@ -15,7 +15,8 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
 
     if @form.valid?
       status = :ok
-      payload = {}
+      filter_id = Hammerstone.stabilizer_class('Stabilizers::UrlEncodedStabilizer').new.to_stable_id(filter: filter)
+      payload= { filter_id: filter_id }
     else
       status = :unprocessable_entity
       payload = {

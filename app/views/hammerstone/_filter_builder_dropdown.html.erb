@@ -1,0 +1,59 @@
+<div data-controller="search-filter"
+   data-search-filter-search-frame-id-value="index_search"
+   data-search-filter-submit-url-value="<%= hammerstone_refine_blueprint_path %>"
+>
+
+  <%= tag.div class: "px-8 md:block w-auto p6 relative", data: {
+    controller: "reveal", 
+    action: "filter-stored@window->search-filter#updateStoredFilter" 
+  } do %>
+    <button
+      class="px-8bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+      data-action="reveal#toggle"
+      type="button"
+    >
+      <%= t('global.buttons.filter') %>
+    </button>
+    <div
+
+      data-reveal
+      data-transition
+      data-transition-enter="transition ease-out duration-100"
+      data-transition-enter-start="transform opacity-0 scale-95"
+      data-transition-enter-end="transform opacity-100 scale-100"
+      data-transition-leave="transition ease-in duration-75"
+      data-transition-leave-start="transform opacity-100 scale-100"
+      data-transition-leave-end="transform opacity-0 scale-95"
+      data-controller="filter-link"
+
+      class="px-4 mt-2 origin-top-right absolute z-100 right-0 rounded shadow-2xl bg-white opacity-100 scale-100 w-screen sm:max-w-max z-1000"
+      style="min-width: 50vw; max-height: 66vh; overflow: auto; z-index:100;"
+    >
+      <%= turbo_frame_tag :stored_filters, loading: :lazy,
+        src: editor_hammerstone_refine_stored_filters_path({ 
+          id: @stored_filter&.id, stable_id: @stable_id, filter: @refine_filter.class.name }.compact) do %>
+        <div class="py-4">
+          <%= render partial: '/shared/loading', locals: {style: "tr"} %>
+        </div>
+      <% end %>
+      <div class="py-6 flex sticky bottom-0 bg-white">
+        <button
+          class="button-secondary ml-auto mr-4"
+          data-action="click->reveal#toggle"
+          type="button"
+        >
+          <%= t('global.buttons.cancel') %>
+        </button>
+        <button
+          class="button text-center mr-4"
+          data-action="click->search-filter#search"
+          data-filter-link-target="link"
+          type="button"
+        >
+          <%= t('global.buttons.apply') %>
+        </button>
+      </div>
+    </div>
+  <% end if @refine_filter.present? %>
+
+</div>

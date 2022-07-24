@@ -16,14 +16,6 @@ export default class extends Controller {
     this.stableId = this.paramsCache['stable_id']
   }
 
-  updateStableId(event) {
-    const {
-      detail: { stableId },
-    } = event
-
-    this.stableId = stableId
-  }
-
   search(event) {
     event.preventDefault()
     this.submitFilter()

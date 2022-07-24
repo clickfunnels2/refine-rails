@@ -1,0 +1,12 @@
+en:
+  global:
+    filter_name_placeholder: Name your filter 
+    buttons:
+      apply: Apply
+      cancel: Cancel
+      find_filter: Find a saved filter
+      save_filter: Save this filter 
+      choose_filter: Load filter 
+      filter_name: Filter Name
+      filter: Filter
+

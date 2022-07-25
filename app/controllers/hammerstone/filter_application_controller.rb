@@ -1,8 +1,9 @@
-module HammerstoneFilter
-  # Modify this method as needed. You can send in the current controller's instance variable if you'd like to update the collection here
+module Hammerstone::FilterApplicationController 
+	# Optional module to get started quickly.You can send in the current controller's instance variable if you'd like to update the collection here
   # The current scope can be used to modify the query
   # If you would like to *send in* the initial query at runtime, use the HammerstoneFilterWithInitialQuery module 
-  
+
+
   def apply_filter(child_filter_class, current_scope = nil, instance_variable_name = nil)
     if child_filter_class.present?
       @stored_filter = nil

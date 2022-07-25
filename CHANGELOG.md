@@ -1,4 +1,9 @@
 
+
+### 2.0.2 2022-07-24
+	* bug-fix
+		* Move the hammerstone filter application controller helper to controllers/hammerstone so it is accessible via client's application controller if desired.
+
 ### 2.0.1 2022-07-24
 	* bug-fix
 		* _date_picker.html.erb remove `blur` listener, keep `$change` and add `change` to comply with updated bullet-train_fields npm package.

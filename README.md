@@ -1,4 +1,80 @@
-# Refine::Rails
+## Adding Refine to a non Bullet Train application 
+1. Add the gem
+ 
+```
+source "https://yourKey@gem.fury.io/hammerstonedev" do
+  gem "refine-rails"
+end
+```
+
+2. Add the npm package
+
+```bash
+$ yarn add @hammerstone/refine-stimulus
+```
+
+3. `bundle` `yarn`
+
+4. In the controller you'd like to filter on, add the `apply_filter` method. For this example we'll use Contacts. 
+`@refine_filter = apply_filter(ContactsFilter)`
+
+5. Create a `app/filters/contacts_filter.rb` with the following: 
+
+```
+class ContactsFilter < Hammerstone::Refine::Filter
+  @@default_stabilizer = Hammerstone::Refine::Stabilizers::UrlEncodedStabilizer
+
+  def initial_query
+    Contact.all
+  end
+
+  def automatically_stabilize?
+    true
+  end
+
+  def table
+    Contact.arel_table
+  end
+
+  def conditions
+    [
+      Hammerstone::Refine::Conditions::TextCondition.new("first_name"),
+      Hammerstone::Refine::Conditions::DateCondition.new("created_at"),
+      Hammerstone::Refine::Conditions::DateCondition.new("updated_at"),
+
+    ]
+  end
+end
+```
+
+6. In your application controller, `include Hammerstone::FilterApplicationController`
+
+7. Render the filter partial wherever you want! 
+
+```
+<div class="flex flex-col">
+  <%# Include the this line if you'd like to dump the sql for testing %>
+  <%#= @refine_filter&.get_query&.to_sql %>
+  <%= render partial: 'hammerstone/filter_builder_dropdown' %>
+</div>
+```
+
+8. Set the filter stabilized ENV var or credential. If using rails credentials: 
+`EDITOR="subl --wait" bin/rails credentials:edit --environment development` and set `NAMESPACE_REFINE_STABILIZERS: 1`
+If using .env, application.yml or another gem set `NAMESPACE_REFINE_STABILIZERS=1`
+
+9.  Import the Stimulus Controllers. 
+
+10. Add jquery 
+`yarn add jquery`
+
+```
+import jquery from 'jquery'
+window.jQuery = jquery
+window.$ = jquery
+```
+
+### Refine::Rails How to Install - BT and legacy 
 Short description and motivation.
 
 ## Usage

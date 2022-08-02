@@ -1,4 +1,6 @@
-
+### 2.1.0 2022-08-02
+* updates
+	* Update from Stiumulus 2 to Stimulus 3. All updates are on the javascript/npm package side, this release updates package.json to use the new package on Stimulus 3.
 
 ### 2.0.2 2022-07-24
 	* bug-fix

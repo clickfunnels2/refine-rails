@@ -1,4 +1,4 @@
-import { Controller } from "stimulus"
+import { Controller } from "@hotwired/stimulus"
 import { delegate, abnegate } from 'jquery-events-to-dom-events'
 import { filterUnstableEvent, filterStabilizedEvent, blueprintUpdatedEvent } from '../../refine/helpers'
 
@@ -55,7 +55,7 @@ export default class extends Controller {
     conditions: Array,
     className: String,
     stableId: String,
-    idSuffix: String,
+    idSuffix: String
   }
   static targets = ['loading']
 

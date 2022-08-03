@@ -1,4 +1,4 @@
-import { identifierForContextKey } from "@stimulus/webpack-helpers"
+import { identifierForContextKey } from "@hotwired/stimulus-webpack-helpers"
 
 import AddController from './add-controller'
 import DefaultsController from './defaults-controller'

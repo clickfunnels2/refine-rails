@@ -1,4 +1,4 @@
-import { Controller } from "stimulus"
+import { Controller } from "@hotwired/stimulus"
 import { filterStoredEvent } from '../../refine/helpers'
 
 export default class extends Controller {

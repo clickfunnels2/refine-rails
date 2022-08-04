@@ -52,7 +52,7 @@ export const filterStoredEvent = (storedFilterId) => {
 export const blueprintUpdatedEvent = (blueprint) => {
   const event = new CustomEvent('blueprint-updated', {
     detail: {
-      blueprint,
+      blueprint
     },
   })
   window.dispatchEvent(event)

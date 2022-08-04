@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import { delegate, abnegate } from 'jquery-events-to-dom-events'
-import { filterUnstableEvent, filterStabilizedEvent, blueprintUpdatedEvent } from '../../refine/helpers'
+import { blueprintUpdatedEvent } from '../../refine/helpers'
 
 const criterion = (id, depth, condition) => {
   const { meta, refinements, component } = condition
@@ -75,8 +75,8 @@ export default class extends Controller {
     }, {})
     this.loadingTimeout = null
 
-    filterStabilizedEvent(this.element, this.stableId, this.filterName, true)
-    filterStabilizedEvent(window, this.stableId, this.filterName, true)
+   (this.element, this.stableId, this.filterName, true)
+   (window, this.stableId, this.filterName, true)
   }
 
   disconnect() {
@@ -109,8 +109,6 @@ export default class extends Controller {
   updateStableId(newUrl) {
     if (newUrl !== this.stableId) {
       this.stableId = newUrl
-      filterStabilizedEvent(this.element, this.stableId, this.filterName)
-      filterStabilizedEvent(window, this.stableId, this.filterName)
     }
   }
 
@@ -123,8 +121,7 @@ export default class extends Controller {
       this.blueprint.push(or())
     }
     this.blueprint.push(criterion(condition.id, 1, condition))
-    blueprintUpdatedEvent(this.blueprint)
-    filterUnstableEvent(this.blueprint)
+    blueprintUpdatedEvent(this.blueprint, this.filterName)
   }
 
   addCriterion(previousCriterionId) {
@@ -132,8 +129,7 @@ export default class extends Controller {
     const condition = conditions[0]
     const { meta } = condition
     blueprint.splice(previousCriterionId + 1, 0, and(), criterion(condition.id, 1, condition))
-    blueprintUpdatedEvent(this.blueprint)
-    filterUnstableEvent(this.blueprint)
+    blueprintUpdatedEvent(this.blueprint, this.filterName)
   }
 
   deleteCriterion(criterionId) {
@@ -189,8 +185,7 @@ export default class extends Controller {
       this.blueprint.push(criterion(condition.id, 1, condition))
     }
 
-    blueprintUpdatedEvent(this.blueprint)
-    filterUnstableEvent(this.blueprint)
+    blueprintUpdatedEvent(this.blueprint, this.filterName)
   }
 
   replaceCriterion(criterionId, conditionId, condition) {
@@ -202,8 +197,7 @@ export default class extends Controller {
     }
     // Build out a default criterion.
     this.blueprint[criterionId] = criterion(conditionId, criterionRow.depth, condition)
-    blueprintUpdatedEvent(this.blueprint)
-    filterUnstableEvent(this.blueprint)
+    blueprintUpdatedEvent(this.blueprint, this.filterName)
   }
 
   updateInput(criterionId, input, inputId) {
@@ -218,7 +212,6 @@ export default class extends Controller {
     } else {
       criterion[inputId] = { ...criterion[inputId], ...input }
     }
-    blueprintUpdatedEvent(this.blueprint)
-    filterUnstableEvent(this.blueprint)
+    blueprintUpdatedEvent(this.blueprint, this.filterName)
   }
 }

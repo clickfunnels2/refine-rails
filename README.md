@@ -65,7 +65,14 @@ If using .env, application.yml or another gem set `NAMESPACE_REFINE_STABILIZERS=
 
 9.  Import the Stimulus Controllers. 
 
-10. Add jquery 
+```
+// import { Application } from "stimulus"
+import { controllerDefinitions as refineControllers } from "@hammerstone/refine-stimulus"
+// window.Stimulus = Application.start()
+Stimulus.load(refineControllers)
+```
+
+10. Add jquery (necessary for date picker)
 `yarn add jquery`
 
 ```

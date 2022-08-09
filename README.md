@@ -171,14 +171,14 @@ From the directory of the project including this package:
 
 ```bash
 
-yalc add @hammerstone/refine-stimulus
+yalc link @hammerstone/refine-stimulus
 ```
 
 When you make local updates to the package: 
 
 ```bash 
 # From this repo (refine-rails)
-yarn 
+yarn build
 yalc push
 ```
 

@@ -17,7 +17,6 @@
       data-transition-leave="transition ease-in duration-75"
       data-transition-leave-start="transform opacity-100 scale-100"
       data-transition-leave-end="transform opacity-0 scale-95"
-      data-controller="filter-link"
 
       class="px-4 mt-2 origin-top-right absolute z-100 right-0 rounded shadow-2xl bg-white opacity-100 scale-100 w-screen sm:max-w-max z-1000"
       style="min-width: 50vw; max-height: 66vh; overflow: auto; z-index:100;"
@@ -40,7 +39,6 @@
         <button
           class="button text-center mr-4"
           data-action="click->search-filter#search"
-          data-filter-link-target="link"
           type="button"
         >
           <%= t('global.buttons.apply') %>

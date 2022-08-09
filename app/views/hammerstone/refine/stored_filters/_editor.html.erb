@@ -1,7 +1,7 @@
 <%= turbo_frame_tag :stored_filters do %>
   <%= content_tag :div, data: { controller: 'refine--stored-filter', refine__stored_filter_id_value: @stored_filter&.id,
     refine__stored_filter_stable_id_value: @refine_filter&.configuration[:stable_id], 
-    action: 'filter-stabilized->refine--stored-filter#activateSaveLink filter-stabilized->refine--stored-filter#updateStableIdField' 
+    action: 'blueprint-updated->refine--stored-filter#updateblueprintField'
   } do %>
     <%= render partial: "head" %>
     <%= render partial: "hammerstone/refine_blueprints/query" %>

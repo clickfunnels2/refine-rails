@@ -18,37 +18,6 @@
   return true
 })()
 
-export const filterStabilizedEvent = (element, stableId, filterName, initialLoad) => {
-  const event = new CustomEvent('filter-stabilized', {
-    bubbles: true,
-    cancelable: true,
-    detail: {
-      stableId,
-      filterName,
-      initialLoad,
-    },
-  })
-  element.dispatchEvent(event)
-}
-
-export const filterUnstableEvent = (blueprint) => {
-  const event = new CustomEvent('filter-unstable', {
-    detail: {
-      blueprint,
-    },
-  })
-  window.dispatchEvent(event)
-}
-
-export const filterStoredEvent = (storedFilterId) => {
-  const event = new CustomEvent('filter-stored', {
-    detail: {
-      storedFilterId,
-    },
-  })
-  window.dispatchEvent(event)
-}
-
 export const blueprintUpdatedEvent = (blueprint) => {
   const event = new CustomEvent('blueprint-updated', {
     detail: {

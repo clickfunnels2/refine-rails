@@ -2,18 +2,18 @@
   <%= content_tag :div, class: "py-4" do %>
     <% if @stored_filter.errors.any? %>
       <% @stored_filter.errors.full_messages.each do |message|%>
-        <p class="mb-2 text-xs text-red">Name has already been taken</p>
+        <p class="mb-2 text-xs text-red"><%= message %></p>
       <%end%>
     <%end%>
-    <%= form_tag(hammerstone_refine_stored_filters_path, method: :post, 
-      class: "flex w-full", data: { turbo_frame: :stored_filters }) do %>
+    <%= form_tag(hammerstone_refine_stored_filters_path, method: :post, data: { turbo_frame: :stored_filters })
+      class: "flex w-full") do %>
         <input type="text" name="name" placeholder="<%= t('global.filter_name_placeholder')%>"
-          class="w-full mr-4 block w-full pl-9 rounded border border-solid border-coolGray-200 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" 
+          class="w-full mr-4 block w-full pl-9 rounded border border-solid border-coolGray-200 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           value="<%= @stored_filter.name %>"
         />
-        <input type="text" name="stable_id" value="<%= @stable_id %>" data-refine--stored-filter-target="stableIdField" hidden />
+        <input type="text" name="blueprint" value="<%= @blueprint.to_json %>" data-refine--stored-filter-target="blueprintField" hidden />
         <%= link_to t('global.buttons.back'), @back_link, class: "button-secondary ml-auto mr-4" %>
         <%= button_tag t('global.buttons.save'), type: "submit", class: "button text-center" %>
       <% end %>
     <% end %>
-<% end%>
+<% end %>

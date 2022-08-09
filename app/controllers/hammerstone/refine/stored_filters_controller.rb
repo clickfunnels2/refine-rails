@@ -30,12 +30,6 @@ module Hammerstone::Refine
       render "show"
     end
 
-    def edit
-      @stored_filter = StoredFilter.find(params[:id])
-      @stable_id = stable_id
-      @back_link = hammerstone_refine_stored_filter_path(return_params)
-    end
-
     def update
       saved_stored_filter = StoredFilter.find(params[:id])
 
@@ -53,12 +47,6 @@ module Hammerstone::Refine
       end
     end
 
-    def new
-      @stored_filter = StoredFilter.new(name: "", state: refine_filter.state, workspace_id: current_workspace.id, filter_type: refine_filter.type)
-      @stable_id = stable_id
-      @back_link = editor_hammerstone_refine_stored_filters_path(return_params)
-    end
-
     def show
       @stored_filter = StoredFilter.find_by(id: params[:id])
       # Show the refine filter for the stored filter id unless a stable id param is given
@@ -67,9 +55,18 @@ module Hammerstone::Refine
       @return_params = return_params.except(:id)
     end
 
+    def new
+      @stored_filter = StoredFilter.new(name: "", state: refine_filter.state, workspace_id: current_workspace.id, filter_type: refine_filter.type)
+      @back_link = editor_hammerstone_refine_stored_filters_path(return_params)
+    end
+
     def create
-      @stored_filter = StoredFilter.new(name: params[:name], state: refine_filter.state, workspace_id: current_workspace.id, filter_type: refine_filter.type)
-      @stable_id = stable_id
+      @stable_id = Hammerstone::Refine::Stabilizers::UrlEncondedStabilizer.new.to_stable_id(refine_filter)
+
+      @stored_filter = StoredFilter.find_by(id: stable_id)
+      @stored_filter ||= StoredFilter.new(name: params[:name], state: refine_filter.state, workspace_id: current_workspace.id, filter_type: refine_filter.type)
+      @stored_filter.attributes = {name: params[:name, state: refine_filter.state]}
+
       @back_link = editor_hammerstone_refine_stored_filters_path(return_params)
 
       if @stored_filter.save
@@ -99,12 +96,13 @@ module Hammerstone::Refine
     end
 
     def refine_filter
-      if stable_id
-        Hammerstone.stabilizer_class('Stabilizers::UrlEncodedStabilizer').new.from_stable_id(id: stable_id)
-      elsif filter_class
-        filterClass = filter_class.constantize
-        filterClass.new []
+      blueprint = if params[:blueprint]
+        JSON.parse(params[:blueprint]).map(&:deep_symbolize_keys)
+      else
+        []
       end
+      filterClass = filter_class.constantize
+      filterClass.new blueprint
     end
   end
 end

@@ -9,4 +9,6 @@ en:
       choose_filter: Load filter 
       filter_name: Filter Name
       filter: Filter
+      back: Back
+      save: Save
 

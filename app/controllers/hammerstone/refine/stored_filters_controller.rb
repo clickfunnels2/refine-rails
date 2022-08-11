@@ -102,8 +102,10 @@ module Hammerstone::Refine
       else
         []
       end
-      filterClass = filter_class.constantize
-      filterClass.new blueprint
+      if filter_class
+        filterClass = filter_class.constantize
+        filterClass.new blueprint
+      end
     end
   end
 end

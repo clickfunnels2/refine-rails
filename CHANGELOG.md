@@ -1,3 +1,9 @@
+### 2.1.1 (Not yet released)
+	* Load all stored filters when using stored filters view (bug - need to add scoping to filter)
+	* Remove workspace_record from stored filters. Client will need to override this controller to get custom attributes on stored filters 
+	* bug-fix
+		* Add back and save to locales file
+
 ### 2.1.0 2022-08-02
 * updates
 	* Update from Stiumulus 2 to Stimulus 3. All updates are on the javascript/npm package side, this release updates package.json to use the new package on Stimulus 3.

@@ -3,6 +3,8 @@
 	* Remove workspace_record from stored filters. Client will need to override this controller to get custom attributes on stored filters 
 	* bug-fix
 		* Add back and save to locales file
+	* bug-fix 
+		* Allow for option condition to have no values https://github.com/hammerstonedev/refine-rails/pull/40
 
 ### 2.1.0 2022-08-02
 * updates

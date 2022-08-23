@@ -5,6 +5,10 @@
 		* Add back and save to locales file
 	* bug-fix 
 		* Allow for option condition to have no values https://github.com/hammerstonedev/refine-rails/pull/40
+	* updates
+		* All filters can be deleted using the delete button - there is no "default" condition
+		* Load the turbo frame with a "Create a filter" button instead of default condition
+		* Use @form in `refine_helper` instead of `@refine_filter` for consistency 
 
 ### 2.1.0 2022-08-02
 * updates

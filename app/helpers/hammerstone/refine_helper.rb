@@ -9,13 +9,15 @@ module Hammerstone
     def show_delete_button?
       # don't show the delete button if there is only one group and only one criterion
       # in the group
-      return true unless @form.grouped_criteria.length == 1 && @form.grouped_criteria.first.length == 1
-
-      false
+      true
     end
 
     def filter_class_name
-      @refine_filter.configuration[:class_name]
+      @form.configuration[:class_name]
+    end
+
+    def conditions
+      @form.available_conditions_attributes
     end
 
     def categories
@@ -24,10 +26,6 @@ module Hammerstone
       end
 
       categories.uniq.compact
-    end
-
-    def conditions
-      configuration[:conditions]
     end
 
     def conditions_for_category(category)
@@ -40,28 +38,8 @@ module Hammerstone
       conditions.filter { |condition| condition[:meta][:category].nil? }
     end
 
-    def blueprint
-      first_condition = conditions[0]
-      meta = first_condition[:meta]
-
-      unless @refine_filter.blueprint&.any?
-        return [{
-          depth: 1,
-          type: "criterion",
-          condition_id: first_condition[:id],
-          input: {clause: meta[:clauses][0][:id]},
-        }]
-      end
-
-      @refine_filter.blueprint
-    end
-
-    def configuration
-      @refine_filter.configuration
-    end
-
     def stable_id
-      configuration[:stable_id]
+      @form.configuration[:stable_id]
     end
 
     def id_suffix

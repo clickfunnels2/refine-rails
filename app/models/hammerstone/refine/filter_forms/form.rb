@@ -18,6 +18,8 @@ class Hammerstone::Refine::FilterForms::Form
   end
 
   def grouped_criteria
+    # Allow for an empty blueprint
+    return [] if @criteria.blank?
     [].tap do |result|
       # start with an empty group
       result.push []
@@ -38,23 +40,25 @@ class Hammerstone::Refine::FilterForms::Form
     @filter.conditions
   end
 
-  private
-
   def blueprint
     if @filter.blueprint&.any?
       @filter.blueprint
     else
-      first_condition = available_conditions_attributes.first
-      meta = first_condition[:meta]
-
-      [{
-        depth: 1,
-        type: "criterion",
-        condition_id: first_condition[:id],
-        input: {clause: meta[:clauses][0][:id]},
-      }]
+      []
     end
   end
+
+  def configuration
+    @filter.configuration
+  end
+
+
+  # The json representation of conditions that is sent to the front end. 
+  def available_conditions_attributes
+    configuration[:conditions]
+  end
+
+  private
 
   def add_criteria!
     @criteria = []
@@ -63,9 +67,5 @@ class Hammerstone::Refine::FilterForms::Form
         **criterion_attrs.merge(form: self, uid: index, position: index)
       )
     end
-  end
-
-  def available_conditions_attributes
-    @filter.conditions_to_array
   end
 end

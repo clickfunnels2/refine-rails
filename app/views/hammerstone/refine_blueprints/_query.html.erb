@@ -2,7 +2,7 @@
   controller: "refine--state",
   refine__state_conditions_value: @form.available_conditions_attributes.to_json,
   refine__state_blueprint_value: @form.blueprint.to_json,
-  refine__state_class_name_value: configuration[:class_name],
+  refine__state_class_name_value: @form.configuration[:class_name],
   refine__state_id_suffix_value: id_suffix,
   refine__state_stable_id_value: stable_id } do %>
   <%= content_tag :div, class: "relative w-full h-full" do %>

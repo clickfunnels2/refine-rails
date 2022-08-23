@@ -9,10 +9,11 @@
     * All filters can be deleted using the delete button - there is no "default" condition
     * Load the turbo frame with a "Create a filter" button instead of default condition
     * Use @form in `refine_helper` instead of `@refine_filter` for consistency 
+    * https://github.com/hammerstonedev/refine-rails/pull/41
 
 ### 2.1.0 2022-08-02
-* updates
-  * Update from Stiumulus 2 to Stimulus 3. All updates are on the javascript/npm package side, this release updates package.json to use the new package on Stimulus 3.
+  * updates
+    * Update from Stiumulus 2 to Stimulus 3. All updates are on the javascript/npm package side, this release updates package.json to use the new package on Stimulus 3.
 
 ### 2.0.2 2022-07-24
   * bug-fix
@@ -23,11 +24,11 @@
     * _date_picker.html.erb remove `blur` listener, keep `$change` and add `change` to comply with updated bullet-train_fields npm package.
 
 ### 2.0.0 2022-07-24
-* enhancements
-  * Create app/controllers/concerns/hammerstone_filter.rb that the client can include in their application_controller. This can then be referenced in their controller they want filtered with something like @refine_filter = apply_filter(DevelopersFilter) (If in the developer_controller and want to apply DevelopersFilter)
-  Reference in client application_controller.rb include HammerstoneFilter
-  * Add the search_filter_controller to the npm package. Note: this is not in the refine folder b/c it's not necessarily required
-  * Allow client to use ENV or Rails credentials. Need a better solution here.
-  * Add filter_builder_dropdown to ship with the gem so they can just render the partial. In their index view they can simply -> <%= render partial: 'hammerstone/filter_builder_dropdown' %>
-  * Add locales
-  * Add routes
+  * enhancements
+    * Create app/controllers/concerns/hammerstone_filter.rb that the client can include in their application_controller. This can then be referenced in their controller they want filtered with something like @refine_filter = apply_filter(DevelopersFilter) (If in the developer_controller and want to apply DevelopersFilter)
+    Reference in client application_controller.rb include HammerstoneFilter
+    * Add the search_filter_controller to the npm package. Note: this is not in the refine folder b/c it's not necessarily required
+    * Allow client to use ENV or Rails credentials. Need a better solution here.
+    * Add filter_builder_dropdown to ship with the gem so they can just render the partial. In their index view they can simply -> <%= render partial: 'hammerstone/filter_builder_dropdown' %>
+    * Add locales
+    * Add routes

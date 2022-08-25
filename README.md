@@ -65,7 +65,14 @@ If using .env, application.yml or another gem set `NAMESPACE_REFINE_STABILIZERS=
 
 9.  Import the Stimulus Controllers. 
 
-10. Add jquery 
+```
+// import { Application } from "stimulus"
+import { controllerDefinitions as refineControllers } from "@hammerstone/refine-stimulus"
+// window.Stimulus = Application.start()
+Stimulus.load(refineControllers)
+```
+
+10. Add jquery (necessary for date picker)
 `yarn add jquery`
 
 ```
@@ -164,14 +171,14 @@ From the directory of the project including this package:
 
 ```bash
 
-yalc add @hammerstone/refine-stimulus
+yalc link @hammerstone/refine-stimulus
 ```
 
 When you make local updates to the package: 
 
 ```bash 
 # From this repo (refine-rails)
-yarn 
+yarn build
 yalc push
 ```
 

@@ -20,7 +20,7 @@ const criterion = (id, depth, condition) => {
     const isOptionCondition = component === 'option-condition'
     newInput[refinement.id] = {
       clause: clauses[0].id,
-      selected: isOptionCondition ? [options[0].id] : undefined,
+      selected: isOptionCondition ? [options[0]?.id] : undefined,
     }
   })
 

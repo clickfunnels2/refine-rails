@@ -58,6 +58,12 @@ class Hammerstone::Refine::FilterForms::Form
     configuration[:conditions]
   end
 
+  # TODO make this a more useful data with pointers to which criteria
+  # each error goes with
+  def error_messages
+    @criteria.flat_map {|c| c.errors.full_messages }
+  end
+
   private
 
   def add_criteria!

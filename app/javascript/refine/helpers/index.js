@@ -40,6 +40,16 @@ export const filterUnstableEvent = (blueprint) => {
   window.dispatchEvent(event)
 }
 
+export const filterInvalidEvent = ({blueprint, errors}) => {
+  const event = new CustomEvent('filter-invalid', {
+    detail: {
+      blueprint,
+      errors,
+    },
+  })
+  window.dispatchEvent(event)
+}
+
 export const filterStoredEvent = (storedFilterId) => {
   const event = new CustomEvent('filter-stored', {
     detail: {

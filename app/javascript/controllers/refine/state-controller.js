@@ -74,9 +74,7 @@ export default class extends Controller {
       return lookup
     }, {})
     this.loadingTimeout = null
-
-   (this.element, this.stableId, this.filterName, true)
-   (window, this.stableId, this.filterName, true)
+    blueprintUpdatedEvent(this.element, this.blueprint)
   }
 
   disconnect() {
@@ -121,7 +119,7 @@ export default class extends Controller {
       this.blueprint.push(or())
     }
     this.blueprint.push(criterion(condition.id, 1, condition))
-    blueprintUpdatedEvent(this.blueprint, this.filterName)
+    blueprintUpdatedEvent(this.element, this.blueprint)
   }
 
   addCriterion(previousCriterionId) {
@@ -129,7 +127,7 @@ export default class extends Controller {
     const condition = conditions[0]
     const { meta } = condition
     blueprint.splice(previousCriterionId + 1, 0, and(), criterion(condition.id, 1, condition))
-    blueprintUpdatedEvent(this.blueprint, this.filterName)
+    blueprintUpdatedEvent(this.element, this.blueprint)
   }
 
   deleteCriterion(criterionId) {
@@ -185,7 +183,7 @@ export default class extends Controller {
       this.blueprint.push(criterion(condition.id, 1, condition))
     }
 
-    blueprintUpdatedEvent(this.blueprint, this.filterName)
+    blueprintUpdatedEvent(this.element, this.blueprint)
   }
 
   replaceCriterion(criterionId, conditionId, condition) {
@@ -197,7 +195,7 @@ export default class extends Controller {
     }
     // Build out a default criterion.
     this.blueprint[criterionId] = criterion(conditionId, criterionRow.depth, condition)
-    blueprintUpdatedEvent(this.blueprint, this.filterName)
+    blueprintUpdatedEvent(this.element, this.blueprint)
   }
 
   updateInput(criterionId, input, inputId) {
@@ -212,6 +210,6 @@ export default class extends Controller {
     } else {
       criterion[inputId] = { ...criterion[inputId], ...input }
     }
-    blueprintUpdatedEvent(this.blueprint, this.filterName)
+    blueprintUpdatedEvent(this.element, this.blueprint)
   }
 }

@@ -33,6 +33,8 @@ export const filterStabilizedEvent = (element, stableId, filterName, initialLoad
 
 export const filterUnstableEvent = (blueprint) => {
   const event = new CustomEvent('filter-unstable', {
+    bubbles: true,
+    cancelable: true,
     detail: {
       blueprint,
     },
@@ -42,16 +44,21 @@ export const filterUnstableEvent = (blueprint) => {
 
 export const filterInvalidEvent = ({blueprint, errors}) => {
   const event = new CustomEvent('filter-invalid', {
+    bubbles: true,
+    cancelable: true,
     detail: {
       blueprint,
       errors,
     },
+    bubbles: true
   })
   window.dispatchEvent(event)
 }
 
 export const filterStoredEvent = (storedFilterId) => {
   const event = new CustomEvent('filter-stored', {
+    bubbles: true,
+    cancelable: true,
     detail: {
       storedFilterId,
     },
@@ -59,11 +66,13 @@ export const filterStoredEvent = (storedFilterId) => {
   window.dispatchEvent(event)
 }
 
-export const blueprintUpdatedEvent = (blueprint) => {
+export const blueprintUpdatedEvent = (element, blueprint) => {
   const event = new CustomEvent('blueprint-updated', {
+    bubbles: true,
+    cancelable: true,
     detail: {
       blueprint
     },
   })
-  window.dispatchEvent(event)
+  element.dispatchEvent(event)
 }

@@ -23,7 +23,7 @@ export default class extends Controller {
     const blueprint = event.detail.blueprint
     const validationResult = await this.validateBlueprint(blueprint)
     if (validationResult.stableId) {
-      this.stableIdValue = validationResult.stableIdValue
+      this.stableIdValue = validationResult.stableId
       filterStabilizedEvent(this.element, this.stableIdValue, this.filterNameValue)
       filterStabilizedEvent(window, this.stableIdValue, this.filterNameValue)
     } else {
@@ -36,9 +36,7 @@ export default class extends Controller {
     const { stateController } = this
     const filter = this.filterNameValue
     let put_data = JSON.stringify({ blueprint, filter })
-    console.log('put_data', put_data)
     let token = document.querySelector("meta[name='csrf-token']")?.content
-    console.log('this.updateStableIdUrlValue', this.updateStableIdUrlValue)
     const response = await fetch(this.updateStableIdUrlValue, {
       method: 'PUT',
       body: put_data,

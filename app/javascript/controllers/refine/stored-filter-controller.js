@@ -3,7 +3,7 @@ import { filterStoredEvent } from '../../refine/helpers'
 
 export default class extends Controller {
   static targets = ['enabledSaveLink', 'disabledSaveLink', 'stableIdField']
-  static values = { id: Number, stableId: String }
+  static values = { id: Number, stableId: String, filterName: String }
 
   connect() {
     if (this.idValue) {
@@ -12,6 +12,7 @@ export default class extends Controller {
   }
 
   updateStableIdField(event) {
+    if (event.detail.filterName != this.filterNameValue) { return null }
     if (this.hasStableIdFieldTarget) {
       const { detail } = event
       const { stableId } = detail
@@ -23,12 +24,7 @@ export default class extends Controller {
     const { detail } = event
     const { stableId, initialLoad } = detail
 
-    // Don't bubble the filterStabilized event if
-    // it's not different
-    if (stableId == this.stableIdValue) {
-      event.preventDefault()
-      event.stopPropagation()
-    }
+    if (event.detail.filterName != this.filterNameValue) { return null }
     if (this.hasEnabledSaveLinkTarget && this.hasDisabledSaveLinkTarget && !initialLoad) {
       const saveUrl = new URL(this.enabledSaveLinkTarget.href)
       saveUrl.searchParams.set('stable_id', stableId)

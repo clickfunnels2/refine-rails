@@ -10,6 +10,9 @@
     * Load the turbo frame with a "Create a filter" button instead of default condition
     * Use @form in `refine_helper` instead of `@refine_filter` for consistency 
     * https://github.com/hammerstonedev/refine-rails/pull/41
+  * updates https://github.com/hammerstonedev/refine-rails/pull/43
+    * Add `Filter` button back to `filter_builder_dropdown` partial 
+    * Rename and add `search-filter-controller` Stimulus controller as a helper to get up and running fast
 
 ### 2.1.0 2022-08-02
   * updates

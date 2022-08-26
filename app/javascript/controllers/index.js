@@ -7,6 +7,7 @@ import FormController from './refine/form-controller'
 import StateController from './refine/state-controller'
 import StoredFilterController from './refine/stored-filter-controller'
 import UpdateController from './refine/update-controller'
+import SearchFilterController from './search-filter-controller'
 
 export const controllerDefinitions = [
   [AddController, 'refine/add-controller.js'],
@@ -15,7 +16,8 @@ export const controllerDefinitions = [
   [FormController, 'refine/form-controller.js'],
   [StateController, 'refine/state-controller.js'],
   [StoredFilterController, 'refine/stored-filter-controller.js'],
-  [UpdateController, 'refine/update-controller.js']
+  [UpdateController, 'refine/update-controller.js'],
+  [SearchFilterController, 'search-filter-controller.js']
 ].map(function(d) {
   const key = d[1]
   const controller = d[0]
@@ -32,5 +34,6 @@ export {
   FormController,
   StateController,
   StoredFilterController,
-  UpdateController
+  UpdateController, 
+  SearchFilterController
 }

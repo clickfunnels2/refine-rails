@@ -9,6 +9,7 @@ import StateController from './refine/state-controller'
 import StoredFilterController from './refine/stored-filter-controller'
 import StabilizeFilterController from './refine/stabilize-filter-controller'
 import UpdateController from './refine/update-controller'
+import SearchFilterController from './search-filter-controller'
 
 export const controllerDefinitions = [
   [AddController, 'refine/add-controller.js'],

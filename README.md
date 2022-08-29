@@ -124,7 +124,7 @@ Stimulus.load(refineControllers)
 ```
 
 If loading in Bullet Train,the load command is 
-`application.load(refineControllers)`
+`application.load(refineControllers)` and the file is `app/javascript/controllers/index.js`
 
 To manually register (or extend or provide your own replacement for) each Stimulus controller:
 

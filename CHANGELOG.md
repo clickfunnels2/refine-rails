@@ -13,6 +13,9 @@
   * updates https://github.com/hammerstonedev/refine-rails/pull/43
     * Add `Filter` button back to `filter_builder_dropdown` partial 
     * Rename and add `search-filter-controller` Stimulus controller as a helper to get up and running fast
+  * updates https://github.com/hammerstonedev/refine-rails/pull/42
+    * Use blueprint as source of truth - emit `blueprintStabilized` event as main piece of information coming from Refine
+    * Add stimulus controllers for BT integration -> `stabilize-filter-controller` and `search-filter-controller` to get and push stableId. Optional controllers customers can use for quick setup. 
 
 ### 2.1.0 2022-08-02
   * updates

@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import { delegate, abnegate } from 'jquery-events-to-dom-events'
-import { filterUnstableEvent, filterStabilizedEvent, blueprintUpdatedEvent } from '../../refine/helpers'
+import { blueprintUpdatedEvent } from '../../refine/helpers'
 
 const criterion = (id, depth, condition) => {
   const { meta, refinements, component } = condition
@@ -74,9 +74,7 @@ export default class extends Controller {
       return lookup
     }, {})
     this.loadingTimeout = null
-
-    filterStabilizedEvent(this.element, this.stableId, this.filterName, true)
-    filterStabilizedEvent(window, this.stableId, this.filterName, true)
+    blueprintUpdatedEvent(this.element, this.blueprint)
   }
 
   disconnect() {
@@ -109,8 +107,6 @@ export default class extends Controller {
   updateStableId(newUrl) {
     if (newUrl !== this.stableId) {
       this.stableId = newUrl
-      filterStabilizedEvent(this.element, this.stableId, this.filterName)
-      filterStabilizedEvent(window, this.stableId, this.filterName)
     }
   }
 
@@ -123,8 +119,7 @@ export default class extends Controller {
       this.blueprint.push(or())
     }
     this.blueprint.push(criterion(condition.id, 1, condition))
-    blueprintUpdatedEvent(this.blueprint)
-    filterUnstableEvent(this.blueprint)
+    blueprintUpdatedEvent(this.element, this.blueprint)
   }
 
   addCriterion(previousCriterionId) {
@@ -132,8 +127,7 @@ export default class extends Controller {
     const condition = conditions[0]
     const { meta } = condition
     blueprint.splice(previousCriterionId + 1, 0, and(), criterion(condition.id, 1, condition))
-    blueprintUpdatedEvent(this.blueprint)
-    filterUnstableEvent(this.blueprint)
+    blueprintUpdatedEvent(this.element, this.blueprint)
   }
 
   deleteCriterion(criterionId) {
@@ -178,8 +172,18 @@ export default class extends Controller {
       blueprint.splice(criterionId - 1, 2)
     }
 
-    blueprintUpdatedEvent(this.blueprint)
-    filterUnstableEvent(this.blueprint)
+    /**
+     * Blueprints always have an initial value so we don't have
+     * an awkward empty state in the UI
+     */
+    if (this.blueprint.length === 0) {
+      const condition = this.conditions[0]
+      const { meta } = condition
+
+      this.blueprint.push(criterion(condition.id, 1, condition))
+    }
+
+    blueprintUpdatedEvent(this.element, this.blueprint)
   }
 
   replaceCriterion(criterionId, conditionId, condition) {
@@ -191,8 +195,7 @@ export default class extends Controller {
     }
     // Build out a default criterion.
     this.blueprint[criterionId] = criterion(conditionId, criterionRow.depth, condition)
-    blueprintUpdatedEvent(this.blueprint)
-    filterUnstableEvent(this.blueprint)
+    blueprintUpdatedEvent(this.element, this.blueprint)
   }
 
   updateInput(criterionId, input, inputId) {
@@ -207,7 +210,6 @@ export default class extends Controller {
     } else {
       criterion[inputId] = { ...criterion[inputId], ...input }
     }
-    blueprintUpdatedEvent(this.blueprint)
-    filterUnstableEvent(this.blueprint)
+    blueprintUpdatedEvent(this.element, this.blueprint)
   }
 }

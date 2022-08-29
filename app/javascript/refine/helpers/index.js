@@ -50,7 +50,6 @@ export const filterInvalidEvent = ({blueprint, errors}) => {
       blueprint,
       errors,
     },
-    bubbles: true
   })
   window.dispatchEvent(event)
 }

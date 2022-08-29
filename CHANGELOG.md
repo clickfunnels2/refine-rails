@@ -1,4 +1,4 @@
-### 2.1.1 (Not yet released)
+### 2.1.1 2022-08-02
   * Load all stored filters when using stored filters view (bug - need to add scoping to filter)
   * Remove workspace_record from stored filters. Client will need to override this controller to get custom attributes on stored filters 
   * bug-fix

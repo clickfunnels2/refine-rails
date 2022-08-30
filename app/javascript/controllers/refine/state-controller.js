@@ -172,17 +172,6 @@ export default class extends Controller {
       blueprint.splice(criterionId - 1, 2)
     }
 
-    /**
-     * Blueprints always have an initial value so we don't have
-     * an awkward empty state in the UI
-     */
-    if (this.blueprint.length === 0) {
-      const condition = this.conditions[0]
-      const { meta } = condition
-
-      this.blueprint.push(criterion(condition.id, 1, condition))
-    }
-
     blueprintUpdatedEvent(this.element, this.blueprint)
   }
 

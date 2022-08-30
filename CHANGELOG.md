@@ -1,4 +1,8 @@
-### 2.2.0 2022-08-02
+### 2.2.1 2022-08-30
+  * bug-fix
+    * Allow deletion of single condition to blank filter state
+
+### 2.2.0 2022-08-29
   * Load all stored filters when using stored filters view (bug - need to add scoping to filter)
   * Remove workspace_record from stored filters. Client will need to override this controller to get custom attributes on stored filters 
   * bug-fix

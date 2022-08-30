@@ -7,14 +7,12 @@ export default class extends Controller {
   static targets = []
 
   connect() {
-    console.log("Seacrch filter connected!")
     const urlParams = new URLSearchParams(window.location.search)
     this.existingParams = urlParams
     this.existingParams.delete('stable_id')
   }
 
   search(event) {
-    console.log("search!")
     event.preventDefault()
     this.submitFilter()
     document.activeElement.blur()
@@ -23,7 +21,6 @@ export default class extends Controller {
   async submitFilter() {
     const {blueprint} = this.stateController
     const validationResult = await this.stabilizeFilterController.validateBlueprint(blueprint)
-    console.log('validationResult', validationResult)
     if (validationResult.stableId) {
       this.redirectToStableId(validationResult.stableId)
     } else {
@@ -68,7 +65,6 @@ export default class extends Controller {
   }
 
   async fetchAndRenderInvalidFilter(blueprint) {
-    console.log('this.submitUrlValue', this.submitUrlValue)
     const response = await fetch(this.submitUrlValue, {
       headers: {
         'Accept': 'application/json',

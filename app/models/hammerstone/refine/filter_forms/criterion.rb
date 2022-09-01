@@ -29,7 +29,9 @@ class Hammerstone::Refine::FilterForms::Criterion
     begin
       condition&.apply(input, filter.table, filter.initial_query)
     rescue Hammerstone::Refine::Conditions::Errors::ConditionClauseError => e
-      errors.add :base, e.message
+      e.errors.each do |error|
+        errors.add(:base, error.full_message)
+      end
     end
   end
 

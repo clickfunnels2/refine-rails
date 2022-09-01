@@ -154,10 +154,9 @@ module Hammerstone::Refine
       begin
         get_condition_for_criterion(criterion)&.apply(criterion[:input], table, initial_query)
       rescue Hammerstone::Refine::Conditions::Errors::ConditionClauseError => e
-        # TODO do we still need the error on the blueprint?
-        errors.add(:base, e.message, criterion_uid: criterion[:uid])
-        criterion[:errors] ||= []
-        criterion[:errors] << e.message
+        e.errors.each do |error|
+          errors.add(:base, error.full_message, criterion_uid: criterion[:uid])
+        end
       end
     end
 

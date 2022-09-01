@@ -1,4 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
+import { FetchRequest } from '@rails/request.js'
+
 export default class extends Controller {
   static values = {
     submitUrl: String
@@ -65,22 +67,18 @@ export default class extends Controller {
   }
 
   async fetchAndRenderInvalidFilter(blueprint) {
-    const response = await fetch(this.submitUrlValue, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': document.querySelector("meta[name='csrf-token']")?.content
-      },
-      method: "POST",
-      body: JSON.stringify({
-        filter: this.stateController.filterName,
-        blueprint: JSON.stringify(blueprint),
-        id_suffix: this.stateController.idSuffix
-      })
-    })
-
-    const responseData = await response.json()
-    const element = document.getElementById(responseData.target)
-    element.outerHTML = responseData.template
+    const request = new FetchRequest(
+      "POST",
+      this.submitUrlValue,
+      {
+        responseKind: "turbo-stream",
+        body: JSON.stringify({
+          filter: this.stateController.filterName,
+          blueprint: JSON.stringify(blueprint),
+          id_suffix: this.stateController.idSuffix
+        })
+      }
+    )
+    await request.perform()
   }
 }

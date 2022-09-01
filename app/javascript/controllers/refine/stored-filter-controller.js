@@ -22,10 +22,10 @@ export default class extends Controller {
 
   activateSaveLink(event) {
     const { detail } = event
-    const { stableId, initialLoad } = detail
+    const { stableId } = detail
 
     if (event.detail.filterName != this.filterNameValue) { return null }
-    if (this.hasEnabledSaveLinkTarget && this.hasDisabledSaveLinkTarget && !initialLoad) {
+    if (this.hasEnabledSaveLinkTarget && this.hasDisabledSaveLinkTarget) {
       const saveUrl = new URL(this.enabledSaveLinkTarget.href)
       saveUrl.searchParams.set('stable_id', stableId)
       this.enabledSaveLinkTarget.setAttribute('href', saveUrl)

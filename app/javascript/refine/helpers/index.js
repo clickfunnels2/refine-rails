@@ -18,14 +18,13 @@
   return true
 })()
 
-export const filterStabilizedEvent = (element, stableId, filterName, initialLoad) => {
+export const filterStabilizedEvent = (element, stableId, filterName) => {
   const event = new CustomEvent('filter-stabilized', {
     bubbles: true,
     cancelable: true,
     detail: {
       stableId,
       filterName,
-      initialLoad,
     },
   })
   element.dispatchEvent(event)

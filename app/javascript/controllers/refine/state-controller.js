@@ -3,13 +3,15 @@ import { delegate, abnegate } from 'jquery-events-to-dom-events'
 import { blueprintUpdatedEvent } from '../../refine/helpers'
 
 const criterion = (id, depth, condition) => {
-  const { meta, refinements, component } = condition
+  const component = condition?.component
+  const meta = condition?.meta || { clauses: [], options: {}}
+  const refinements = condition?.refinements || []
   const { clauses, options } = meta
   const isOptionCondition = component === 'option-condition'
   // Set newInput based on component
 
   let newInput = {
-    clause: clauses[0].id,
+    clause: clauses[0]?.id,
     selected: isOptionCondition ? [options[0].id] : undefined,
   }
 

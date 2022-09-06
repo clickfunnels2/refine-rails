@@ -13,23 +13,15 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
     @id_suffix = filter_params[:id_suffix]
     @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter)
 
-    if @form.valid?
-      status = :ok
-      filter_id = Hammerstone.stabilizer_class('Stabilizers::UrlEncodedStabilizer').new.to_stable_id(filter: filter)
-      payload= { filter_id: filter_id }
-    else
-      status = :unprocessable_entity
-      payload = {
-        action: "replace",
-        target: create_id("hammerstone_refine_query"),
-        template: self.class.render(
-          partial: "hammerstone/refine_blueprints/query",
-          assigns: {refine_filter: @refine_filter, id_suffix: @id_suffix, form: @form}
+    respond_to do |format|
+      format.turbo_stream do
+        @form.validate!
+        render turbo_stream: turbo_stream.replace(
+          create_id("hammerstone_refine_query"),
+          partial: "hammerstone/refine_blueprints/query"
         )
-      }
+      end
     end
-
-    render json: payload, status: status
   end
 
   def update_stable_id

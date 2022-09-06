@@ -175,7 +175,10 @@ module Hammerstone::Refine::Conditions
       # Errors added to the errors array by individual conditions and standard rails validations
       if errors.any? || !valid?
         # When the error is rescued, it will stringify the message.
-        raise Errors::ConditionClauseError, errors.attribute_names.map{|name| errors[name].join}.to_sentence
+        raise Errors::ConditionClauseError.new(
+          errors.attribute_names.map{|name| errors[name].join}.to_sentence,
+          errors: errors
+        )
       end
     end
 

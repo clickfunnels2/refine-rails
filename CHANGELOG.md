@@ -1,3 +1,8 @@
+### 2.2.2 2022-09-03
+  * bug-fix 
+    * show both error messages if neither date is filled in when using "betweens"
+    * Use turbo streams instead of json in create action https://github.com/hammerstonedev/refine-rails/pull/48
+
 ### 2.2.1 2022-08-30
   * bug-fix
     * Allow deletion of single condition to blank filter state

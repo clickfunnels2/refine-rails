@@ -190,6 +190,27 @@ module Hammerstone::Refine::Conditions
       end
     end
 
+    describe "Clause Set" do
+      it "works with value set" do
+        data = {clause: OptionCondition::CLAUSE_SET, selected:[]}
+        expected_sql = <<~SQL.squish
+          SELECT "o".* FROM "o" WHERE ("o"."simple_option_test" IS NOT NULL OR `o`.`simple_option_test` != '')
+        SQL
+
+        assert_equal convert(expected_sql), apply_condition_on_test_filter(simple_condition, data).to_sql
+      end
+    end
+
+    describe "Clause Not Set" do
+      it "works with value not set" do
+        data = {clause: OptionCondition::CLAUSE_NOT_SET, selected:[]}
+        expected_sql = <<~SQL.squish
+          SELECT "o".* FROM "o" WHERE ("o"."simple_option_test" IS NULL OR `o`.`simple_option_test` = '')
+        SQL
+        assert_equal convert(expected_sql), apply_condition_on_test_filter(simple_condition, data).to_sql
+      end
+    end
+
     describe "Configuration Object from options" do
       it "correctly sends configurations to front end with standard syntax" do
         condition = OptionCondition.new("option_test")

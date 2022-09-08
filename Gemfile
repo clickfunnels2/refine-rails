@@ -8,6 +8,7 @@ gem "mysql2"
 
 gem "sprockets-rails"
 gem "byebug"
+gem "bullet_train-fields"
 
 group :test do 
 	gem "minitest-around"

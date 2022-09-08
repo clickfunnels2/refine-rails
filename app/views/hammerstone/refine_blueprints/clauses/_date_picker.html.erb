@@ -1,5 +1,5 @@
 <div
-  data-controller="fields--date"
+  data-controller="refine--date"
   class="relative"
 >
   <label for="<%= condition_id %>" class="sr-only"><%= label %></label>
@@ -8,7 +8,7 @@
     name="<%= condition_id %>"
     type="text"
     value="<%= date&.to_date&.strftime('%m/%d/%y') %>"
-    data-fields--date-target="field"
+    data-refine--date-target="field"
     data-input-key="<%= input_key %>"
     data-input-id="<%= defined?(input_id) && input_id %>"
     data-action="$change->refine--update#date change->refine--update#date"

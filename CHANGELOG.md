@@ -1,7 +1,9 @@
-### 2.2.2 2022-09-03
+### 2.2.2 2022-09-07
   * bug-fix 
     * show both error messages if neither date is filled in when using "betweens"
     * Use turbo streams instead of json in create action https://github.com/hammerstonedev/refine-rails/pull/48
+  * Add rake task so customer can add gem to `tmp/gems` (must be run by customer) to pick up gem styling
+  * Use local partial
 
 ### 2.2.1 2022-08-30
   * bug-fix

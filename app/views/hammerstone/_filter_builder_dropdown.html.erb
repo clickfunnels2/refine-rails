@@ -37,7 +37,7 @@
         src: editor_hammerstone_refine_stored_filters_path({
           id: @stored_filter&.id, stable_id: @stable_id, filter: @refine_filter.class.name }.compact) do %>
         <div class="py-4">
-          <%= render partial: 'account/shared/loading', locals: {style: "tr"} %>
+          <%= render partial: 'hammerstone/loading', locals: {style: "tr"} %>
         </div>
       <% end %>
       <div class="py-6 flex sticky bottom-0 bg-white">

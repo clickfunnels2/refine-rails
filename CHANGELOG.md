@@ -1,3 +1,7 @@
+### 2.2.3 TBD
+  * bug-fix
+    * Uncomment out Options Conditions test and fix `set` `not-set` conditions 
+
 ### 2.2.2 2022-09-07
   * bug-fix 
     * show both error messages if neither date is filled in when using "betweens"

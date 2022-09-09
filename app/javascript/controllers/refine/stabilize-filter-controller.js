@@ -35,7 +35,12 @@ export default class extends Controller {
   async validateBlueprint(blueprint) {
     const { stateController } = this
     const filter = this.filterNameValue
-    let put_data = JSON.stringify({ blueprint, filter })
+    const form_id = stateController.formIdValue
+    let put_data = JSON.stringify({
+      blueprint,
+      filter,
+      form_id
+    })
     let token = document.querySelector("meta[name='csrf-token']")?.content
     const response = await fetch(this.updateStableIdUrlValue, {
       method: 'PUT',
@@ -53,5 +58,9 @@ export default class extends Controller {
       const errors = responseJson.errors
       return {errors}
     }
+  }
+
+  get stateController() {
+    return this.element.querySelector('[data-controller~=refine--state]')
   }
 }

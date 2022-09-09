@@ -1,4 +1,4 @@
-<%= turbo_frame_tag create_id("group_#{group_id}") do %>
+<%= turbo_frame_tag dom_id(@form, "group_#{group_id}") do %>
   <div class="bg-gray-50 rounded p-4 font-sans">
     <% criteria&.each_with_index do |criterion, index| %>
       <div class="flex items-start pb-3 flex-wrap">

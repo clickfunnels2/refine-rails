@@ -1,23 +1,23 @@
 class Hammerstone::RefineBlueprintsController < ApplicationController
+  include ActionView::RecordIdentifier # for dom_id
   layout false
-  include Hammerstone::RefineHelper # for create_id
 
   def show
     @refine_filter = filter
-    @id_suffix = filter_params[:id_suffix]
-    @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter)
+    @form_id = filter_params[:form_id]
+    @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter, id: @form_id)
   end
 
   def create
     @refine_filter = filter
-    @id_suffix = filter_params[:id_suffix]
-    @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter)
+    @form_id = filter_params[:form_id]
+    @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter, id: @form_id)
 
     respond_to do |format|
       format.turbo_stream do
         @form.validate!
         render turbo_stream: turbo_stream.replace(
-          create_id("hammerstone_refine_query"),
+          dom_id(@form, "query"),
           partial: "hammerstone/refine_blueprints/query"
         )
       end
@@ -26,11 +26,12 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
 
   def update_stable_id
     filterClass = filter_params[:filter].constantize
+    form_id = filter_params[:form_id]
     # note that here the params are coming in as a nested params hash,
     # in the show method they are a string. 
     blueprint_details = params.to_unsafe_h[:blueprint]
     filter = filterClass.new blueprint_details
-    form = Hammerstone::Refine::FilterForms::Form.new(filter)
+    form = Hammerstone::Refine::FilterForms::Form.new(filter, id: form_id)
     if form.valid?
       filter_id = Hammerstone.stabilizer_class('Stabilizers::UrlEncodedStabilizer').new.to_stable_id(filter: filter)
       render json: { filter_id: filter_id }, status: :ok
@@ -51,7 +52,7 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
   end
 
   def filter_params
-    params.permit(:filter, :stable_id, :blueprint, :id_suffix)
+    params.permit(:filter, :stable_id, :blueprint, :form_id)
   end
 
   def blueprint

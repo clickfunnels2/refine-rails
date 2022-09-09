@@ -67,6 +67,10 @@ class Hammerstone::Refine::FilterForms::Criterion
     condition.component.underscore
   end
 
+  def to_key
+    [form.id, uid]
+  end
+
   private
 
   def initialize_condition!

@@ -1,6 +1,6 @@
 <% criterion_id = criterion.position %>
 
-<%= turbo_frame_tag create_id("criterion_#{criterion_id}")  do %>
+<%= turbo_frame_tag dom_id(criterion)  do %>
   <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex flex-wrap flex-grow items-baseline w-full sm:w-auto sm:pr-12', data: {
     controller: 'refine--update',
     refine__update_criterion_id_value: criterion_id,
@@ -46,7 +46,7 @@
   <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'pt-5 ml-auto flex-0', data: {
     controller: 'refine--delete',
     refine__delete_criterion_id_value: criterion_id,
-    turbo_frame: create_id("hammerstone_refine_query"),
+    turbo_frame: dom_id(@form, "query"),
   }) do %>
     <%= button_tag type: 'submit', class: 'ml-auto flex items-center', data: {
       action: "click->refine--delete#criterion",

@@ -39,9 +39,10 @@ module Hammerstone::Refine::Conditions
     end
 
     def option_in_approved_list?
-      # TODO allow this to accept integers as well as strings. Right now must be a string. 
+      # TODO allow this to accept integers as well as strings. Right now must be a string.
+      return if selected.nil?
       selected.each do |select|
-        select.join if select.is_a? Array 
+        select.join if select.is_a? Array
         unless get_options.call.map { |option| option[:id] }.include? select
           errors.add(:base, "Selected #{select} is not configured in options list")
         end
@@ -206,11 +207,11 @@ module Hammerstone::Refine::Conditions
       table.grouping(table[:"#{attribute}"].not_eq(value).or(table[:"#{attribute}"].eq(nil)))
     end
 
-    def apply_clause_set(value, table)
+    def apply_clause_set(table)
       table.grouping(table[:"#{attribute}"].not_eq_any([nil, ""]))
     end
 
-    def apply_clause_not_set(value, table)
+    def apply_clause_not_set(table)
       table.grouping(table[:"#{attribute}"].eq_any([nil, ""]))
     end
   end

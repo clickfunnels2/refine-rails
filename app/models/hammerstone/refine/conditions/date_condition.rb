@@ -233,7 +233,7 @@ module Hammerstone::Refine::Conditions
       current_time = Time.current.in_time_zone(user_timezone)
 
       # Day will be 00 based
-      day_in_user_tz = day.to_time.in_time_zone(user_timezone)
+      day_in_user_tz = day.to_time(:utc).in_time_zone(user_timezone)
 
       options = {hour: current_time.hour, min: current_time.min, sec: current_time.sec}
 

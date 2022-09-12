@@ -25,7 +25,6 @@ export default class extends Controller {
   }
 
   connect() {
-    console.log('hey from date controller')
     this.initPluginInstance()
   }
 

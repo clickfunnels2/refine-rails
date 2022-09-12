@@ -1,3 +1,6 @@
+### 2.2.3 (not yet released)
+  * Add date picker to the gem. Note - this will override the `fields/date_controller` currently being used in client. Styles should already be imported via client, confirm before merge. 
+
 ### 2.2.2 2022-09-07
   * bug-fix 
     * show both error messages if neither date is filled in when using "betweens"

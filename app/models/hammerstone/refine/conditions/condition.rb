@@ -191,6 +191,10 @@ module Hammerstone::Refine::Conditions
       raise NotImplementedError
     end
 
+    def human_readable
+      raise NotImplementedError
+    end
+
     def apply_condition
       raise NotImplementedError
     end

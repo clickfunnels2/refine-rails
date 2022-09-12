@@ -21,6 +21,11 @@ module Hammerstone::Refine::Conditions
       "text-condition"
     end
 
+    def human_readable(input)
+      current_clause = clauses.select{ |clause| clause.id == input[:clause] }
+      "#{display} #{current_clause[0].display} #{input[:value]}"
+    end
+
     def clauses
       [
         Clause.new(CLAUSE_EQUALS, "Equals")

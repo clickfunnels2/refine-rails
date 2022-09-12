@@ -26,6 +26,20 @@ module Hammerstone::Refine
       end
     end
 
+    def human_readable
+      output = []
+      if blueprint.present?
+        blueprint.each do |criterion|
+          if criterion[:type] == "conjunction" 
+            output << criterion[:word]
+          else
+            output << get_condition_for_criterion(criterion).human_readable(criterion[:input])
+          end
+        end
+      end
+      output
+    end
+
     def initial_query
       raise NotImplementedError if @initial_query.nil?
       @initial_query

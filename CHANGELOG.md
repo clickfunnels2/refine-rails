@@ -1,5 +1,7 @@
 ### 2.2.3 (not yet released)
   * Add date picker to the gem. Note - this will override the `fields/date_controller` currently being used in client. Styles should already be imported via client, confirm before merge. 
+  * bug-fix
+    * Uncomment out Options Conditions test and fix `set` `not-set` conditions 
 
 ### 2.2.2 2022-09-07
   * bug-fix 

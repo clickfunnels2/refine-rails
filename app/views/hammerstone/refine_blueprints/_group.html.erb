@@ -8,10 +8,10 @@
         <p class="text-gray-400 pl-2">and</p>
       <% end %>
     <% end %>
-    <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: "pt-4 flex", data: {
+    <%= tag.div class: "pt-4 flex", data: {
       controller: "refine--add",
       refine__add_previous_criterion_id_value: criteria.last.position,
-    }) do %>
+    } do %>
       <button
         class="button-secondary text-gray-900 uppercase font-semibold text-center px-3 block"
         type="submit"

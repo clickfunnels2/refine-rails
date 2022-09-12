@@ -4,6 +4,7 @@
   refine__state_blueprint_value: @form.blueprint.to_json,
   refine__state_class_name_value: @form.configuration[:class_name],
   refine__state_stable_id_value: stable_id,
+  refine__state_refresh_url_value: hammerstone_refine_blueprint_path,
   refine__state_form_id_value: @form.id } do %>
   <%= content_tag :div, class: "relative w-full h-full" do %>
     <div
@@ -25,9 +26,7 @@
       <% end %>
  
     <% end %>
-    <%= form_tag(hammerstone_refine_blueprint_path, method: :get, class: 'flex items-center', data: {
-      controller: 'refine--add'
-    }) do %>
+    <%= tag.div(class: 'flex items-center', data: {controller: 'refine--add'}) do %>
 
       <button
         class="text-blue-600 background-transparent font-bold underline pt-4 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"

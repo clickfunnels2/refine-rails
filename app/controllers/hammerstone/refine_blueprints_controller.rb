@@ -7,12 +7,7 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
     @form_id = filter_params[:form_id]
     @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter, id: @form_id)
     respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(
-          dom_id(@form, "query"),
-          partial: "hammerstone/refine_blueprints/query"
-        )
-      end
+      format.turbo_stream
       format.html
     end
   end
@@ -25,10 +20,7 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         @form.validate!
-        render turbo_stream: turbo_stream.replace(
-          dom_id(@form, "query"),
-          partial: "hammerstone/refine_blueprints/query"
-        )
+        render :show
       end
     end
   end

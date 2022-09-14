@@ -23,12 +23,6 @@ export default class extends Controller {
     return null
   }
 
-  // Call this on submit
-  startUpdate() {
-    this.blueprintInput.value = JSON.stringify(this.state.blueprint)
-    this.state.startUpdate()
-  }
-
   async refreshFromServer() {
     this.state.startUpdate()
     const request = new FetchRequest(

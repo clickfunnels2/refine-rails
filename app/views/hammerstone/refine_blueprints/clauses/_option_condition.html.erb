@@ -5,7 +5,7 @@
 <% elsif %>
   <%= tag.div class: 'w-full mt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3 flex postfixed' do %>
     <%= tag.div data: {
-      action: "$change->refine--update#selected blur->refine--update#submitForm",
+      action: "$change->refine--update#selected blur->refine--update#refreshFromServer",
       controller: 'fields--super-select',
       fields__super_select_enable_search_value: 'true',
       fields__super_select_container_width_value: 'resolve',

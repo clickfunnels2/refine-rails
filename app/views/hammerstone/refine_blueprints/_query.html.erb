@@ -26,20 +26,8 @@
       <% end %>
  
     <% end %>
-    <%= tag.div(class: 'flex items-center', data: {controller: 'refine--add'}) do %>
 
-      <button
-        class="text-blue-600 background-transparent font-bold underline pt-4 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-        data-action="click->refine--add#group"
-        type="submit"
-      >
-        <% if @form.grouped_criteria.any? %>
-          <%= t(".buttons.add_or") %>
-        <% else %>
-          <%= t(".buttons.create_filter") %>
-        <% end %>
-      </button>
-    <% end %>
+    <%= render 'hammerstone/refine_blueprints/add_group' %>
   <% end %>
 <% end %>
 

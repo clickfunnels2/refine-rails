@@ -57,7 +57,9 @@ export default class extends Controller {
     conditions: Array,
     className: String,
     stableId: String,
-    idSuffix: String
+    idSuffix: String,
+    formId: String,
+    refreshUrl: String
   }
   static targets = ['loading']
 

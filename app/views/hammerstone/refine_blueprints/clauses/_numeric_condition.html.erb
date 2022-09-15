@@ -10,7 +10,7 @@
         type="text"
         value="<%= input[:value1] %>"
         data-input-key="value1"
-        data-action="input->refine--update#value blur->refine--update#submitForm"
+        data-action="input->refine--update#value blur->refine--update#refreshFromServer"
         data-input-id="<%= defined?(input_id) && input_id %>"
       />
       <%= render partial: 'hammerstone/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
@@ -27,7 +27,7 @@
           type="text"
           value="<%= input[:value2] %>"
           data-input-key="value2"
-          data-action="input->refine--update#value blur->refine--update#submitForm"
+          data-action="input->refine--update#value blur->refine--update#refreshFromServer"
           data-input-id="<%= defined?(input_id) && input_id %>"
         />
         <%= render partial: 'hammerstone/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>

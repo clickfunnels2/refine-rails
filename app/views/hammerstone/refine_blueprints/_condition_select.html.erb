@@ -1,4 +1,9 @@
-<% selected_condition_id = first_condition[:id] if local_assigns[:selected_condition_id].nil? %>
+<%
+  selected_condition_id ||= categories
+    .first
+    &.conditions_for_category(categories.first)
+    [:id]
+%>
 
 <%= tag.div data: {
   action: "$change->refine--update#condition",
@@ -8,7 +13,7 @@
 } do %>
   <select
     data-fields--super-select-target="select"
-    data-condition-id="selected_condition_id"
+    data-condition-id="<%= selected_condition_id %>"
     name="conditions"
     class="w-full sm:w-auto"
   >

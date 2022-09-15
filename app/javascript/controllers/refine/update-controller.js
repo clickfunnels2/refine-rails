@@ -1,22 +1,15 @@
-import FormController from './form-controller'
+import ServerRefreshController from './server-refresh-controller'
 import { debounce } from 'lodash'
 
-export default class extends FormController {
+export default class extends ServerRefreshController {
   static values = {
     criterionId: Number,
-    stableId: String
   }
 
   initialize() {
     this.updateBlueprint = debounce((event, value, inputKey) => {
       this.value(event, value, inputKey)
-      this.createStableId(this.state.blueprint, this.state.filterName)
     }, 500)
-  }
-
-  connect() {
-    FormController.prototype.connect.apply(this)
-    this.state.updateStableId(this.stableIdValue)
   }
 
   refinedFilter(event) {
@@ -31,7 +24,7 @@ export default class extends FormController {
       },
       inputId
     )
-    this.submitForm()
+    this.refreshFromServer()
   }
 
   clause(event) {
@@ -45,7 +38,7 @@ export default class extends FormController {
       },
       inputId
     )
-    this.submitForm()
+    this.refreshFromServer()
   }
 
   selected(event) {
@@ -54,7 +47,6 @@ export default class extends FormController {
     const selectedOptions = options.filter((option) => option.selected)
     const selected = selectedOptions.map((option) => option.value)
     this.value(event, selected, 'selected')
-    this.createStableId(this.state.blueprint, this.state.filterName)
   }
 
   value(event, value, inputKey) {
@@ -76,27 +68,7 @@ export default class extends FormController {
     const { picker } = event.detail
     const value = picker.startDate.format('YYYY-MM-DD')
     this.value(event, value)
-    this.submitForm()
-  }
-
-  createStableId(blueprint, filter) {
-    // Create stableId on debounced input and update stable id to allow for form submission
-    const { state } = this
-    let post_data = JSON.stringify({ blueprint, filter })
-    let token = document.querySelector("meta[name='csrf-token']")?.content
-    $.ajax({
-      type: 'PUT',
-      url: '/hammerstone/update_stable_id',
-      data: post_data,
-      headers: {
-        accept: 'application/json',
-        'content-type': 'application/json',
-        'X-CSRF-Token': token,
-      },
-      success: function (e) {
-        state.updateStableId(e.filter_id)
-      },
-    })
+    this.refreshFromServer()
   }
 
   condition(event) {
@@ -105,7 +77,7 @@ export default class extends FormController {
     const newConditionId = element.value
     const config = this.state.conditionConfigFor(newConditionId)
     state.replaceCriterion(criterionIdValue, newConditionId, config)
-    this.submitForm()
+    this.refreshFromServer()
   }
 
   // Prevent form submission when hitting enter in a text box

@@ -1,17 +1,17 @@
-import FormController from './form-controller'
+import ServerRefreshController from './server-refresh-controller'
 
-export default class extends FormController {
+export default class extends ServerRefreshController {
   static values = {
     previousCriterionId: Number,
   }
 
   criterion() {
     this.state.addCriterion(this.previousCriterionIdValue)
-    this.startUpdate()
+    this.refreshFromServer()
   }
 
   group() {
     this.state.addGroup()
-    this.startUpdate()
+    this.refreshFromServer()
   }
 }

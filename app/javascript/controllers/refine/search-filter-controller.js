@@ -75,7 +75,7 @@ export default class extends Controller {
         body: JSON.stringify({
           filter: this.stateController.filterName,
           blueprint: JSON.stringify(blueprint),
-          id_suffix: this.stateController.idSuffix
+          form_id: this.stateController.formIdValue
         })
       }
     )

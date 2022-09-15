@@ -27,7 +27,7 @@ class Hammerstone::Refine::FilterForms::Criterion
     errors.clear
     return true if type == "conjunction"
     begin
-      condition&.apply(input, filter.table, filter.initial_query)
+      condition&.apply(input, filter.table, filter.initial_query || filter.fallback_initial_condition)
     rescue Hammerstone::Refine::Conditions::Errors::ConditionClauseError => e
       e.errors.each do |error|
         errors.add(:base, error.full_message)

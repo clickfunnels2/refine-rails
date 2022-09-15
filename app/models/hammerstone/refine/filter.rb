@@ -31,6 +31,15 @@ module Hammerstone::Refine
       @initial_query
     end
 
+    
+    # If the initial condition has not been set in the filter, validation for relationships will fail. 
+    # The BT implementation builds the filter *then* sets the initial condition
+    # This pulls a "smart" default from the filter arel table - Arel::Table provides the table name 
+    def fallback_initial_condition
+      # Ex: "orders" returns Order model which can be used with reflect_on_association
+      filter.table.name.classify.constantize
+    end 
+
     def table
       initial_query.model.arel_table
     end

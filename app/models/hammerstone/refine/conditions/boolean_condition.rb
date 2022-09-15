@@ -11,6 +11,15 @@ module Hammerstone::Refine::Conditions
       "boolean-condition"
     end
 
+    def human_readable(input)
+      current_clause = clauses.select{ |clause| clause.id == input[:clause] }
+      if input[:value]
+        "#{display} #{current_clause[0].display} #{input[:value]}"
+      else
+        "#{display} #{current_clause[0].display}"
+      end
+    end
+
     def boot
       @nulls_are = nil
       hide_unknowns
@@ -49,10 +58,10 @@ module Hammerstone::Refine::Conditions
 
     def clauses
       [
-        Clause.new(CLAUSE_TRUE, "Is True"),
-        Clause.new(CLAUSE_FALSE, "Is False"),
-        Clause.new(CLAUSE_SET, "Is Not Set"),
-        Clause.new(CLAUSE_NOT_SET, "Is Not Set"),
+        Clause.new(CLAUSE_TRUE, "is true"),
+        Clause.new(CLAUSE_FALSE, "is false"),
+        Clause.new(CLAUSE_SET, "is set"),
+        Clause.new(CLAUSE_NOT_SET, "is not set"),
       ]
     end
 

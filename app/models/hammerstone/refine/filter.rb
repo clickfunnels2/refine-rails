@@ -4,7 +4,7 @@ module Hammerstone::Refine
     include ActiveModel::Callbacks
     include TracksPendingRelationshipSubqueries
     include Stabilize
-    # This validation structure sents `initial_query` as the method to validate against 
+    # This validation structure sents `initial_query` as the method to validate against
     define_model_callbacks :initialize, only: [:after]
     after_initialize :valid?
 
@@ -24,6 +24,20 @@ module Hammerstone::Refine
         @relation = initial_query
         @immediately_commit_pending_relationship_subqueries = false
       end
+    end
+
+    def human_readable_criterions
+      output = []
+      if blueprint.present?
+        blueprint.each do |criterion|
+          if criterion[:type] == "conjunction"
+            output << criterion[:word]
+          else
+            output << get_condition_for_criterion(criterion).human_readable(criterion[:input])
+          end
+        end
+      end
+      output
     end
 
     def initial_query
@@ -66,8 +80,8 @@ module Hammerstone::Refine
       # No nodes returned, do nothing
       elsif subquery.present? && nodes.blank?
         subquery
-      # Subquery has not yet been initialized, initialize with new nodes - must use !nil? here, present/exists/blank etc don't 
-      # account for AR::Relation object. 
+      # Subquery has not yet been initialized, initialize with new nodes - must use !nil? here, present/exists/blank etc don't
+      # account for AR::Relation object.
       elsif subquery.blank? && !nodes.nil?
         subquery = group(nodes)
       end

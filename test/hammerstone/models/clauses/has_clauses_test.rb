@@ -94,12 +94,12 @@ module Hammerstone::Refine::Conditions
       [
         {
           id: "st",
-          display: "Is Set",
+          display: "is set",
           meta: {}
         },
         {
           id: "eq",
-          display: "Equals",
+          display: "is",
           meta: {}
         }
       ]
@@ -109,7 +109,7 @@ module Hammerstone::Refine::Conditions
       [
         {
           id: "st",
-          display: "Is Set",
+          display: "is set",
           meta: {}
         }
       ]
@@ -119,7 +119,7 @@ module Hammerstone::Refine::Conditions
       [
         {
           id: "eq",
-          display: "Equals",
+          display: "is",
           meta: {}
         }
       ]
@@ -129,52 +129,52 @@ module Hammerstone::Refine::Conditions
       [
         {
           id: "eq",
-          display: "Equals",
+          display: "is",
           meta: {}
         },
         {
           id: "dne",
-          display: "Does Not Equal",
+          display: "is not",
           meta: {}
         },
         {
           id: "sw",
-          display: "Starts With",
+          display: "starts with",
           meta: {}
         },
         {
           id: "ew",
-          display: "Ends With",
+          display: "ends with",
           meta: {}
         },
         {
           id: "dsw",
-          display: "Does Not Start With",
+          display: "does not start with",
           meta: {}
         },
         {
           id: "dew",
-          display: "Does Not End With",
+          display: "does not end with",
           meta: {}
         },
         {
           id: "cont",
-          display: "Contains",
+          display: "contains",
           meta: {}
         },
         {
           id: "dcont",
-          display: "Does Not Contain",
+          display: "does not contain",
           meta: {}
         },
         {
           id: "st",
-          display: "Is Set",
+          display: "is set",
           meta: {}
         },
         {
           id: "nst",
-          display: "Is Not Set",
+          display: "is not set",
           meta: {}
         }
       ]
@@ -184,37 +184,37 @@ module Hammerstone::Refine::Conditions
       [
         {
           id: "sw",
-          display: "Starts With",
+          display: "starts with",
           meta: {}
         },
         {
           id: "ew",
-          display: "Ends With",
+          display: "ends with",
           meta: {}
         },
         {
           id: "dsw",
-          display: "Does Not Start With",
+          display: "does not start with",
           meta: {}
         },
         {
           id: "dew",
-          display: "Does Not End With",
+          display: "does not end with",
           meta: {}
         },
         {
           id: "cont",
-          display: "Contains",
+          display: "contains",
           meta: {}
         },
         {
           id: "dcont",
-          display: "Does Not Contain",
+          display: "does not contain",
           meta: {}
         },
         {
           id: "nst",
-          display: "Is Not Set",
+          display: "is not set",
           meta: {}
         }
       ]
@@ -224,47 +224,47 @@ module Hammerstone::Refine::Conditions
       [
         {
           id: "eq",
-          display: "Equals",
+          display: "is",
           meta: {}
         },
         {
           id: "dne",
-          display: "Does Not Equal",
+          display: "is not",
           meta: {}
         },
         {
           id: "sw",
-          display: "Starts With",
+          display: "starts with",
           meta: {}
         },
         {
           id: "ew",
-          display: "Ends With",
+          display: "ends with",
           meta: {}
         },
         {
           id: "dsw",
-          display: "Does Not Start With",
+          display: "does not start with",
           meta: {}
         },
         {
           id: "dew",
-          display: "Does Not End With",
+          display: "does not end with",
           meta: {}
         },
         {
           id: "cont",
-          display: "Contains",
+          display: "contains",
           meta: {}
         },
         {
           id: "dcont",
-          display: "Does Not Contain",
+          display: "does not contain",
           meta: {}
         },
         {
           id: "nst",
-          display: "Is Not Set",
+          display: "is not set",
           meta: {}
         }
       ]

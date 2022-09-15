@@ -97,7 +97,7 @@ module Hammerstone::Refine::Conditions
         expected_output =
           [{
             id: DateCondition::CLAUSE_BETWEEN,
-            display: "Is Between",
+            display: "is between",
             meta: {}
           }]
 
@@ -164,7 +164,7 @@ module Hammerstone::Refine::Conditions
         expected_output =
           [{
             id: NumericCondition::CLAUSE_BETWEEN,
-            display: "Is Between",
+            display: "is between",
             meta: {}
           }]
 
@@ -250,7 +250,7 @@ module Hammerstone::Refine::Conditions
     def complete_refinement_config
       [{id: "date_refinement", component: "date-condition", display: "Date Refinement",
         meta: {clauses:
-          [{id: "eq", display: "On date", meta: {}}, {id: "dne", display: "Not on date", meta: {}}, {id: "lte", display: "Is On or Before", meta: {}}, {id: "gte", display: "Is On or After", meta: {}}, {id: "btwn", display: "Is Between", meta: {}}, {id: "gt", display: "Is More Than", meta: {}}, {id: "exct", display: "Is Exactly", meta: {}}, {id: "lt", display: "Is Less Than", meta: {}}, {id: "st", display: "Is Set", meta: {}}, {id: "nst", display: "Is Not Set", meta: {}}]}, refinements: []}, {id: "count_refinement", component: "numeric-condition", display: "Count Refinement", meta: {clauses: [{id: "eq", display: "Is Equal To", meta: {}}, {id: "dne", display: "Is Not Equal To", meta: {}}, {id: "gt", display: "Is Greater Than", meta: {}}, {id: "gte", display: "Is Greater Than Or Equal To", meta: {}}, {id: "lt", display: "Is Less Than", meta: {}}, {id: "lte", display: "Is Less Than Or Equal To", meta: {}}, {id: "btwn", display: "Is Between", meta: {}}, {id: "nbtwn", display: "Is Not Between", meta: {}}, {id: "st", display: "Is Set", meta: {}}, {id: "nst", display: "Is Not Set", meta: {}}]}, refinements: []}]
+          [{id: "eq", display: "on", meta: {}}, {id: "dne", display: "not on", meta: {}}, {id: "lte", display: "is on or before", meta: {}}, {id: "gte", display: "is on or after", meta: {}}, {id: "btwn", display: "is between", meta: {}}, {id: "gt", display: "is more than", meta: {}}, {id: "exct", display: "is", meta: {}}, {id: "lt", display: "is less than", meta: {}}, {id: "st", display: "is set", meta: {}}, {id: "nst", display: "is not set", meta: {}}]}, refinements: []}, {id: "count_refinement", component: "numeric-condition", display: "Count Refinement", meta: {clauses: [{id: "eq", display: "is", meta: {}}, {id: "dne", display: "is not", meta: {}}, {id: "gt", display: "is greater than", meta: {}}, {id: "gte", display: "is greater than or equal to", meta: {}}, {id: "lt", display: "is less than", meta: {}}, {id: "lte", display: "is less than or equal to", meta: {}}, {id: "btwn", display: "is between", meta: {}}, {id: "nbtwn", display: "is not between", meta: {}}, {id: "st", display: "is set", meta: {}}, {id: "nst", display: "is not set", meta: {}}]}, refinements: []}]
     end
   end
 

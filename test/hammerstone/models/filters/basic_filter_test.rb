@@ -78,7 +78,7 @@ describe Hammerstone::Refine::Filter do
     describe "Text Condition with meta, no clauses" do
       it "returns correct json" do
         filter = TestDoubleFilter.new([])
-        filter.conditions =  
+        filter.conditions =
           [Hammerstone::Refine::Conditions::TextCondition.new("text_field_value").with_meta({hint: "password"})]
         expected_value =
           {
@@ -160,52 +160,52 @@ describe Hammerstone::Refine::Filter do
           clauses: [
             {
               id: "eq",
-              display: "Equals",
+              display: "is",
               meta: {}
             },
             {
               id: "dne",
-              display: "Does Not Equal",
+              display: "is not",
               meta: {}
             },
             {
               id: "sw",
-              display: "Starts With",
+              display: "starts with",
               meta: {}
             },
             {
               id: "ew",
-              display: "Ends With",
+              display: "ends with",
               meta: {}
             },
             {
               id: "dsw",
-              display: "Does Not Start With",
+              display: "does not start with",
               meta: {}
             },
             {
               id: "dew",
-              display: "Does Not End With",
+              display: "does not end with",
               meta: {}
             },
             {
               id: "cont",
-              display: "Contains",
+              display: "contains",
               meta: {}
             },
             {
               id: "dcont",
-              display: "Does Not Contain",
+              display: "does not contain",
               meta: {}
             },
             {
               id: "st",
-              display: "Is Set",
+              display: "is set",
               meta: {}
             },
             {
               id: "nst",
-              display: "Is Not Set",
+              display: "is not set",
               meta: {}
             }
           ],
@@ -226,52 +226,52 @@ describe Hammerstone::Refine::Filter do
           clauses: [
             {
               id: "eq",
-              display: "Equals",
+              display: "is",
               meta: {}
             },
             {
               id: "dne",
-              display: "Does Not Equal",
+              display: "is not",
               meta: {}
             },
             {
               id: "sw",
-              display: "Starts With",
+              display: "starts with",
               meta: {}
             },
             {
               id: "ew",
-              display: "Ends With",
+              display: "ends with",
               meta: {}
             },
             {
               id: "dsw",
-              display: "Does Not Start With",
+              display: "does not start with",
               meta: {}
             },
             {
               id: "dew",
-              display: "Does Not End With",
+              display: "does not end with",
               meta: {}
             },
             {
               id: "cont",
-              display: "Contains",
+              display: "contains",
               meta: {}
             },
             {
               id: "dcont",
-              display: "Does Not Contain",
+              display: "does not contain",
               meta: {}
             },
             {
               id: "st",
-              display: "Is Set",
+              display: "is set",
               meta: {}
             },
             {
               id: "nst",
-              display: "Is Not Set",
+              display: "is not set",
               meta: {}
             }
           ]

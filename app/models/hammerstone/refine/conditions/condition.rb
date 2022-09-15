@@ -140,7 +140,7 @@ module Hammerstone::Refine::Conditions
         apply_relationship_attribute(input: input, query: initial_query)
         return
       end
-      # No longer a relationship attribute, apply condition normally 
+      # No longer a relationship attribute, apply condition normally
       nodes = apply_condition(input, table)
       if !is_refinement && has_any_refinements?
         refined_node = apply_refinements(input)
@@ -163,7 +163,7 @@ module Hammerstone::Refine::Conditions
 
     def validate_user_input(input)
       evaluated_rules = recursively_evaluate_lazy_enumerable(@rules)
-      # Set input parameters on the condition in order to use conditiion level validations
+      # Set input parameters on the condition in order to use condition level validations
       @clause = input[:clause]
       set_input_parameters(input)
       evaluated_rules.each_pair do |k, v|
@@ -188,6 +188,10 @@ module Hammerstone::Refine::Conditions
     end
 
     def component
+      raise NotImplementedError
+    end
+
+    def human_readable(input)
       raise NotImplementedError
     end
 

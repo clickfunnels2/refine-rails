@@ -1,3 +1,7 @@
+### 2.2.4 2022-09-14
+  * bug-fix 
+    * Add a fallback initial query based on the arel table _only to be used for validations_ 
+
 ### 2.2.3 2022-09-12
   * Add date picker to the gem. Note - this will override the `fields/date_controller` currently being used in client. Styles should already be imported via client, confirm before merge. 
   * bug-fix

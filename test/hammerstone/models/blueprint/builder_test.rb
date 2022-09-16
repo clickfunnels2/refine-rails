@@ -94,7 +94,6 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
         type: "criterion",
         condition_id: "id",
         depth: 0,
-        index: 0,
         input: {
           clause: "eq",
           value: "one",
@@ -104,13 +103,11 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
         type: "conjunction",
         word: "and",
         depth: 0,
-        index: 1
       },
       {
         type: "criterion",
         condition_id: "id",
         depth: 2,
-        index: 2,
         input: {
           clause: "eq",
           value: "two",
@@ -120,13 +117,11 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
         type: "conjunction",
         word: "and",
         depth: 2,
-        index: 3
       },
       {
         type: "criterion",
         condition_id: "id",
         depth: 2,
-        index: 4,
         input: {
           clause: "eq",
           value: "three",
@@ -136,13 +131,11 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
         type: "conjunction",
         word: "and",
         depth: 1,
-        index: 5
       },
       {
         type: "criterion",
         condition_id: "id",
         depth: 1,
-        index: 6,
         input: {
           clause: "eq",
           value: "four",
@@ -152,13 +145,11 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
         type: "conjunction",
         word: "and",
         depth: 0,
-        index: 7
       },
       {
         type: "criterion",
         condition_id: "id",
         depth: 0,
-        index: 8,
         input: {
           clause: "eq",
           value: "five",
@@ -173,7 +164,6 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
         type: "criterion",
         condition_id: "id",
         depth: 0,
-        index: 0,
         input: {
           clause: "eq",
           value1: "one",
@@ -183,13 +173,11 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
         type: "conjunction",
         word: "and",
         depth: 0,
-        index: 1
       },
       {
         type: "criterion",
         condition_id: "id",
         depth: 1,
-        index: 2,
         input: {
           clause: "eq",
           value1: "two"
@@ -199,13 +187,11 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
         type: "conjunction",
         word: "and",
         depth: 1,
-        index: 3
       },
       {
         type: "criterion",
         condition_id: "id",
         depth: 1,
-        index: 4,
         input: {
           clause: "eq",
           value1: "three"
@@ -218,7 +204,6 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
     [
       {
         depth: 0,
-        index: 0,
         type: "criterion",
         condition_id: "id",
         input: {
@@ -233,7 +218,6 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
     [
       {
         depth: 0,
-        index: 0,
         type: "criterion",
         condition_id: "id",
         input: {
@@ -243,13 +227,11 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
       },
       { # conjunction
         depth: 0,
-        index: 1,
         type: "conjunction",
         word: "and"
       },
       { # criterion
         depth: 0,
-        index: 2,
         type: "criterion",
         condition_id: "id",
         input: {
@@ -264,7 +246,6 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
     [
       {
         depth: 0,
-        index: 0,
         type: "criterion",
         condition_id: "id",
         input: {
@@ -274,13 +255,11 @@ describe Hammerstone::Refine::Blueprints::Blueprint do
       },
       { # conjunction
         depth: 0,
-        index: 1,
         type: "conjunction",
         word: "or"
       },
       { # criterion
         depth: 0,
-        index: 2,
         type: "criterion",
         condition_id: "id",
         input: {

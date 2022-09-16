@@ -21,7 +21,6 @@ module Hammerstone::Refine::Blueprints
 
       add({
         depth: @depth,
-        index: @blueprint.length,
         type: "criterion",
         condition_id: condition_id,
         input: input,
@@ -32,7 +31,6 @@ module Hammerstone::Refine::Blueprints
     def conjunction(word)
       add({
         depth: @depth,
-        index: @blueprint.length,
         type: "conjunction",
         word: word
       })

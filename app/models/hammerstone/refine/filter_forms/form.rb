@@ -1,10 +1,12 @@
 class Hammerstone::Refine::FilterForms::Form
+  include ActiveModel::Model
   # View Model that holds the state of the entire filter
 
-  attr_reader :filter
+  attr_reader :filter, :id
 
-  def initialize(filter)
+  def initialize(filter, id: nil)
     @filter = filter
+    @id = id || SecureRandom.uuid
     add_criteria!
   end
 

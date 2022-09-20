@@ -5,7 +5,7 @@ export default class extends Controller {
     this.state = this.getStateController()
     this.blueprintInput = this.addHiddenInput('blueprint')
     this.addHiddenInput('filter', this.state.filterName)
-    this.addHiddenInput('id_suffix', this.state.idSuffix)
+    this.addHiddenInput('form_id', this.state.formIdValue)
     this.finishUpdate()
   }
 

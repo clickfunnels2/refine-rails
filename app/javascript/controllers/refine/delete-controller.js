@@ -1,6 +1,6 @@
-import FormController from './form-controller';
+import ServerRefreshController from './server-refresh-controller';
 
-export default class extends FormController {
+export default class extends ServerRefreshController {
   static values = {
     criterionId: Number,
   }
@@ -8,6 +8,6 @@ export default class extends FormController {
   criterion() {
     const { state, criterionIdValue } = this;
     state.deleteCriterion(criterionIdValue);
-    this.startUpdate();
+    this.refreshFromServer()
   }
 }

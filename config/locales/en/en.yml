@@ -11,4 +11,11 @@ en:
       filter: Filter
       back: Back
       save: Save
+  hammerstone:
+    refine_blueprints:
+      add_group:
+        create_filter: "Create a Filter"
+        add_or: "OR"
+      add_and:
+        add_and: "AND"
 

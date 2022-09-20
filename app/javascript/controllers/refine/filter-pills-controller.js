@@ -10,7 +10,8 @@ export default class extends Controller {
 
   delete(event) {
     const { criterionId } = event.currentTarget.dataset
-    this.stateController.deleteCriterion(criterionId)
+    var index = parseInt(criterionId)
+    this.stateController.deleteCriterion(index)
     this.reloadPage()
   }
 

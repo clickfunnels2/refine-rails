@@ -1,6 +1,6 @@
 <% criterion_id = criterion.position %>
 
-<%= turbo_frame_tag dom_id(criterion)  do %>
+<%= tag.div id: dom_id(criterion) do %>
   <%= tag.div(class: 'flex flex-wrap flex-grow items-baseline w-full sm:w-auto sm:pr-12', data: {
     controller: 'refine--update',
     refine__update_criterion_id_value: criterion_id,

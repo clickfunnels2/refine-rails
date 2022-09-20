@@ -23,7 +23,11 @@ module Hammerstone::Refine::Conditions
 
     def human_readable(input)
       current_clause = clauses.select{ |clause| clause.id == input[:clause] }
-      "#{display} #{current_clause[0].display} #{input[:value]}"
+      if input[:clause].in? [CLAUSE_SET, CLAUSE_NOT_SET]
+        "#{display} #{current_clause[0].display}"
+      else
+        "#{display} #{current_clause[0].display} #{input[:value]}"
+      end
     end
 
     def clauses

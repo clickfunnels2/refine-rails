@@ -77,14 +77,20 @@ module Hammerstone::Refine::Conditions
     def human_readable(input)
       current_clause = clauses.select{ |clause| clause.id == input[:clause] }
 
-      if input[:modifier] == 'ago' then
-        "#{display} #{current_clause[0].display} #{input[:days]} days ago"
-      elsif input[:modifier] == 'from_now' then
-        "#{display} #{current_clause[0].display} #{input[:days]} days from now"
-      elsif !input[:days]
+      case input[:clause]
+      when *[CLAUSE_EQUALS, CLAUSE_DOESNT_EQUAL, CLAUSE_LESS_THAN_OR_EQUAL, CLAUSE_GREATER_THAN_OR_EQUAL]
+        formatted_date1 = input[:date1].to_date.strftime("%m/%d/%y")
+        "#{display} #{current_clause[0].display} #{formatted_date1}"
+      when CLAUSE_BETWEEN
+        formatted_date1 = input[:date1].to_date.strftime("%m/%d/%y")
+        formatted_date2 = input[:date2].to_date.strftime("%m/%d/%y")
+        "#{display} #{current_clause[0].display} #{formatted_date1} and #{formatted_date2}"
+      when *[CLAUSE_GREATER_THAN, CLAUSE_LESS_THAN, CLAUSE_EXACTLY]
+        "#{display} #{current_clause[0].display} #{input[:days]} days #{input[:modifier] == 'ago' ? "ago" : "from now"}"
+      when *[CLAUSE_SET, CLAUSE_NOT_SET]
         "#{display} #{current_clause[0].display}"
       else
-        "#{display} #{current_clause[0].display} #{input[:date1]}"
+        raise "#{input[:clause]} not supported"
       end
     end
 

@@ -56,8 +56,6 @@ export default class extends Controller {
     blueprint: Array,
     conditions: Array,
     className: String,
-    stableId: String,
-    idSuffix: String,
     formId: String,
     refreshUrl: String
   }
@@ -71,8 +69,6 @@ export default class extends Controller {
     this.blueprint = this.blueprintValue
     this.conditions = this.conditionsValue
     this.filterName = this.classNameValue
-    this.idSuffix = this.idSuffixValue
-    this.stableId = this.stableIdValue
     this.conditionsLookup = this.conditions.reduce((lookup, condition) => {
       lookup[condition.id] = condition
       return lookup
@@ -106,12 +102,6 @@ export default class extends Controller {
 
   conditionConfigFor(conditionId) {
     return this.conditionsLookup[conditionId]
-  }
-
-  updateStableId(newUrl) {
-    if (newUrl !== this.stableId) {
-      this.stableId = newUrl
-    }
   }
 
   addGroup() {

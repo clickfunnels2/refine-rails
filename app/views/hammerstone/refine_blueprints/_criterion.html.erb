@@ -1,7 +1,7 @@
 <% criterion_id = criterion.position %>
 
 <%= turbo_frame_tag dom_id(criterion)  do %>
-  <%= tag.div(hammerstone_refine_blueprint_path, method: :get, class: 'flex flex-wrap flex-grow items-baseline w-full sm:w-auto sm:pr-12', data: {
+  <%= tag.div(class: 'flex flex-wrap flex-grow items-baseline w-full sm:w-auto sm:pr-12', data: {
     controller: 'refine--update',
     refine__update_criterion_id_value: criterion_id,
     position: criterion.position}) do %>

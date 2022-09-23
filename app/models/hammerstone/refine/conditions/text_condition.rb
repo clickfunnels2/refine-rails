@@ -21,35 +21,44 @@ module Hammerstone::Refine::Conditions
       "text-condition"
     end
 
+    def human_readable(input)
+      current_clause = clauses.select{ |clause| clause.id == input[:clause] }
+      if input[:clause].in? [CLAUSE_SET, CLAUSE_NOT_SET]
+        "#{display} #{current_clause[0].display}"
+      else
+        "#{display} #{current_clause[0].display} #{input[:value]}"
+      end
+    end
+
     def clauses
       [
-        Clause.new(CLAUSE_EQUALS, "Equals")
+        Clause.new(CLAUSE_EQUALS, "is")
           .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_DOESNT_EQUAL, "Does Not Equal")
+        Clause.new(CLAUSE_DOESNT_EQUAL, "is not")
           .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_STARTS_WITH, "Starts With")
+        Clause.new(CLAUSE_STARTS_WITH, "starts with")
           .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_ENDS_WITH, "Ends With")
+        Clause.new(CLAUSE_ENDS_WITH, "ends with")
           .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_DOESNT_START_WITH, "Does Not Start With")
+        Clause.new(CLAUSE_DOESNT_START_WITH, "does not start with")
           .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_DOESNT_END_WITH, "Does Not End With")
+        Clause.new(CLAUSE_DOESNT_END_WITH, "does not end with")
           .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_CONTAINS, "Contains")
+        Clause.new(CLAUSE_CONTAINS, "contains")
           .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_DOESNT_CONTAIN, "Does Not Contain")
+        Clause.new(CLAUSE_DOESNT_CONTAIN, "does not contain")
           .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_SET, "Is Set"),
+        Clause.new(CLAUSE_SET, "is set"),
 
-        Clause.new(CLAUSE_NOT_SET, "Is Not Set")
+        Clause.new(CLAUSE_NOT_SET, "is not set")
       ]
     end
 

@@ -162,6 +162,16 @@ module Hammerstone::Refine::Conditions
         SQL
         assert_equal convert(expected_sql), apply_condition_on_test_filter(condition, data).to_sql
       end
+
+      describe "Human readable text representation" do
+        it "correctly outputs human readable text for 'is set' clause" do
+          condition = DateWithTimeCondition.new("date_test")
+          data = {clause: DateCondition::CLAUSE_SET}
+          filter = apply_condition_and_return_filter(condition, data)
+          filter.translate_display(condition)
+          assert_equal "Date Test is set", condition.human_readable(data)
+        end
+      end
     end
   end
 end

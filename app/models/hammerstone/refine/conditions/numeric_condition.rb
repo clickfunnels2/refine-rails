@@ -42,27 +42,44 @@ module Hammerstone::Refine::Conditions
       "numeric-condition"
     end
 
+    def human_readable(input)
+      current_clause = clauses.select{ |clause| clause.id == input[:clause] }
+
+      case input[:clause]
+      when *[CLAUSE_EQUALS, CLAUSE_DOESNT_EQUAL, CLAUSE_GREATER_THAN, CLAUSE_GREATER_THAN_OR_EQUAL, CLAUSE_LESS_THAN, CLAUSE_LESS_THAN_OR_EQUAL]
+        "#{display} #{current_clause[0].display} #{input[:value1]}"
+      when *[CLAUSE_BETWEEN, CLAUSE_NOT_BETWEEN]
+        "#{display} #{current_clause[0].display} #{input[:value1]} and #{input[:value2]}"
+      when *[CLAUSE_SET, CLAUSE_NOT_SET]
+        "#{display} #{current_clause[0].display}"
+      else
+        raise "#{input[:clause]} not supported"
+      end
+    end
+
+
+
     def clauses
       [
-        Clause.new(CLAUSE_EQUALS, "Is Equal To").requires_inputs(["value1"]),
+        Clause.new(CLAUSE_EQUALS, "is").requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_DOESNT_EQUAL, "Is Not Equal To").requires_inputs(["value1"]),
+        Clause.new(CLAUSE_DOESNT_EQUAL, "is not").requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_GREATER_THAN, "Is Greater Than").requires_inputs(["value1"]),
+        Clause.new(CLAUSE_GREATER_THAN, "is greater than").requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_GREATER_THAN_OR_EQUAL, "Is Greater Than Or Equal To").requires_inputs(["value1"]),
+        Clause.new(CLAUSE_GREATER_THAN_OR_EQUAL, "is greater than or equal to").requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_LESS_THAN, "Is Less Than").requires_inputs(["value1"]),
+        Clause.new(CLAUSE_LESS_THAN, "is less than").requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_LESS_THAN_OR_EQUAL, "Is Less Than Or Equal To").requires_inputs(["value1"]),
+        Clause.new(CLAUSE_LESS_THAN_OR_EQUAL, "is less than or equal to").requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_BETWEEN, "Is Between").requires_inputs(["value1", "value2"]),
+        Clause.new(CLAUSE_BETWEEN, "is between").requires_inputs(["value1", "value2"]),
 
-        Clause.new(CLAUSE_NOT_BETWEEN, "Is Not Between").requires_inputs(["value1", "value2"]),
+        Clause.new(CLAUSE_NOT_BETWEEN, "is not between").requires_inputs(["value1", "value2"]),
 
-        Clause.new(CLAUSE_SET, "Is Set"),
+        Clause.new(CLAUSE_SET, "is set"),
 
-        Clause.new(CLAUSE_NOT_SET, "Is Not Set"),
+        Clause.new(CLAUSE_NOT_SET, "is not set"),
       ]
     end
 

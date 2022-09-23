@@ -74,6 +74,26 @@ module Hammerstone::Refine::Conditions
       "date-condition"
     end
 
+    def human_readable(input)
+      current_clause = clauses.select{ |clause| clause.id == input[:clause] }
+
+      case input[:clause]
+      when *[CLAUSE_EQUALS, CLAUSE_DOESNT_EQUAL, CLAUSE_LESS_THAN_OR_EQUAL, CLAUSE_GREATER_THAN_OR_EQUAL]
+        formatted_date1 = input[:date1].to_date.strftime("%m/%d/%y")
+        "#{display} #{current_clause[0].display} #{formatted_date1}"
+      when CLAUSE_BETWEEN
+        formatted_date1 = input[:date1].to_date.strftime("%m/%d/%y")
+        formatted_date2 = input[:date2].to_date.strftime("%m/%d/%y")
+        "#{display} #{current_clause[0].display} #{formatted_date1} and #{formatted_date2}"
+      when *[CLAUSE_GREATER_THAN, CLAUSE_LESS_THAN, CLAUSE_EXACTLY]
+        "#{display} #{current_clause[0].display} #{input[:days]} days #{input[:modifier] == 'ago' ? "ago" : "from now"}"
+      when *[CLAUSE_SET, CLAUSE_NOT_SET]
+        "#{display} #{current_clause[0].display}"
+      else
+        raise "#{input[:clause]} not supported"
+      end
+    end
+
     def attribute_is_date
       attribute_is(ATTRIBUTE_TYPE_DATE)
       self
@@ -117,34 +137,33 @@ module Hammerstone::Refine::Conditions
 
     def clauses
       [
-        Clause.new(CLAUSE_EQUALS, "On date")
+        Clause.new(CLAUSE_EQUALS, "on")
           .requires_inputs("date1"),
 
-        Clause.new(CLAUSE_DOESNT_EQUAL, "Not on date")
+        Clause.new(CLAUSE_DOESNT_EQUAL, "not on")
           .requires_inputs("date1"),
 
-        Clause.new(CLAUSE_LESS_THAN_OR_EQUAL, "Is On or Before")
+        Clause.new(CLAUSE_LESS_THAN_OR_EQUAL, "is on or before")
           .requires_inputs("date1"),
 
-        Clause.new(CLAUSE_GREATER_THAN_OR_EQUAL, "Is On or After")
+        Clause.new(CLAUSE_GREATER_THAN_OR_EQUAL, "is on or after")
           .requires_inputs("date1"),
 
-        Clause.new(CLAUSE_BETWEEN, "Is Between")
+        Clause.new(CLAUSE_BETWEEN, "is between")
           .requires_inputs(["date1", "date2"]),
 
-        Clause.new(CLAUSE_GREATER_THAN, "Is More Than")
+        Clause.new(CLAUSE_GREATER_THAN, "is more than")
           .requires_inputs(["days", "modifier"]),
 
-        Clause.new(CLAUSE_EXACTLY, "Is Exactly")
+        Clause.new(CLAUSE_EXACTLY, "is")
           .requires_inputs(["days", "modifier"]),
 
-        Clause.new(CLAUSE_LESS_THAN, "Is Less Than")
+        Clause.new(CLAUSE_LESS_THAN, "is less than")
           .requires_inputs(["days", "modifier"]),
 
-        Clause.new(CLAUSE_SET, "Is Set"),
+        Clause.new(CLAUSE_SET, "is set"),
 
-        Clause.new(CLAUSE_NOT_SET, "Is Not Set"),
-
+        Clause.new(CLAUSE_NOT_SET, "is not set"),
       ]
     end
 

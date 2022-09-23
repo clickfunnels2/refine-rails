@@ -22,6 +22,22 @@ module Hammerstone::Refine::Conditions
       "option-condition"
     end
 
+    def human_readable(input)
+      current_clause = clauses.select{ |clause| clause.id == input[:clause] }
+      display_values = input[:selected].map {|option_id| @options.find{|option| option[:id] == option_id}[:display]}
+      case input[:clause]
+      when *[CLAUSE_EQUALS, CLAUSE_DOESNT_EQUAL]
+        "#{display} #{current_clause[0].display} #{display_values.first}"
+      when *[CLAUSE_IN, CLAUSE_NOT_IN]
+        if display_values.length >= 3
+          display_values = display_values.take(2) + ["..."]
+        end
+        "#{display} #{current_clause[0].display}: #{display_values.join(", ")}"
+      else
+        raise "#{input[:clause]} not supported"
+      end
+    end
+
     def boot
       @nil_option_id = nil
       @options = nil
@@ -82,25 +98,25 @@ module Hammerstone::Refine::Conditions
 
     def clauses
       [
-        Clause.new(CLAUSE_EQUALS, "Is")
+        Clause.new(CLAUSE_EQUALS, "is")
           .requires_inputs(["selected"])
           .with_meta({multiple: false}),
 
-        Clause.new(CLAUSE_DOESNT_EQUAL, "Is Not")
+        Clause.new(CLAUSE_DOESNT_EQUAL, "is not")
           .requires_inputs(["selected"])
           .with_meta({multiple: false}),
 
-        Clause.new(CLAUSE_IN, "Is One Of")
+        Clause.new(CLAUSE_IN, "is one of")
           .requires_inputs(["selected"])
           .with_meta({multiple: true}),
 
-        Clause.new(CLAUSE_NOT_IN, "Is Not One Of")
+        Clause.new(CLAUSE_NOT_IN, "is not one of")
           .requires_inputs(["selected"])
           .with_meta({multiple:true}),
 
-        Clause.new(CLAUSE_SET, "Is Set"),
+        Clause.new(CLAUSE_SET, "is set"),
 
-        Clause.new(CLAUSE_NOT_SET, "Is Not Set")
+        Clause.new(CLAUSE_NOT_SET, "is not set")
       ]
     end
 

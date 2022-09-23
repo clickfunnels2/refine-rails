@@ -8,7 +8,8 @@ export default class extends Controller {
   static values = {
     stableId: String,
     updateStableIdUrl: String,
-    filterName: String
+    filterName: String,
+    stateControllerDomId: String
   }
 
   static targets = []
@@ -61,6 +62,10 @@ export default class extends Controller {
   }
 
   get stateController() {
-    return this.element.querySelector('[data-controller~=refine--state]')
+    if (this.stateControllerDomIdValue) {
+      return document.getElementById(this.stateControllerDomIdValue)
+    } else {
+      return this.element.querySelector('[data-controller~=refine--state]')
+    }
   }
 }

@@ -8,6 +8,7 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
     @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter, id: @form_id)
     respond_to do |format|
       format.turbo_stream
+      format.html
     end
   end
 

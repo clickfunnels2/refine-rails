@@ -1,3 +1,13 @@
+### 2.3.0 2022-09-25
+  * feature
+    * Filter pills
+  * breaking change
+    * Assign uuids to filter modals
+    * Switch to turbo streams
+    * Remove the concept of "idSuffix"
+  * bugfix 
+    * Fix timezone issue with date condition
+
 ### 2.2.4 2022-09-14
   * bug-fix 
     * Add a fallback initial query based on the arel table _only to be used for validations_ 

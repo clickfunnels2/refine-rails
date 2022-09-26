@@ -1,3 +1,7 @@
+### 2.3.1 2022-09-26
+  * bugfix
+    * Support turbo frame/index view so customers can load `refine_blueprints` directly without stored filters 
+    * Update locales
 ### 2.3.0 2022-09-25
   * feature
     * Filter pills

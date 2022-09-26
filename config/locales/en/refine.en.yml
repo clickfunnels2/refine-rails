@@ -1,6 +1,11 @@
 en:
   hammerstone:
     refine_blueprints:
+      add_and:
+        add_and: "And"
+      add_group: 
+        add_or: "Add Or"
+        create_filter: "Create a filter"
       group:
         buttons:
           add_and: "And"

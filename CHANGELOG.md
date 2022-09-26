@@ -1,3 +1,7 @@
+### 2.3.2 2022-09-26
+  * bugfix
+    * Change buttons to divs so upstream forms aren't submitted
+
 ### 2.3.1 2022-09-26
   * bugfix
     * Support turbo frame/index view so customers can load `refine_blueprints` directly without stored filters 

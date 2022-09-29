@@ -24,7 +24,7 @@ module Hammerstone::Refine::Conditions
 
     def human_readable(input)
       current_clause = clauses.select{ |clause| clause.id == input[:clause] }
-      display_values = input[:selected].map {|option_id| @options.find{|option| option[:id] == option_id}[:display]}
+      display_values = input[:selected].map {|option_id| get_options.call.find{|option| option[:id] == option_id}[:display]}
       case input[:clause]
       when *[CLAUSE_EQUALS, CLAUSE_DOESNT_EQUAL]
         "#{display} #{current_clause[0].display} #{display_values.first}"

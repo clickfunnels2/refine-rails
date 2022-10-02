@@ -51,6 +51,7 @@ Example (Contacts Filter on a Contact Model)
 ```ruby 
 # app/filters/contacts_filter.rb
 class ContactsFilter < Hammerstone::Refine::Filter
+  include Hammerstone::Refine::Conditions
   @@default_stabilizer = Hammerstone::Refine::Stabilizers::UrlEncodedStabilizer
 
   def initial_query
@@ -67,9 +68,9 @@ class ContactsFilter < Hammerstone::Refine::Filter
 
   def conditions
     [
-      Hammerstone::Refine::Conditions::TextCondition.new("name"),
-      Hammerstone::Refine::Conditions::DateCondition.new("created_at"),
-      Hammerstone::Refine::Conditions::DateCondition.new("updated_at"),
+      TextCondition.new("name"),
+      DateCondition.new("created_at"),
+      DateCondition.new("updated_at"),
 
     ]
   end

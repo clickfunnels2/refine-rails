@@ -134,9 +134,6 @@ module Hammerstone::Refine
       query
     end
 
-    def handle_query_present(query, relation, inner_query, parent_table, linking_key)
-    end
-
     def handle_select_manager(query, relation, inner_query, parent_table, linking_key)
       if (inner_query.is_a? Arel::SelectManager) && (relation == :events)
         # Option to execute query on different DB

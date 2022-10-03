@@ -88,9 +88,11 @@ module Hammerstone::Refine
     end
 
     def commit_subset(subset:, query: nil)
-      # Turn pending subqueries into nodes to apply in the filter
-      # Subquery below is the hash value with has a subquery key.
+      # Turn pending relationship subqueries into nodes to apply
+      # Subquery below is the hash value which has a query key.
       subset.each do |relation, subquery|
+        # relation = table
+        # subquery.keys = [:instance, :query, :key, :secondary] possibly (:children)
         if subquery.dig(:children).present?
           # Send in the values at children as the subset hash and remove from existing subquery
           child_nodes = subquery.delete(:children)
@@ -103,49 +105,46 @@ module Hammerstone::Refine
         if subquery.dig(:wrapper).respond_to? :call
           subquery[:query] = subquery[:wrapper].call(subquery[:query], subquery[:key], subquery[:secondary])
         end
+
         parent_table = subquery[:instance].active_record.arel_table
         linking_key = subquery[:key]
-        temp_query = subquery[:query]
+        inner_query = subquery[:query]
+
         if query.present?
-          # If query is a Select Manager (“SELECT....“) we are deeply nested and need to build the query
+          # If query exists and is a Select Manager we are deeply nested and need to build the query
           # with a WHERE statement
           if query.is_a? Arel::SelectManager
-            if (temp_query.is_a? Arel::SelectManager) && ENV["MULTIPLE_DB_1"]
-              # TODO compare query to temp_query and see if they are on different dbs. If they are,
-              # execute temp query
-              # Switch to correct db to execute
-              ActiveRecord::Base.establish_connection :workspace
-              array_of_ids = ActiveRecord::Base.connection.exec_query(temp_query.to_sql).rows.flatten
-              query.where(parent_table[linking_key.to_s].in(array_of_ids))
-            else
-              # Same db, don’t decompose temp_query
-              # query is AREL select manager
-              # Where’s called on AREL select managers modify the object in place
-              query.where(parent_table[linking_key.to_s].in(temp_query))
-            end
+            query = handle_select_manager(query, relation, inner_query, parent_table, linking_key)
           else
             # Otherwise we are joining nodes, which requires an AND statement (ORs are immediately commited)
             # The group() in front of query is required for nested relationship attributes.
-            query = group(query).and(group(parent_table[linking_key.to_s].in(temp_query)))
+            query = group(query).and(group(parent_table[linking_key.to_s].in(inner_query)))
           end
         else
-          if (temp_query.is_a? Arel::SelectManager) && ENV["MULTIPLE_DB_2"]
-            # somehow compare query to temp_query and see if they are on different dbs. If they are,
-            # execute temp query
-            # Returns active record result object, then pluck ids (maybe not necessary)
-            # Switch to correct db to execute
-            ActiveRecord::Base.establish_connection :workspace
-            array_of_ids = ActiveRecord::Base.connection.exec_query(temp_query.to_sql).rows.flatten
-            query = parent_table[linking_key.to_s].in(array_of_ids)
+          # No existing query, top level of stack 
+          if (inner_query.is_a? Arel::SelectManager) && (relation == :events)
+            ActiveRecord::Base.establish_connection :event
+            array_of_ids = ActiveRecord::Base.connection.exec_query(inner_query.to_sql).rows.flatten
+            query = parent_table[linking_key.to_s].in(array_of_ids.uniq)
           else
-            # Don’t decompose temp_query
-            # query is AREL select manager
-            # Where’s called on AREL select managers modify the object in place
-            query = parent_table[linking_key.to_s].in(temp_query)
+            query = parent_table[linking_key.to_s].in(inner_query)
           end
         end
       end
       query
+    end
+
+    def handle_select_manager(query, relation, inner_query, parent_table, linking_key)
+      if (inner_query.is_a? Arel::SelectManager) && (relation == :events)
+        # Option to execute query on different DB
+        ActiveRecord::Base.establish_connection :event
+        array_of_ids = ActiveRecord::Base.connection.exec_query(inner_query.to_sql).rows.flatten
+        query.where(parent_table[linking_key.to_s].in(array_of_ids))
+      else
+        # Same DB, don’t decompose 
+        # Where’s called on AREL select managers modify the object in place
+        query.where(parent_table[linking_key.to_s].in(inner_query))
+      end
     end
 
     def get_pending_relationship_subquery

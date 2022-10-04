@@ -74,7 +74,8 @@ export default class extends ServerRefreshController {
   condition(event) {
     const { criterionIdValue, state } = this
     const element = event.target
-    const newConditionId = element.value
+    let newConditionId = element.value
+    if (!newConditionId) newConditionId = element.querySelector('select').value    
     const config = this.state.conditionConfigFor(newConditionId)
     state.replaceCriterion(criterionIdValue, newConditionId, config)
     this.refreshFromServer()

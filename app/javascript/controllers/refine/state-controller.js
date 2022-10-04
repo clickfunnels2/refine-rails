@@ -88,7 +88,6 @@ export default class extends Controller {
     // only show the loading overlay if it's taking a long time
     // to render the updates
     this.loadingTimeout = window.setTimeout(() => {
-      document.activeElement.blur()
       this.loadingTarget.classList.remove('hidden')
     }, 1000)
   }

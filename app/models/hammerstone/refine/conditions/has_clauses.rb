@@ -84,6 +84,12 @@ module Hammerstone::Refine::Conditions
       end
     end
 
+    def get_clause_by_id(id)
+      clause = get_clauses.call().find{ |clause| clause.id == id }
+      raise "Clause with id: #{id} not found" unless clause
+      clause
+    end
+
     def get_clauses
       proc do
         returned_clauses = clauses.dup

@@ -320,5 +320,44 @@ module Hammerstone::Refine::Conditions
         assert_equal(["Selected option_7 is not configured in options list"], filter.errors.full_messages)
       end
     end
+
+    describe "Human readable text representation" do
+      it "correctly outputs human readable text for 'in' clause. Single value selected" do
+        condition = OptionCondition.new("option_test")
+          .with_options(
+            [{
+              id: "option_1",
+              display: "Option 1"
+            }, {
+              id: "option_2",
+              display: "Option 2"
+            }]
+          )
+
+        data = {clause: OptionCondition::CLAUSE_EQUALS, selected: ["option_2"]}
+        filter = apply_condition_and_return_filter(condition, data)
+        filter.translate_display(condition)
+        assert_equal "Option Test is Option 2", condition.human_readable(data)
+      end
+
+
+      it "correctly outputs human readable text for 'in' clause. Multiple values selected" do
+        condition = OptionCondition.new("option_test")
+          .with_options(
+            [{
+              id: "option_1",
+              display: "Option 1"
+            }, {
+              id: "option_2",
+              display: "Option 2"
+            }]
+          )
+        data = {clause: OptionCondition::CLAUSE_IN, selected: ["option_1", "option_2"]}
+        filter = apply_condition_and_return_filter(condition, data)
+        filter.translate_display(condition)
+        assert_equal "Option Test is one of: Option 1, Option 2", condition.human_readable(data)
+      end
+
+    end
   end
 end

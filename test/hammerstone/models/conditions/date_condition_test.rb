@@ -158,6 +158,15 @@ module Hammerstone::Refine::Conditions
 
           assert_equal "Date To Test is set", condition.human_readable(data)
         end
+
+        it "correctly outputs human readable text for 'equals' clause using remap" do
+          data = {clause: DateCondition::CLAUSE_EQUALS, date1: "2019-05-15"}
+          condition = DateCondition.new("date_to_test").remap_clause_displays({eq: "equals"})
+          filter = apply_condition_and_return_filter(condition, data)
+          filter.translate_display(condition)
+
+          assert_equal "Date To Test equals 05/15/19", condition.human_readable(data)
+        end
       end
     end
   end

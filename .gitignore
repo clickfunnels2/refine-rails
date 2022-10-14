@@ -12,5 +12,6 @@
 /test/reports/*
 /app/assets/javascripts
 .byebug_history
-
+.idea
+.idea/*
 *.tgz

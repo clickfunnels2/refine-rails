@@ -41,7 +41,7 @@ module Hammerstone::Refine
     end
 
     def get_pending_relationship_item(key)
-      # Digging for a particular key will create a {} value, must check presence
+      # Digging for a particular key will create a {} value, must check presence.
       if pending_relationship_subqueries.dig(*get_current_relationship, key.to_sym).present?
         pending_relationship_subqueries.dig(*get_current_relationship, key.to_sym)
       else
@@ -110,11 +110,30 @@ module Hammerstone::Refine
         linking_key = subquery[:key]
         inner_query = subquery[:query]
 
+        # Compare database connections for inner and outer query. Refer to ActiveRecord::Reflection
+        # Example: 
+        # class Company < ActiveRecord::Base
+        #   has_many :clients
+        # end
+
+        # Company.reflect_on_association(:clients).klass
+        # # => Client
+
+        current_model = subquery[:instance]&.klass 
+        parent_model = subquery[:instance]&.active_record
+        use_multiple_databases = (inner_query.is_a? Arel::SelectManager) && use_multiple_databases?(current_model, parent_model)
+
         if query.present?
           # If query exists and is a Select Manager we are deeply nested and need to build the query
           # with a WHERE statement
           if query.is_a? Arel::SelectManager
-            query = handle_select_manager(query, relation, inner_query, parent_table, linking_key)
+            if use_multiple_databases
+              array_of_ids = current_model.connection.exec_query(inner_query.to_sql).rows.flatten
+              query.where(parent_table[linking_key.to_s].in(array_of_ids))
+            else
+              # Same DB, don’t decompose. Note: Where’s called on AREL select managers modify the object in place
+              query.where(parent_table[linking_key.to_s].in(inner_query))
+            end
           else
             # Otherwise we are joining nodes, which requires an AND statement (ORs are immediately commited)
             # The group() in front of query is required for nested relationship attributes.
@@ -122,9 +141,8 @@ module Hammerstone::Refine
           end
         else
           # No existing query, top level of stack 
-          if (inner_query.is_a? Arel::SelectManager) && (relation == :events)
-            ActiveRecord::Base.establish_connection :event
-            array_of_ids = ActiveRecord::Base.connection.exec_query(inner_query.to_sql).rows.flatten
+          if use_multiple_databases
+            array_of_ids = current_model.connection.exec_query(inner_query.to_sql).rows.flatten
             query = parent_table[linking_key.to_s].in(array_of_ids.uniq)
           else
             query = parent_table[linking_key.to_s].in(inner_query)
@@ -134,17 +152,9 @@ module Hammerstone::Refine
       query
     end
 
-    def handle_select_manager(query, relation, inner_query, parent_table, linking_key)
-      if (inner_query.is_a? Arel::SelectManager) && (relation == :events)
-        # Option to execute query on different DB
-        ActiveRecord::Base.establish_connection :event
-        array_of_ids = ActiveRecord::Base.connection.exec_query(inner_query.to_sql).rows.flatten
-        query.where(parent_table[linking_key.to_s].in(array_of_ids))
-      else
-        # Same DB, don’t decompose 
-        # Where’s called on AREL select managers modify the object in place
-        query.where(parent_table[linking_key.to_s].in(inner_query))
-      end
+    def use_multiple_databases?(current_model, parent_model)
+      # Are the queries on different databases?
+      parent_model.connection_db_config.configuration_hash != current_model.connection_db_config.configuration_hash
     end
 
     def get_pending_relationship_subquery

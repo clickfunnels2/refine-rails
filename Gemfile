@@ -14,10 +14,5 @@ group :test do
   gem "minitest-ci"
 end
 
-group :test do 
-	gem "minitest-around"
-  gem "minitest-ci"
-end
-
 # Start debugger with binding.b [https://github.com/ruby/debug]
 # gem "debug", ">= 1.0.0"

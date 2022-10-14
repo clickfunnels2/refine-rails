@@ -136,6 +136,7 @@ module Hammerstone::Refine
             end
           else
             # Otherwise we are joining nodes, which requires an AND statement (ORs are immediately commited)
+            # query can be a `Arel::Nodes::In` class (See HMMT test for example)
             # The group() in front of query is required for nested relationship attributes.
             query = group(query).and(group(parent_table[linking_key.to_s].in(inner_query)))
           end

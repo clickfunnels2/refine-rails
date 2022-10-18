@@ -66,9 +66,9 @@ export default class extends ServerRefreshController {
   }
 
   date(event) {
-    console.log(event)
     const { value } = event.currentTarget
-    const date = flatpickr.parseDate(value, 'm/d/Y')
+    // default format defined in date-controller.js
+    const date = flatpickr.parseDate(value, window.HammerstoneRefine.datePicker.format)
     this.value(event, flatpickr.formatDate(date, 'Y-m-d'))
     this.refreshFromServer()
   }

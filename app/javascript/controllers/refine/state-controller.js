@@ -75,7 +75,6 @@ export default class extends Controller {
       return lookup
     }, {})
     this.loadingTimeout = null
-    console.log("blueprint updated!", "connect")
     blueprintUpdatedEvent(this.element, this.blueprint)
   }
 
@@ -114,7 +113,6 @@ export default class extends Controller {
       this.blueprint.push(or())
     }
     this.blueprint.push(criterion(condition.id, 1, condition))
-    console.log("blueprint updated!", "addGroup")
     blueprintUpdatedEvent(this.element, this.blueprint)
   }
 
@@ -123,7 +121,6 @@ export default class extends Controller {
     const condition = conditions[0]
     const { meta } = condition
     blueprint.splice(previousCriterionId + 1, 0, and(), criterion(condition.id, 1, condition))
-    console.log("blueprint updated!", "addCriterion", previousCriterionId)
     blueprintUpdatedEvent(this.element, this.blueprint)
   }
 
@@ -169,7 +166,6 @@ export default class extends Controller {
       blueprint.splice(criterionId - 1, 2)
     }
 
-    console.log("blueprint updated!", "deleteCriterion", criterionId)
     blueprintUpdatedEvent(this.element, this.blueprint)
   }
 
@@ -186,10 +182,8 @@ export default class extends Controller {
     }
     const existing = this.blueprint[criterionId]
     const newCriterion = criterion(conditionId, criterionRow.depth, condition)
-    console.log("equal?", (isEqual(existing, newCriterion)))
     if (!isEqual(existing, newCriterion)) {
       this.blueprint[criterionId] = newCriterion
-      console.log("blueprint updated!", "replaceCriterion", criterionId, conditionId, condition)
       blueprintUpdatedEvent(this.element, this.blueprint)
       return true
     } else {
@@ -209,7 +203,6 @@ export default class extends Controller {
     } else {
       criterion[inputId] = { ...criterion[inputId], ...input }
     }
-    console.log("blueprint updated!", "updateInput", criterionId, input, inputId)
     blueprintUpdatedEvent(this.element, this.blueprint)
   }
 }

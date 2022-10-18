@@ -1,6 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 import flatpickr from "flatpickr"
-import $ from 'jquery' // ensure jquery is loaded before daterangepicker
+require("flatpickr/dist/flatpickr.css")
+import $ from 'jquery' // TODO move jquery deps to client app or default plugin
 
 export default class extends Controller {
   static targets = [
@@ -22,21 +23,13 @@ export default class extends Controller {
 
   connect() {
     // init plugin
-    console.log("init flatpickr on ", this.fieldTarget)
     this.plugin = flatpickr(this.fieldTarget,{
       enableTime: this.includeTimeValue,
       minDate: this.futureOnlyValue ? new Date() : null,
-      dateFormat: this.includeTimeValue ? 'MM/DD/YYYY h:mm A' : 'MM/DD/YYYY',
+      dateFormat: this.includeTimeValue ? 'm/d/Y h:i K' : 'm/d/Y',
       onChange: (selectedDates, dateStr, instance) => {
-        const format = this.includeTimeValue ? 'MM/DD/YYYY h:mm A' : 'MM/DD/YYYY'
-        this.fieldTarget.value = selectedDates[0].format(format)
-        // bubble up a change event when the input is updated for other listeners
-        const changeEvent = new Event('change', {bubbles: true})
-        this.fieldTarget.dispatchEvent(changeEvent)
-      },
-      onClose: (selectedDates, dateStr, instance) => {
-        console.log("flatpickr close!")
-        this.fieldTarget.value = ''
+        const format = this.includeTimeValue ? 'm/d/Y h:i K' : 'm/d/Y'
+        this.fieldTarget.value = instance.formatDate(selectedDates[0], format)
       }
     })
 
@@ -87,7 +80,6 @@ export default class extends Controller {
   }
 
   disconnect() {
-    console.log("Cleaning up flatpickr")
     this.plugin.destroy()
 
     if (this.includeTimeValue) {

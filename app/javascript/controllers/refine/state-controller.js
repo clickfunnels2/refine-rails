@@ -1,6 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 import { delegate, abnegate } from 'jquery-events-to-dom-events'
 import { blueprintUpdatedEvent } from '../../refine/helpers'
+import { isEqual } from 'lodash'
 
 const criterion = (id, depth, condition) => {
   const component = condition?.component
@@ -74,6 +75,7 @@ export default class extends Controller {
       return lookup
     }, {})
     this.loadingTimeout = null
+    console.log("blueprint updated!", "connect")
     blueprintUpdatedEvent(this.element, this.blueprint)
   }
 
@@ -112,6 +114,7 @@ export default class extends Controller {
       this.blueprint.push(or())
     }
     this.blueprint.push(criterion(condition.id, 1, condition))
+    console.log("blueprint updated!", "addGroup")
     blueprintUpdatedEvent(this.element, this.blueprint)
   }
 
@@ -120,6 +123,7 @@ export default class extends Controller {
     const condition = conditions[0]
     const { meta } = condition
     blueprint.splice(previousCriterionId + 1, 0, and(), criterion(condition.id, 1, condition))
+    console.log("blueprint updated!", "addCriterion", previousCriterionId)
     blueprintUpdatedEvent(this.element, this.blueprint)
   }
 
@@ -165,9 +169,14 @@ export default class extends Controller {
       blueprint.splice(criterionId - 1, 2)
     }
 
+    console.log("blueprint updated!", "deleteCriterion", criterionId)
     blueprintUpdatedEvent(this.element, this.blueprint)
   }
 
+  /*
+    Updates a criterion in the blueprint
+    Returns true if an update was actually performed, or false if no-op
+  */
   replaceCriterion(criterionId, conditionId, condition) {
     const criterionRow = this.blueprint[criterionId]
     if (criterionRow.type !== 'criterion') {
@@ -175,9 +184,17 @@ export default class extends Controller {
         `You can't call updateConditionId on a non-criterion type. Trying to update ${JSON.stringify(criterion)}`
       )
     }
-    // Build out a default criterion.
-    this.blueprint[criterionId] = criterion(conditionId, criterionRow.depth, condition)
-    blueprintUpdatedEvent(this.element, this.blueprint)
+    const existing = this.blueprint[criterionId]
+    const newCriterion = criterion(conditionId, criterionRow.depth, condition)
+    console.log("equal?", (isEqual(existing, newCriterion)))
+    if (!isEqual(existing, newCriterion)) {
+      this.blueprint[criterionId] = newCriterion
+      console.log("blueprint updated!", "replaceCriterion", criterionId, conditionId, condition)
+      blueprintUpdatedEvent(this.element, this.blueprint)
+      return true
+    } else {
+      return false
+    }
   }
 
   updateInput(criterionId, input, inputId) {
@@ -192,6 +209,7 @@ export default class extends Controller {
     } else {
       criterion[inputId] = { ...criterion[inputId], ...input }
     }
+    console.log("blueprint updated!", "updateInput", criterionId, input, inputId)
     blueprintUpdatedEvent(this.element, this.blueprint)
   }
 }

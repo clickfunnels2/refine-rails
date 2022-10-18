@@ -1,5 +1,6 @@
 import ServerRefreshController from './server-refresh-controller'
 import { debounce } from 'lodash'
+import flatpickr from 'flatpickr'
 
 export default class extends ServerRefreshController {
   static values = {
@@ -65,9 +66,10 @@ export default class extends ServerRefreshController {
   }
 
   date(event) {
-    const { picker } = event.detail
-    const value = picker.startDate.format('YYYY-MM-DD')
-    this.value(event, value)
+    console.log(event)
+    const { value } = event.currentTarget
+    const date = flatpickr.parseDate(value, 'm/d/Y')
+    this.value(event, flatpickr.formatDate(date, 'Y-m-d'))
     this.refreshFromServer()
   }
 
@@ -77,8 +79,10 @@ export default class extends ServerRefreshController {
     let newConditionId = element.value
     if (!newConditionId) newConditionId = element.querySelector('select').value    
     const config = this.state.conditionConfigFor(newConditionId)
-    state.replaceCriterion(criterionIdValue, newConditionId, config)
-    this.refreshFromServer()
+    const updatePerformed = state.replaceCriterion(criterionIdValue, newConditionId, config)
+    if (updatePerformed) {
+      this.refreshFromServer()
+    }
   }
 
   // Prevent form submission when hitting enter in a text box

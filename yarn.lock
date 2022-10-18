@@ -2073,11 +2073,6 @@ jquery-events-to-dom-events@^1.1.0:
   resolved "https://registry.yarnpkg.com/jquery-events-to-dom-events/-/jquery-events-to-dom-events-1.1.0.tgz#df038920e05760d9a41e00e2f48ca023f80d5579"
   integrity sha512-rEgD7wqslktlvPPlQ74QuaQJ7y33kNCGW0bhAKRiJbSm4yg6xiConpzOqrO2qO5a00hpMQZT7YrSElB7K6o9jg==
 
-jquery@^3.6.1:
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.1.tgz#fab0408f8b45fc19f956205773b62b292c147a16"
-  integrity sha512-opJeO4nCucVnsjiXOE+/PcCgYw9Gwpvs/a6B1LL/lQhwWwpbVEVYDZ1FokFr8PRc7ghYlrFPuyHuiiDNTQxmcw==
-
 js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"

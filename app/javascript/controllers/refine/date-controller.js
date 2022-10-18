@@ -1,7 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import flatpickr from "flatpickr"
 require("flatpickr/dist/flatpickr.css")
-import $ from 'jquery' // TODO move jquery deps to client app or default plugin
 
 export default class extends Controller {
   static targets = [
@@ -24,12 +23,10 @@ export default class extends Controller {
 /*
   Logic for the actual datepicker lives in a window variable.
   This allows end-users to customize it by specifying the following:
-  window.HammerstoneRefine = {
-    datePicker: {
-      connect: function() {}, // runs bound to the Stimulus Controller instance at connect
-      disconnect: function() {}, // runs bound to the Stimulus Controller instance at disconnect
-      format: 'm/d/y' // date format in flatpickr tokens (see https://flatpickr.js.org/formatting/)
-    }
+  window.HammerstoneRefine.datePicker = {
+    connect: function() {}, // runs bound to the Stimulus Controller instance at connect
+    disconnect: function() {}, // runs bound to the Stimulus Controller instance at disconnect
+    format: 'm/d/y' // date format in flatpickr tokens (see https://flatpickr.js.org/formatting/)
   }
 */
 window.HammerstoneRefine || (window.HammerstoneRefine = {})

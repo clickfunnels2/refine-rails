@@ -1,10 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
-require('daterangepicker/daterangepicker.css')
-
-
-// requires jQuery, moment, might want to consider a vanilla JS alternative
+import flatpickr from "flatpickr"
 import $ from 'jquery' // ensure jquery is loaded before daterangepicker
-import 'daterangepicker'
 
 export default class extends Controller {
   static targets = [
@@ -25,25 +21,78 @@ export default class extends Controller {
   }
 
   connect() {
-    this.initPluginInstance()
+    // init plugin
+    console.log("init flatpickr on ", this.fieldTarget)
+    this.plugin = flatpickr(this.fieldTarget,{
+      enableTime: this.includeTimeValue,
+      minDate: this.futureOnlyValue ? new Date() : null,
+      dateFormat: this.includeTimeValue ? 'MM/DD/YYYY h:mm A' : 'MM/DD/YYYY',
+      onChange: (selectedDates, dateStr, instance) => {
+        const format = this.includeTimeValue ? 'MM/DD/YYYY h:mm A' : 'MM/DD/YYYY'
+        this.fieldTarget.value = selectedDates[0].format(format)
+        // bubble up a change event when the input is updated for other listeners
+        const changeEvent = new Event('change', {bubbles: true})
+        this.fieldTarget.dispatchEvent(changeEvent)
+      },
+      onClose: (selectedDates, dateStr, instance) => {
+        console.log("flatpickr close!")
+        this.fieldTarget.value = ''
+      }
+    })
+
+
+    // Init time zone select
+    /*
+      TODO Clarify who uses time zones
+      Markup for selecting timze zones is not present in the gem code.
+      Clarify whether end-users should handle it
+      Could also provide a plugin system with this as the default
+    */
+    if (this.includeTimeValue && this.hasTimeZoneSelectWrapperTarget) {
+      this.timeZoneSelect = this.timeZoneSelectWrapperTarget.querySelector('select.select2')
+
+      $(this.timeZoneSelect).select2({
+        width: 'style',
+      })
+
+      $(this.timeZoneSelect).on('change.select2', (event) => {
+        const currentTimeZoneEl = this.currentTimeZoneWrapperTarget.querySelector('a')
+        const { value } = event.target
+
+        this.timeZoneFieldTarget.value = value
+        currentTimeZoneEl.textContent = value
+
+        // FIXME this should be scoped
+        const selectedOptionTimeZoneButton = document.querySelector('.selected-option-time-zone-button')
+
+        if (this.defaultTimeZonesValue.includes(value)) {
+          $('.time-zone-button').removeClass('button').addClass('button-alternative')
+          selectedOptionTimeZoneButton.addClass('hidden').attr('hidden', true)
+          $(`a[data-value="${value}"`).removeClass('button-alternative').addClass('button')
+        } else {
+          // deselect any selected button
+          $('.time-zone-button').removeClass('button').addClass('button-alternative')
+
+          selectedOptionTimeZoneButton.textContent = value
+          selectedOptionTimeZoneButton.dataset.value =  value
+          selectedOptionTimeZoneButton.removeAttribute('hidden')
+          selectedOptionTimeZoneButton.classList.remove('hidden')
+          selectedOptionTimeZoneButton.classList.remove('button-alternative')
+          selectedOptionTimeZoneButton.classList.add('button')
+        }
+
+        this.resetTimeZoneUI()
+      })
+    }
   }
 
   disconnect() {
-    this.teardownPluginInstance()
-  }
+    console.log("Cleaning up flatpickr")
+    this.plugin.destroy()
 
-  clearDate(event) {
-    // don't submit the form, unless it originated from the cancel/clear button
-    event.preventDefault()
-
-    $(this.fieldTarget).val('')
-  }
-
-  applyDateToField(event, picker) {
-    const format = this.includeTimeValue ? 'MM/DD/YYYY h:mm A' : 'MM/DD/YYYY'
-    $(this.fieldTarget).val(picker.startDate.format(format))
-    // bubble up a change event when the input is updated for other listeners
-    $(this.fieldTarget).trigger('change', picker)
+    if (this.includeTimeValue) {
+      $(this.timeZoneSelect).select2('destroy')
+    }
   }
 
   showTimeZoneButtons(event) {
@@ -90,78 +139,5 @@ export default class extends Controller {
     $(event.target).removeClass('button-alternative').addClass('button')
 
     this.resetTimeZoneUI()
-  }
-
-  initPluginInstance() {
-    $(this.fieldTarget).daterangepicker({
-      singleDatePicker: true,
-      timePicker: this.includeTimeValue,
-      timePickerIncrement: 5,
-      autoUpdateInput: false,
-      minDate: this.futureOnlyValue ? new Date() : false,
-      locale: {
-        cancelLabel: this.cancelButtonLabelValue,
-        applyLabel: this.applyButtonLabelValue,
-        format: this.includeTimeValue ? 'MM/DD/YYYY h:mm A' : 'MM/DD/YYYY',
-      },
-      parentEl: $(this.element),
-      drops: this.dropsValue ? this.dropsValue : 'down',
-    })
-
-    $(this.fieldTarget).on('apply.daterangepicker', this.applyDateToField.bind(this))
-    $(this.fieldTarget).on('cancel.daterangepicker', this.clearDate.bind(this))
-
-    this.pluginMainEl = this.fieldTarget
-    this.plugin = $(this.pluginMainEl).data('daterangepicker') // weird
-
-    // Init time zone select
-    if (this.includeTimeValue && this.hasTimeZoneSelectWrapperTarget) {
-      this.timeZoneSelect = this.timeZoneSelectWrapperTarget.querySelector('select.select2')
-
-      $(this.timeZoneSelect).select2({
-        width: 'style',
-      })
-
-      $(this.timeZoneSelect).on('change.select2', (event) => {
-        const currentTimeZoneEl = this.currentTimeZoneWrapperTarget.querySelector('a')
-        const { value } = event.target
-
-        $(this.timeZoneFieldTarget).val(value)
-        $(currentTimeZoneEl).text(value)
-
-        const selectedOptionTimeZoneButton = $('.selected-option-time-zone-button')
-
-        if (this.defaultTimeZonesValue.includes(value)) {
-          $('.time-zone-button').removeClass('button').addClass('button-alternative')
-          selectedOptionTimeZoneButton.addClass('hidden').attr('hidden', true)
-          $(`a[data-value="${value}"`).removeClass('button-alternative').addClass('button')
-        } else {
-          // deselect any selected button
-          $('.time-zone-button').removeClass('button').addClass('button-alternative')
-
-          selectedOptionTimeZoneButton.text(value)
-          selectedOptionTimeZoneButton.attr('data-value', value).removeAttr('hidden')
-          selectedOptionTimeZoneButton.removeClass(['hidden', 'button-alternative']).addClass('button')
-        }
-
-        this.resetTimeZoneUI()
-      })
-    }
-  }
-
-  teardownPluginInstance() {
-    if (this.plugin === undefined) {
-      return
-    }
-
-    $(this.pluginMainEl).off('apply.daterangepicker')
-    $(this.pluginMainEl).off('cancel.daterangepicker')
-
-    // revert to original markup, remove any event listeners
-    this.plugin.remove()
-
-    if (this.includeTimeValue) {
-      $(this.timeZoneSelect).select2('destroy')
-    }
   }
 }

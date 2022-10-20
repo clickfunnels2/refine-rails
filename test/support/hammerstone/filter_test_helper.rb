@@ -25,9 +25,4 @@ module FilterTestHelper
     blueprint = Hammerstone::Refine::Blueprints::Blueprint.new.criterion(condition.id, input)
     BlankTestFilter.new(blueprint, nil, [condition])
   end
-
-  def create_filter_CF2(condition, input)
-    blueprint = Hammerstone::Refine::Blueprints::Blueprint.new.criterion(condition.id, input)
-    Cf2BlankTestFilter.new(blueprint, [condition])
-  end
 end

@@ -242,7 +242,7 @@ If the filter is valid, the server responds 200 OK with the stable_id in the JSO
 If the filter is not valid, the server responds 422 Unprocessable Entity with an errors array in the JSON response
 
 ## Customizing the datepicker
-By default date filters use [flatpickr](https://flatpickr.js.org/getting-started/).  End users can specify an alterntive datepicker in their application javascript.  Here's an example using the daterangepicker that ships with Bullet Train:
+By default date filters use [flatpickr](https://flatpickr.js.org/getting-started/).  End users can specify an alternative datepicker in their application javascript.  Here's an example using the daterangepicker that ships with Bullet Train:
 
 ```javascript
 import $ from 'jquery' // ensure jquery is loaded before daterangepicker

@@ -5,12 +5,17 @@
   <label for="<%= condition_id %>" class="sr-only"><%= label %></label>
   <input
     class="rounded w-36 border border-solid border-coolGray-200 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-    name="<%= condition_id %>"
     type="text"
     value="<%= date&.to_date&.strftime('%m/%d/%y') %>"
     data-refine--date-target="field"
+  />
+  <input
+    type="hidden"
+    name="<%= condition_id %>"
+    value="<%= date&.to_date&.strftime('%y-%m-%d') %>"
+    data-refine--date-target="hiddenField"
     data-input-key="<%= input_key %>"
     data-input-id="<%= defined?(input_id) && input_id %>"
-    data-action="$change->refine--update#date change->refine--update#date"
-  />
+    data-action="change->refine--update#value"
+  >
 </div>

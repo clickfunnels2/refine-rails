@@ -12,6 +12,7 @@
 /test/reports/*
 /app/assets/javascripts
 .byebug_history
+/yarn-error.log
+*.tgz
 .idea
 .idea/*
-*.tgz

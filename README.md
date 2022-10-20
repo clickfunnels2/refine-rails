@@ -35,7 +35,7 @@ Stimulus.router.modulesByIdentifier
 ```
 You should see the `refine--....` controllers listed 
 
-6. Add jquery (necessary for date picker)
+6. Add jquery (necessary for our custom select elements)
 `yarn add jquery`
 
 ```
@@ -241,6 +241,51 @@ const response = await fetch(this.updateStableIdUrlValue, {
 If the filter is valid, the server responds 200 OK with the stable_id in the JSON response
 If the filter is not valid, the server responds 422 Unprocessable Entity with an errors array in the JSON response
 
+## Customizing the datepicker
+By default date filters use [flatpickr](https://flatpickr.js.org/getting-started/).  End users can specify an alterntive datepicker in their application javascript.  Here's an example using the daterangepicker that ships with Bullet Train:
+
+```javascript
+import $ from 'jquery' // ensure jquery is loaded before daterangepicker
+import 'daterangepicker'
+import 'daterangepicker/daterangepicker.css'
+
+window.HammerstoneRefine ||= {}
+window.HammerstoneRefine.datePicker = {
+  connect: function() {
+    $(this.fieldTarget).daterangepicker({
+      singleDatePicker: true,
+      autoUpdateInput: false,
+      minDate: this.futureOnlyValue ? new Date() : false,
+      locale: {
+        cancelLabel: "Cancel",
+        applyLabel: "Apply",
+        format: 'MM/DD/YYYY',
+      },
+      parentEl: $(this.element),
+      drops: this.dropsValue ? this.dropsValue : 'down',
+    })
+
+    $(this.fieldTarget).on('apply.daterangepicker', (event, picker) => {
+      const format =
+      $(this.fieldTarget).val(picker.startDate.format('MM/DD/YYYY'))
+      $(this.hiddenFieldTarget).val(picker.startDate.format('YYYY-MM-DD'))
+      this.hiddenFieldTarget.dispatchEvent(new Event('change', {bubbles: true}))
+    })
+
+    this.plugin = $(this.fieldTarget).data('daterangepicker')
+  },
+  disconnect: function() {
+    if (this.plugin === undefined) {
+      return
+    }
+
+    $(this.fieldTarget).off('apply.daterangepicker')
+
+    // revert to original markup, remove any event listeners
+    this.plugin.remove()
+  }
+}
+````
 
 ## Local JavaScript Development
 

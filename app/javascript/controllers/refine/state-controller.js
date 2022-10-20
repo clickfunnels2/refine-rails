@@ -1,6 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 import { delegate, abnegate } from 'jquery-events-to-dom-events'
 import { blueprintUpdatedEvent } from '../../refine/helpers'
+import { isEqual } from 'lodash'
 
 const criterion = (id, depth, condition) => {
   const component = condition?.component
@@ -168,6 +169,10 @@ export default class extends Controller {
     blueprintUpdatedEvent(this.element, this.blueprint)
   }
 
+  /*
+    Updates a criterion in the blueprint
+    Returns true if an update was actually performed, or false if no-op
+  */
   replaceCriterion(criterionId, conditionId, condition) {
     const criterionRow = this.blueprint[criterionId]
     if (criterionRow.type !== 'criterion') {
@@ -175,9 +180,15 @@ export default class extends Controller {
         `You can't call updateConditionId on a non-criterion type. Trying to update ${JSON.stringify(criterion)}`
       )
     }
-    // Build out a default criterion.
-    this.blueprint[criterionId] = criterion(conditionId, criterionRow.depth, condition)
-    blueprintUpdatedEvent(this.element, this.blueprint)
+    const existingCriterion = this.blueprint[criterionId]
+    const newCriterion = criterion(conditionId, criterionRow.depth, condition)
+    if (isEqual(existingCriterion, newCriterion)) {
+      return false
+    } else {
+      this.blueprint[criterionId] = newCriterion
+      blueprintUpdatedEvent(this.element, this.blueprint)
+      return true
+    }
   }
 
   updateInput(criterionId, input, inputId) {

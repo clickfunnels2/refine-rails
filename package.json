@@ -57,8 +57,9 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.1.0",
     "@rails/request.js": "^0.0.6",
-    "daterangepicker": "^3.1.0",
+    "flatpickr": "^4.6.13",
     "jquery-events-to-dom-events": "^1.1.0",
     "lodash": "^4.0.8"
-  }
+  },
+  "peerDependencies": {}
 }

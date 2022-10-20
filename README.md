@@ -245,10 +245,9 @@ If the filter is not valid, the server responds 422 Unprocessable Entity with an
 By default date filters use [flatpickr](https://flatpickr.js.org/getting-started/).  End users can specify an alterntive datepicker in their application javascript.  Here's an example using the daterangepicker that ships with Bullet Train:
 
 ```javascript
-require('daterangepicker/daterangepicker.css')
-
 import $ from 'jquery' // ensure jquery is loaded before daterangepicker
 import 'daterangepicker'
+import 'daterangepicker/daterangepicker.css'
 
 window.HammerstoneRefine ||= {}
 window.HammerstoneRefine.datePicker = {

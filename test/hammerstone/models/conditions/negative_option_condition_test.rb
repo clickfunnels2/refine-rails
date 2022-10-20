@@ -24,8 +24,7 @@ module Hammerstone::Refine::Conditions
                 `contacts`.`id` FROM `contacts`
                 INNER JOIN `contacts_applied_tags` ON `contacts_applied_tags`.`contact_id` = `contacts`.`id`
                 INNER JOIN `contacts_tags` ON `contacts_tags`.`id` = `contacts_applied_tags`.`tag_id`
-              WHERE (`contacts_tags`.`id` IN (1)
-                OR `contacts_tags`.`id` IS NULL)))
+              WHERE (`contacts_tags`.`id` IN (1))))
 
       SQL
       assert_equal convert(expected_sql), query.get_query.to_sql

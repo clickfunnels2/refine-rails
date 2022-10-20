@@ -63,13 +63,13 @@ module Hammerstone::Refine
     end
 
     def release_pending_relationship
-      byebug
+
       instance = get_pending_relationship_instance
       # Pop off the last key (last relationship) (:contact has many tags through applied tags => popped = tags)
       popped = pending_relationship_subquery_depth.pop.to_sym
       return if relationship_supports_collapsing(instance)
       current = get_current_relationship
-      byebug
+
       if current.blank?
         @immediately_commit_pending_relationship_subqueries = true
         return
@@ -85,7 +85,6 @@ module Hammerstone::Refine
     end
 
     def commit_pending_relationship_subqueries
-      byebug
       applied_query = commit_subset(subset: pending_relationship_subqueries)
       @pending_relationship_subqueries = Hash.new { |h, k| h[k] = h.dup.clear }
       applied_query
@@ -157,7 +156,11 @@ module Hammerstone::Refine
             array_of_ids = current_model.connection.exec_query(inner_query.to_sql).rows.flatten
             query = parent_table[linking_key.to_s].in(array_of_ids.uniq)
           else
-            query = parent_table[linking_key.to_s].connecting_method(inner_query)
+            if subquery[:flip] == true
+              query = parent_table[linking_key.to_s].not_in(inner_query)
+            else 
+              query = parent_table[linking_key.to_s].in(inner_query)
+            end
           end
         end
       end

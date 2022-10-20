@@ -59,7 +59,6 @@ module Hammerstone::Refine::Conditions
       filter.release_pending_relationship
       # We want the method to return nil for relationship attributes
       # The purpose of this method is to populate pending relationship subqueries
-      byebug
       nil
     end
 

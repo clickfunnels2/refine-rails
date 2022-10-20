@@ -2,36 +2,38 @@ import { Controller } from "@hotwired/stimulus"
 import flatpickr from "flatpickr"
 require("flatpickr/dist/flatpickr.css")
 
-export default class extends Controller {
-  static targets = [
-    'field',
-  ]
-  static values = {
-    includeTime: Boolean,
-  }
-
-  connect() {
-    // init plugin
-    window.HammerstoneRefine.datePicker.connect.bind(this)()
-  }
-
-  disconnect() {
-    window.HammerstoneRefine.datePicker.disconnect.bind(this)()
-  }
-}
-
 /*
-  Logic for the actual datepicker lives in a window variable.
-  This allows end-users to customize it by specifying the following:
+  Stimulus controller for initializing the datepicker.
+  It defaults to flatpickr, but end-users can customize it by specifying the following:
   window.HammerstoneRefine.datePicker = {
     connect: function() {}, // runs bound to the Stimulus Controller instance at connect
     disconnect: function() {}, // runs bound to the Stimulus Controller instance at disconnect
     format: 'm/d/y' // date format in flatpickr tokens (see https://flatpickr.js.org/formatting/)
   }
 */
-window.HammerstoneRefine ||= {}
-window.HammerstoneRefine.datePicker || (window.HammerstoneRefine.datePicker = {
-  connect: function() {
+export default class extends Controller {
+  static targets = [
+    'field',
+    'hiddenField'
+  ]
+
+  connect() {
+    if (window.HammerstoneRefine?.datePicker) {
+      window.HammerstoneRefine.datePicker.connect.bind(this)()
+    } else {
+      this.defaultConnect()
+    }
+  }
+
+  disconnect() {
+    if (window.HammerstoneRefine?.datePicker) {
+      window.HammerstoneRefine.datePicker.disconnect.bind(this)()
+    } else {
+      this.defaultDisconnect()
+    }
+  }
+
+  defaultConnect() {
     this.plugin = flatpickr(this.fieldTarget,{
       enableTime: this.includeTimeValue,
       minDate: this.futureOnlyValue ? new Date() : null,
@@ -39,11 +41,13 @@ window.HammerstoneRefine.datePicker || (window.HammerstoneRefine.datePicker = {
       onChange: (selectedDates, dateStr, instance) => {
         const format = this.includeTimeValue ? 'm/d/Y h:i K' : 'm/d/Y'
         this.fieldTarget.value = instance.formatDate(selectedDates[0], format)
+        this.hiddenFieldTarget.value = instance.formatDate(selectedDates[0], 'Y-m-d')
+        this.hiddenFieldTarget.dispatchEvent(new Event('change', {bubbles: true}))
       }
     })
-  },
-  disconnect: function() {
+  }
+
+  defaultDisconnect() {
     this.plugin.destroy()
-  },
-  format: 'm/d/Y'
-})
+  }
+}

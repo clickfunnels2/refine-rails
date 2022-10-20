@@ -182,7 +182,7 @@ export default class extends Controller {
     }
     const existingCriterion = this.blueprint[criterionId]
     const newCriterion = criterion(conditionId, criterionRow.depth, condition)
-    if (isEqual(existing, newCriterion)) {
+    if (isEqual(existingCriterion, newCriterion)) {
       return false
     } else {
       this.blueprint[criterionId] = newCriterion

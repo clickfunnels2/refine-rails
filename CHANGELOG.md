@@ -1,3 +1,9 @@
+### 2.3.5 2022-10-18
+  * bugfix
+    * don't send blank condition id
+    * Fix random blurring during filter input 
+    * Update queries to allow for multiple databases 
+
 ### 2.3.2 2022-09-26
   * bugfix
     * Change buttons to divs so upstream forms aren't submitted

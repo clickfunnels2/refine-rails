@@ -9,14 +9,10 @@ gem "mysql2"
 gem "sprockets-rails"
 gem "byebug"
 
-group :test do 
-	gem "minitest-around"
+group :development, :test do
+  gem "minitest-around"
   gem "minitest-ci"
-end
-
-group :test do 
-	gem "minitest-around"
-  gem "minitest-ci"
+  gem "standard"
 end
 
 # Start debugger with binding.b [https://github.com/ruby/debug]

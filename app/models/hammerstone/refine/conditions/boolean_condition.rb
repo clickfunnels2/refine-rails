@@ -66,7 +66,7 @@ module Hammerstone::Refine::Conditions
     end
 
     # TODO: Remove input here
-    def apply_condition(input, table)
+    def apply_condition(input, table, _flip)
       case clause
       when CLAUSE_SET
         apply_clause_set(table)

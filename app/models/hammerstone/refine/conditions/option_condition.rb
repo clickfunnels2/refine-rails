@@ -120,11 +120,11 @@ module Hammerstone::Refine::Conditions
       ]
     end
 
-    def apply_condition(input, table, flip_option_condition)
+    def apply_condition(input, table, flip)
       value = input[:selected]
       # if it's a "through" relationship. What other relationships?
-      if (flip_option_condition && ([CLAUSE_NOT_IN, CLAUSE_DOESNT_EQUAL].include? clause))
-        @clause = "in"
+      if flip
+        @clause = CLAUSE_IN
       end
 
       # if this is a ManyRelationship

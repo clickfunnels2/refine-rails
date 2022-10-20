@@ -30,6 +30,24 @@ module Hammerstone::Refine::Conditions
       assert_equal convert(expected_sql), query.get_query.to_sql
     end
 
+    it "properly handles negative option conditions with and condition" do 
+      # TODO 
+      query = create_filter(does_not_contain_option_condition)
+      expected_sql = <<~SQL.squish
+        SELECT
+          `contacts`.*
+        FROM
+          `contacts`
+        WHERE (`contacts`.`id` NOT IN (SELECT
+                `contacts`.`id` FROM `contacts`
+                INNER JOIN `contacts_applied_tags` ON `contacts_applied_tags`.`contact_id` = `contacts`.`id`
+                INNER JOIN `contacts_tags` ON `contacts_tags`.`id` = `contacts_applied_tags`.`tag_id`
+              WHERE (`contacts_tags`.`id` IN (1))))
+
+      SQL
+      assert_equal convert(expected_sql), query.get_query.to_sql
+    end
+
     def does_not_contain_option_condition
       Hammerstone::Refine::Blueprints::Blueprint.new
         .criterion("tags.id",

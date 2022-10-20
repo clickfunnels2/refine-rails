@@ -124,9 +124,9 @@ module Hammerstone::Refine
 
         # If the query needs to be flipped because it's a negative do that here 
         connecting_method = if subquery[:flip] == true
-          "not_in"
+          :not_in
         else 
-          "in"
+          :in
         end
 
         current_model = subquery[:instance]&.klass 
@@ -156,11 +156,7 @@ module Hammerstone::Refine
             array_of_ids = current_model.connection.exec_query(inner_query.to_sql).rows.flatten
             query = parent_table[linking_key.to_s].in(array_of_ids.uniq)
           else
-            if subquery[:flip] == true
-              query = parent_table[linking_key.to_s].not_in(inner_query)
-            else 
-              query = parent_table[linking_key.to_s].in(inner_query)
-            end
+            query = parent_table[linking_key.to_s].send(connecting_method, inner_query)
           end
         end
       end

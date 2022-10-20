@@ -98,9 +98,20 @@ module Hammerstone::Refine::Conditions
       Arel::Nodes::Grouping.new(nodes)
     end
 
+    # Determine if the clause should be flipped. For example, "not_eq" => "eq"
+    # @param [?] instance
+    # @param [String] clause The join clause (example: `eq` or `not_eq`)
+    # @return [Boolean]
+    def should_flip?(instance, clause)
+      is_through_reflection = instance.is_a?(ActiveRecord::Reflection::ThroughReflection)
+      is_flippable = Clauses::FLIPPABLE.include?(clause)
+
+      is_through_reflection && is_flippable
+    end
+
     def create_pending_has_many_through_subquery(input:, relation:, instance:, query:)
       # In a has_many relationship the negative has to be flipped to positive. Only through??
-      flip = (instance.is_a? ActiveRecord::Reflection::ThroughReflection) ? true : false
+      flip = should_flip?(instance, input[:clause])
       # Ex: A country has many posts through hmtt_users.
       # Use AR to properly join the relation to the base query provided
       # Convert to AREL to use with nodes 

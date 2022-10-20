@@ -180,14 +180,14 @@ export default class extends Controller {
         `You can't call updateConditionId on a non-criterion type. Trying to update ${JSON.stringify(criterion)}`
       )
     }
-    const existing = this.blueprint[criterionId]
+    const existingCriterion = this.blueprint[criterionId]
     const newCriterion = criterion(conditionId, criterionRow.depth, condition)
-    if (!isEqual(existing, newCriterion)) {
+    if (isEqual(existing, newCriterion)) {
+      return false
+    } else {
       this.blueprint[criterionId] = newCriterion
       blueprintUpdatedEvent(this.element, this.blueprint)
       return true
-    } else {
-      return false
     }
   }
 

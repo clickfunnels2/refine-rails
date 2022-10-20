@@ -120,8 +120,20 @@ module Hammerstone::Refine::Conditions
       ]
     end
 
-    def apply_condition(input, table)
+    def apply_condition(input, table, flip_option_condition)
       value = input[:selected]
+      # if it's a "through" relationship. What other relationships?
+      if (flip_option_condition && ([CLAUSE_NOT_IN, CLAUSE_DOESNT_EQUAL].include? clause))
+        @clause = "in"
+      end
+
+      # if this is a ManyRelationship
+      #   original = clause
+      #   @clause = CLAUSE_IN 
+      #   if the original clause is not in or doesn't equal 
+      #   if [CLAUSE_NOT_IN, CLAUSE_DOESNT_EQUAL].include? original
+      #     # set a flag in currently open relationship to switch it from a whereIn to a whereNotIn 
+      #     # and immediately commit? 
 
       case clause
       when CLAUSE_SET

@@ -6,8 +6,8 @@ module Hammerstone::Refine::Conditions
       self
     end
 
-    def apply_and_add_to_query(query_class:, table:, input:, subquery:)
-      node = apply(input, table, query_class)
+    def apply_and_add_to_query(query_class:, table:, input:, subquery:, flip_option_condition: false)
+      node = apply(input, table, query_class, flip_option_condition)
       if node
         subquery.where(node)
       else
@@ -52,12 +52,14 @@ module Hammerstone::Refine::Conditions
       if can_use_where_in_relationship_subquery?(instance)
         create_pending_wherein_subquery(input: input, relation: relation, instance: instance, query: query)
       else
+        # TODO ERIC -> I need to see all the possible relationships that are a "has many". Is it only through reflection?
         create_pending_has_many_through_subquery(input: input, relation: relation, instance: instance, query: query)
       end
 
       filter.release_pending_relationship
       # We want the method to return nil for relationship attributes
       # The purpose of this method is to populate pending relationship subqueries
+      byebug
       nil
     end
 
@@ -98,6 +100,8 @@ module Hammerstone::Refine::Conditions
     end
 
     def create_pending_has_many_through_subquery(input:, relation:, instance:, query:)
+      # In a has_many relationship the negative has to be flipped to positive. Only through??
+      flip = (instance.is_a? ActiveRecord::Reflection::ThroughReflection) ? true : false
       # Ex: A country has many posts through hmtt_users.
       # Use AR to properly join the relation to the base query provided
       # Convert to AREL to use with nodes 
@@ -106,12 +110,11 @@ module Hammerstone::Refine::Conditions
 
       relation_class = instance.klass
       
-      node_to_apply = apply(input, relation_table_being_queried, relation_class)
+      node_to_apply = apply(input, relation_table_being_queried, relation_class, flip)
 
       complete_subquery = subquery_path.where(node_to_apply)
       subquery = filter.get_pending_relationship_subquery || complete_subquery
-
-      filter.add_pending_relationship_subquery(subquery: subquery, primary_key: key_1(instance), secondary_key: nil)
+      filter.add_pending_relationship_subquery(subquery: subquery, primary_key: key_1(instance), secondary_key: nil, flip: flip)
     end
 
     def can_use_where_in_relationship_subquery?(instance)

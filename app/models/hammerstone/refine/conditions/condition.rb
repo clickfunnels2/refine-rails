@@ -113,7 +113,7 @@ module Hammerstone::Refine::Conditions
       end
     end
 
-    def apply(input, table, initial_query)
+    def apply(input, table, initial_query, flip_option_condition=false)
       table ||= filter.table
       # Ensurance validations are checking the developer configured correctly
       run_ensurance_validations
@@ -141,7 +141,7 @@ module Hammerstone::Refine::Conditions
         return
       end
       # No longer a relationship attribute, apply condition normally
-      nodes = apply_condition(input, table)
+      nodes = apply_condition(input, table, flip_option_condition)
       if !is_refinement && has_any_refinements?
         refined_node = apply_refinements(input)
         # Count refinement will return nil because it directly modified pending relationship subquery
@@ -164,6 +164,7 @@ module Hammerstone::Refine::Conditions
     def validate_user_input(input)
       evaluated_rules = recursively_evaluate_lazy_enumerable(@rules)
       # Set input parameters on the condition in order to use condition level validations
+      # TODO set this somewhere more obvious 
       @clause = input[:clause]
       set_input_parameters(input)
       evaluated_rules.each_pair do |k, v|

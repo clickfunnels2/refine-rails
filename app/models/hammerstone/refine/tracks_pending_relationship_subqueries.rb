@@ -29,11 +29,12 @@ module Hammerstone::Refine
       add_pending_relationship_subquery(subquery: subquery, primary_key: JOINS)
     end
 
-    def add_pending_relationship_subquery(subquery:, primary_key:, secondary_key: nil)
+    def add_pending_relationship_subquery(subquery:, primary_key:, secondary_key: nil, flip: false)
       # Add key, query, and secondary keys at the correct depth
       pending_relationship_subqueries.dig(*get_current_relationship)[:key] = primary_key
       pending_relationship_subqueries.dig(*get_current_relationship)[:query] = subquery
       pending_relationship_subqueries.dig(*get_current_relationship)[:secondary] = secondary_key
+      pending_relationship_subqueries.dig(*get_current_relationship)[:flip] = flip
     end
 
     def get_pending_relationship_instance
@@ -62,11 +63,13 @@ module Hammerstone::Refine
     end
 
     def release_pending_relationship
+      byebug
       instance = get_pending_relationship_instance
-      # Pop off the last key (last relationship)
+      # Pop off the last key (last relationship) (:contact has many tags through applied tags => popped = tags)
       popped = pending_relationship_subquery_depth.pop.to_sym
       return if relationship_supports_collapsing(instance)
       current = get_current_relationship
+      byebug
       if current.blank?
         @immediately_commit_pending_relationship_subqueries = true
         return
@@ -82,6 +85,7 @@ module Hammerstone::Refine
     end
 
     def commit_pending_relationship_subqueries
+      byebug
       applied_query = commit_subset(subset: pending_relationship_subqueries)
       @pending_relationship_subqueries = Hash.new { |h, k| h[k] = h.dup.clear }
       applied_query
@@ -119,6 +123,13 @@ module Hammerstone::Refine
         # Company.reflect_on_association(:clients).klass
         # # => Client
 
+        # If the query needs to be flipped because it's a negative do that here 
+        connecting_method = if subquery[:flip] == true
+          "not_in"
+        else 
+          "in"
+        end
+
         current_model = subquery[:instance]&.klass 
         parent_model = subquery[:instance]&.active_record
         use_multiple_databases = (inner_query.is_a? Arel::SelectManager) && use_multiple_databases?(current_model, parent_model)
@@ -146,7 +157,7 @@ module Hammerstone::Refine
             array_of_ids = current_model.connection.exec_query(inner_query.to_sql).rows.flatten
             query = parent_table[linking_key.to_s].in(array_of_ids.uniq)
           else
-            query = parent_table[linking_key.to_s].in(inner_query)
+            query = parent_table[linking_key.to_s].connecting_method(inner_query)
           end
         end
       end

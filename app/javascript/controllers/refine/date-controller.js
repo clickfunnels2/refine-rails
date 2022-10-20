@@ -29,7 +29,7 @@ export default class extends Controller {
     format: 'm/d/y' // date format in flatpickr tokens (see https://flatpickr.js.org/formatting/)
   }
 */
-window.HammerstoneRefine || (window.HammerstoneRefine = {})
+window.HammerstoneRefine ||= {}
 window.HammerstoneRefine.datePicker || (window.HammerstoneRefine.datePicker = {
   connect: function() {
     this.plugin = flatpickr(this.fieldTarget,{

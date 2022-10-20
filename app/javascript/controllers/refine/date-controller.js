@@ -8,7 +8,6 @@ require("flatpickr/dist/flatpickr.css")
   window.HammerstoneRefine.datePicker = {
     connect: function() {}, // runs bound to the Stimulus Controller instance at connect
     disconnect: function() {}, // runs bound to the Stimulus Controller instance at disconnect
-    format: 'm/d/y' // date format in flatpickr tokens (see https://flatpickr.js.org/formatting/)
   }
 */
 export default class extends Controller {
@@ -35,9 +34,8 @@ export default class extends Controller {
 
   defaultConnect() {
     this.plugin = flatpickr(this.fieldTarget,{
-      enableTime: this.includeTimeValue,
       minDate: this.futureOnlyValue ? new Date() : null,
-      dateFormat: this.includeTimeValue ? 'm/d/Y h:i K' : 'm/d/Y',
+      dateFormat: 'm/d/Y',
       onChange: (selectedDates, dateStr, instance) => {
         const format = this.includeTimeValue ? 'm/d/Y h:i K' : 'm/d/Y'
         this.fieldTarget.value = instance.formatDate(selectedDates[0], format)

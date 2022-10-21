@@ -1,3 +1,9 @@
+### 2.3.6 2022-10-21
+  * feature
+    * Change datepicker to flatpickr and allow user to override 
+  * bugfix
+    * For negative has many through relationships (i.e give me all contacts that don't have tag 1)add a flag to switch to "give me all contacts not in the set of contacts where tag = 1" to avoid the has many selecting contacts with multiple tags. 
+
 ### 2.3.5 2022-10-18
   * bugfix
     * don't send blank condition id

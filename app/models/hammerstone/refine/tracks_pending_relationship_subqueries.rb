@@ -150,7 +150,7 @@ module Hammerstone::Refine
           # No existing query, top level of stack 
           if use_multiple_databases
             array_of_ids = current_model.connection.exec_query(inner_query.to_sql).rows.flatten
-            query = parent_table[linking_key.to_s].in(array_of_ids.uniq)
+            query = parent_table[linking_key.to_s].send(connecting_method, array_of_ids.uniq)
           else
             query = parent_table[linking_key.to_s].send(connecting_method, inner_query)
           end

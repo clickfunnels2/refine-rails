@@ -102,7 +102,7 @@ module Hammerstone::Refine::Conditions
     include HasClauses
     include FilterTestHelper
 
-    def apply_condition(query, input, _flip)
+    def apply_condition(query, input, _inverse_clause)
     end
 
     def clauses

@@ -180,7 +180,7 @@ module Hammerstone::Refine::Conditions
       @clause = standardize_clause(input)
     end
 
-    def apply_condition(input, table, _flip)
+    def apply_condition(input, table, _inverse_clause)
       if clause == CLAUSE_SET
         return apply_clause_set(table)
       end

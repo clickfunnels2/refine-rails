@@ -119,7 +119,7 @@ module Hammerstone::Refine::Conditions
     # @param [Arel::Table] table The arel_table the query is built on 
     # @param [ActiveRecord::Relation] initial_query The base query the query is built on 
     # @return [Arel::Node] 
-    def apply(input, table, initial_query, flip_option_condition=false)
+    def apply(input, table, initial_query, inverse_clause=false)
       table ||= filter.table
       # Ensurance validations are checking the developer configured correctly
       run_ensurance_validations
@@ -147,9 +147,7 @@ module Hammerstone::Refine::Conditions
         return
       end
       # No longer a relationship attribute, apply condition normally
-      # TODO This is a mess becuase not all apply_conditions need this flip option. Do I not need to modify *every*
-      # apply condition?
-      nodes = apply_condition(input, table, flip_option_condition)
+      nodes = apply_condition(input, table, inverse_clause)
       if !is_refinement && has_any_refinements?
         refined_node = apply_refinements(input)
         # Count refinement will return nil because it directly modified pending relationship subquery
@@ -204,7 +202,7 @@ module Hammerstone::Refine::Conditions
       raise NotImplementedError
     end
 
-    def apply_condition(input, table, _flip)
+    def apply_condition(input, table, _inverse_clause)
       raise NotImplementedError
     end
 

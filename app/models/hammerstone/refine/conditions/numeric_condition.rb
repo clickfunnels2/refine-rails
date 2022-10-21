@@ -93,7 +93,7 @@ module Hammerstone::Refine::Conditions
     end
 
     # TODO Refactor to remove input here
-    def apply_condition(input, table, _flip)
+    def apply_condition(input, table, _inverse_clause)
       # TODO check for custom clause
 
       case clause

@@ -175,7 +175,6 @@ module Hammerstone::Refine
 
     def apply_condition(criterion)
       begin
-        # option condition tags.id
         get_condition_for_criterion(criterion)&.apply(criterion[:input], table, initial_query)
       rescue Hammerstone::Refine::Conditions::Errors::ConditionClauseError => e
         e.errors.each do |error|

@@ -71,7 +71,7 @@ module Hammerstone::Refine::Conditions
       end
     end
 
-    def apply_condition(input, table)
+    def apply_condition(input, table, _inverse_clause)
       filter_id = input[:selected].first.to_i
       filter = Hammerstone.stabilizer_class('Stabilizers::DatabaseStabilizer').new.from_stable_id(id: filter_id)
       # TODO handle this more elegantly

@@ -6,8 +6,8 @@ module Hammerstone::Refine::Conditions
       self
     end
 
-    def apply_and_add_to_query(query_class:, table:, input:, subquery:)
-      node = apply(input, table, query_class)
+    def apply_and_add_to_query(query_class:, table:, input:, subquery:, inverse_clause: false)
+      node = apply(input, table, query_class, inverse_clause)
       if node
         subquery.where(node)
       else
@@ -97,7 +97,20 @@ module Hammerstone::Refine::Conditions
       Arel::Nodes::Grouping.new(nodes)
     end
 
+    # Determine if the clause should be flipped. For example, "not_eq" => "eq". Must also change "in" to "not in" upstream
+    # @param [Object] instance
+    # @param [String] clause The join clause (example: `eq` or `not_eq`)
+    # @return [Boolean]
+    def should_inverse_clause?(instance, clause)
+      is_through_reflection = instance.is_a?(ActiveRecord::Reflection::ThroughReflection)
+      is_inverse_clause_flippable = Clauses::FLIPPABLE.include?(clause)
+
+      is_through_reflection && is_inverse_clause_flippable
+    end
+
     def create_pending_has_many_through_subquery(input:, relation:, instance:, query:)
+      # In a has_many relationship the negative has to be flipped to positive. 
+      inverse_clause = should_inverse_clause?(instance, input[:clause])
       # Ex: A country has many posts through hmtt_users.
       # Use AR to properly join the relation to the base query provided
       # Convert to AREL to use with nodes 
@@ -106,12 +119,11 @@ module Hammerstone::Refine::Conditions
 
       relation_class = instance.klass
       
-      node_to_apply = apply(input, relation_table_being_queried, relation_class)
+      node_to_apply = apply(input, relation_table_being_queried, relation_class, inverse_clause)
 
       complete_subquery = subquery_path.where(node_to_apply)
       subquery = filter.get_pending_relationship_subquery || complete_subquery
-
-      filter.add_pending_relationship_subquery(subquery: subquery, primary_key: key_1(instance), secondary_key: nil)
+      filter.add_pending_relationship_subquery(subquery: subquery, primary_key: key_1(instance), secondary_key: nil, inverse_clause: inverse_clause)
     end
 
     def can_use_where_in_relationship_subquery?(instance)

@@ -32,5 +32,7 @@ module Hammerstone::Refine::Conditions
 
     DOESNT_START_WITH = "dsw"
     DOESNT_END_WITH = "dew"
+
+    FLIPPABLE = [NOT_IN, DOESNT_EQUAL].freeze
   end
 end

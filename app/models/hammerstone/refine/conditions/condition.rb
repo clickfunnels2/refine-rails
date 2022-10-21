@@ -113,7 +113,13 @@ module Hammerstone::Refine::Conditions
       end
     end
 
-    def apply(input, table, initial_query)
+    # Applies the criterion which can be a relationship condition
+    #
+    # @param [Hash] input The user's input
+    # @param [Arel::Table] table The arel_table the query is built on 
+    # @param [ActiveRecord::Relation] initial_query The base query the query is built on 
+    # @return [Arel::Node] 
+    def apply(input, table, initial_query, inverse_clause=false)
       table ||= filter.table
       # Ensurance validations are checking the developer configured correctly
       run_ensurance_validations
@@ -141,7 +147,7 @@ module Hammerstone::Refine::Conditions
         return
       end
       # No longer a relationship attribute, apply condition normally
-      nodes = apply_condition(input, table)
+      nodes = apply_condition(input, table, inverse_clause)
       if !is_refinement && has_any_refinements?
         refined_node = apply_refinements(input)
         # Count refinement will return nil because it directly modified pending relationship subquery
@@ -164,6 +170,7 @@ module Hammerstone::Refine::Conditions
     def validate_user_input(input)
       evaluated_rules = recursively_evaluate_lazy_enumerable(@rules)
       # Set input parameters on the condition in order to use condition level validations
+      # TODO set this somewhere more obvious 
       @clause = input[:clause]
       set_input_parameters(input)
       evaluated_rules.each_pair do |k, v|
@@ -195,7 +202,7 @@ module Hammerstone::Refine::Conditions
       raise NotImplementedError
     end
 
-    def apply_condition
+    def apply_condition(input, table, _inverse_clause)
       raise NotImplementedError
     end
 

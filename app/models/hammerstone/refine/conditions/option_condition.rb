@@ -120,8 +120,10 @@ module Hammerstone::Refine::Conditions
       ]
     end
 
-    def apply_condition(input, table)
+    def apply_condition(input, table, inverse_clause)
       value = input[:selected]
+      # TODO: Triggers on "through" relationship. Other relationships?
+      @clause = CLAUSE_IN if inverse_clause
 
       case clause
       when CLAUSE_SET

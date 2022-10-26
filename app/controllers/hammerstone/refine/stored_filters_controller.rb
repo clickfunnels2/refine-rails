@@ -11,7 +11,8 @@ module Hammerstone::Refine
       # Get all stored filters for this workspace to select from.
       # TODO how to set stored filters??
       # TODO if load filters is clicked but no filter is selected the widget is in an awkward state.
-      @stored_filters = StoredFilter.all
+      @stored_filters = StoredFilter.where(filter_type: filter_class)
+      @stored_filters = instance_exec(@stored_filters, &Refine::Rails.configuration.stored_filter_scope)
       if @stored_filter
         @back_link = hammerstone_refine_stored_filter_path(return_params.except(:selected_filter_id))
       else

@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+
+
+
+  #date_condition.html.erb
+  .refine-date-condition-days-container {
+    @apply mt-3;
+  }
+  .refine-date-condition-days-container-input {
+    @apply shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md w-28;
+  }
+  .refine-date-condition-days-container-text {
+    @apply px-2 mt-3;
+  }
+
+  .refine-date-condition-days-modifier-container {
+    @apply w-32 mt-3 sm:mr-3;
+  }
+
+  .refine-date-condition-days-modifier-select {
+    @apply w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md;
+  }
+
+  .refine-date-condition-first-date-container {
+    @apply flex-grow-0 mt-3 sm:mr-3;
+  }
+  .refine-date-condition-first-date-container-btwn {
+    @apply flex-grow-0 mt-3;
+  }
+
+  .refine-date-condition-and {
+    @apply px-2 mt-3;
+  }
+
+  .refine-date-condition-second-date-container {
+    @apply flex-grow-0 mt-3 sm:mr-3;
+  }
+}

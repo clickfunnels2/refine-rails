@@ -13,6 +13,30 @@
     @apply rounded border border-solid border-coolGray-200 focus:ring-blue-500 focus:border-blue-500 sm:text-sm;
   }
 
+  /* _numeric_condition_html.erb */
+
+  .refine-numeric-condition-container {
+    @apply flex-grow-0 mt-3;
+  }
+
+  .refine-numeric-condition-container-btwn {
+    @apply flex-grow-0 mt-3 sm:mr-3;
+  }
+
+  .refine-numeric-condition-input {
+    @apply shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md;
+  }
+
+  .refine-numeric-condition-and {
+    @apply px-2 mt-3;
+  }
+
+  .refine-numeric-condition-second-container {
+    @apply flex-grow-0 mt-3 sm:mr-3;
+  }
+  .refine-numeric-condition-second-input {
+    @apply shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md;
+  }
 
   /* _date_condition.html.erb */
   .refine-date-condition-days-container {

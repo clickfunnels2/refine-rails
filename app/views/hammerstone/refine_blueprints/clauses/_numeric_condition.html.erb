@@ -2,10 +2,10 @@
 <% if ['st', 'nst'].include? input[:clause] %>
   <!-- render nothing -->
 <% else %>
-    <div class="flex-grow-0 mt-3 <% if input[:clause] != 'btwn' %>sm:mr-3<% end %>">
-    
+    <div class="<% input[:clause] != 'btwn' ? 'refine-numeric-condition-container' : 'refine-numeric-condition-container-btwn' %>">
+
       <input
-        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+        class="refine-numeric-condition-input"
         name="<%= condition_id %>"
         type="text"
         value="<%= input[:value1] %>"
@@ -18,11 +18,10 @@
 
     <% if ['btwn', 'nbtwn'].include? input[:clause] %>
       <!-- Add second input for value2 if clause is between or not between -->
-      <span class="px-2 mt-3">and</span>
-      <div class="flex-grow-0 mt-3 sm:mr-3">
-
+      <span class="refine-numeric-condition-and">and</span>
+      <div class="refine-numeric-condition-second-container">
         <input
-          class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+          class="refine-numeric-condition-second-input"
           name="<%= condition_id %>"
           type="text"
           value="<%= input[:value2] %>"

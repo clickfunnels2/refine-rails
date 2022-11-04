@@ -4,6 +4,14 @@
 
 @layer components {
 
+  /* _text_condition.html.erb */
+  .refine-text-condition-container {
+    @apply mt-3 mr-3;
+  }
+
+  .refine-text-condition-input {
+    @apply rounded border border-solid border-coolGray-200 focus:ring-blue-500 focus:border-blue-500 sm:text-sm;
+  }
 
 
   /* _date_condition.html.erb */

@@ -6,14 +6,14 @@
 
 
 
-  #date_condition.html.erb
+  /* _date_condition.html.erb */
   .refine-date-condition-days-container {
     @apply mt-3;
   }
-  .refine-date-condition-days-container-input {
+  .refine-date-condition-daysª-input {
     @apply shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md w-28;
   }
-  .refine-date-condition-days-container-text {
+  .refine-date-condition-days-text {
     @apply px-2 mt-3;
   }
 

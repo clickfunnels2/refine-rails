@@ -355,4 +355,19 @@ application.load(refineControllers)
 
 ### TODO
 - Documentation for stored filters
+
+
+## Readme Installation Goals (what we're working towards - does not work yet) 
+
+1. Run the generator  
+`rails generate refine:install`
+
+2. Define your filters, subclassing from `Hammerstone::Refine::Filter` 
+
+3. Call `apply_filter` in your controller (or even better, instantiate the filter in your controller `@contacts = ContactFilter.new(blueprint, initial_query` -> might not be possible, how can we do this with validations?)
+
+4. If you want to customize the views you can override our stylesheet with you own. 
+If you need even more customization you can override the views with `rails generate refine:views` will extract the views
+
+5. Add custom datepicker if desired and scope stored filters. 
  

@@ -1,10 +1,10 @@
 <div
   data-controller="refine--date"
-  class="relative"
+  class="refine-date-picker-container"
 >
   <label for="<%= condition_id %>" class="sr-only"><%= label %></label>
   <input
-    class="rounded w-36 border border-solid border-coolGray-200 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+    class="refine-date-picker-input"
     type="text"
     value="<%= date&.to_date&.strftime('%m/%d/%y') %>"
     data-refine--date-target="field"

@@ -4,6 +4,15 @@
 
 @layer components {
 
+  /* _date_picker.html.erb */
+  .refine-date-picker-container {
+    @apply relative;
+  }
+
+  .refine-date-picker-input {
+    @apply rounded w-36 border border-solid border-coolGray-200 focus:ring-blue-500 focus:border-blue-500 sm:text-sm;
+  }
+
   /* _text_condition.html.erb */
   .refine-text-condition-container {
     @apply mt-3 mr-3;

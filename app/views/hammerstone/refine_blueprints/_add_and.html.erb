@@ -1,12 +1,12 @@
-<%= tag.div class: "pt-4 flex", data: {
+<%= tag.div class: "refine-add-container", data: {
   controller: "refine--add",
   refine__add_previous_criterion_id_value: criteria.last.position,
 } do %>
   <div
-    class="button-secondary text-gray-900 uppercase font-semibold text-center cursor-pointer px-3 block"
+    class="refine-add-button"
     style="transition: all .15s ease"
     data-action="click->refine--add#criterion"
   >
-    <span><%= t(".add_and") %></span><i class="fal fa-plus pl-2 text-gray-500"></i>
+    <span class="refine-add-button-text"><%= t(".add_and") %></span><i class="refine-add-icon fal fa-plus"></i>
   </div>
 <% end %>

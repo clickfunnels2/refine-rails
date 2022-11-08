@@ -2,7 +2,145 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer components {
+  /* _filter_condition.html.erb */
+  .refine-filter-condition-container {
+    @apply w-full mt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3 flex postfixed;
+  }
+
+  .refine-filter-condition-select {
+    @apply font-sans mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md;
+  }
+
+  .refine-filter-condition-postfix {
+    @apply flex-shrink-0 bg-gray-50 border border-gray-300 rounded-md rounded-l-none p-2;
+  }
+
+  /* _option_condition.html.erb */
+  .refine-option-condition-container {
+    @apply w-full mt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3 flex postfixed;
+  }
+
+  .refine-option-condition-select {
+    @apply font-sans mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md;
+  }
+
+  .refine-option-condition-postfix {
+    @apply flex-shrink-0 bg-gray-50 border border-gray-300 rounded-md rounded-l-none p-2;
+  }
+
+  /* _add_and.html.erb */
+  .refine-add-container {
+    @apply pt-4 flex;
+  }
+
+  .refine-add-button {
+    @apply button-secondary text-gray-900 uppercase font-semibold text-center cursor-pointer px-3 block;
+  }
+
+  .refine-add-button-text {
+  }
+
+  .refine-add-icon {
+    @apply pl-2 text-gray-500;
+  }
+
+  /* _add_group.html.erb */
+  .refine-add-group-container {
+    @apply flex items-center;
+  }
+
+  .refine-add-group {
+    @apply cursor-pointer text-blue-600 bg-transparent font-bold underline pt-4 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150;
+  }
+
+  /* _clause_select.html.erb */
+  .refine-clause-select-prefixed {
+    @apply flex prefixed;
+  }
+
+  .refine-clause-select-prefix {
+    @apply flex-shrink-0 bg-gray-50 border border-gray-300 rounded-md rounded-r-none p-2;
+  }
+
+  .refine-clause-select {
+    @apply w-full flex-grow flex-shrink-0 sm:w-auto;
+  }
+
+  /* _condition_select.html.erb */
+  .refine-condition-select {
+    @apply w-full sm:w-auto;
+  }
+
+
+  /* _criterion_errors.html.erb */
+  .refine-criterion-error {
+    @apply mt-2 text-xs text-red;
+  }
+
+  /* _criterion.html.erb */
+  .refine-criterion-container {
+    @apply flex flex-wrap flex-grow items-baseline w-full sm:w-auto sm:pr-12;
+  }
+  .refine-criterion-condition-container {
+    @apply w-full sm:w-auto sm:flex-shrink-0 sm:mr-3 pt-3;
+  }
+
+  .refine-criterion-clause-container {
+    @apply w-full pt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3;
+  }
+
+  .refine-criterion-refinement-container {
+    @apply w-full pt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3;
+  }
+
+  /* _delete_criterion.html.erb */
+  .refine-delete-container {
+    @apply pt-5 ml-auto flex-none;
+  }
+
+  .refine-delete-criterion-icon {
+    @apply text-gray-600;
+  }
+
+  .refine-delete-criterion-label {
+    @apply text-gray-500 pl-2 hidden;
+  }
+
+  /* _group.html.erb */
+  .refine-group-container {
+    @apply bg-gray-50 rounded p-4 font-sans;
+  }
+
+  .refine-group-criterion-container {
+    @apply flex items-start pb-3 flex-wrap;
+  }
+
+  .refine-group-and {
+    @apply text-gray-400 pl-2;
+  }
+
+  /* _query.html.erb */
+  .refine-query-container {
+    @apply relative;
+  }
+
+  .refine-query-content-container {
+    @apply relative w-full h-full;
+  }
+
+  .refine-query-loading-container {
+    @apply flex items-center justify-center absolute left-0 top-0 w-full h-full bg-gray bg-opacity-50 z-10 rounded;
+  }
+
+  .refine-query-loading-text {
+    @apply text-black text-xl;
+  }
+
+  .refine-query-or {
+    @apply py-3;
+  }
 
   /* _date_picker.html.erb */
   .refine-date-picker-container {

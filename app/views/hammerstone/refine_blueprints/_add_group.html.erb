@@ -1,7 +1,7 @@
-<%= tag.div(class: 'flex items-center', data: {controller: 'refine--add'}) do %>
+<%= tag.div(class: 'refine-add-group-container', data: {controller: 'refine--add'}) do %>
 
   <div
-    class="cursor-pointer text-blue-600 background-transparent font-bold underline pt-4 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+    class="refine-add-group"
     data-action="click->refine--add#group"
   >
     <% if @form.grouped_criteria.any? %>

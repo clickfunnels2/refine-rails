@@ -1,3 +1,7 @@
+### 2.3.7 2022-11-09
+  * bugfix
+    * Scope stored filters properly by type and allow end user to add custom scoping 
+
 ### 2.3.6 2022-10-21
   * feature
     * Change datepicker to flatpickr and allow user to override 

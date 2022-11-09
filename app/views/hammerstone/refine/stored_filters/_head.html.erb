@@ -6,7 +6,7 @@
       <%= filter_title %>
     </h3>
     <a
-      href="<%= hammerstone_refine_stored_filters_path(@return_params) %>"
+      href="<%= hammerstone_refine_stored_filters_path(@return_params.merge(filter: @refine_filter.class.name)) %>"
       class="text-blue-600 background-transparent font-bold underline text-xs ml-auto leading-6 outline-none focus:outline-none"
     >
       <%= t('global.buttons.find_filter') %>

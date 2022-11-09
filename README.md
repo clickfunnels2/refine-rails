@@ -287,6 +287,18 @@ window.HammerstoneRefine.datePicker = {
 }
 ````
 
+## Customizing Available Stored Filters
+
+By default the list of available stored filters is scoped to the type of the current filter. You can add additional scoping by assigning a Proc to `Refine::Rails.configuration.stored_filter_scope` in an initializer.
+
+```ruby
+# config/initializers/refine_rails.rb
+
+Refine::Rails.configuration.stored_filter_scope = ->(scope) { scope.where(workspace_id: current_user.workspace.id) }
+```
+
+Custom scoping Proc's should accept a single argument which is the default scope defined by the gem.  It will be executed in the context of the Rails controller so methods like `current_user` and `params` are available.
+
 ## Local JavaScript Development
 
 From this repo's directory:

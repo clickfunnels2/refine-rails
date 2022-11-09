@@ -1,6 +1,6 @@
 <%= turbo_frame_tag :stored_filter_head do %>
   <%= content_tag :div, class: "flex w-full py-4" do %>
-    <%= form_tag(hammerstone_refine_stored_filters_path, method: :get, 
+    <%= form_tag(hammerstone_refine_stored_filters_path(filter: @refine_filter.class.name), method: :get,
       class: "flex w-full", data: { turbo_frame: :stored_filters }) do %>
       <!-- Saved filter selector -->
         <%= tag.div class: 'w-full mr-4', data: {

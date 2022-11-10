@@ -8,8 +8,6 @@ module Hammerstone::Refine
       # Load filter, back (sometimes), find a filter hit this action
       return redirect_to hammerstone_refine_stored_filter_path(id: params[:id]) unless params[:id].nil?
       @stored_filter = StoredFilter.find_by(id: params[:selected_filter_id])
-      # Get all stored filters for this workspace to select from.
-      # TODO how to set stored filters??
       # TODO if load filters is clicked but no filter is selected the widget is in an awkward state.
       @stored_filters = StoredFilter.where(filter_type: filter_class)
       @stored_filters = instance_exec(@stored_filters, &Refine::Rails.configuration.stored_filter_scope)
@@ -44,7 +42,7 @@ module Hammerstone::Refine
         @stored_filter = saved_stored_filter
         @stored_filter.update(name: params[:name], state: refine_filter.state)
       else
-        @stored_filter = StoredFilter.new(name: params[:name], state: refine_filter.state, filter_type: refine_filter.type)
+        @stored_filter = StoredFilter.new(name: params[:name], state: refine_filter.state, filter_type: refine_filter.type, **instance_exec(&Refine::Rails.configuration.custom_stored_filter_attributes))
       end
       
       if @stored_filter.save
@@ -70,7 +68,7 @@ module Hammerstone::Refine
     end
 
     def create
-      @stored_filter = StoredFilter.new(name: params[:name], state: refine_filter.state, filter_type: refine_filter.type)
+      @stored_filter = StoredFilter.new(name: params[:name], state: refine_filter.state, filter_type: refine_filter.type, **instance_exec(&Refine::Rails.configuration.custom_stored_filter_attributes))
       @stable_id = stable_id
       @back_link = editor_hammerstone_refine_stored_filters_path(return_params)
 

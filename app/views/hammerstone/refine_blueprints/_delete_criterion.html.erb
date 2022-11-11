@@ -4,7 +4,7 @@
     controller: 'refine--delete',
     refine__delete_criterion_id_value: criterion_id,
   } do %>
-    <%= button_tag type: 'button', class: 'ml-auto flex items-center', data: {
+    <%= button_tag type: 'button', class: 'refine-delete-button', data: {
       action: "click->refine--delete#criterion",
     } do %>
       <i class="refine-delete-criterion-icon ti ti-trash"></i>

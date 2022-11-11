@@ -1,19 +1,19 @@
 <%= turbo_frame_tag :stored_filter_head do %>
-  <%= content_tag :div, class: "py-4" do %>
+  <%= content_tag :div, class: "refine-stored-filter-container" do %>
     <% if @stored_filter.errors.any? %>
       <% @stored_filter.errors.full_messages.each do |message|%>
-        <p class="mb-2 text-xs text-red">Name has already been taken</p>
+        <p class="refine-stored-filter-error">Name has already been taken</p>
       <%end%>
     <%end%>
-    <%= form_tag(hammerstone_refine_stored_filter_path(id: @stored_filter.id), method: :put, 
-      class: "flex w-full", data: { turbo_frame: :stored_filters }) do %>
+    <%= form_tag(hammerstone_refine_stored_filter_path(id: @stored_filter.id), method: :put,
+      class: "refine-stored-filter-form", data: { turbo_frame: :stored_filters }) do %>
         <input type="text" name="name" placeholder="<%= t('global.filter_name_placeholder')%>"
-          class="w-full mr-4 block w-full pl-9 rounded border border-solid border-coolGray-200 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" 
+          class="refine-stored-filter-input"
           value="<%= @stored_filter.name %>"
         />
         <input type="text" name="stable_id" value="<%= @stable_id %>" data-refine--stored-filter-target="stableIdField" hidden />
-        <%= link_to t('global.buttons.back'), @back_link, class: "button-secondary ml-auto mr-4" %>
-        <%= button_tag t('global.buttons.save'), type: "submit", class: "button text-center" %>
+        <%= link_to t('global.buttons.back'), @back_link, class: "refine-stored-filter-button-cancel" %>
+        <%= button_tag t('global.buttons.save'), type: "submit", class: "refine-stored-filter-button-submit" %>
       <% end %>
     <% end %>
 <% end%>

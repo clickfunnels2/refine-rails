@@ -4,6 +4,97 @@
 
 
 @layer components {
+  /* _head.html.erb */
+  .refine-stored-filter-head-container {
+    @apply flex w-full py-4;
+  }
+
+  .refine-stored-filter-header {
+    @apply text-gray-800 font-semibold text-base;
+  }
+
+  .refine-stored-filter-link {
+    @apply text-blue-600 bg-transparent font-bold underline text-xs ml-auto leading-6 outline-none focus:outline-none;
+  }
+
+
+  /* edit.html.erb / new.html.erb */
+  .refine-stored-filter-container {
+    @apply py-4;
+  }
+
+  .refine-stored-filter-form {
+    @apply flex w-full;
+  }
+
+  .refine-stored-filter-error {
+    @apply mb-2 text-xs text-red;
+  }
+
+  .refine-stored-filter-input {
+    @apply w-full mr-4 block w-full pl-9 rounded border border-solid border-coolGray-200 focus:ring-blue-500 focus:border-blue-500 sm:text-sm;
+  }
+
+  .refine-stored-filter-button-cancel {
+    @apply button-secondary ml-auto mr-4;
+  }
+
+  .refine-stored-filter-button-submit {
+    @apply button text-center;
+  }
+
+  /* _find.html.erb */
+  .refine-stored-filter-search-container {
+    @apply flex w-full py-4;
+  }
+
+  .refine-stored-filter-search-form {
+    @apply flex w-full;
+  }
+
+  .refine-stored-filter-search-selector-container {
+    @apply w-full mr-4;
+  }
+
+  .refine-stored-filter-search-button-cancel {
+    @apply button-secondary ml-auto mr-4;
+  }
+
+
+  .refine-stored-filter-search-button-submit {
+    @apply button text-center;
+  }
+
+
+  /* _filter_builder_dropdown.html.erb */
+  .refine-filter-builder-dropdown-container {
+    @apply px-8 hidden md:block w-auto p-6 relative;
+  }
+
+  .refine-filter-builder-dropdown-search-box {
+    @apply px-4 mt-2 origin-top-right absolute z-100 right-0 rounded shadow-2xl bg-white opacity-100 scale-100 w-screen sm:max-w-max;
+  }
+
+  .refine-filter-builder-dropdown-toggle-button {
+    @apply px-8 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded;
+  }
+
+  .refine-filter-builder-dropdown-button-container {
+    @apply py-6 flex sticky bottom-0 bg-white;
+  }
+
+  .refine-filter-builder-dropdown-cancel-button {
+    @apply button-secondary ml-auto mr-4;
+  }
+
+  .refine-filter-builder-dropdown-apply-button {
+    @apply button text-center mr-4;
+  }
+
+  .refine-filter-builder-dropdown-loading-container {
+    @apply py-4;
+  }
+
   /* _filter_condition.html.erb */
   .refine-filter-condition-container {
     @apply w-full mt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3 flex postfixed;
@@ -98,6 +189,10 @@
   /* _delete_criterion.html.erb */
   .refine-delete-container {
     @apply pt-5 ml-auto flex-none;
+  }
+
+  .refine-delete-button {
+    @apply ml-auto flex items-center;
   }
 
   .refine-delete-criterion-icon {

@@ -1,9 +1,9 @@
 <%= turbo_frame_tag :stored_filter_head do %>
-  <%= content_tag :div, class: "flex w-full py-4" do %>
+  <%= content_tag :div, class: "refine-stored-filter-search-container" do %>
     <%= form_tag(hammerstone_refine_stored_filters_path(filter: @refine_filter.class.name), method: :get,
-      class: "flex w-full", data: { turbo_frame: :stored_filters }) do %>
+      class: "refine-stored-filter-search-form", data: { turbo_frame: :stored_filters }) do %>
       <!-- Saved filter selector -->
-        <%= tag.div class: 'w-full mr-4', data: {
+        <%= tag.div class: 'refine-stored-filter-search-selector-container', data: {
           controller: 'fields--super-select',
           fields__super_select_enable_search_value: 'true'
         } do %>
@@ -21,8 +21,8 @@
             <% end %>
           </select>
         <% end %>
-        <%= link_to t('global.buttons.back'), @back_link, class: "button-secondary ml-auto mr-4", data: { turbo_frame: stored_filters } %>
-        <%= button_tag t('global.buttons.choose_filter'), type: "submit", class: "button text-center" %>
+        <%= link_to t('global.buttons.back'), @back_link, class: "refine-stored-filter-search-button-cancel", data: { turbo_frame: stored_filters } %>
+        <%= button_tag t('global.buttons.choose_filter'), type: "submit", class: "refine-stored-filter-search-button-submit" %>
       <% end %>
     <% end %>
 <% end%>

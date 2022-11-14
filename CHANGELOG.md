@@ -1,3 +1,9 @@
+### 2.38 2022-11-14 
+  * features
+    * Allow scoping of stored filters on save 
+    * Remove css from partials and provide file 
+    * Get filter pills to work with remap clause display 
+
 ### 2.3.7 2022-11-09
   * bugfix
     * Scope stored filters properly by type and allow end user to add custom scoping 

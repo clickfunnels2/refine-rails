@@ -1,45 +1,32 @@
 <%= turbo_frame_tag :stored_filter_head do %>
-  <%= content_tag :div, class: "flex w-full py-4" do %>
-   <h3 
-      class="text-gray-800 font-semibold text-base"
+  <%= content_tag :div, class: "refine-stored-filter-head-container" do %>
+   <h3
+      class="refine-stored-filter-header"
     >
       <%= filter_title %>
     </h3>
     <a
       href="<%= hammerstone_refine_stored_filters_path(@return_params.merge(filter: @refine_filter.class.name)) %>"
-      class="text-blue-600 background-transparent font-bold underline text-xs ml-auto leading-6 outline-none focus:outline-none"
+      class="refine-stored-filter-link"
     >
       <%= t('global.buttons.find_filter') %>
     </a>
-    <% if @stored_filter %>
-     <span class="text-xs ml-4 mr-4 leading-6">
-        <a
-          class="<%= 'hidden' unless @save_button_active %> text-blue-600 background-transparent font-bold underline outline-none focus:outline-none"
-          href="<%= edit_hammerstone_refine_stored_filter_url(@return_params.merge(id: @stored_filter.id)) %>"
-          data-refine--stored-filter-target="enabledSaveLink"
-        >
-          <%= t('global.buttons.save_filter') %>
-        </a>        
-        <span class="<%= 'hidden' if @save_button_active %> text-gray-500 font-medium"
-              data-refine--stored-filter-target="disabledSaveLink">
-          Saved
-        </span>
+    <%
+      href = @stored_filter ? edit_hammerstone_refine_stored_filter_url(@return_params.merge(id: @stored_filter.id)) : new_hammerstone_refine_stored_filter_url(@return_params)
+    %>
+    <span class="text-xs ml-4 mr-4 leading-6">
+      <a
+        class="<%= 'hidden' unless @save_button_active %> text-blue-600 background-transparent font-bold underline outline-none focus:outline-none"
+        href="<%= href %>"
+        data-refine--stored-filter-target="enabledSaveLink"
+      >
+        <%= t('global.buttons.save_filter') %>
+      </a>
+      <span class="<%= 'hidden' if @save_button_active %> text-gray-500 font-medium"
+            data-refine--stored-filter-target="disabledSaveLink">
+        Saved
       </span>
-    <% else %>
-      <span class="text-xs ml-4 mr-4 leading-6">
-        <a
-          class="<%= 'hidden' unless @save_button_active %> text-blue-600 background-transparent font-bold underline outline-none focus:outline-none"
-          href="<%= new_hammerstone_refine_stored_filter_url(@return_params) %>"
-          data-refine--stored-filter-target="enabledSaveLink"
-        >
-          <%= t('global.buttons.save_filter') %>
-        </a>        
-        <span class="<%= 'hidden' if @save_button_active %> text-gray-500 font-medium"
-              data-refine--stored-filter-target="disabledSaveLink">
-          Saved
-        </span>
-      </span>
-    <% end %>
+    </span>
   <% end %>
 <% end %>
-   
+

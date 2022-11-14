@@ -1,29 +1,29 @@
-<%= tag.div id: dom_id(@form, "query"), class: 'relative', data: {
+<%= tag.div id: dom_id(@form, "query"), class: 'refine-query-container', data: {
   controller: "refine--state",
   refine__state_conditions_value: @form.available_conditions_attributes.to_json,
   refine__state_blueprint_value: @form.blueprint.to_json,
   refine__state_class_name_value: @form.configuration[:class_name],
   refine__state_refresh_url_value: hammerstone_refine_blueprint_path,
   refine__state_form_id_value: @form.id } do %>
-  <%= content_tag :div, class: "relative w-full h-full" do %>
+  <%= content_tag :div, class: "refine-query-content-container" do %>
     <div
-      class="flex items-center justify-center absolute left-0 top-0 w-full h-full bg-gray bg-opacity-50 z-10 rounded <%= "hidden" unless action_name == "create" %>"
+      class="refine-query-loading-container <%= "hidden" unless action_name == "create" %>"
       id="refine-loader"
       data-refine--state-target="loading">
-      <p class="text-black text-xl">Loading...</p>
+      <p class="refine-query-loading-text">Loading...</p>
     </div>
 
     <%= tag.div id: dom_id(@form, "groups") do %>
       <% @form.grouped_criteria.each_with_index do |criteria, index| %>
         <% if index > 0 %>
-          <p class="py-3">or</p>
+          <p class="refine-query-or">or</p>
         <% end %>
         <%= render partial: 'hammerstone/refine_blueprints/group', locals: {
           criteria: criteria,
           group_id: index }
         %>
       <% end %>
- 
+
     <% end %>
 
     <%= render 'hammerstone/refine_blueprints/add_group' %>

@@ -1,14 +1,14 @@
 <%# Delete the filter %>
 <% if show_delete_button? %>
-  <%= tag.div class: 'pt-5 ml-auto flex-0', data: {
+  <%= tag.div class: 'refine-delete-container', data: {
     controller: 'refine--delete',
     refine__delete_criterion_id_value: criterion_id,
   } do %>
-    <%= button_tag type: 'button', class: 'ml-auto flex items-center', data: {
+    <%= button_tag type: 'button', class: 'refine-delete-button', data: {
       action: "click->refine--delete#criterion",
     } do %>
-      <i class="text-gray-600 ti ti-trash"></i>
-      <span class="text-black-500 pl-2 hidden">Remove filter</span>
+      <i class="refine-delete-criterion-icon ti ti-trash"></i>
+      <span class="refine-delete-criterion-label">Remove filter</span>
     <% end %>
   <% end %>
 <% end %>

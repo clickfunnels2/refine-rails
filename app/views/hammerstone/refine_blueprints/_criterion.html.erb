@@ -1,24 +1,24 @@
 <% criterion_id = criterion.position %>
 
 <%= tag.div id: dom_id(criterion) do %>
-  <%= tag.div(class: 'flex flex-wrap flex-grow items-baseline w-full sm:w-auto sm:pr-12', data: {
+  <%= tag.div(class: 'refine-criterion-container', data: {
     controller: 'refine--update',
     refine__update_criterion_id_value: criterion_id,
     position: criterion.position}) do %>
 
     <!-- Select Condition -->
-    <div class="w-full sm:w-auto sm:flex-shrink-0 sm:mr-3 pt-3">
+    <div class="refine-criterion-condition-container">
       <%= render partial: 'hammerstone/refine_blueprints/condition_select', locals: {
         selected_condition_id: criterion.condition_id } %>
     </div>
 
     <!-- Select Clause -->
-    <div class="w-full pt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3">
+    <div class="refine-criterion-clause-container">
       <%= render partial: 'hammerstone/refine_blueprints/clause_select', locals: {
           meta: criterion.meta, selected_clause: criterion.input[:clause]} %>
     </div>
 
-    <!-- Render correct type of condition --> 
+    <!-- Render correct type of condition -->
     <%= render partial: "hammerstone/refine_blueprints/clauses/#{criterion.component}", locals: {
       criterion: criterion,
       condition: criterion.condition, input: criterion.input, criterion_id: criterion_id, meta: criterion.meta, meta_clause: criterion.selected_clause_meta, input_id: nil } %>
@@ -26,7 +26,7 @@
     <!-- Refinements -->
     <% criterion.refinements.each do |refinement|%>
 
-      <div class="w-full pt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3">
+      <div class="refine-criterion-refinement-container">
         <%= render partial: 'hammerstone/refine_blueprints/clause_select', locals: {
           meta: refinement[:meta], input_id: "input, #{refinement[:id]}", selected_clause: criterion.input.dig(:input, refinement[:id].to_sym, :clause) || {} } %>
       </div>
@@ -35,8 +35,8 @@
         condition: refinement, input: criterion.input[refinement[:id].to_sym] || {}, criterion_id: criterion_id, meta: refinement[:meta], input_id: "input, #{refinement[:id]}", meta_clause: criterion.meta_for_refinement_clause(refinement), criterion: criterion} %>
     <% end %>
     <!-- End Refinements -->
-    
-  <% end %>  
+
+  <% end %>
 <% end %>
 
 <%= render 'hammerstone/refine_blueprints/delete_criterion', criterion_id: criterion_id %>

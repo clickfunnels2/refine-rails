@@ -1,11 +1,11 @@
 <%= tag.div id: dom_id(@form, "group_#{group_id}") do %>
-  <div class="bg-gray-50 rounded p-4 font-sans">
+  <div class="refine-group-container">
     <% criteria&.each_with_index do |criterion, index| %>
-      <div class="flex items-start pb-3 flex-wrap">
+      <div class="refine-group-criterion-container">
         <%= render "hammerstone/refine_blueprints/criterion", criterion: criterion %>
       </div>
       <% if criteria.count > 1 && index < criteria.count - 1 %>
-        <p class="text-gray-400 pl-2">and</p>
+        <p class="refine-group-and">and</p>
       <% end %>
     <% end %>
     <%= render 'hammerstone/refine_blueprints/add_and', criteria: criteria %>

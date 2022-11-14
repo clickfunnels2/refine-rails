@@ -5,10 +5,10 @@
 <% if ['st', 'nst'].include? input[:clause] %>
   <!-- render nothing -->
 <% elsif ['exct', 'gt', 'lt'].include? input[:clause] %>
-  <div class="mt-3">
+  <div class="refine-date-condition-days-container">
     <label for="<%= condition_id %>" class="sr-only">Number of days</label>
     <input
-      class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md w-28"
+      class="refine-date-condition-days-input"
       type="text"
       value="<%= input[:days] %>"
       placeholder="Number of"
@@ -17,12 +17,12 @@
       data-input-id='<%= input_id if defined? input_id %>'
     />
   </div>
-  <div class="px-2 mt-3">
+  <div class="refine-date-condition-days-text">
     <span>days</span>
   </div>
-  <div class="w-32 mt-3 sm:mr-3">
+  <div class="refine-date-condition-days-modifier-container">
     <select
-      class="w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+      class="refine-date-condition-days-modifier-select"
       name="modifer"
       <% if input[:modifier].blank? %>
       data-controller="refine--defaults"
@@ -51,7 +51,7 @@
   </div>
 <% else %>
   <div
-    class="flex-grow-0 mt-3 <% if input[:clause] != 'btwn' %>sm:mr-3<% end %>"
+    class="<%= input[:clause] == 'btwn' ? 'refine-date-condition-first-date-container-btwn' : 'refine-date-condition-first-date-container' %>"
   >
     <%= render partial: "hammerstone/refine_blueprints/clauses/date_picker", locals: {
       criterion: criterion,
@@ -64,8 +64,8 @@
     <%= render partial: 'hammerstone/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
   </div>
   <% if input[:clause] == 'btwn' %>
-    <span class="px-2 mt-3">and</span>
-    <div class="flex-grow-0 mt-3 sm:mr-3">
+    <span class="refine-date-condition-and">and</span>
+    <div class="refine-date-condition-second-date-container">
       <%= render partial: "hammerstone/refine_blueprints/clauses/date_picker", locals: {
         criterion: criterion,
         label: "Second Date",

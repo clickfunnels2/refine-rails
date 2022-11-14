@@ -1,4 +1,4 @@
-<% prefixedClass = 'flex prefixed' if meta[:prefix] %>
+<% prefixedClass = 'refine-clause-select-prefixed' if meta[:prefix] %>
 <%= tag.div class: prefixedClass, data: {
   action: "$change->refine--update#clause",
   controller: 'fields--super-select',
@@ -6,13 +6,13 @@
   fields__super_select_container_width_value: 'resolve',
 } do %>
   <% if meta[:prefix] %>
-    <span class="flex-shrink-0 bg-gray-50 border border-gray-300 rounded-md rounded-r-none p-2"><%= meta[:prefix] %></span>
+    <span class="refine-clause-select-prefix"><%= meta[:prefix] %></span>
   <% end %>
   <select
     data-fields--super-select-target="select"
     data-input-id='<%= input_id if defined? input_id %>'
     name="clauses"
-    class="w-full flex-grow flex-shrink-0 sm:w-auto"
+    class="refine-clause-select"
   >
     <% meta[:clauses].each do |clause| %>
       <option

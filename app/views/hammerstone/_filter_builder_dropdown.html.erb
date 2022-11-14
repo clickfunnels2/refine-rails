@@ -7,12 +7,12 @@
    data-action="blueprint-updated->refine--stabilize-filter#updateStableId"
    >
 
-  <%= tag.div class: "px-8 hidden md:block w-auto p6 relative", data: {
+  <%= tag.div class: "refine-filter-builder-dropdown-container", data: {
     controller: "reveal",
     action: "filter-stored@window->search-filter#updateStoredFilter"
   } do %>
     <button
-      class="px-8bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+      class="refine-filter-condition-toggle-button"
       data-action="reveal#toggle"
       type="button"
     >
@@ -30,26 +30,26 @@
       data-transition-leave-end="transform opacity-0 scale-95"
       data-controller="filter-link"
 
-      class="px-4 mt-2 origin-top-right absolute z-100 right-0 rounded shadow-2xl bg-white opacity-100 scale-100 w-screen sm:max-w-max"
+      class="refine-filter-builder-dropdown-search-box"
       style="min-width: 50vw; max-height: 66vh; overflow: auto;"
     >
       <%= turbo_frame_tag :stored_filters, loading: :lazy,
         src: editor_hammerstone_refine_stored_filters_path({
           id: @stored_filter&.id, stable_id: @stable_id, filter: @refine_filter.class.name }.compact) do %>
-        <div class="py-4">
+        <div class="refine-filter-builder-dropdown-loading-container">
           <%= render partial: 'hammerstone/loading', locals: {style: "tr"} %>
         </div>
       <% end %>
-      <div class="py-6 flex sticky bottom-0 bg-white">
+      <div class="refine-filter-builder-dropdown-button-container">
         <button
-          class="button-secondary ml-auto mr-4"
+          class="refine-filter-builder-dropdown-cancel-button"
           data-action="click->reveal#toggle"
           type="button"
         >
           <%= t('global.buttons.cancel') %>
         </button>
         <button
-          class="button text-center mr-4"
+          class="refine-filter-builder-dropdown-apply-button"
           data-action="click->refine--search-filter#search"
           data-filter-link-target="link"
           type="button"

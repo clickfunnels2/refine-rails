@@ -3,7 +3,7 @@
 <% if ['st', 'nst'].include? input[:clause] %>
 <!-- Render nothing -->
 <% elsif %>
-  <%= tag.div class: 'w-full mt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3 flex postfixed' do %>
+  <%= tag.div class: 'refine-option-condition-container' do %>
     <%= tag.div data: {
       action: "$change->refine--update#selected blur->refine--update#refreshFromServer",
       controller: 'fields--super-select',
@@ -11,7 +11,7 @@
       fields__super_select_container_width_value: 'resolve',
     } do %>
       <select <%=multiple%>
-        class="font-sans mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+        class="refine-option-condition-select"
         data-fields--super-select-target="select"
         name="values"
         data-input-id='<%= input_id if input_id%>'
@@ -28,10 +28,10 @@
       </select>
     <% end %>
     <% if meta[:postfix] %>
-      <span class="flex-shrink-0 bg-gray-50 border border-gray-300 rounded-md rounded-l-none p-2"><%= meta[:postfix] %></span>
+      <span class="refine-option-condition-postfix"><%= meta[:postfix] %></span>
     <% end %>
     <%= render partial: 'hammerstone/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
   <% end %>
 <% end %>
- 
+
 

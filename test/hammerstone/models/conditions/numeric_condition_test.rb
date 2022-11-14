@@ -120,10 +120,19 @@ module Hammerstone::Refine::Conditions
 
     describe "Human readable text representation" do
       it "correctly outputs human readable text for 'is set' clause" do
-        data = {clause: DateCondition::CLAUSE_SET}
+        data = {clause: NumericCondition::CLAUSE_SET}
         filter = apply_condition_and_return_filter(condition, data)
         filter.translate_display(condition)
         assert_equal "Numeric Test is set", condition.human_readable(data)
+      end
+
+      it "correctly outputs human readable text for 'equals' clause using remap" do
+        data = {clause: NumericCondition::CLAUSE_EQUALS, value1: 42}
+        condition = NumericCondition.new("numeric_test").remap_clause_displays({eq: "equals"})
+        filter = apply_condition_and_return_filter(condition, data)
+        filter.translate_display(condition)
+
+        assert_equal "Numeric Test equals 42", condition.human_readable(data)
       end
     end
   end

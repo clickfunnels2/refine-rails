@@ -77,12 +77,22 @@ module Hammerstone::Refine::Conditions
     end
     describe "Human readable text representation" do
       it "correctly outputs human readable text for 'is set' clause" do
-        data = {clause: DateCondition::CLAUSE_SET}
+        data = {clause: BooleanCondition::CLAUSE_TRUE}
         condition = BooleanCondition.new("test_bool")
+        condition.ensure_clauses.call
         filter = apply_condition_and_return_filter(condition, data)
         filter.translate_display(condition)
 
-        assert_equal "Test Bool is set", condition.human_readable(data)
+        assert_equal "Test Bool is true", condition.human_readable(data)
+      end
+
+      it "correctly outputs human readable text for 'is set' clause using remap" do
+        data = {clause: BooleanCondition::CLAUSE_SET}
+        condition = BooleanCondition.new("test_bool").only_clauses([BooleanCondition::CLAUSE_SET]).remap_clause_displays({st: "is defined"})
+        filter = apply_condition_and_return_filter(condition, data)
+        filter.translate_display(condition)
+
+        assert_equal "Test Bool is defined", condition.human_readable(data)
       end
     end
   end

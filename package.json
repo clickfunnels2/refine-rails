@@ -13,7 +13,7 @@
     "app/assets/javascripts/*.js",
     "app/assets/javascripts/*.js.map",
     "app/javascript/**/*.js",
-    "app/javascript/index.css"
+    "app/assets/stylesheets/refine/rails/index.css"
   ],
   "watch": {
     "update-local-installs": "app/javascript/**/*.js"

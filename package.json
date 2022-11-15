@@ -1,6 +1,6 @@
 {
   "name": "@hammerstone/refine-stimulus",
-  "version": "2.3.6",
+  "version": "2.3.8",
   "description": "Refine is a flexible query builder for your apps. It lets your users filter down to exactly what they're looking for. Completely configured on the backend.",
   "browserslist": [
     "defaults",
@@ -12,7 +12,8 @@
   "files": [
     "app/assets/javascripts/*.js",
     "app/assets/javascripts/*.js.map",
-    "app/javascript/**/*.js"
+    "app/javascript/**/*.js",
+    "app/assets/stylesheets/refine/rails/index.css"
   ],
   "watch": {
     "update-local-installs": "app/javascript/**/*.js"

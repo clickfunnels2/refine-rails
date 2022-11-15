@@ -1,0 +1,316 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+  /* _head.html.erb */
+  .refine-stored-filter-head-container {
+    @apply flex w-full py-4;
+  }
+
+  .refine-stored-filter-header {
+    @apply text-gray-800 font-semibold text-base;
+  }
+
+  .refine-stored-filter-link {
+    @apply text-blue-600 bg-transparent font-bold underline text-xs ml-auto leading-6 outline-none focus:outline-none;
+  }
+
+
+  /* edit.html.erb / new.html.erb */
+  .refine-stored-filter-container {
+    @apply py-4;
+  }
+
+  .refine-stored-filter-form {
+    @apply flex w-full;
+  }
+
+  .refine-stored-filter-error {
+    @apply mb-2 text-xs text-red;
+  }
+
+  .refine-stored-filter-input {
+    @apply w-full mr-4 block w-full pl-9 rounded border border-solid border-coolGray-200 focus:ring-blue-500 focus:border-blue-500 sm:text-sm;
+  }
+
+  .refine-stored-filter-button-cancel {
+    @apply button-secondary ml-auto mr-4;
+  }
+
+  .refine-stored-filter-button-submit {
+    @apply button text-center;
+  }
+
+  /* _find.html.erb */
+  .refine-stored-filter-search-container {
+    @apply flex w-full py-4;
+  }
+
+  .refine-stored-filter-search-form {
+    @apply flex w-full;
+  }
+
+  .refine-stored-filter-search-selector-container {
+    @apply w-full mr-4;
+  }
+
+  .refine-stored-filter-search-button-cancel {
+    @apply button-secondary ml-auto mr-4;
+  }
+
+
+  .refine-stored-filter-search-button-submit {
+    @apply button text-center;
+  }
+
+
+  /* _filter_builder_dropdown.html.erb */
+  .refine-filter-builder-dropdown-container {
+    @apply px-8 hidden md:block w-auto p-6 relative;
+  }
+
+  .refine-filter-builder-dropdown-search-box {
+    @apply px-4 mt-2 origin-top-right absolute z-100 right-0 rounded shadow-2xl bg-white opacity-100 scale-100 w-screen sm:max-w-max;
+  }
+
+  .refine-filter-builder-dropdown-toggle-button {
+    @apply px-8 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded;
+  }
+
+  .refine-filter-builder-dropdown-button-container {
+    @apply py-6 flex sticky bottom-0 bg-white;
+  }
+
+  .refine-filter-builder-dropdown-cancel-button {
+    @apply button-secondary ml-auto mr-4;
+  }
+
+  .refine-filter-builder-dropdown-apply-button {
+    @apply button text-center mr-4;
+  }
+
+  .refine-filter-builder-dropdown-loading-container {
+    @apply py-4;
+  }
+
+  /* _filter_condition.html.erb */
+  .refine-filter-condition-container {
+    @apply w-full mt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3 flex postfixed;
+  }
+
+  .refine-filter-condition-select {
+    @apply font-sans mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md;
+  }
+
+  .refine-filter-condition-postfix {
+    @apply flex-shrink-0 bg-gray-50 border border-gray-300 rounded-md rounded-l-none p-2;
+  }
+
+  /* _option_condition.html.erb */
+  .refine-option-condition-container {
+    @apply w-full mt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3 flex postfixed;
+  }
+
+  .refine-option-condition-select {
+    @apply font-sans mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md;
+  }
+
+  .refine-option-condition-postfix {
+    @apply flex-shrink-0 bg-gray-50 border border-gray-300 rounded-md rounded-l-none p-2;
+  }
+
+  /* _add_and.html.erb */
+  .refine-add-container {
+    @apply pt-4 flex;
+  }
+
+  .refine-add-button {
+    @apply button-secondary text-gray-900 uppercase font-semibold text-center cursor-pointer px-3 block;
+  }
+
+  .refine-add-button-text {
+  }
+
+  .refine-add-icon {
+    @apply pl-2 text-gray-500;
+  }
+
+  /* _add_group.html.erb */
+  .refine-add-group-container {
+    @apply flex items-center;
+  }
+
+  .refine-add-group {
+    @apply cursor-pointer text-blue-600 bg-transparent font-bold underline pt-4 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150;
+  }
+
+  /* _clause_select.html.erb */
+  .refine-clause-select-prefixed {
+    @apply flex prefixed;
+  }
+
+  .refine-clause-select-prefix {
+    @apply flex-shrink-0 bg-gray-50 border border-gray-300 rounded-md rounded-r-none p-2;
+  }
+
+  .refine-clause-select {
+    @apply w-full flex-grow flex-shrink-0 sm:w-auto;
+  }
+
+  /* _condition_select.html.erb */
+  .refine-condition-select {
+    @apply w-full sm:w-auto;
+  }
+
+
+  /* _criterion_errors.html.erb */
+  .refine-criterion-error {
+    @apply mt-2 text-xs text-red;
+  }
+
+  /* _criterion.html.erb */
+  .refine-criterion-container {
+    @apply flex flex-wrap flex-grow items-baseline w-full sm:w-auto sm:pr-12;
+  }
+  .refine-criterion-condition-container {
+    @apply w-full sm:w-auto sm:flex-shrink-0 sm:mr-3 pt-3;
+  }
+
+  .refine-criterion-clause-container {
+    @apply w-full pt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3;
+  }
+
+  .refine-criterion-refinement-container {
+    @apply w-full pt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3;
+  }
+
+  /* _delete_criterion.html.erb */
+  .refine-delete-container {
+    @apply pt-5 ml-auto flex-none;
+  }
+
+  .refine-delete-button {
+    @apply ml-auto flex items-center;
+  }
+
+  .refine-delete-criterion-icon {
+    @apply text-gray-600;
+  }
+
+  .refine-delete-criterion-label {
+    @apply text-gray-500 pl-2 hidden;
+  }
+
+  /* _group.html.erb */
+  .refine-group-container {
+    @apply bg-gray-50 rounded p-4 font-sans;
+  }
+
+  .refine-group-criterion-container {
+    @apply flex items-start pb-3 flex-wrap;
+  }
+
+  .refine-group-and {
+    @apply text-gray-400 pl-2;
+  }
+
+  /* _query.html.erb */
+  .refine-query-container {
+    @apply relative;
+  }
+
+  .refine-query-content-container {
+    @apply relative w-full h-full;
+  }
+
+  .refine-query-loading-container {
+    @apply flex items-center justify-center absolute left-0 top-0 w-full h-full bg-gray bg-opacity-50 z-10 rounded;
+  }
+
+  .refine-query-loading-text {
+    @apply text-black text-xl;
+  }
+
+  .refine-query-or {
+    @apply py-3;
+  }
+
+  /* _date_picker.html.erb */
+  .refine-date-picker-container {
+    @apply relative;
+  }
+
+  .refine-date-picker-input {
+    @apply rounded w-36 border border-solid border-coolGray-200 focus:ring-blue-500 focus:border-blue-500 sm:text-sm;
+  }
+
+  /* _text_condition.html.erb */
+  .refine-text-condition-container {
+    @apply mt-3 mr-3;
+  }
+
+  .refine-text-condition-input {
+    @apply rounded border border-solid border-coolGray-200 focus:ring-blue-500 focus:border-blue-500 sm:text-sm;
+  }
+
+  /* _numeric_condition_html.erb */
+
+  .refine-numeric-condition-container {
+    @apply flex-grow-0 mt-3;
+  }
+
+  .refine-numeric-condition-container-btwn {
+    @apply flex-grow-0 mt-3 sm:mr-3;
+  }
+
+  .refine-numeric-condition-input {
+    @apply shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md;
+  }
+
+  .refine-numeric-condition-and {
+    @apply px-2 mt-3;
+  }
+
+  .refine-numeric-condition-second-container {
+    @apply flex-grow-0 mt-3 sm:mr-3;
+  }
+  .refine-numeric-condition-second-input {
+    @apply shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md;
+  }
+
+  /* _date_condition.html.erb */
+  .refine-date-condition-days-container {
+    @apply mt-3;
+  }
+  .refine-date-condition-daysª-input {
+    @apply shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md w-28;
+  }
+  .refine-date-condition-days-text {
+    @apply px-2 mt-3;
+  }
+
+  .refine-date-condition-days-modifier-container {
+    @apply w-32 mt-3 sm:mr-3;
+  }
+
+  .refine-date-condition-days-modifier-select {
+    @apply w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md;
+  }
+
+  .refine-date-condition-first-date-container {
+    @apply flex-grow-0 mt-3 sm:mr-3;
+  }
+  .refine-date-condition-first-date-container-btwn {
+    @apply flex-grow-0 mt-3;
+  }
+
+  .refine-date-condition-and {
+    @apply px-2 mt-3;
+  }
+
+  .refine-date-condition-second-date-container {
+    @apply flex-grow-0 mt-3 sm:mr-3;
+  }
+}

@@ -1,3 +1,7 @@
+### 2.3.9 (npm package: 2.3.9) 2022-11-15
+  * features
+    * Export stylesheet to npm package
+
 ### 2.38 2022-11-14 
   * features
     * Allow scoping of stored filters on save 

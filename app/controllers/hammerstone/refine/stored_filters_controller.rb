@@ -23,7 +23,6 @@ module Hammerstone::Refine
       return redirect_to hammerstone_refine_stored_filter_path(id: params[:id]) unless params[:id].nil?
 
       @refine_filter = refine_filter
-      @save_button_active = !!stable_id
       @return_params = return_params
       @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter)
       render "show"
@@ -44,7 +43,7 @@ module Hammerstone::Refine
       else
         @stored_filter = StoredFilter.new(name: params[:name], state: refine_filter.state, filter_type: refine_filter.type, **instance_exec(&Refine::Rails.configuration.custom_stored_filter_attributes))
       end
-      
+
       if @stored_filter.save
         redirect_to hammerstone_refine_stored_filter_path(id: @stored_filter.id)
       else
@@ -63,7 +62,6 @@ module Hammerstone::Refine
       # Show the refine filter for the stored filter id unless a stable id param is given
       @refine_filter = refine_filter || @stored_filter&.refine_filter
       @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter)
-      @save_button_active = !!stable_id
       @return_params = return_params.except(:id)
     end
 

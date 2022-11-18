@@ -8,7 +8,6 @@ import SearchFilterController from './refine/search-filter-controller'
 import ServerRefreshController from './refine/server-refresh-controller'
 import StateController from './refine/state-controller'
 import StoredFilterController from './refine/stored-filter-controller'
-import StabilizeFilterController from './refine/stabilize-filter-controller'
 import UpdateController from './refine/update-controller'
 import DateController from './refine/date-controller'
 
@@ -21,7 +20,6 @@ export const controllerDefinitions = [
   [ServerRefreshController, 'refine/server-refresh-controller.js'],
   [StateController, 'refine/state-controller.js'],
   [StoredFilterController, 'refine/stored-filter-controller.js'],
-  [StabilizeFilterController, 'refine/stabilize-filter-controller.js'],
   [UpdateController, 'refine/update-controller.js'],
   [DateController, 'refine/date-controller.js']
 ].map(function(d) {
@@ -42,7 +40,6 @@ export {
   ServerRefreshController,
   StateController,
   StoredFilterController,
-  StabilizeFilterController,
   UpdateController,
   DateController
 }

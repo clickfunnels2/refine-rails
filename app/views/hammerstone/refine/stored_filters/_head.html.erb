@@ -16,17 +16,11 @@
     %>
     <span class="text-xs ml-4 mr-4 leading-6">
       <a
-        class="<%= 'hidden' unless @save_button_active %> text-blue-600 background-transparent font-bold underline outline-none focus:outline-none"
+        class="text-blue-600 background-transparent font-bold underline outline-none focus:outline-none"
         href="<%= href %>"
-        data-refine--stored-filter-target="enabledSaveLink"
       >
         <%= t('global.buttons.save_filter') %>
       </a>
-      <span class="<%= 'hidden' if @save_button_active %> text-gray-500 font-medium"
-            data-refine--stored-filter-target="disabledSaveLink">
-        Saved
-      </span>
     </span>
   <% end %>
 <% end %>
-

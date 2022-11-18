@@ -25,22 +25,6 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
     end
   end
 
-  def update_stable_id
-    filterClass = filter_params[:filter].constantize
-    form_id = filter_params[:form_id]
-    # note that here the params are coming in as a nested params hash,
-    # in the show method they are a string. 
-    blueprint_details = params.to_unsafe_h[:blueprint]
-    filter = filterClass.new blueprint_details
-    form = Hammerstone::Refine::FilterForms::Form.new(filter, id: form_id)
-    if form.valid?
-      filter_id = Hammerstone.stabilizer_class('Stabilizers::UrlEncodedStabilizer').new.to_stable_id(filter: filter)
-      render json: { filter_id: filter_id }, status: :ok
-    else
-      render json: { errors: form.error_messages }, status: :unprocessable_entity
-    end
-  end
-
   private
 
   def filter

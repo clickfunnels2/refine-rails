@@ -1,10 +1,6 @@
-  <div data-controller="refine--search-filter refine--stabilize-filter"
+  <div
    data-refine--search-filter-search-frame-id-value="index_search"
    data-refine--search-filter-submit-url-value="<%= hammerstone_refine_blueprint_path %>"
-   data-refine--stabilize-filter-update-stable-id-url-value="<%= hammerstone_update_stable_id_path %>"
-   data-refine--stabilize-filter-stable-id-value="<%= @stable_id %>"
-   data-refine--stabilize-filter-filter-name-value="<%= @refine_filter.class.name %>"
-   data-action="blueprint-updated->refine--stabilize-filter#updateStableId"
    >
 
   <%= tag.div class: "refine-filter-builder-dropdown-container", data: {

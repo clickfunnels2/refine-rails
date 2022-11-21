@@ -2,7 +2,7 @@
 module.exports = {
   safelist: [
     {
-      pattern: /./
+      pattern: /refine.*/
     },
   ]
 }

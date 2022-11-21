@@ -1,8 +1,37 @@
-@tailwind base;
 @tailwind components;
-@tailwind utilities;
 
 @layer components {
+  
+  .refine-button {
+    @apply shadow-sm text-white hover:text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 hover:no-underline;
+  
+    &.button-red {
+      @apply bg-red-500 hover:bg-red-600 focus:ring-red-600;
+    }
+  }
+  
+  .refine-button-secondary {
+    @apply text-blue-600 hover:text-blue-600 hover:underline;
+    &.button-increase-contrast {
+      @apply text-blue-700 hover:text-blue-900;
+    }
+  
+    &.button-red {
+      @apply text-red-500 hover:text-red-600;
+      &.button-increase-contrast {
+        @apply text-red-700 hover:text-red-900;
+      }
+    }
+  }
+  
+  .refine-button, .refine-button-secondary {
+    @apply py-2 px-4 border border-transparent rounded-md;
+    @apply inline-flex items-center whitespace-nowrap;
+    &.button-smaller {
+      @apply py-1 px-3 text-xs;
+    }
+  }
+  
   /* _head.html.erb */
   .refine-stored-filter-head-container {
     @apply flex w-full py-4;
@@ -27,19 +56,19 @@
   }
 
   .refine-stored-filter-error {
-    @apply mb-2 text-xs text-red;
+    @apply mb-2 text-xs text-red-900;
   }
 
   .refine-stored-filter-input {
-    @apply w-full mr-4 block w-full pl-9 rounded border border-solid border-coolGray-200 focus:ring-blue-500 focus:border-blue-500 sm:text-sm;
+    @apply w-full mr-4 block w-full pl-9 rounded border border-solid border-gray-200 focus:ring-blue-500 focus:border-blue-500 sm:text-sm;
   }
 
   .refine-stored-filter-button-cancel {
-    @apply button-secondary ml-auto mr-4;
+    @apply refine-button-secondary ml-auto mr-4;
   }
 
   .refine-stored-filter-button-submit {
-    @apply button text-center;
+    @apply refine-button text-center;
   }
 
   /* _find.html.erb */
@@ -56,12 +85,12 @@
   }
 
   .refine-stored-filter-search-button-cancel {
-    @apply button-secondary ml-auto mr-4;
+    @apply refine-button-secondary ml-auto mr-4;
   }
 
 
   .refine-stored-filter-search-button-submit {
-    @apply button text-center;
+    @apply refine-button text-center;
   }
 
 
@@ -71,7 +100,7 @@
   }
 
   .refine-filter-builder-dropdown-search-box {
-    @apply px-4 mt-2 origin-top-right absolute z-100 right-0 rounded shadow-2xl bg-white opacity-100 scale-100 w-screen sm:max-w-max;
+    @apply px-4 mt-2 origin-top-right absolute z-[100] right-0 rounded shadow-2xl bg-white opacity-100 scale-100 w-screen sm:max-w-max;
   }
 
   .refine-filter-builder-dropdown-toggle-button {
@@ -83,11 +112,11 @@
   }
 
   .refine-filter-builder-dropdown-cancel-button {
-    @apply button-secondary ml-auto mr-4;
+    @apply refine-button-secondary ml-auto mr-4;
   }
 
   .refine-filter-builder-dropdown-apply-button {
-    @apply button text-center mr-4;
+    @apply refine-button text-center mr-4;
   }
 
   .refine-filter-builder-dropdown-loading-container {
@@ -96,7 +125,7 @@
 
   /* _filter_condition.html.erb */
   .refine-filter-condition-container {
-    @apply w-full mt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3 flex postfixed;
+    @apply w-full mt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3 flex;
   }
 
   .refine-filter-condition-select {
@@ -109,7 +138,7 @@
 
   /* _option_condition.html.erb */
   .refine-option-condition-container {
-    @apply w-full mt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3 flex postfixed;
+    @apply w-full mt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3 flex;
   }
 
   .refine-option-condition-select {
@@ -126,7 +155,7 @@
   }
 
   .refine-add-button {
-    @apply button-secondary text-gray-900 uppercase font-semibold text-center cursor-pointer px-3 block;
+    @apply refine-button-secondary text-gray-900 uppercase font-semibold text-center cursor-pointer px-3 block;
   }
 
   .refine-add-button-text {
@@ -147,7 +176,7 @@
 
   /* _clause_select.html.erb */
   .refine-clause-select-prefixed {
-    @apply flex prefixed;
+    @apply flex;
   }
 
   .refine-clause-select-prefix {
@@ -166,7 +195,7 @@
 
   /* _criterion_errors.html.erb */
   .refine-criterion-error {
-    @apply mt-2 text-xs text-red;
+    @apply mt-2 text-xs text-red-900;
   }
 
   /* _criterion.html.erb */
@@ -225,7 +254,7 @@
   }
 
   .refine-query-loading-container {
-    @apply flex items-center justify-center absolute left-0 top-0 w-full h-full bg-gray bg-opacity-50 z-10 rounded;
+    @apply flex items-center justify-center absolute left-0 top-0 w-full h-full bg-gray-500 bg-opacity-50 z-10 rounded;
   }
 
   .refine-query-loading-text {
@@ -242,7 +271,7 @@
   }
 
   .refine-date-picker-input {
-    @apply rounded w-36 border border-solid border-coolGray-200 focus:ring-blue-500 focus:border-blue-500 sm:text-sm;
+    @apply rounded w-36 border border-solid border-gray-200 focus:ring-blue-500 focus:border-blue-500 sm:text-sm;
   }
 
   /* _text_condition.html.erb */
@@ -251,7 +280,7 @@
   }
 
   .refine-text-condition-input {
-    @apply rounded border border-solid border-coolGray-200 focus:ring-blue-500 focus:border-blue-500 sm:text-sm;
+    @apply rounded border border-solid border-gray-200 focus:ring-blue-500 focus:border-blue-500 sm:text-sm;
   }
 
   /* _numeric_condition_html.erb */

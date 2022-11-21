@@ -21,7 +21,7 @@
   "scripts": {
     "prebuild": "$npm_execpath run clean",
     "build": "microbundle app/javascript/index.js -o app/assets/javascripts/ --globals @hotwired/stimulus=Stimulus",
-    "clean": "rimraf app/assets/javascripts",
+    "clean": "rimraf app/assets/javascripts app/assets/styles/refine/rails/index.css",
     "watch": "npm-watch",
     "update-local-installs": "$npm_execpath run build; yalc push"
   },

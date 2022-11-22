@@ -13,13 +13,13 @@
     "app/assets/javascripts/*.js",
     "app/assets/javascripts/*.js.map",
     "app/javascript/**/*.js",
-    "app/assets/stylesheets/refine/rails/index.css"
+    "app/assets/stylesheets/index.css"
   ],
   "watch": {
     "update-local-installs": {
       "patterns": [
         "app/javascript/**/*.js",
-        "app/assets/stylesheets/refine/rails/index.tailwind.css"
+        "app/assets/stylesheets/index.tailwind.css"
       ]
     }
   },
@@ -27,8 +27,8 @@
     "prebuild": "$npm_execpath run clean",
     "build": "$npm_execpath run build:js && $npm_execpath run build:css",
     "build:js": "microbundle app/javascript/index.js -o app/assets/javascripts/ --globals @hotwired/stimulus=Stimulus",
-    "build:css": "tailwindcss -i app/assets/stylesheets/refine/rails/index.tailwind.css -o app/assets/stylesheets/refine/rails/index.css",
-    "clean": "rimraf app/assets/javascripts app/assets/stylesheets/refine/rails/index.css",
+    "build:css": "tailwindcss -i app/assets/stylesheets/index.tailwind.css -o app/assets/stylesheets/index.css",
+    "clean": "rimraf app/assets/javascripts app/assets/stylesheets/index.css",
     "watch": "npm-watch",
     "update-local-installs": "$npm_execpath run build; yalc push"
   },

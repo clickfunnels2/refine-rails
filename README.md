@@ -23,7 +23,7 @@ Typically this is in `app/javascript/controllers/index.js`
 
 ```javascript
 import { controllerDefinitions as refineControllers } from "@hammerstone/refine-stimulus"
-import "@hammerstone/refine-stimulus/app/assets/stylesheets/refine/rails/index.css";
+import "@hammerstone/refine-stimulus/app/assets/stylesheets/index.css";
 application.load(refineControllers)
 ```
 

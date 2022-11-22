@@ -16,4 +16,4 @@
 *.tgz
 .idea
 .idea/*
-app/assets/stylesheets/refine/rails/index.css
+app/assets/stylesheets/index.css

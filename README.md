@@ -36,6 +36,15 @@ Stimulus.router.modulesByIdentifier
 ```
 You should see the `refine--....` controllers listed 
 
+**Note about the style sheet:**
+
+Instead of importing the plain `index.css`, you can remove that line and instead, in your app's tailwind-parsed source css files, you can include the raw tailwind file. Tailwind v3 is required for this.
+
+```css
+/* in application.css */
+@import '@hammerstone/refine-stimulus/app/assets/stylesheets/index.tailwind.css';
+```
+
 6. Add jquery (necessary for our custom select elements)
 `yarn add jquery`
 

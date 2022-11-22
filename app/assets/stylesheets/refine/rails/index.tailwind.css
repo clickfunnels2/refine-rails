@@ -56,7 +56,7 @@
   }
 
   .refine-stored-filter-error {
-    @apply mb-2 text-xs text-red-900;
+    @apply mb-2 text-xs text-red-600;
   }
 
   .refine-stored-filter-input {
@@ -195,7 +195,7 @@
 
   /* _criterion_errors.html.erb */
   .refine-criterion-error {
-    @apply mt-2 text-xs text-red-900;
+    @apply mt-2 text-xs text-red-600;
   }
 
   /* _criterion.html.erb */
@@ -254,7 +254,7 @@
   }
 
   .refine-query-loading-container {
-    @apply flex items-center justify-center absolute left-0 top-0 w-full h-full bg-gray-500 bg-opacity-50 z-10 rounded;
+    @apply flex items-center justify-center absolute left-0 top-0 w-full h-full bg-gray-300 bg-opacity-50 z-10 rounded;
   }
 
   .refine-query-loading-text {

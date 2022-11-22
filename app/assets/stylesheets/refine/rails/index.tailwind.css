@@ -122,10 +122,14 @@
   .refine-filter-builder-dropdown-loading-container {
     @apply py-4;
   }
+  
+  .postfixed {
+    /* keep it because the dropdown select uses it */
+  }
 
   /* _filter_condition.html.erb */
   .refine-filter-condition-container {
-    @apply w-full mt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3 flex;
+    @apply w-full mt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3 flex postfixed;
   }
 
   .refine-filter-condition-select {
@@ -138,7 +142,7 @@
 
   /* _option_condition.html.erb */
   .refine-option-condition-container {
-    @apply w-full mt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3 flex;
+    @apply w-full mt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3 flex postfixed;
   }
 
   .refine-option-condition-select {
@@ -173,10 +177,14 @@
   .refine-add-group {
     @apply cursor-pointer text-blue-600 bg-transparent font-bold underline pt-4 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150;
   }
+  
+  .prefixed {
+    /* keep it because the dropdown select uses it */
+  }
 
   /* _clause_select.html.erb */
   .refine-clause-select-prefixed {
-    @apply flex;
+    @apply flex prefixed;
   }
 
   .refine-clause-select-prefix {

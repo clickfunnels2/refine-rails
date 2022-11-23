@@ -13,15 +13,23 @@
     "app/assets/javascripts/*.js",
     "app/assets/javascripts/*.js.map",
     "app/javascript/**/*.js",
-    "app/assets/stylesheets/refine/rails/index.css"
+    "app/assets/stylesheets/index.css",
+    "app/assets/stylesheets/index.tailwind.css"
   ],
   "watch": {
-    "update-local-installs": "app/javascript/**/*.js"
+    "update-local-installs": {
+      "patterns": [
+        "app/javascript/**/*.js",
+        "app/assets/stylesheets/index.tailwind.css"
+      ]
+    }
   },
   "scripts": {
     "prebuild": "$npm_execpath run clean",
-    "build": "microbundle app/javascript/index.js -o app/assets/javascripts/ --globals @hotwired/stimulus=Stimulus",
-    "clean": "rimraf app/assets/javascripts",
+    "build": "$npm_execpath run build:js && $npm_execpath run build:css",
+    "build:js": "microbundle app/javascript/index.js -o app/assets/javascripts/ --globals @hotwired/stimulus=Stimulus",
+    "build:css": "tailwindcss -i app/assets/stylesheets/index.tailwind.css -o app/assets/stylesheets/index.css",
+    "clean": "rimraf app/assets/javascripts app/assets/stylesheets/index.css",
     "watch": "npm-watch",
     "update-local-installs": "$npm_execpath run build; yalc push"
   },
@@ -53,6 +61,7 @@
     "microbundle": "^0.13.0",
     "npm-watch": "^0.11.0",
     "rimraf": "^3.0.2",
+    "tailwindcss": "^3.2.4",
     "yalc": "^1.0.0-pre.53"
   },
   "dependencies": {

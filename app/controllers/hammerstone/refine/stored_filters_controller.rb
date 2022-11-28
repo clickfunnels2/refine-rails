@@ -32,6 +32,7 @@ module Hammerstone::Refine
       @stored_filter = StoredFilter.find(params[:id])
       @stable_id = stable_id
       @back_link = hammerstone_refine_stored_filter_path(return_params)
+      @filter_form = Hammerstone::Refine::FilterForms::Form.new(@stored_filter.refine_filter, id: filter_form_id)
     end
 
     def update
@@ -79,7 +80,7 @@ module Hammerstone::Refine
       elsif !@stored_filter.save
         render :new, status: :unprocessable_entity
       else
-        render :new, status: :unprocessable_entity
+        redirect_to hammerstone_refine_stored_filter_path(@stored_filter.id)
       end
     end
 

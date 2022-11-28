@@ -75,7 +75,7 @@ export default class extends Controller {
       return lookup
     }, {})
     this.loadingTimeout = null
-    blueprintUpdatedEvent(this.element, this.blueprint)
+    blueprintUpdatedEvent(this.element, {blueprint: this.blueprint, formId: this.formIdValue})
   }
 
   disconnect() {
@@ -113,7 +113,7 @@ export default class extends Controller {
       this.blueprint.push(or())
     }
     this.blueprint.push(criterion(condition.id, 1, condition))
-    blueprintUpdatedEvent(this.element, this.blueprint)
+    blueprintUpdatedEvent(this.element, {blueprint: this.blueprint, formId: this.formIdValue})
   }
 
   addCriterion(previousCriterionId) {
@@ -121,7 +121,7 @@ export default class extends Controller {
     const condition = conditions[0]
     const { meta } = condition
     blueprint.splice(previousCriterionId + 1, 0, and(), criterion(condition.id, 1, condition))
-    blueprintUpdatedEvent(this.element, this.blueprint)
+    blueprintUpdatedEvent(this.element, {blueprint: this.blueprint, formId: this.formIdValue})
   }
 
   deleteCriterion(criterionId) {
@@ -166,7 +166,7 @@ export default class extends Controller {
       blueprint.splice(criterionId - 1, 2)
     }
 
-    blueprintUpdatedEvent(this.element, this.blueprint)
+    blueprintUpdatedEvent(this.element, {blueprint: this.blueprint, formId: this.formIdValue})
   }
 
   /*
@@ -186,7 +186,7 @@ export default class extends Controller {
       return false
     } else {
       this.blueprint[criterionId] = newCriterion
-      blueprintUpdatedEvent(this.element, this.blueprint)
+      blueprintUpdatedEvent(this.element, {blueprint: this.blueprint, formId: this.formIdValue})
       return true
     }
   }
@@ -203,6 +203,6 @@ export default class extends Controller {
     } else {
       criterion[inputId] = { ...criterion[inputId], ...input }
     }
-    blueprintUpdatedEvent(this.element, this.blueprint)
+    blueprintUpdatedEvent(this.element, {blueprint: this.blueprint, formId: this.formIdValue})
   }
 }

@@ -64,12 +64,13 @@ export const filterStoredEvent = (storedFilterId) => {
   window.dispatchEvent(event)
 }
 
-export const blueprintUpdatedEvent = (element, blueprint) => {
+export const blueprintUpdatedEvent = (element, {blueprint, formId}) => {
   const event = new CustomEvent('blueprint-updated', {
     bubbles: true,
     cancelable: true,
     detail: {
-      blueprint
+      blueprint,
+      formId
     },
   })
   element.dispatchEvent(event)

@@ -55,7 +55,7 @@ module Hammerstone::Refine
       @stored_filter = StoredFilter.new(name: "", state: refine_filter.state, filter_type: refine_filter.type)
       @stable_id = stable_id
       @back_link = editor_hammerstone_refine_stored_filters_path(return_params)
-      @filter_form = Refine::FilterForms::Form.new(refine_filter, id: filter_form_id)
+      @filter_form = Hammerstone::Refine::FilterForms::Form.new(refine_filter, id: filter_form_id)
     end
 
     def show
@@ -71,7 +71,7 @@ module Hammerstone::Refine
       @stable_id = stable_id
       @back_link = editor_hammerstone_refine_stored_filters_path(return_params)
       @form_id = nil # TODO need to pass in form's UUID for rendering
-      @filter_form = Refine::FilterForms::Form.new(refine_filter, id: filter_form_id)
+      @filter_form = Hammerstone::Refine::FilterForms::Form.new(refine_filter, id: filter_form_id)
 
       if !refine_filter.valid?
         @replace_filter_form = true
@@ -90,7 +90,7 @@ module Hammerstone::Refine
     end
 
     def return_params
-      {selected_filter_id: filter_id, id: filter_id, filter_form_id: filter_form_id
+      {selected_filter_id: filter_id, id: filter_id, filter_form_id: filter_form_id,
        filter: filter_class, stable_id: params[:stable_id]}.compact
     end
 
@@ -107,12 +107,17 @@ module Hammerstone::Refine
     end
 
     def refine_filter
-      if stable_id
+      if stable_id.present?
         Hammerstone.stabilizer_class('Stabilizers::UrlEncodedStabilizer').new.from_stable_id(id: stable_id)
       elsif filter_class
         filterClass = filter_class.constantize
-        filterClass.new []
+        filterClass.new blueprint
       end
+    end
+
+    def blueprint
+      return [] unless params[:blueprint]
+      JSON.parse(params[:blueprint]).map(&:deep_symbolize_keys)
     end
   end
 end

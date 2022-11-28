@@ -6,7 +6,6 @@ export default class extends Controller {
     submitUrl: String
   }
 
-  static targets = []
 
   search(event) {
     event.preventDefault()

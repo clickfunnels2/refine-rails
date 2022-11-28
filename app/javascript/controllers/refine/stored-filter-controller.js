@@ -2,8 +2,8 @@ import { Controller } from "@hotwired/stimulus"
 import { filterStoredEvent } from '../../refine/helpers'
 
 export default class extends Controller {
-  static targets = ['stableIdField']
-  static values = { id: Number, stableId: String, filterName: String }
+  static targets = ['blueprintField']
+  static values = { id: Number, stableId: String, filterName: String, formId: String, blueprint: Array }
 
   connect() {
     if (this.idValue) {
@@ -11,12 +11,19 @@ export default class extends Controller {
     }
   }
 
-  updateStableIdField(event) {
-    if (event.detail.filterName != this.filterNameValue) { return null }
-    if (this.hasStableIdFieldTarget) {
-      const { detail } = event
-      const { stableId } = detail
-      this.stableIdFieldTarget.value = stableId
+  updateBlueprintField(event) {
+    if (event.detail.formId != this.formIdValue) { return null }
+    const { detail } = event
+    const { blueprint } = detail
+    this.blueprintValue = blueprint
+    if (this.hasBlueprintFieldTarget) {
+      this.blueprintFieldTarget.value = blueprint
+    }
+  }
+
+  setBlueprintFieldFromValue(event) {
+    if (this.hasBlueprintFieldTarget) {
+      this.blueprintFieldTarget.value = JSON.stringify(this.blueprintValue)
     }
   }
 }

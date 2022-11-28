@@ -17,11 +17,13 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
     @form_id = filter_params[:form_id]
     @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter, id: @form_id)
 
-    respond_to do |format|
-      format.turbo_stream do
-        @form.validate!
-        render :show
-      end
+    if @form.valid?
+      uri = URI(request.referrer)
+      new_query_ar = URI.decode_www_form(String(uri.query))
+      new_query_ar.reject! { |(k, _v)| k == "stable_id" }
+      new_query_ar << ["stable_id", @refine_filter.to_stable_id]
+      uri.query = URI.encode_www_form(new_query_ar)
+      @url_for_redirect = uri.to_s
     end
   end
 

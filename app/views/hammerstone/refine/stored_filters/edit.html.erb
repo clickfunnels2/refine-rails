@@ -7,6 +7,7 @@
     <%end%>
     <%= form_tag(hammerstone_refine_stored_filter_path(id: @stored_filter.id), method: :put,
       class: "refine-stored-filter-form", data: { turbo_frame: :stored_filters }) do %>
+        <%= hidden_field_tag :filter_form_id, @refine_filter.id %>
         <input type="text" name="name" placeholder="<%= t('global.filter_name_placeholder')%>"
           class="refine-stored-filter-input"
           value="<%= @stored_filter.name %>"

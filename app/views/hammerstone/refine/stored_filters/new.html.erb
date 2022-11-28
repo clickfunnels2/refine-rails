@@ -3,10 +3,11 @@
     <% if @stored_filter.errors.any? %>
       <% @stored_filter.errors.full_messages.each do |message|%>
         <p class="refine-stored-filter-error">Name has already been taken</p>
-      <%end%>
-    <%end%>
+      <% end %>
+    <% end %>
     <%= form_tag(hammerstone_refine_stored_filters_path, method: :post,
       class: "refine-stored-filter-form", data: { turbo_frame: :stored_filters }) do %>
+        <%= hidden_field_tag :filter_form_id, @refine_filter.id %>
         <input type="text" name="name" placeholder="<%= t('global.filter_name_placeholder')%>"
           class="refine-stored-filter-input"
           value="<%= @stored_filter.name %>"
@@ -17,3 +18,6 @@
       <% end %>
     <% end %>
 <% end%>
+<% if @replace_filter_form %>
+  <%= turbo_stream.replace(dom_id(@filter_form, "query"), partial: "hammerstone/refine_blueprints/query") %>
+<% end %>

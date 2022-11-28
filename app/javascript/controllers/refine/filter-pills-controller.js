@@ -1,6 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
+import { FetchRequest } from '@rails/request.js'
 
 export default class extends Controller {
+  static values = {
+    submitUrl: String
+  }
 
   connect() {
     const urlParams = new URLSearchParams(window.location.search)
@@ -17,10 +21,19 @@ export default class extends Controller {
 
   async reloadPage() {
     const {blueprint} = this.stateController
-    const validationResult = await this.stabilizeFilterController.validateBlueprint(blueprint)
-    if (validationResult.stableId) {
-      this.redirectToStableId(validationResult.stableId)
-    }
+    const request = new FetchRequest(
+      "POST",
+      this.submitUrlValue,
+      {
+        responseKind: "turbo-stream",
+        body: JSON.stringify({
+          filter: this.stateController.filterName,
+          blueprint: JSON.stringify(blueprint),
+          form_id: this.stateController.formIdValue
+        })
+      }
+    )
+    await request.perform()
   }
 
   redirectToStableId(stableId) {

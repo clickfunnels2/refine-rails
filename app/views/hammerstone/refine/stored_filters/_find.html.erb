@@ -1,8 +1,10 @@
 <%= turbo_frame_tag :stored_filter_head do %>
   <%= content_tag :div, class: "refine-stored-filter-search-container" do %>
-    <%= form_tag(hammerstone_refine_stored_filters_path(filter: @refine_filter.class.name), method: :get,
+    <%= form_tag(find_hammerstone_refine_stored_filters_path, method: :post,
       class: "refine-stored-filter-search-form", data: { turbo_frame: :stored_filters }) do %>
       <!-- Saved filter selector -->
+        <%= hidden_field_tag :filter, @return_params[:filter] %>
+        <%= hidden_field_tag :filter_form_id, @return_params[:filter_form_id] %>
         <%= tag.div class: 'refine-stored-filter-search-selector-container', data: {
           controller: 'fields--super-select',
           fields__super_select_enable_search_value: 'true'

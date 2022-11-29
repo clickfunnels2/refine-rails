@@ -23,8 +23,8 @@ module Hammerstone::Refine
       return redirect_to hammerstone_refine_stored_filter_path(id: params[:id]) unless params[:id].nil?
 
       @refine_filter = refine_filter
-      @return_params = return_params
       @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter)
+      @return_params = return_params
       render "show"
     end
 
@@ -32,7 +32,7 @@ module Hammerstone::Refine
       @stored_filter = StoredFilter.find(params[:id])
       @stable_id = stable_id
       @back_link = hammerstone_refine_stored_filter_path(return_params)
-      @filter_form = Hammerstone::Refine::FilterForms::Form.new(@stored_filter.refine_filter, id: filter_form_id)
+      @form = Hammerstone::Refine::FilterForms::Form.new(@stored_filter.refine_filter, id: filter_form_id)
     end
 
     def update
@@ -55,8 +55,8 @@ module Hammerstone::Refine
     def new
       @stored_filter = StoredFilter.new(name: "", state: refine_filter.state, filter_type: refine_filter.type)
       @stable_id = stable_id
+      @form = Hammerstone::Refine::FilterForms::Form.new(refine_filter, id: filter_form_id)
       @back_link = editor_hammerstone_refine_stored_filters_path(return_params)
-      @filter_form = Hammerstone::Refine::FilterForms::Form.new(refine_filter, id: filter_form_id)
     end
 
     def show
@@ -70,14 +70,14 @@ module Hammerstone::Refine
     def create
       @stored_filter = StoredFilter.new(name: params[:name], state: refine_filter.state, filter_type: refine_filter.type, **instance_exec(&Refine::Rails.configuration.custom_stored_filter_attributes))
       @stable_id = stable_id
+      @form = Hammerstone::Refine::FilterForms::Form.new(refine_filter, id: filter_form_id)
       @back_link = editor_hammerstone_refine_stored_filters_path(return_params)
-      @form_id = nil # TODO need to pass in form's UUID for rendering
-      @filter_form = Hammerstone::Refine::FilterForms::Form.new(refine_filter, id: filter_form_id)
 
-      if !refine_filter.valid?
-        @replace_filter_form = true
-        render :new, status: :unprocessable_entity
+      if !@form.valid?
+        # replace the filter form with errors
+        render :create
       elsif !@stored_filter.save
+        # replace the stored filter form
         render :new, status: :unprocessable_entity
       else
         redirect_to hammerstone_refine_stored_filter_path(@stored_filter.id)
@@ -91,7 +91,7 @@ module Hammerstone::Refine
     end
 
     def return_params
-      {selected_filter_id: filter_id, id: filter_id, filter_form_id: filter_form_id,
+      {selected_filter_id: filter_id, id: filter_id, filter_form_id: @form.id,
        filter: filter_class, stable_id: params[:stable_id]}.compact
     end
 

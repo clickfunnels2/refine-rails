@@ -7,9 +7,9 @@
     <% end %>
     <%= form_tag(hammerstone_refine_stored_filters_path, method: :post,
       class: "refine-stored-filter-form", data: { turbo_frame: :stored_filters }) do %>
-        <%= hidden_field_tag :filter_form_id, @filter_form.id %>
-        <%= hidden_field_tag :filter, @filter_form.filter.type %>
-        <%= hidden_field_tag :blueprint, @filter_form.filter.blueprint.to_json, data: {refine__stored_filter_target: "blueprintField"} %>
+        <%= hidden_field_tag :filter_form_id, @form.id %>
+        <%= hidden_field_tag :filter, @form.filter.type %>
+        <%= hidden_field_tag :blueprint, @form.filter.blueprint.to_json, data: {refine__stored_filter_target: "blueprintField"} %>
         <input type="text" name="name" placeholder="<%= t('global.filter_name_placeholder')%>"
           class="refine-stored-filter-input"
           value="<%= @stored_filter.name %>"
@@ -20,6 +20,3 @@
       <% end %>
     <% end %>
 <% end%>
-<% if @replace_filter_form %>
-  <%= turbo_stream.replace(dom_id(@filter_form, "query"), partial: "hammerstone/refine_blueprints/query") %>
-<% end %>

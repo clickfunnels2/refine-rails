@@ -16,12 +16,10 @@ export default class extends Controller {
     const { detail } = event
     const { blueprint } = detail
     this.blueprintValue = blueprint
-    if (this.hasBlueprintFieldTarget) {
-      this.blueprintFieldTarget.value = blueprint
-    }
+    this.setBlueprintFieldFromValue(null)
   }
 
-  setBlueprintFieldFromValue(event) {
+  setBlueprintFieldFromValue(_event) {
     if (this.hasBlueprintFieldTarget) {
       this.blueprintFieldTarget.value = JSON.stringify(this.blueprintValue)
     }

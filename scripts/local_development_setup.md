@@ -31,7 +31,7 @@ yarn build --watch
 
 Switch to the app's folder and yarn link
 ```sh
-yarn link '@hammerstone/refine-rails'
+yarn link '@hammerstone/refine-stimulus'
 ```
 
 ## Restart the Dev Server

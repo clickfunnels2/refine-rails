@@ -16,3 +16,4 @@
 *.tgz
 .idea
 .idea/*
+app/assets/stylesheets/index.css

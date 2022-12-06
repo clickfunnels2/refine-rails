@@ -1,3 +1,7 @@
+### 2.3.10 2022-11-22
+* bugfix
+    * Properly export tailwind and non tailwind css files
+
 ### 2.3.9 (npm package: 2.3.9) 2022-11-15
   * features
     * Export stylesheet to npm package

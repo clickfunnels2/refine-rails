@@ -45,14 +45,14 @@ module Hammerstone::Refine
       @initial_query
     end
 
-    # If the initial condition has not been set in the filter, validation for relationships will error. 
+    # If the initial condition has not been set in the filter, validation for relationships will error.
     # The BT implementation builds the filter *then* sets the initial condition
     # This pulls a "smart" default from the filter arel table - Arel::Table provides the table name, can extract the model then call "all"
-    # to return and AR::R object which is what `uses_attributes` expects. 
+    # to return and AR::R object which is what `uses_attributes` expects.
     def fallback_initial_condition
       # TODO: Figure out a better way to do this.
       table.name.classify.constantize.all
-    end 
+    end
 
     def table
       initial_query.model.arel_table
@@ -248,6 +248,10 @@ module Hammerstone::Refine
       else
         raise ArgumentError.new('Given class doesn\'t implement to_stable_id and from_stable_id!')
       end
+    end
+
+    def to_stable_id
+      Hammerstone.stabilizer_class('Stabilizers::UrlEncodedStabilizer').new.to_stable_id(filter: self)
     end
   end
 end

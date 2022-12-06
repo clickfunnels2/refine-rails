@@ -44,7 +44,7 @@ module Hammerstone::Refine
     def show
       @stored_filter = StoredFilter.find_by(id: params[:id])
       # Show the refine filter for the stored filter id unless a stable id param is given
-      @refine_filter = refine_filter || @stored_filter&.refine_filter
+      @refine_filter = @stored_filter&.refine_filter || refine_filter
       @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter)
       @return_params = return_params.except(:id)
     end

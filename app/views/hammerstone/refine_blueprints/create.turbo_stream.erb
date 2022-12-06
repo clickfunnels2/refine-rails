@@ -1,7 +1,7 @@
 <% if @url_for_redirect %>
   <%= turbo_stream.append_all "body" do %>
     <script>
-      window.Turbo.visit(<%= @url_for_redirect.to_json %>)
+      window.Turbo.visit(<%= @url_for_redirect.to_json.html_safe %>)
     </script>
   <% end %>
 <% else %>

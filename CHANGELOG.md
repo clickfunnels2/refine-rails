@@ -1,5 +1,8 @@
+### 2.3.11 2022-12-6
+  * Possible breaking change
+    * Remove the constant server refresh PR: #81
 ### 2.3.10 2022-11-22
-* bugfix
+  * bugfix
     * Properly export tailwind and non tailwind css files
 
 ### 2.3.9 (npm package: 2.3.9) 2022-11-15

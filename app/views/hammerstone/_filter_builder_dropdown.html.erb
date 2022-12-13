@@ -1,7 +1,8 @@
   <div
-    data-controller="refine--search-filter"
+  data-controller="refine--search-filter"
    data-refine--search-filter-search-frame-id-value="index_search"
    data-refine--search-filter-submit-url-value="<%= hammerstone_refine_blueprint_path %>"
+   data-action="filter-submit-success@document->refine--search-filter#loadResults"
   >
 
   <%= tag.div class: "refine-filter-builder-dropdown-container", data: {

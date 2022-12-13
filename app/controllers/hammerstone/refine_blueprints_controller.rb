@@ -2,15 +2,16 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
   include ActionView::RecordIdentifier # for dom_id
   layout false
 
+  before_action :set_filter
+
   def show
-    @refine_filter = filter
-    @form_id = filter_params[:form_id]
-    @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter, id: @form_id)
     if @form.valid?
       @stable_id = @refine_filter.to_stable_id
     end
+
     # don't display errors
     @form.clear_errors
+
     respond_to do |format|
       format.turbo_stream
       format.html
@@ -18,12 +19,11 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
   end
 
   def create
-    @refine_filter = filter
-    @form_id = filter_params[:form_id]
-    @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter, id: @form_id)
-
     if @form.valid?
+      # set stable_id
       @stable_id = @refine_filter.to_stable_id
+
+      # set url
       uri = URI(request.referrer)
       new_query_ar = URI.decode_www_form(String(uri.query))
       new_query_ar.reject! { |(k, _v)| k == "stable_id" }
@@ -36,25 +36,27 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
 
   private
 
-  def filter
-    if stable_id
-      Hammerstone.stabilizer_class('Stabilizers::UrlEncodedStabilizer').new.from_stable_id(id: stable_id)
+  def set_filter
+    if stable_id = filter_params[:stable_id]
+      @refine_filter = Hammerstone.stabilizer_class('Stabilizers::UrlEncodedStabilizer').new.from_stable_id(id: stable_id)
+    elsif filter_params[:blueprint]
+      klass = filter_params[:filter].constantize
+      blueprint = JSON.parse(filter_params[:blueprint]).map(&:deep_symbolize_keys)
+      @refine_filter = klass.new blueprint
     else
-      filterClass = filter_params[:filter].constantize
-      filterClass.new blueprint
+      klass = filter_params[:filter].constantize
+      @refine_filter = klass.new([])
     end
+
+
+  end
+
+  def set_form
+     @form_id = filter_params[:form_id]
+    @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter, id: @form_id)
   end
 
   def filter_params
     params.permit(:filter, :stable_id, :blueprint, :form_id)
-  end
-
-  def blueprint
-    return [] unless filter_params[:blueprint]
-    JSON.parse(filter_params[:blueprint]).map(&:deep_symbolize_keys)
-  end
-
-  def stable_id
-    filter_params[:stable_id]
   end
 end

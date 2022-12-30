@@ -17,3 +17,5 @@
 .idea
 .idea/*
 app/assets/stylesheets/index.css
+*.sublime-project
+*.sublime-workspace

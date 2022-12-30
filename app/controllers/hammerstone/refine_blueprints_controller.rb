@@ -1,7 +1,14 @@
 class Hammerstone::RefineBlueprintsController < ApplicationController
-  include ActionView::RecordIdentifier # for dom_id
   layout false
 
+  # entry point for initial render of the filter builder
+  def new
+    @refine_filter = refine_filter
+    @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter)
+    @show_stored_filters = true # TODO make this an option
+  end
+
+  # refresh the filter builder
   def show
     @refine_filter = filter
     @form_id = filter_params[:form_id]
@@ -12,6 +19,7 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
     end
   end
 
+  # handles filter submission
   def create
     @refine_filter = filter
     @form_id = filter_params[:form_id]

@@ -31,8 +31,7 @@
       style="min-width: 50vw; max-height: 66vh; overflow: auto;"
     >
       <%= turbo_frame_tag :stored_filters, loading: :lazy,
-        src: editor_hammerstone_refine_stored_filters_path({
-          id: @stored_filter&.id, stable_id: @stable_id, filter: @refine_filter.class.name }.compact) do %>
+        src: new_hammerstone_refine_filter_path({stable_id: @stable_id, filter: @refine_filter.class.name }.compact) do %>
         <div class="refine-filter-builder-dropdown-loading-container">
           <%= render partial: 'hammerstone/loading', locals: {style: "tr"} %>
         </div>

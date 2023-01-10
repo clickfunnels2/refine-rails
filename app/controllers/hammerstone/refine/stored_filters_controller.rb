@@ -17,9 +17,11 @@ module Hammerstone::Refine
     end
 
     def new
-      @stored_filter = StoredFilter.new(filter_type: params[:filter_class])
-      refine_filter = params[:filter_class].constantize.new
-      @form = Hammerstone::Refine::FilterForms::Form.new(refine_filter, id: params[:filter_form_id])
+      @filter_class = params[:filter_class]
+      @filter_form_id = params[:filter_form_id]
+      @stored_filter = StoredFilter.new(filter_type: @filter_class)
+      refine_filter = @filter_class.constantize.new
+      @form = Hammerstone::Refine::FilterForms::Form.new(refine_filter, id: @filter_form_id)
     end
 
     def create

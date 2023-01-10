@@ -15,7 +15,7 @@
           value="<%= @stored_filter.name %>"
         />
         <input type="text" name="stable_id" value="<%= @stable_id %>" data-refine--stored-filter-target="stableIdField" hidden />
-        <%= link_to t('global.buttons.back'), @back_link, class: "refine-stored-filter-button-cancel" %>
+        <%= link_to t('global.buttons.back'), stored_filters_hammerstone_refine_blueprint_path(filter: @filter_class, form_id: @filter_form_id), class: "refine-stored-filter-search-button-cancel"%>
         <%= button_tag t('global.buttons.save'), type: "submit", class: "refine-stored-filter-button-submit" %>
       <% end %>
     <% end %>

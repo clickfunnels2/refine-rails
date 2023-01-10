@@ -3,25 +3,21 @@ import { filterStoredEvent } from '../../refine/helpers'
 
 export default class extends Controller {
   static targets = ['blueprintField']
-  static values = { id: Number, stableId: String, filterName: String, formId: String, blueprint: Array }
+  static values = { formId: String }
 
   connect() {
-    if (this.idValue) {
-      filterStoredEvent(this.idValue)
-    }
+    const stateController = document
+      .getElementById(`query_hammerstone_refine_filter_forms_form_${this.formIdValue}`)
+      .refineStateController
+    this.blueprintFieldTarget.value = JSON.stringify(stateController.blueprintValue)
+    console.log("connect", this.blueprintFieldTarget.value)
   }
 
   updateBlueprintField(event) {
     if (event.detail.formId != this.formIdValue) { return null }
     const { detail } = event
     const { blueprint } = detail
-    this.blueprintValue = blueprint
-    this.setBlueprintFieldFromValue(null)
-  }
-
-  setBlueprintFieldFromValue(_event) {
-    if (this.hasBlueprintFieldTarget) {
-      this.blueprintFieldTarget.value = JSON.stringify(this.blueprintValue)
-    }
+    this.blueprintFieldTarget.value = JSON.stringify(blueprint)
+    console.log("update blueprint", this.blueprintFieldTarget.value)
   }
 }

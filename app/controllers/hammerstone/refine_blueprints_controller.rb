@@ -5,7 +5,7 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
   def new
     @refine_filter = filter
     @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter)
-    @show_stored_filters = true # TODO make this an option
+    @show_stored_filters = params[:stored_filters]
   end
 
   # refresh the filter builder

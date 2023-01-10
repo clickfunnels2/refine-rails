@@ -1,0 +1,11 @@
+<%= tag.div id: dom_id(refine_filter_form), class: 'refine-query-container', data: {
+  controller: "refine--state",
+  refine__state_conditions_value: refine_filter_form.available_conditions_attributes.to_json,
+  refine__state_blueprint_value: refine_filter_form.blueprint.to_json,
+  refine__state_class_name_value: refine_filter_form.configuration[:class_name],
+  refine__state_refresh_url_value: hammerstone_refine_blueprint_path,
+  refine__state_form_id_value: refine_filter_form.id } do %>
+
+  <%= yield %>
+
+<% end %>

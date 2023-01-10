@@ -11,11 +11,13 @@ module Hammerstone::FilterApplicationController
       @stable_id = stable_id
       @refine_filter = if stable_id
         Hammerstone::Refine::Stabilizers::UrlEncodedStabilizer.new.from_stable_id(id: stable_id)
+
       elsif @stored_filter
         @stored_filter.refine_filter
       else
         child_filter_class.new([])
       end
+      @refine_filter_form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter)
       # Optionally set the instance variable to be the results of the query. 
       # instance_variable_set('example: @contacts', @refine_filter.get_query)
 

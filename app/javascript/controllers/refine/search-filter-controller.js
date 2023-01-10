@@ -33,7 +33,7 @@ export default class extends Controller {
   get stateController() {
     return this
       .element
-      .querySelector('[data-controller~="refine--state"]')
+      .closest('[data-controller~="refine--state"]')
       .refineStateController
   }
 }

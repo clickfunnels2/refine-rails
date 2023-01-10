@@ -1,4 +1,4 @@
-<%= turbo_frame_tag dom_id(@form, :stored_filters) do %>
+<%= turbo_frame_tag "stored_filters" do %>
   <%= content_tag :div, class: "refine-stored-filter-container" do %>
     <% if @stored_filter.errors.any? %>
       <% @stored_filter.errors.full_messages.each do |message|%>

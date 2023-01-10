@@ -30,8 +30,8 @@
       class="refine-filter-builder-dropdown-search-box"
       style="min-width: 50vw; max-height: 66vh; overflow: auto;"
     >
-      <%= turbo_frame_tag :stored_filters, loading: :lazy,
-        src: new_hammerstone_refine_filter_path({stable_id: @stable_id, filter: @refine_filter.class.name }.compact) do %>
+      <%= turbo_frame_tag :refine_filter_modal, loading: :lazy,
+        src: new_hammerstone_refine_blueprint_path({stable_id: @stable_id, filter: @refine_filter.class.name }.compact) do %>
         <div class="refine-filter-builder-dropdown-loading-container">
           <%= render partial: 'hammerstone/loading', locals: {style: "tr"} %>
         </div>

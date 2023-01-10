@@ -3,7 +3,7 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
 
   # entry point for initial render of the filter builder
   def new
-    @refine_filter = refine_filter
+    @refine_filter = filter
     @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter)
     @show_stored_filters = true # TODO make this an option
   end
@@ -33,6 +33,12 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
       uri.query = URI.encode_www_form(new_query_ar)
       @url_for_redirect = uri.to_s
     end
+  end
+
+  def stored_filters
+    @refine_filter = filter
+    @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter, id: params[:form_id])
+    render partial: "stored_filters", layout: false
   end
 
   private

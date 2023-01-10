@@ -1,5 +1,7 @@
-<%= if @show_stored_filters %>
-  <%= render partial: "stored_filters" %>
-<% end %>
+<%= turbo_frame_tag "refine_filter_modal" do %>
+  <% if @show_stored_filters %>
+    <%= render partial: "stored_filters" %>
+  <% end %>
 
-<%= render template: "show" %>
+  <%= render template: "hammerstone/refine_blueprints/show" %>
+<% end %>

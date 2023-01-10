@@ -1,4 +1,4 @@
-<%= turbo_frame_tag dom_id(@form, :stored_filters) do %>
+<%= turbo_frame_tag "stored_filters" do %>
   <%= content_tag :div, class: "refine-stored-filter-head-container", data: {
         controller: 'refine--stored-filter',
         refine__stored_filter_id_value: @stored_filter&.id,
@@ -12,7 +12,7 @@
       <%= filter_title %>
     </h3>
     <a
-      href="<%= hammerstone_refine_stored_filters_path(filter: @refine_filter.class.name, filter_form_id: @form.id) %>"
+      href="<%= hammerstone_refine_stored_filters_path(filter: @refine_filter.class.name, filter_form_id: @form.id, filter_class: @refine_filter.class.name) %>"
       class="refine-stored-filter-link"
     >
       <%= t('global.buttons.find_filter') %>
@@ -20,7 +20,7 @@
     <span class="text-xs ml-4 mr-4 leading-6">
       <a
         class="text-blue-600 background-transparent font-bold underline outline-none focus:outline-none"
-        href="<%= new_hammerstone_refine_stored_filter_url %>"
+        href="<%= new_hammerstone_refine_stored_filter_path(filter_class: @refine_filter.class.name, filter_form_id: @form.id) %>"
       >
         <%= t('global.buttons.save_filter') %>
       </a>

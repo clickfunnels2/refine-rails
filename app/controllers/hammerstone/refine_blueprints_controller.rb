@@ -1,11 +1,10 @@
 class Hammerstone::RefineBlueprintsController < ApplicationController
   layout false
   before_action :set_filter
+  before_action :set_form
 
   # entry point for initial render of the filter builder
   def new
-    @refine_filter = filter
-    @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter)
     @show_stored_filters = params[:stored_filters]
   end
 
@@ -42,8 +41,6 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
   end
 
   def stored_filters
-    @refine_filter = filter
-    @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter, id: params[:form_id])
     render partial: "stored_filters", layout: false
   end
 
@@ -65,7 +62,7 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
   end
 
   def set_form
-     @form_id = filter_params[:form_id]
+    @form_id = filter_params[:form_id]
     @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter, id: @form_id)
   end
 

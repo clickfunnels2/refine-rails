@@ -1,9 +1,15 @@
 class Hammerstone::RefineBlueprintsController < ApplicationController
-  include ActionView::RecordIdentifier # for dom_id
   layout false
-
   before_action :set_filter
 
+  # entry point for initial render of the filter builder
+  def new
+    @refine_filter = filter
+    @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter)
+    @show_stored_filters = params[:stored_filters]
+  end
+
+  # refresh the filter builder
   def show
     if @form.valid?
       @stable_id = @refine_filter.to_stable_id
@@ -18,6 +24,7 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
     end
   end
 
+  # handles filter submission
   def create
     if @form.valid?
       # set stable_id
@@ -32,6 +39,12 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
       @url_for_redirect = uri.to_s
       @filter_submit_success = true
     end
+  end
+
+  def stored_filters
+    @refine_filter = filter
+    @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter, id: params[:form_id])
+    render partial: "stored_filters", layout: false
   end
 
   private

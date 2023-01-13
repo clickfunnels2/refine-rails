@@ -1,21 +1,29 @@
-<%= turbo_frame_tag :stored_filter_head do %>
-  <%= content_tag :div, class: "refine-stored-filter-container" do %>
+<%= turbo_frame_tag "stored_filters" do %>
+  <%= content_tag :div, class: "refine-stored-filter-container", data: {
+    controller: 'refine--stored-filter',
+    refine__stored_filter_id_value: @stored_filter&.id,
+    refine__stored_filter_form_id_value: @form&.id,
+    refine__stored_filter_filter_name_value: @refine_filter.class.name,
+    action: 'blueprint-updated@window->refine--stored-filter#updateBlueprintField'
+  } do %>
     <% if @stored_filter.errors.any? %>
       <% @stored_filter.errors.full_messages.each do |message|%>
-        <p class="refine-stored-filter-error">Name has already been taken</p>
+        <p class="refine-stored-filter-error"><%= message %></p>
       <% end %>
     <% end %>
     <%= form_tag(hammerstone_refine_stored_filters_path, method: :post,
-      class: "refine-stored-filter-form", data: { turbo_frame: :stored_filters }) do %>
+      class: "refine-stored-filter-form", data: {
+        turbo_frame: :stored_filters
+      }) do %>
         <%= hidden_field_tag :filter_form_id, @form.id %>
-        <%= hidden_field_tag :filter, @form.filter.type %>
-        <%= hidden_field_tag :blueprint, @form.filter.blueprint.to_json, data: {refine__stored_filter_target: "blueprintField"} %>
+        <%= hidden_field_tag :filter_class, @form.filter.type %>
+        <%= hidden_field_tag :blueprint, "", data: {refine__stored_filter_target: "blueprintField"} %>
         <input type="text" name="name" placeholder="<%= t('global.filter_name_placeholder')%>"
           class="refine-stored-filter-input"
           value="<%= @stored_filter.name %>"
         />
         <input type="text" name="stable_id" value="<%= @stable_id %>" data-refine--stored-filter-target="stableIdField" hidden />
-        <%= link_to t('global.buttons.back'), @back_link, class: "refine-stored-filter-button-cancel" %>
+        <%= link_to t('global.buttons.back'), stored_filters_hammerstone_refine_blueprint_path(filter: @filter_class, form_id: @filter_form_id), class: "refine-stored-filter-search-button-cancel"%>
         <%= button_tag t('global.buttons.save'), type: "submit", class: "refine-stored-filter-button-submit" %>
       <% end %>
     <% end %>

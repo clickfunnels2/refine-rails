@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
   namespace :hammerstone do
-    resource :refine_blueprint, only: [:show, :update, :create]
+    resource :refine_blueprint, only: [:show, :new, :create] do
+      get "stored_filters", on: :collection
+    end
     namespace :refine do
-      resources :stored_filters, only: [:create, :index, :show, :new] do
-        get "editor", on: :collection
+      resources :stored_filters, only: [:index, :new, :create] do
         post "find", on: :collection
       end
     end

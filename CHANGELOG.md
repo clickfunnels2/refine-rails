@@ -1,3 +1,8 @@
+### 2.3.12 2023-01-13
+  * Cleanup
+    * Separate stored filter back end (PR #83)
+    * Dispatch events on filter update (PR #82)
+
 ### 2.3.11 2022-12-6
   * Possible breaking change
     * Remove the constant server refresh PR: #81

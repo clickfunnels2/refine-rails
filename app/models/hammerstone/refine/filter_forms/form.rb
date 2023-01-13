@@ -19,6 +19,10 @@ class Hammerstone::Refine::FilterForms::Form
     @criteria.all? { |c| c.errors.empty? }
   end
 
+  def clear_errors
+    @criteria.each { |c| c.errors.clear }
+  end
+
   def grouped_criteria
     # Allow for an empty blueprint
     return [] if @criteria.blank?

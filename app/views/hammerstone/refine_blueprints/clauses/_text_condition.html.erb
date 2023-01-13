@@ -6,7 +6,7 @@
       name="<%= condition.id %>"
       type="text"
       value="<%= input[:value] %>"
-      data-action="input->refine--update#updateBlueprint keydown->refine--update#cancelEnter"
+      data-action="input->refine--update#updateBlueprint keydown->refine--update#cancelEnter blur->refine--update#refreshFromServer"
     />
     <%= render partial: 'hammerstone/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
   </div>

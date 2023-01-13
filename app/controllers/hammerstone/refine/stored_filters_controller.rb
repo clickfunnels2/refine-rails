@@ -30,10 +30,10 @@ module Hammerstone::Refine
       else
         []
       end
-      refine_filter = params[:filter_class].constantize.new(blueprint)
+      @refine_filter = params[:filter_class].constantize.new(blueprint)
 
-      @stored_filter = StoredFilter.new(name: params[:name], state: refine_filter.state, filter_type: refine_filter.type, **instance_exec(&Refine::Rails.configuration.custom_stored_filter_attributes))
-      @form = Hammerstone::Refine::FilterForms::Form.new(refine_filter, id: params[:filter_form_id])
+      @stored_filter = StoredFilter.new(name: params[:name], state: @refine_filter.state, filter_type: @refine_filter.type, **instance_exec(&Refine::Rails.configuration.custom_stored_filter_attributes))
+      @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter, id: params[:filter_form_id])
 
       if !@form.valid?
         # replace the filter form with errors

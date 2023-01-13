@@ -1,7 +1,20 @@
-<% if @url_for_redirect %>
+<% if @filter_submit_success %>
   <%= turbo_stream.append_all "body" do %>
     <script>
-      window.Turbo.visit(<%= @url_for_redirect.to_json.html_safe %>)
+      (function() {
+        const formId = <%= @form.id.to_json.html_safe %>
+        const event = new CustomEvent("filter-submit-success", {
+          bubbles: true,
+          detail: {
+            stableId: <%= @stable_id.to_json.html_safe %>,
+            url: <%= @url_for_redirect.to_json.html_safe %>,
+            formId: formId
+          }
+        })
+        document
+          .getElementById(<%= dom_id(@form, "query").to_json.html_safe %>)
+          .dispatchEvent(event)
+      })()
     </script>
   <% end %>
 <% else %>

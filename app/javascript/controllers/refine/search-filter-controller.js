@@ -36,4 +36,13 @@ export default class extends Controller {
       .querySelector('[data-controller~="refine--state"]')
       .refineStateController
   }
+
+  loadResults({detail: {url}}) {
+    console.log("filter submit success")
+    if (window.Turbo) {
+      window.Turbo.visit(url)
+    } else {
+      window.location.href = url
+    }
+  }
 }

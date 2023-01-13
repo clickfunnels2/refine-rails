@@ -1,1 +1,22 @@
 <%= turbo_stream.replace(dom_id(@form, "query"), partial: "hammerstone/refine_blueprints/query") %>
+<% if @stable_id %>
+  <%= turbo_stream.append_all "body" do %>
+    <script>
+      (function() {
+        const formId = <%= @form.id.to_json.html_safe %>
+        const event = new CustomEvent("filter-stabilized", {
+          bubbles: true,
+          detail: {
+            stableId: <%= @stable_id.to_json.html_safe %>,
+            formId: formId
+          }
+        })
+        document
+          .getElementById(<%= dom_id(@form, "query").to_json.html_safe %>)
+          ?.dispatchEvent(event)
+      })()
+    </script>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace(dom_id(@form, "query"), partial: "hammerstone/refine_blueprints/query") %>

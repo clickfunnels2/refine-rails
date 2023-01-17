@@ -9,7 +9,7 @@ export default class extends Controller {
     const stateController = document
       .getElementById(`query_hammerstone_refine_filter_forms_form_${this.formIdValue}`)
       .refineStateController
-    this.blueprintFieldTarget.value = JSON.stringify(stateController.blueprintValue)
+    this.blueprintFieldTarget.value = JSON.stringify(stateController.blueprint)
     console.log("connect", this.blueprintFieldTarget.value)
   }
 

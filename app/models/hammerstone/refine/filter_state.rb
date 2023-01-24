@@ -20,10 +20,11 @@ module Hammerstone::Refine
     def to_params
       {
         hammerstone_refine_filter_state: {
-          blueprint_json: blueprint,
+          blueprint_json: blueprint.to_json,
           stable_id: stable_id,
           stored_filter_id: stored_filter_id,
-          client_id: client_id
+          client_id: client_id,
+          filter_class: filter_class
         }
       }
     end

@@ -41,5 +41,15 @@ module Hammerstone
     def stable_id
       @form.configuration[:stable_id]
     end
+
+    def refine_filter_state
+      params.require(:refine_filter_state).permit(
+        :blueprint,
+        :filter_class,
+        :stable_id,
+        :stored_filter_id,
+        :form_id,
+      )
+    end
   end
 end

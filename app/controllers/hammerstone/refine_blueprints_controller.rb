@@ -1,5 +1,6 @@
 class Hammerstone::RefineBlueprintsController < ApplicationController
   layout false
+  before_action :set_state
   before_action :set_filter
   before_action :set_form
 
@@ -46,27 +47,23 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
 
   private
 
+  def set_state
+    state_params = params.require(:hammerstone_refine_filter_state).permit(
+      :blueprint_json,
+      :filter_class,
+      :stable_id,
+      :stored_filter_id,
+      :client_id,
+    )
+
+    @refine_filter_state = Hammerstone::Refine::FilterState.new(state_params)
+  end
+
   def set_filter
-    if stable_id = filter_params[:stable_id]
-      @refine_filter = Hammerstone.stabilizer_class('Stabilizers::UrlEncodedStabilizer').new.from_stable_id(id: stable_id)
-    elsif filter_params[:blueprint]
-      klass = filter_params[:filter].constantize
-      blueprint = JSON.parse(filter_params[:blueprint]).map(&:deep_symbolize_keys)
-      @refine_filter = klass.new blueprint
-    else
-      klass = filter_params[:filter].constantize
-      @refine_filter = klass.new([])
-    end
-
-
+    @refine_filter = @refine_filter_state.refine_filter
   end
 
   def set_form
-    @form_id = filter_params[:form_id]
-    @form = Hammerstone::Refine::FilterForms::Form.new(@refine_filter, id: @form_id)
-  end
-
-  def filter_params
-    params.permit(:filter, :stable_id, :blueprint, :form_id)
+    @form = @refine_filter_state.filter_form
   end
 end

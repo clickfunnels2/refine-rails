@@ -57,8 +57,8 @@ export default class extends Controller {
     blueprint: Array,
     conditions: Array,
     className: String,
-    formId: String,
-    refreshUrl: String
+    refreshUrl: String,
+    clientId: String
   }
   static targets = ['loading']
 

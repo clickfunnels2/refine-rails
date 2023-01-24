@@ -1,4 +1,4 @@
-<%= tag.div id: dom_id(@form, "query"), class: 'refine-query-container', data: {
+<%= tag.div id: dom_id(@refine_filter_state, "query"), class: 'refine-query-container', data: {
   controller: "refine--state",
   refine__state_conditions_value: @form.available_conditions_attributes.to_json,
   refine__state_blueprint_value: @form.blueprint.to_json,
@@ -13,7 +13,7 @@
       <p class="refine-query-loading-text">Loading...</p>
     </div>
 
-    <%= tag.div id: dom_id(@form, "groups") do %>
+    <%= tag.div id: dom_id(@refine_filter_state, "groups") do %>
       <% @form.grouped_criteria.each_with_index do |criteria, index| %>
         <% if index > 0 %>
           <p class="refine-query-or">or</p>

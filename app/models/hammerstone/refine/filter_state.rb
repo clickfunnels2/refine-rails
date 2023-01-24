@@ -13,6 +13,7 @@ module Hammerstone::Refine
 
     def initialize(attrs)
       super
+      @client_id ||= SecureRandom.uuid
       set_refine_filter_and_blueprint!
       set_filter_form!
     end
@@ -27,6 +28,11 @@ module Hammerstone::Refine
           filter_class: filter_class
         }
       }
+    end
+
+    # For use with the Rails dom_id helper
+    def to_key
+      [client_id]
     end
 
     private

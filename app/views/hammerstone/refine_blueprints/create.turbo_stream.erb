@@ -12,11 +12,11 @@
           }
         })
         document
-          .getElementById(<%= dom_id(@form, "query").to_json.html_safe %>)
+          .getElementById(<%= dom_id(@refine_filter_state, "query").to_json.html_safe %>)
           .dispatchEvent(event)
       })()
     </script>
   <% end %>
 <% else %>
-  <%= turbo_stream.replace(dom_id(@form, "query"), partial: "hammerstone/refine_blueprints/query") %>
+  <%= turbo_stream.replace(dom_id(@refine_filter_state, "query"), partial: "hammerstone/refine_blueprints/query") %>
 <% end %>

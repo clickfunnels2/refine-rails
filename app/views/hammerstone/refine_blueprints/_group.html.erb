@@ -1,4 +1,4 @@
-<%= tag.div id: dom_id(@form, "group_#{group_id}") do %>
+<%= tag.div id: dom_id(@refine_filter_state, "group_#{group_id}") do %>
   <div class="refine-group-container">
     <% criteria&.each_with_index do |criterion, index| %>
       <div class="refine-group-criterion-container">

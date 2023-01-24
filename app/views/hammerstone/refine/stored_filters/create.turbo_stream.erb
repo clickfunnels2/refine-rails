@@ -1,2 +1,2 @@
-<%= turbo_stream.replace dom_id(@form, "stored_filters"), template: "hammerstone/refine/stored_filters/new" %>
-<%= turbo_stream.replace(dom_id(@form, "query"), partial: "hammerstone/refine_blueprints/query") %>
+<%= turbo_stream.replace dom_id(@refine_filter_state, "stored_filters"), template: "hammerstone/refine/stored_filters/new" %>
+<%= turbo_stream.replace(dom_id(@refine_filter_state, "query"), partial: "hammerstone/refine_blueprints/query") %>

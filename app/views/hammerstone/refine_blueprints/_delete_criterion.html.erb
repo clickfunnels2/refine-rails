@@ -1,16 +1,11 @@
-<%# Delete the filter %>
-<% if show_delete_button? %>
-  <%= tag.div class: 'refine-delete-container', data: {
-    controller: 'refine--delete',
-    refine__delete_criterion_id_value: criterion_id,
+<%= tag.div class: 'refine-delete-container', data: {
+  controller: 'refine--delete',
+  refine__delete_criterion_id_value: criterion_id,
+} do %>
+  <%= button_tag type: 'button', class: 'refine-delete-button', data: {
+    action: "click->refine--delete#criterion",
   } do %>
-    <%= button_tag type: 'button', class: 'refine-delete-button', data: {
-      action: "click->refine--delete#criterion",
-    } do %>
-      <i class="refine-delete-criterion-icon ti ti-trash"></i>
-      <span class="refine-delete-criterion-label">Remove filter</span>
-    <% end %>
+    <i class="refine-delete-criterion-icon ti ti-trash"></i>
+    <span class="refine-delete-criterion-label">Remove filter</span>
   <% end %>
 <% end %>
-
-<%# End Delete %>

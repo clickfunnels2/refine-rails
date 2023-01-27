@@ -3,6 +3,15 @@
     .first
     &.conditions_for_category(categories.first)
     [:id]
+
+  conditions = @refine_filter_query.available_conditions_attributes
+  uncategorized_conditions = conditions.filter { |c| c[:meta][:category].nil? }
+
+  categories = conditions.map { |c| c[:meta][:category] }.uniq.compact
+
+  conditions_for_category = ->(category) do
+    conditions.filter { |c| condition[:meta][:category] == category}
+  end
 %>
 
 <%= tag.div data: {

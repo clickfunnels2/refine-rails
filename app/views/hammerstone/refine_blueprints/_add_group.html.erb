@@ -4,7 +4,7 @@
     class="refine-add-group"
     data-action="click->refine--add#group"
   >
-    <% if @form.grouped_criteria.any? %>
+    <% if @refine_filter_query.grouped_criteria.any? %>
       <%= t(".add_or") %>
     <% else %>
       <%= t(".create_filter") %>

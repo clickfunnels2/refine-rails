@@ -1,6 +1,6 @@
 class Hammerstone::RefineBlueprintsController < ApplicationController
   layout false
-  before_action :set_state
+  before_action :set_builder
   before_action :set_filter
   before_action :set_form
 
@@ -11,12 +11,12 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
 
   # refresh the filter builder
   def show
-    if @form.valid?
+    if @refine_filter_query.valid?
       @stable_id = @refine_filter.to_stable_id
     end
 
     # don't display errors
-    @form.clear_errors
+    @refine_filter_query.clear_errors
 
     respond_to do |format|
       format.turbo_stream
@@ -26,7 +26,7 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
 
   # handles filter submission
   def create
-    if @form.valid?
+    if @refine_filter_query.valid?
       # set stable_id
       @stable_id = @refine_filter.to_stable_id
 
@@ -47,8 +47,8 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
 
   private
 
-  def set_state
-    state_params = params.require(:hammerstone_refine_filter_state).permit(
+  def set_builder
+    builder_params = params.require(:hammerstone_refine_filters_builder).permit(
       :blueprint_json,
       :filter_class,
       :stable_id,
@@ -56,14 +56,14 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
       :client_id,
     )
 
-    @refine_filter_state = Hammerstone::Refine::FilterState.new(state_params)
+    @refine_filter_builder = Hammerstone::Refine::Filters::Builder.new(builder_params)
   end
 
   def set_filter
-    @refine_filter = @refine_filter_state.refine_filter
+    @refine_filter = @refine_filter_builder.refine_filter
   end
 
   def set_form
-    @form = @refine_filter_state.filter_form
+    @refine_filter_query = @refine_filter_builder.query
   end
 end

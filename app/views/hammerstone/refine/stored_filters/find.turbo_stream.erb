@@ -1,5 +1,5 @@
 <%= turbo_stream.replace "stored_filters",
   partial: "hammerstone/refine_blueprints/stored_filters" %>
 
-<%= turbo_stream.replace dom_id(@refine_filter_state, :query),
+<%= turbo_stream.replace dom_id(@refine_filter_builder, :query),
   partial: "hammerstone/refine_blueprints/query" %>

@@ -1,7 +1,7 @@
 <%= turbo_frame_tag "stored_filters" do %>
   <%= content_tag :div, class: "refine-stored-filter-search-container" do %>
     <%= form_with(
-        model: @refine_filter_state,
+        model: @refine_filter_builder,
         url: find_hammerstone_refine_stored_filters_path,
         method: :post,
         class: "refine-stored-filter-search-form") do |form| %>
@@ -26,7 +26,7 @@
             <% end %>
           </select>
         <% end %>
-        <%= link_to t('global.buttons.back'), stored_filters_hammerstone_refine_blueprint_path(@refine_filter_state.to_params), class: "refine-stored-filter-search-button-cancel"%>
+        <%= link_to t('global.buttons.back'), stored_filters_hammerstone_refine_blueprint_path(@refine_filter_builder.to_params), class: "refine-stored-filter-search-button-cancel"%>
         <%= button_tag t('global.buttons.choose_filter'), type: "submit", class: "refine-stored-filter-search-button-submit" %>
       <% end %>
     <% end %>

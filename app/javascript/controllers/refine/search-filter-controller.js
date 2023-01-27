@@ -21,7 +21,7 @@ export default class extends Controller {
       {
         responseKind: "turbo-stream",
         body: JSON.stringify({
-          hammerstone_refine_filter_state: {
+          hammerstone_refine_filters_builder: {
             filter_class: this.stateController.filterName,
             blueprint_json: JSON.stringify(blueprint),
             client_id: this.stateController.clientIdValue

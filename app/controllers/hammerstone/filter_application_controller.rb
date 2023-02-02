@@ -1,17 +1,15 @@
 module Hammerstone::FilterApplicationController 
 	# Optional module to get started quickly.You can send in the current controller's instance variable if you'd like to update the collection here
   # The current scope can be used to modify the query
-  # If you would like to *send in* the initial query at runtime, use the HammerstoneFilterWithInitialQuery module 
 
 
-  def apply_filter(child_filter_class, initial_query: nil)
-    if child_filter_class.present?
+  def apply_filter(filter_class, initial_query: nil)
+    if filter_class.present?
       @stable_id = params[:stable_id]
       @refine_filter_builder = Hammerstone::Refine::Filters::Builder.new(
         stable_id: @stable_id,
-        filter_class: child_filter_class.name,
+        filter_class: filter_class.name,
         initial_query: initial_query)
-      )
       @refine_filter = @refine_filter_builder.refine_filter
     end
   end

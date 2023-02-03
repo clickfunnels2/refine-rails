@@ -1,7 +1,11 @@
+### 2.4.0
+  * Refactor of query and  builder object. Breaking change for existing implementations. PR #86
+
 ### 2.3.14
   * bugfix
     * Remove constant refresh from text field 
     * Use correct blueprint reference in stored filter controller
+
 ### 2.3.13
   * bugfix
     * Setform in refine_blueprintscontroller

@@ -38,9 +38,7 @@
     >
       <%= turbo_frame_tag :refine_filter_modal, loading: :lazy,
         src: new_hammerstone_refine_blueprint_path(hammerstone_refine_filters_builder: {stable_id: @stable_id, filter_class: @refine_filter.class.name}, stored_filters: stored_filters) do %>
-        <div class="refine-filter-builder-dropdown-loading-container">
-          <%= render partial: 'hammerstone/loading', locals: {style: "tr"} %>
-        </div>
+
       <% end %>
       <div class="refine-filter-builder-dropdown-button-container">
         <button

@@ -1,12 +1,11 @@
-class Hammerstone::Refine::FilterForms::Form
+class Hammerstone::Refine::Filters::Query
   include ActiveModel::Model
-  # View Model that holds the state of the entire filter
+  # View Model for the main section of the filter builder- the dynamic query form
 
-  attr_reader :filter, :id
+  attr_reader :filter
 
-  def initialize(filter, id: nil)
+  def initialize(filter)
     @filter = filter
-    @id = id || SecureRandom.uuid
     add_criteria!
   end
 
@@ -75,8 +74,8 @@ class Hammerstone::Refine::FilterForms::Form
   def add_criteria!
     @criteria = []
     blueprint.each.with_index do |criterion_attrs, index|
-      @criteria << Hammerstone::Refine::FilterForms::Criterion.new(
-        **criterion_attrs.merge(form: self, uid: index, position: index)
+      @criteria << Hammerstone::Refine::Filters::Criterion.new(
+        **criterion_attrs.merge(query: self, uid: index, position: index)
       )
     end
   end

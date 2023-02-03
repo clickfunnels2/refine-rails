@@ -1,10 +1,10 @@
-<%= tag.div id: dom_id(@form, "query"), class: 'refine-query-container', data: {
+<%= tag.div id: dom_id(@refine_filter_builder, "query"), class: 'refine-query-container', data: {
   controller: "refine--state",
-  refine__state_conditions_value: @form.available_conditions_attributes.to_json,
-  refine__state_blueprint_value: @form.blueprint.to_json,
-  refine__state_class_name_value: @form.configuration[:class_name],
+  refine__state_conditions_value: @refine_filter_query.available_conditions_attributes.to_json,
+  refine__state_blueprint_value: @refine_filter_query.blueprint.to_json,
+  refine__state_class_name_value: @refine_filter_query.configuration[:class_name],
   refine__state_refresh_url_value: hammerstone_refine_blueprint_path,
-  refine__state_form_id_value: @form.id } do %>
+  refine__state_client_id_value: @refine_filter_builder.client_id } do %>
   <%= content_tag :div, class: "refine-query-content-container" do %>
     <div
       class="refine-query-loading-container <%= "hidden" unless action_name == "create" %>"
@@ -13,8 +13,8 @@
       <p class="refine-query-loading-text">Loading...</p>
     </div>
 
-    <%= tag.div id: dom_id(@form, "groups") do %>
-      <% @form.grouped_criteria.each_with_index do |criteria, index| %>
+    <%= tag.div id: dom_id(@refine_filter_builder, "groups") do %>
+      <% @refine_filter_query.grouped_criteria.each_with_index do |criteria, index| %>
         <% if index > 0 %>
           <p class="refine-query-or">or</p>
         <% end %>

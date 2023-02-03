@@ -2,7 +2,7 @@
   <%= turbo_stream.append_all "body" do %>
     <script>
       (function() {
-        const formId = <%= @form.id.to_json.html_safe %>
+        const formId = <%= @refine_filter_builder.client_id.to_json.html_safe %>
         const event = new CustomEvent("filter-submit-success", {
           bubbles: true,
           detail: {
@@ -12,11 +12,11 @@
           }
         })
         document
-          .getElementById(<%= dom_id(@form, "query").to_json.html_safe %>)
+          .getElementById(<%= dom_id(@refine_filter_builder, "query").to_json.html_safe %>)
           .dispatchEvent(event)
       })()
     </script>
   <% end %>
 <% else %>
-  <%= turbo_stream.replace(dom_id(@form, "query"), partial: "hammerstone/refine_blueprints/query") %>
+  <%= turbo_stream.replace(dom_id(@refine_filter_builder, "query"), partial: "hammerstone/refine_blueprints/query") %>
 <% end %>

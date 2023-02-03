@@ -1,5 +1,5 @@
-class Hammerstone::Refine::FilterForms::Criterion
-  # View model that holds the state of individual criteria within the Filter form
+class Hammerstone::Refine::Filters::Criterion
+  # View model that holds the state of individual criteria within the Filter query
   include ActiveModel::Model
   include ActiveModel::Attributes
 
@@ -12,8 +12,8 @@ class Hammerstone::Refine::FilterForms::Criterion
   attribute :position, :integer
   attribute :uid, :string
 
-  attr_accessor :form
-  delegate :filter, to: :form, allow_nil: true
+  attr_accessor :query
+  delegate :filter, to: :query, allow_nil: true
 
   attr_reader :condition
 
@@ -67,14 +67,10 @@ class Hammerstone::Refine::FilterForms::Criterion
     condition.component.underscore
   end
 
-  def to_key
-    [form.id, uid]
-  end
-
   private
 
   def initialize_condition!
-    @condition = form
+    @condition = query
       .available_conditions
       .find { |condition| condition.id == condition_id }
       .dup

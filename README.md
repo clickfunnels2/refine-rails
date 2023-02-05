@@ -28,7 +28,7 @@ application.load(refineControllers)
 ```
 
 Depending on how you import Stimulus Controllers and define `application` it may be `Stimulus.load(refineControllers)`
-## Troubleshooting Stimulus Controllers
+### Troubleshooting Stimulus Controllers
 To make sure the Stimulus controllers are loaded properly, add `window.Stimulus=application` to `controllers/index.js`
 Then in the console inspect the stimulus object: 
 ```bash 
@@ -47,6 +47,8 @@ Instead of importing the plain `index.css`, you can remove that line and instead
 
 6. Add jquery (necessary for our custom select elements)
 `yarn add jquery`
+
+Add to `index.js` or wherever you added your stimulus controllers 
 
 ```
 import jquery from 'jquery'
@@ -103,6 +105,13 @@ Please restart your server!
 9. In the controller you'd like to filter on, add the `apply_filter` method. For this example we'll use Contacts model and filter. 
 `@refine_filter = apply_filter(ContactsFilter)`
 
+### Notes for Pagy/Jumpstart 
+```
+    apply_filter(ContactsFilter, initial_query: (Contact.sort_by_params(params[:sort], sort_direction))
+    @pagy, @contacts = pagy(@refine_filter.get_query)
+    ```
+    
+    
 This is a helper method you can inspect in `Hammerstone::FilterApplicationController`. You probably *do not* want to use this method but want to implement your own. It will return `@refine_filter` which is generated from the stable_id. The `stable_id` comes in from the params when the form is submitted or the URL is directly changed. 
 
 10. Set the filter stabilized ENV var or credential. 
@@ -127,7 +136,7 @@ import RevealController from 'stimulus-reveal'
 application.register('reveal', RevealController)
 ```
 
-13. If the gems tailwind styles are being purged with JIT you can add the gem to `tmp/gems` and add this to your tailwing config.  
+~13. If the gems tailwind styles are being purged with JIT you can add the gem to `tmp/gems` and add this to your tailwing config.~ 
 
 ``` tailwind.config.js
   './tmp/gems/*/app/views/**/*.html.erb',
@@ -136,7 +145,7 @@ application.register('reveal', RevealController)
   './tmp/gems/*/app/javascript/**/*.js',
 ```
 
-Run the following rake task: 
+~Run the following rake task:~ 
 ```
 task :add_temp_gems do 
   target = `bundle show refine-rails`.chomp

@@ -43,7 +43,7 @@ class Hammerstone::Refine::Filters::Builder
 
   def set_refine_filter_and_blueprint!
     if stable_id.present?
-      @refine_filter = Hammerstone.stabilizer_class('Stabilizers::UrlEncodedStabilizer').new.from_stable_id(id: stable_id, initial_query: initial_query)
+      @refine_filter = Refine::Rails.configuration.stabilizer_classes[:url].new.from_stable_id(id: stable_id, initial_query: initial_query)
       @blueprint = @refine_filter.blueprint
     else
       json = blueprint_json || "[]"

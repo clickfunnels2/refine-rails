@@ -251,7 +251,7 @@ module Hammerstone::Refine
     end
 
     def to_stable_id
-      Hammerstone.stabilizer_class('Stabilizers::UrlEncodedStabilizer').new.to_stable_id(filter: self)
+       Refine::Rails.configuration.stabilizer_classes[:url].new.to_stable_id(filter: self)
     end
   end
 end

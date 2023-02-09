@@ -1,5 +1,7 @@
 require "refine/rails/version"
 require "refine/rails/engine"
+require "app/models/hammerstone/refine/stabilizers/database_stabilizer"
+require "app/models/hammerstone/refine/stabilizers/url_encoded_stabilizer"
 
 module Refine
   module Rails
@@ -13,8 +15,13 @@ module Refine
         url: Hammerstone::Refine::Stabilizers::UrlEncodedStabilizer
       }
     )
+
     module_function def configuration
-      @configuration
+      if block_given?
+        yield @configuration
+      else
+        @configuration
+      end
     end
   end
 end

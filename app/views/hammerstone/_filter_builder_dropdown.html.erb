@@ -12,17 +12,18 @@
   >
 
   <%= tag.div class: "refine-filter-builder-dropdown-container", data: {
-    controller: "reveal"
+    controller: "refine--toggle"
   } do %>
     <button
       class="refine-filter-condition-toggle-button"
-      data-action="reveal#toggle"
+      data-action="refine--toggle#toggle"
       type="button"
     >
       <%= t('global.buttons.filter') %>
     </button>
     <div
       hidden
+      data-refine--toggle-target="content"
       data-reveal
       data-transition
       data-transition-enter="transition ease-out duration-100"
@@ -43,7 +44,7 @@
       <div class="refine-filter-builder-dropdown-button-container">
         <button
           class="refine-filter-builder-dropdown-cancel-button"
-          data-action="click->reveal#toggle"
+          data-action="click->refine--toggle#toggle"
           type="button"
         >
           <%= t('global.buttons.cancel') %>

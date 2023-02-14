@@ -1,3 +1,8 @@
+### 2.4.1 
+  * Remove loading div from filter_builder_dropdown 
+  * Remove dependency on stimulus reveal stimulus controller 
+
+
 ### 2.4.0
   * Refactor of query and  builder object. Breaking change for existing implementations. PR #86
 

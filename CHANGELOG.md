@@ -1,3 +1,6 @@
+### 2.4.2
+  * Update the configuration of stabilizer classes
+
 ### 2.4.1 
   * Remove loading div from filter_builder_dropdown 
   * Remove dependency on stimulus reveal stimulus controller 

@@ -10,7 +10,7 @@ if Rails.env.test?
 	    self.table_name = "hammerstone_refine_stored_filters"
 
 	    def refine_filter
-	      Hammerstone.stabilizer_class('Stabilizers::DatabaseStabilizer').new.from_stable_id(id: id)
+	      Refine::Rails.configuration.stabilizer_classes[:db].new.from_stable_id(id: id)
 	    end
 
       def blueprint

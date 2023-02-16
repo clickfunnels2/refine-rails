@@ -14,7 +14,7 @@ rails db:migrate
 This will create a `hammerstone_refine_stored_filters` table in your database. 
 
 The `StoredFilter` needs to be included in your application: 
-# TODO Move to gem?
+@TODO Move to gem
 
 ```ruby
 module Hammerstone::Refine

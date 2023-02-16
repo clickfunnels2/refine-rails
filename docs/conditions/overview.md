@@ -36,13 +36,9 @@ For your convenience, we provide a number of common conditions out of the box:
 - [Boolean](/condition-types/boolean) - filter on boolean attributes.
 - [Date](/condition-types/date) - filter on date attributes.
 - [Date with Time](/condition-types/date-with-time) - filter on attributes that have a date and time.
-- [UNIX Timestamp](/condition-types/unix-timestamp) - filter on UNIX timestamp attributes.
 - [Numeric](/condition-types/numeric) - filter on a numeric attribute.
 - [Option](/condition-types/option) - filter on an attribute given from a defined set of options.
-- [Deferred Option](/condition-types/deferred-option) - filter on an attribute given from a defined set of options retrieved via AJAX.
-- [Relationship](/condition-types/relationship) - filter on the presence or absence of a relationship.
 - [Text](/condition-types/text) - filter on a text attribute.
-- [Presence](/condition-types/presence) - filter on the presence or absence of an attribute.
 <!-- - [Existence](/condition-types/existence) - filter on the existence or non-existence of a subquery.-->
 
 ## Defining a Filter's Conditions

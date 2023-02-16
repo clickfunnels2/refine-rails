@@ -79,14 +79,12 @@ end
 ```
 
 ## Table
-The table is simple the name of the arel table backing your model. It's simply `Model.arel_table`
+The table is simple the name of the arel table backing your model. It's simply `Model.arel_table`. This defaults to `initial_query.model.arel_table` which should work for the majority of cases.  
 
 ```ruby
 def table
   Employee.arel_table
 end
 ```
-
-# TODO add this to the generator
 
 The package comes with many conditions out of the box that you can use to build your perfect filter. To learn more about conditions, jump to the [conditions overview](/conditions/overview) page.

@@ -5,4 +5,6 @@ No matter how configurable the standard conditions may be, there are still going
 
 We've put a great amount of effort into giving you as many places to modify the behavior of the standard conditions.
 
+@TODO clarify extending vs custom
+
 > Psst... You can also create your own [custom condition](/condition-types/custom) entirely from scratch.

@@ -127,9 +127,6 @@ The DateCondition will handle validating the user's input based on the chosen cl
 
 If your user chooses a relative clause ("more than" or "less than") then the input will be validated to ensure that the first input is an integer and the second input is a direction ("ago" or "from_now").
 
-#TODO COLLEEN
-Be sure that you are handling validation errors on your frontend. You can read more about validation in the [Validating Input](/validation) section. 
-
 ## Clauses
 
 Below you'll see all of the clauses available on the DateCondition.

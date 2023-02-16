@@ -1,0 +1,61 @@
+{
+    "basePath": "/ruby/docs/local",
+    "assetUrl": "/ruby/docs/local",
+    "@todo": {
+        "User Input": {
+            "children": {
+                "The Blueprint": "/input/blueprint",
+                "Hammerstone Frontends": "/input/frontends",
+                "Custom Frontends": "/input/custom"
+            }
+        }
+    },
+    "navigation": {
+        "Installation": "/ruby-installation",
+        "Nova": "/nova",
+        "Filters": {
+            "children": {
+                "Creating": "/filters/creating",
+                "Registering": "/filters/registering"
+            }
+        },
+        "Conditions": {
+            "children": {
+                "Overview": "/conditions/overview",
+                "Attributes": "/conditions/attributes",
+                "Clauses": "/conditions/clauses",
+                "Meta": "/conditions/meta",
+                "Validating Input": "/conditions/validation",
+                "Querying": "/conditions/querying",
+                "Migrating IDs": "/conditions/migrating",
+                "Extending": "/conditions/extending"
+            }
+        },
+        "Condition Types": {
+            "children": {
+                "Boolean": "/condition-types/boolean",
+                "Date": "/condition-types/date",
+                "Date With Time": "/condition-types/date-with-time",
+                "UNIX Timestamp": "/condition-types/unix-timestamp",
+                "Numeric": "/condition-types/numeric",
+                "Option": "/condition-types/option",
+                "Deferred Option": "/condition-types/deferred-option",
+                "Relationship": "/condition-types/relationship",
+                "Text": "/condition-types/text",
+                "Presence": "/condition-types/presence",
+                "Custom": "/condition-types/custom"
+            }
+        },
+        "Refinements": "/refinements",
+        "Stabilizers": {
+            "children": {
+                "Overview": "/stabilizers/overview",
+                "Database": "/stabilizers/database",
+                "URL Encoding": "/stabilizers/urlencoded",
+                "Hybrid": "/stabilizers/hybrid",
+                "Cache": "/stabilizers/cache",
+                "Session": "/stabilizers/session"
+            }
+        }
+    }
+}

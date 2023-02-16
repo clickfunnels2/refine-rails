@@ -1,0 +1,39 @@
+<%= tag.div id: dom_id(@refine_filter_builder, "query"),
+  data: {
+    controller: "refine--filter-pills refine--state turbo-visit",
+    refine__state_conditions_value: @refine_filter_builder.query.available_conditions_attributes.to_json,
+    refine__state_blueprint_value: @refine_filter_builder.blueprint.to_json,
+    refine__state_class_name_value: @refine_filter_builder.filter_class,
+    refine__state_stable_id_value: @stable_id,
+    refine__state_refresh_url_value: hammerstone_refine_blueprint_path,
+    refine__state_form_id_value: @refine_filter_builder.client_id,
+    refine__filter_pills_submit_url_value: hammerstone_refine_blueprint_path,
+    action: "filter-submit-success->turbo-visit#visit"
+  } do
+%>
+
+  <% if @refine_filter.human_readable_criterions.any? %>
+    <div class="text-blue-600 pb-3 font-medium text-sm rounded w-full">
+      <div class="w-full flex pb-1 refine-filter-condition-pills-wrapper">
+        <div class="refine-filter-conditions-wrapper-icon"></div>
+        <% @refine_filter.human_readable_criterions.each_with_index do |condition, index| %>
+
+          <% if ["or", "and"].include?(condition) %>
+            <span class="refine-filter-condition-pill-and"><%= condition %></span>
+          <% else %>
+            <% data_action = "click->refine--filter-pills#delete" %>
+            <div class="refine-filter-condition-pill">
+              <%= condition %>
+              <button
+                class="refine-filter-remove-condition-pill"
+                data-action="<%= data_action %>"
+                data-criterion-id="<%= index %>"
+              >
+              </button>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

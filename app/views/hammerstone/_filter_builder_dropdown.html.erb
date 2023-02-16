@@ -19,7 +19,7 @@
       data-action="reveal#toggle"
       type="button"
     >
-      + Add Filter
+      <%= t('global.buttons.filter') %>
     </button>
     <div
       hidden
@@ -37,9 +37,27 @@
       style="min-width: 50vw; max-height: 66vh; overflow: auto;"
     >
       <%= turbo_frame_tag :refine_filter_modal, loading: :lazy,
-        src: hammerstone_refine_conditions_path(hammerstone_refine_filters_builder: {filter_class: @refine_filter.class.name}) do %>
+        src: new_hammerstone_refine_blueprint_path(hammerstone_refine_filters_builder: {stable_id: @stable_id, filter_class: @refine_filter.class.name}, stored_filters: stored_filters) do %>
 
       <% end %>
+      <div class="refine-filter-builder-dropdown-button-container">
+        <button
+          class="refine-filter-builder-dropdown-cancel-button"
+          data-action="click->reveal#toggle"
+          type="button"
+        >
+          <%= t('global.buttons.cancel') %>
+        </button>
+        <button
+          class="refine-filter-builder-dropdown-apply-button"
+          data-action="click->refine--search-filter#search"
+          data-filter-link-target="link"
+          type="button"
+        >
+          <%= t('global.buttons.apply') %>
+        </button>
+      </div>
+    </div>
   <% end %>
 
 </div>

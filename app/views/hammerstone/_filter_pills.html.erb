@@ -1,3 +1,4 @@
+
 <%= tag.div id: dom_id(@refine_filter_builder, "query"),
   data: {
     controller: "refine--filter-pills refine--state turbo-visit",
@@ -12,28 +13,20 @@
   } do
 %>
 
-  <% if @refine_filter.human_readable_criterions.any? %>
-    <div class="text-blue-600 pb-3 font-medium text-sm rounded w-full">
-      <div class="w-full flex pb-1 refine-filter-condition-pills-wrapper">
-        <div class="refine-filter-conditions-wrapper-icon"></div>
-        <% @refine_filter.human_readable_criterions.each_with_index do |condition, index| %>
 
-          <% if ["or", "and"].include?(condition) %>
-            <span class="refine-filter-condition-pill-and"><%= condition %></span>
-          <% else %>
-            <% data_action = "click->refine--filter-pills#delete" %>
-            <div class="refine-filter-condition-pill">
-              <%= condition %>
-              <button
-                class="refine-filter-remove-condition-pill"
-                data-action="<%= data_action %>"
-                data-criterion-id="<%= index %>"
-              >
-              </button>
-            </div>
-          <% end %>
-        <% end %>
+  <% @refine_filter.human_readable_criterions.each_with_index do |condition, index| %>
+
+  <div class="filter-condition-wrapper">
+    <div class="filter-condition">
+      <div class="filter-value">
+        <%= condition %>
       </div>
     </div>
+    <div class="filter-remove">
+      <div class="material-icons">
+        X
+      </div>
+    </div>
+  </div>
   <% end %>
 <% end %>

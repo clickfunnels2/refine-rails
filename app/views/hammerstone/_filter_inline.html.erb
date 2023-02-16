@@ -7,35 +7,36 @@
   </div>
 </div> -->
 
+<div class="filter-wrapper">
+  <%= render "hammerstone/filter_pills" %>
+  <div class="refine-filter-inline-add-container" data-controller="reveal">
+    <button
+        class="refine-filter-condition-toggle-button"
+        data-action="reveal#toggle"
+        type="button"
+      >
+        + Add Filter
+    </button>
+    <div
+      hidden
+      data-reveal
+      data-transition
+      data-transition-enter="transition ease-out duration-100"
+      data-transition-enter-start="transform opacity-0 scale-95"
+      data-transition-enter-end="transform opacity-100 scale-100"
+      data-transition-leave="transition ease-in duration-75"
+      data-transition-leave-start="transform opacity-100 scale-100"
+      data-transition-leave-end="transform opacity-0 scale-95"
 
-
-<%= render "hammerstone/filter_pills" %>
-<div class="refine-filter-builder-dropdown-container" data-controller="reveal">
-  <button
-      class="refine-filter-condition-toggle-button"
-      data-action="reveal#toggle"
-      type="button"
+      class="refine-filter-builder-dropdown-search-box"
+      style="min-width: 50vw; max-height: 66vh; overflow: auto;"
     >
-      + Add Filter
-  </button>
-  <div
-    hidden
-    data-reveal
-    data-transition
-    data-transition-enter="transition ease-out duration-100"
-    data-transition-enter-start="transform opacity-0 scale-95"
-    data-transition-enter-end="transform opacity-100 scale-100"
-    data-transition-leave="transition ease-in duration-75"
-    data-transition-leave-start="transform opacity-100 scale-100"
-    data-transition-leave-end="transform opacity-0 scale-95"
+      <%= turbo_frame_tag :refine_filter_modal, loading: :lazy,
+        src: hammerstone_refine_conditions_path(hammerstone_refine_filters_builder: {filter_class: @refine_filter.class.name}) do %>
 
-    class="refine-filter-builder-dropdown-search-box"
-    style="min-width: 50vw; max-height: 66vh; overflow: auto;"
-  >
-    <%= turbo_frame_tag :refine_filter_modal, loading: :lazy,
-      src: hammerstone_refine_conditions_path(hammerstone_refine_filters_builder: {filter_class: @refine_filter.class.name}) do %>
-
-    <% end %>
+      <% end %>
+    </div>
   </div>
-</div>
 
+  
+</div>

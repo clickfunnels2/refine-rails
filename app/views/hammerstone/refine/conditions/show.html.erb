@@ -1,0 +1,36 @@
+<%= turbo_frame_tag :refine_filter_modal do %>
+  <%= form_with model: @refine_filter_builder, url: hammerstone_refine_conditions_path(@refine_filter_builder.to_params), method: :post, data: {turbo_frame: "_top"} do |form| %>
+    <%= form.hidden_field :filter_class %>
+    <%= form.hidden_field :client_id %>
+    <%= form.hidden_field :blueprint_json %>
+    <%= hidden_field_tag :condition_id, params[:id] %>
+    <label style="color: black;"><%= @criterion.condition.display %></label>
+
+    <%= render "hammerstone/refine_blueprints/clauses/#{@criterion.component}", 
+      criterion: @criterion,
+      condition: @criterion.condition,
+      input: @criterion.input,
+      criterion_id: 0,
+      meta: @criterion.meta,
+      # meta_clause: @criterion.selected_clause_meta,
+      input_id: nil
+    %>
+
+    <div class="refine-criterion-clause-container">
+      <%= render partial: 'hammerstone/refine_blueprints/clause_select', locals: {
+          meta: @criterion.meta, selected_clause: @criterion.input[:clause]} %>
+    </div>
+
+    <div class="refine-filter-builder-dropdown-button-container">
+      <button
+        class="refine-filter-builder-dropdown-cancel-button"
+        data-action="click->reveal#toggle"
+        type="button"
+      >
+        <%= t('global.buttons.cancel') %>
+      </button>
+      <%= form.submit t('global.buttons.apply') %>
+    </div>
+    <div>
+  <% end %>
+<% end %>

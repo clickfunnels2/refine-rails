@@ -4,7 +4,7 @@ Rails.application.routes.draw do
       get "stored_filters", on: :collection
     end
     namespace :refine do
-      resources :conditions, only: [:index, :show]
+      resources :conditions, only: [:index, :show, :create]
       resources :stored_filters, only: [:index, :new, :create] do
         post "find", on: :collection
       end

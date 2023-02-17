@@ -11,12 +11,10 @@
         }
     },
     "navigation": {
-        "Installation": "/ruby-installation",
-        "Nova": "/nova",
+        "Installation": "/installation",
         "Filters": {
             "children": {
                 "Creating": "/filters/creating",
-                "Registering": "/filters/registering"
             }
         },
         "Conditions": {
@@ -24,10 +22,8 @@
                 "Overview": "/conditions/overview",
                 "Attributes": "/conditions/attributes",
                 "Clauses": "/conditions/clauses",
-                "Meta": "/conditions/meta",
                 "Validating Input": "/conditions/validation",
                 "Querying": "/conditions/querying",
-                "Migrating IDs": "/conditions/migrating",
                 "Extending": "/conditions/extending"
             }
         },
@@ -36,13 +32,9 @@
                 "Boolean": "/condition-types/boolean",
                 "Date": "/condition-types/date",
                 "Date With Time": "/condition-types/date-with-time",
-                "UNIX Timestamp": "/condition-types/unix-timestamp",
                 "Numeric": "/condition-types/numeric",
                 "Option": "/condition-types/option",
-                "Deferred Option": "/condition-types/deferred-option",
-                "Relationship": "/condition-types/relationship",
                 "Text": "/condition-types/text",
-                "Presence": "/condition-types/presence",
                 "Custom": "/condition-types/custom"
             }
         },
@@ -52,9 +44,6 @@
                 "Overview": "/stabilizers/overview",
                 "Database": "/stabilizers/database",
                 "URL Encoding": "/stabilizers/urlencoded",
-                "Hybrid": "/stabilizers/hybrid",
-                "Cache": "/stabilizers/cache",
-                "Session": "/stabilizers/session"
             }
         }
     }

@@ -72,7 +72,7 @@ end
 
 8. Include the module in your `ApplicationController`: `include Hammerstone::FilterApplicationController`
 
-9. Apply the filter in your `contacts_controller`
+9. Apply the filter in your `contacts_controller`. `apply_filter` sets `@refine_filter`. `@refine_filter.get_query` returns an object of `ActiveRecordRelation`. This allows you to chain additional scopes if needed.
 
 ```ruby
 # contacts_controller.rb
@@ -81,6 +81,9 @@ end
     apply_filter(ContactsFilter)
     @contacts = @refine_filter.get_query
 
+    # If you're using Pagy your query will look as follows
+    # apply_filter(ContactsFilter, initial_query: (Contact.sort_by_params(params[:sort], sort_direction)))
+    # @pagy, @contacts = pagy(@refine_filter.get_query)
     # Uncomment to authorize with Pundit
     # authorize @contacts
   end

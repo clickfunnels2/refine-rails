@@ -22,6 +22,10 @@ application.load(refineControllers)
 
 5. Import the style sheet in your application. Typically this is in `app/assets/stylesheets/application.css`
 
+```css
+import "@hammerstone/refine-stimulus/app/assets/stylesheets/index.css";
+```
+
 6. Add jquery (necessary for our custom select elements)
 `yarn add jquery`
 
@@ -66,7 +70,7 @@ class ContactsFilter < Hammerstone::Refine::Filter
 end
 ```
 
-8. Include the module in your application controller: `include Hammerstone::FilterApplicationController`
+8. Include the module in your `ApplicationController`: `include Hammerstone::FilterApplicationController`
 
 9. Apply the filter in your `contacts_controller`
 
@@ -74,8 +78,8 @@ end
 # contacts_controller.rb
   def index
     # Sets refine filter
-    apply_filter(ContactsFilter, initial_query: (Contact.sort_by_params(params[:sort], sort_direction)))
-    @pagy, @contacts = pagy(@refine_filter.get_query)
+    apply_filter(ContactsFilter)
+    @contacts = @refine_filter.get_query
 
     # Uncomment to authorize with Pundit
     # authorize @contacts
@@ -89,3 +93,9 @@ end
  You should see a working filter - something like [this loom](https://www.loom.com/share/ca1cc42740274ceabe0b7cc908fe1aba).
 
 Celebrate!
+
+## Debugging your queries
+
+You can add this snippet to the same view using the filter to see the query being generated.
+
+`<%=@refine_filter&.get_query&.to_sql%>`

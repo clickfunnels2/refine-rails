@@ -1,129 +1,48 @@
 ## How to integrate the refine filter
 
-1. Add the gem
- 
-```
-source "https://yourKey@gem.fury.io/hammerstonedev" do
-  gem "refine-rails"
-end
-```
+Refer to the installation [documentation](https://github.com/hammerstonedev/refine-rails/blob/readme_clarity/docs/installation.md)
 
-2. Add the npm package
+## Troubleshooting
 
-```bash
-$ yarn add @hammerstone/refine-stimulus
-```
-
-3. `bundle`
-
-4. `yarn`
-
-5. Import the Stimulus Controllers and style sheet in your application. 
-Typically this is in `app/javascript/controllers/index.js`
-
-```javascript
-import { controllerDefinitions as refineControllers } from "@hammerstone/refine-stimulus"
-import "@hammerstone/refine-stimulus/app/assets/stylesheets/index.css";
-application.load(refineControllers)
-```
-
+### Stimulus package
 Depending on how you import Stimulus Controllers and define `application` it may be `Stimulus.load(refineControllers)`
-### Troubleshooting Stimulus Controllers
-To make sure the Stimulus controllers are loaded properly, add `window.Stimulus=application` to `controllers/index.js`
-Then in the console inspect the stimulus object: 
-```bash 
+
+To confirm the Stimulus controllers are loaded, add `window.Stimulus=application` to `controllers/index.js`
+Then in the console inspect the stimulus object:
+```bash
 Stimulus.router.modulesByIdentifier
 ```
-You should see the `refine--....` controllers listed 
+You should see the `refine--....` controllers listed.
 
-**Note about the style sheet:**
-
-Instead of importing the plain `index.css`, you can remove that line and instead, in your app's tailwind-parsed source css files, you can include the raw tailwind file. Tailwind v3 is required for this.
+### StyleSheets
+Instead of importing the plain `index.css`, include the raw tailwind file in your app's tailwind-parsed source css files. Tailwind v3 is required for this.
 
 ```css
 /* in application.css */
 @import '@hammerstone/refine-stimulus/app/assets/stylesheets/index.tailwind.css';
 ```
 
-6. Add jquery (necessary for our custom select elements)
-`yarn add jquery`
-
-Add to `index.js` or wherever you added your stimulus controllers 
-
-```
-import jquery from 'jquery'
-window.jQuery = jquery
-window.$ = jquery
-```
-
-7. Implement a Filter class in `app/filters` that inherits from `Hammerstone::Refine::Filter`. Use this class to define the conditions that can be filtered.
-
-Example (Contacts Filter on a Contact Model)
-
-```ruby 
-# app/filters/contacts_filter.rb
-class ContactsFilter < Hammerstone::Refine::Filter
-  include Hammerstone::Refine::Conditions
-  @@default_stabilizer = Hammerstone::Refine::Stabilizers::UrlEncodedStabilizer
-
-  def initial_query
-    Contact.all
-  end
-
-  def automatically_stabilize?
-    true
-  end
-
-  def table
-    Contact.arel_table
-  end
-
-  def conditions
-    [
-      TextCondition.new("name"),
-      DateCondition.new("created_at"),
-      DateCondition.new("updated_at"),
-
-    ]
-  end
-end
-```
-
-8. In your application controller, `include Hammerstone::FilterApplicationController` which is a helper class to get you up and running quickly. You can remove it and use your own `apply_filter` method if you want. 
-
-## Troubleshooting: 
-If you see this error: 
+### Errors
+You may have to restart your server if you encounter the error: 
 ```
  NameError (uninitialized constant ApplicationController::Hammerstone
 web    | 
 web    |   include Hammerstone::FilterApplicationController
 ```
 
-Please restart your server! 
+## Custom configuration
+### Define your own apply_filter_method
+If you prefer, you can remove it and define your own `apply_filter`.
 
+This is a helper method you can inspect in `Hammerstone::FilterApplicationController`. You probably *do not* want to use this method but want to implement your own. It will return `@refine_filter` which is generated from the stable_id. The `stable_id` comes in from the params when the form is submitted or the URL is directly changed. 
 
-9. In the controller you'd like to filter on, add the `apply_filter` method. For this example we'll use Contacts model and filter. 
-`@refine_filter = apply_filter(ContactsFilter)`
-
-### Notes for Pagy/Jumpstart 
+**SIDE NOTE for Pagy/Jumpstart**
 ```
     apply_filter(ContactsFilter, initial_query: (Contact.sort_by_params(params[:sort], sort_direction))
     @pagy, @contacts = pagy(@refine_filter.get_query)
-    ```
-    
-    
-This is a helper method you can inspect in `Hammerstone::FilterApplicationController`. You probably *do not* want to use this method but want to implement your own. It will return `@refine_filter` which is generated from the stable_id. The `stable_id` comes in from the params when the form is submitted or the URL is directly changed. 
-
-10. Set the filter stabilized ENV var or credential. 
-If using rails credentials: EDITOR="subl --wait" bin/rails credentials:edit --environment development and set NAMESPACE_REFINE_STABILIZERS: 1 
-
-If using .env, application.yml or another gem set NAMESPACE_REFINE_STABILIZERS=1
-
-
-11. Add the following to your index view to render a button that activates the filter:
 ```
-<%= render partial: 'hammerstone/filter_builder_dropdown' %>
-```
+
+# TODO: Everything below this header was not covered in the installation guide. Not sure if it is deprecated
 
 12. Add the `reveal` controller to your application if using the `filter_builder_dropdown` partial
 

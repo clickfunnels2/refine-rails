@@ -14,7 +14,7 @@
         "Installation": "/installation",
         "Filters": {
             "children": {
-                "Creating": "/filters/creating",
+                "Creating": "/filters/creating"
             }
         },
         "Conditions": {
@@ -43,7 +43,7 @@
             "children": {
                 "Overview": "/stabilizers/overview",
                 "Database": "/stabilizers/database",
-                "URL Encoding": "/stabilizers/urlencoded",
+                "URL Encoding": "/stabilizers/urlencoded"
             }
         }
     }

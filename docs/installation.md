@@ -102,3 +102,7 @@ Celebrate!
 You can add this snippet to the same view using the filter to see the query being generated.
 
 `<%=@refine_filter&.get_query&.to_sql%>`
+
+## Stored filters
+
+For storing filters please refer to [database stabilization](/docs/stabilizers/database.md).

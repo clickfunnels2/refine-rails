@@ -26,6 +26,13 @@ application.load(refineControllers)
 import "@hammerstone/refine-stimulus/app/assets/stylesheets/index.css";
 ```
 
+5. Import the date range picker and icon (add and delete) style sheets. This is tyipcally done in your `application.html.erb` layout.
+
+```html
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<link rel="stylesheet" href="https://unpkg.com/@icon/themify-icons/themify-icons.css">
+```
+
 6. Add jquery (necessary for our custom select elements)
 `yarn add jquery`
 

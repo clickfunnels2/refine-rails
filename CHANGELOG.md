@@ -1,4 +1,4 @@
-### 2.4.3
+### 2.4.3 (not yet released)
   * bugfix
     * `Clause doesn't equal` and `clause not between` were not implemented for Date with time conditions. PR #98
 

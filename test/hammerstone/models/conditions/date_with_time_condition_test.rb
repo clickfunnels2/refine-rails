@@ -109,6 +109,16 @@ module Hammerstone::Refine::Conditions
         SQL
         assert_equal convert(expected_sql), apply_condition_on_test_filter(condition, data).to_sql
       end
+
+      it "correctly executes clause doesnt equals" do
+        condition = DateWithTimeCondition.new("date_test")
+        data = {clause: DateCondition::CLAUSE_DOESNT_EQUAL, date1: "2019-05-15"}
+        expected_sql = <<~SQL.squish
+          SELECT "t".* FROM "t" WHERE ("t"."date_to_test" != '2019-05-15' OR "t"."date_to_test" IS NULL)
+        SQL
+        assert_equal convert(expected_sql), apply_condition_on_test_filter(condition, data).to_sql
+      end
+
       it "executes clause greater than ago" do
         condition = DateWithTimeCondition.new("date_test")
         data = {clause: DateCondition::CLAUSE_GREATER_THAN, days: 3, modifier: "ago"}

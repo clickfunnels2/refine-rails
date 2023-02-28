@@ -280,6 +280,7 @@ module Hammerstone::Refine::Conditions
       when CLAUSE_LESS_THAN_OR_EQUAL
         apply_clause_less_than_or_equal(comparison_time(date1), table)
       end
+
     end
 
     def apply_standardized_values(table)

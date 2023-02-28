@@ -1,0 +1,35 @@
+<% condition_id = condition.try(:id) || condition[:id] %>
+<% if ['st', 'nst'].include? input[:clause] %>
+  <!-- render nothing -->
+<% else %>
+    <div class="<% input[:clause] != 'btwn' ? 'refine-numeric-condition-container' : 'refine-numeric-condition-container-btwn' %>">
+
+      <input
+        class="refine-numeric-condition-input"
+        name="<%= condition_id %>"
+        type="text"
+        value="<%= input[:value1] %>"
+        data-input-key="value1"
+        data-action="input->refine--update#value blur->refine--update#refreshFromServer"
+        data-input-id="<%= defined?(input_id) && input_id %>"
+      />
+      <%= render partial: 'hammerstone/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
+    </div>
+
+    <% if ['btwn', 'nbtwn'].include? input[:clause] %>
+      <!-- Add second input for value2 if clause is between or not between -->
+      <span class="refine-numeric-condition-and">and</span>
+      <div class="refine-numeric-condition-second-container">
+        <input
+          class="refine-numeric-condition-second-input"
+          name="<%= condition_id %>"
+          type="text"
+          value="<%= input[:value2] %>"
+          data-input-key="value2"
+          data-action="input->refine--update#value blur->refine--update#refreshFromServer"
+          data-input-id="<%= defined?(input_id) && input_id %>"
+        />
+        <%= render partial: 'hammerstone/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
+      </div>
+    <% end %>
+<% end %>

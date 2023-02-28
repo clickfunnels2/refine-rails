@@ -1,12 +1,23 @@
 <%= turbo_frame_tag :refine_filter_modal do %>
-  <%= form_with model: @refine_filter_builder, url: hammerstone_refine_conditions_path(@refine_filter_builder.to_params), method: :post, data: {turbo_frame: "_top"} do |form| %>
+  <%= form_with model: @refine_filter_builder,
+    url: hammerstone_refine_conditions_path(@refine_filter_builder.to_params),
+    method: :post,
+    data: {
+      turbo_frame: "_top",
+      controller: "refine--condition-form",
+      refine__condition_form_url_value: hammerstone_refine_condition_url(
+        @criterion.condition.id, @refine_filter_builder.to_params
+      ),
+      refine__condition_form_turbo_frame_value: "refine_filter_modal"
+    } do |form|
+  %>
     <%= form.hidden_field :filter_class %>
     <%= form.hidden_field :client_id %>
     <%= form.hidden_field :blueprint_json %>
     <%= hidden_field_tag :condition_id, params[:id] %>
     <label style="color: black;"><%= @criterion.condition.display %></label>
 
-    <%= render "hammerstone/refine_blueprints/clauses/#{@criterion.component}", 
+    <%= render "hammerstone/refine/conditions/components/#{@criterion.component}", 
       criterion: @criterion,
       condition: @criterion.condition,
       input: @criterion.input,
@@ -17,8 +28,7 @@
     %>
 
     <div class="refine-criterion-clause-container">
-      <%= render partial: 'hammerstone/refine_blueprints/clause_select', locals: {
-          meta: @criterion.meta, selected_clause: @criterion.input[:clause]} %>
+      <%= render 'clause_select', meta: @criterion.meta, selected_clause: @criterion.input[:clause] %>
     </div>
 
     <div class="refine-filter-builder-dropdown-button-container">

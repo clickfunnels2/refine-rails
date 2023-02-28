@@ -15,7 +15,9 @@ class Hammerstone::Refine::ConditionsController < ApplicationController
     @criterion = Hammerstone::Refine::Filters::Criterion.new(
       condition_id: params[:id],
       query: @refine_filter_builder.query,
-      input: {}
+      input: {
+        clause: params[:clause].presence
+      }
     )
   end
 

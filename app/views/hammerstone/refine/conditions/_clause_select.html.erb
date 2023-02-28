@@ -1,0 +1,20 @@
+<% prefixedClass = 'refine-clause-select-prefixed' if meta[:prefix] %>
+<%= tag.div class: prefixedClass, data: {
+  action: "$change->refine--update#clause",
+} do %>
+  <% if meta[:prefix] %>
+    <span class="refine-clause-select-prefix"><%= meta[:prefix] %></span>
+  <% end %>
+  <select
+    name="clause"
+    class="refine-clause-select"
+    data-action="change->refine--condition-form#updateClause"
+  >
+    <% meta[:clauses].each do |clause| %>
+      <option
+        value="<%= clause[:id] %>"
+        <% if selected_clause == clause[:id] %>selected<% end %>
+      ><%= clause[:display] %></option>
+    <% end %>
+  </select>
+<% end %>

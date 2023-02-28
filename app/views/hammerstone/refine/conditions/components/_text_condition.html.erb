@@ -1,0 +1,13 @@
+<% unless ['st', 'nst'].include? input[:clause] %>
+  <div class="refine-text-condition-container">
+    <label for="<%= condition.id %>" class="sr-only"><%= condition.display %></label>
+    <input
+      class="refine-text-condition-input <%="has-error" if criterion.errors.any? %> "
+      name="<%= condition.id %>"
+      type="text"
+      value="<%= input[:value] %>"
+      data-action="input->refine--update#updateBlueprint keydown->refine--update#cancelEnter"
+    />
+    <%= render partial: 'hammerstone/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
+  </div>
+<% end %>

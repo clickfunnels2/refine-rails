@@ -9,16 +9,17 @@
 
 <div class="filter-wrapper">
   <%= render "hammerstone/filter_pills" %>
-  <div class="refine-filter-inline-add-container" data-controller="reveal">
+  <div class="refine-filter-inline-add-container" data-controller="refine--toggle">
     <button
         class="refine-filter-condition-toggle-button"
-        data-action="reveal#toggle"
+        data-action="refine--toggle#toggle"
         type="button"
       >
         + Add Filter
     </button>
     <div
       hidden
+      data-refine--toggle-target="content"
       data-reveal
       data-transition
       data-transition-enter="transition ease-out duration-100"
@@ -29,7 +30,7 @@
       data-transition-leave-end="transform opacity-0 scale-95"
 
       class="refine-filter-builder-dropdown-search-box"
-      style="min-width: 50vw; max-height: 66vh; overflow: auto;"
+      style="max-height: 66vh; overflow: auto;"
     >
       <%= turbo_frame_tag :refine_filter_modal, loading: :lazy,
         src: hammerstone_refine_conditions_path(hammerstone_refine_filters_builder: {filter_class: @refine_filter.class.name}) do %>

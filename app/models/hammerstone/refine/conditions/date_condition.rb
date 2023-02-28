@@ -3,7 +3,7 @@ module Hammerstone::Refine::Conditions
     include ActiveModel::Validations
     include HasClauses
 
-    validate :dates_must_be_real
+    validate :date1_must_be_real, :date2_must_be_real
 
     cattr_accessor :default_user_timezone, default: "UTC", instance_accessor: false
     cattr_accessor :default_database_timezone, default: "UTC", instance_accessor: false
@@ -29,23 +29,23 @@ module Hammerstone::Refine::Conditions
     ATTRIBUTE_TYPE_DATE_WITH_TIME = 1
     ATTRIBUTE_TYPE_UNIX_TIMESTAMP = 2
 
-    def dates_must_be_real
-      # If date parameter exists but cannot be coerce into a Date Object, add error
-      real_date1 = begin
+    def date1_must_be_real
+      return true unless date1
+      begin
         Date.strptime(date1, "%Y-%m-%d")
-      rescue
-        false
-      end
-      real_date2 = begin
-        Date.strptime(date2, "%Y-%m-%d")
-      rescue
-        false
-      end
-      if !real_date1 && date1
+      rescue ArgumentError
         errors.add(:base, "date1 is not a real date")
+        false
       end
-      if !real_date2 && date2
+    end
+
+    def date2_must_be_real
+      return true unless date2
+      begin
+        Date.strptime(date2, "%Y-%m-%d")
+      rescue ArgumentError
         errors.add(:base, "date2 is not a real date")
+        false
       end
     end
 

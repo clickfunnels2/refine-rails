@@ -83,7 +83,7 @@ module Hammerstone::Refine::Conditions
       when *[CLAUSE_EQUALS, CLAUSE_DOESNT_EQUAL, CLAUSE_LESS_THAN_OR_EQUAL, CLAUSE_GREATER_THAN_OR_EQUAL]
         formatted_date1 = input[:date1].to_date.strftime("%m/%d/%y")
         "#{display} #{current_clause.display} #{formatted_date1}"
-      when CLAUSE_BETWEEN
+      when *[CLAUSE_BETWEEN, CLAUSE_NOT_BETWEEN]
         formatted_date1 = input[:date1].to_date.strftime("%m/%d/%y")
         formatted_date2 = input[:date2].to_date.strftime("%m/%d/%y")
         "#{display} #{current_clause.display} #{formatted_date1} and #{formatted_date2}"

@@ -93,8 +93,7 @@ module Hammerstone::Refine::Conditions
     def get_clauses
       proc do
         returned_clauses = clauses.dup
-
-        # Clause display map takes precendence over default display map. Merge order matters.
+        # Clause display map takes precedence over default display map. Merge order matters.
         map = self.class.default_clause_display_map.merge(clause_display_map)
         @show_clauses.each do |clause_id, rule|
           filterable_clause_index = returned_clauses.index{ |clause| clause.id.to_sym == clause_id }

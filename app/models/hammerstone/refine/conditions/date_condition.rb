@@ -12,14 +12,16 @@ module Hammerstone::Refine::Conditions
     CLAUSE_EQUALS = Clauses::EQUALS
     CLAUSE_DOESNT_EQUAL = Clauses::DOESNT_EQUAL
 
+    CLAUSE_LESS_THAN = Clauses::LESS_THAN
     CLAUSE_LESS_THAN_OR_EQUAL = Clauses::LESS_THAN_OR_EQUAL
-    CLAUSE_BETWEEN = Clauses::BETWEEN
+
+    CLAUSE_GREATER_THAN = Clauses::GREATER_THAN
     CLAUSE_GREATER_THAN_OR_EQUAL = Clauses::GREATER_THAN_OR_EQUAL
 
-    CLAUSE_LESS_THAN = Clauses::LESS_THAN
-    CLAUSE_EXACTLY = Clauses::EXACTLY
-    CLAUSE_GREATER_THAN = Clauses::GREATER_THAN
+    CLAUSE_BETWEEN = Clauses::BETWEEN
+    CLAUSE_NOT_BETWEEN = Clauses::NOT_BETWEEN
 
+    CLAUSE_EXACTLY = Clauses::EXACTLY
     CLAUSE_SET = Clauses::SET
     CLAUSE_NOT_SET = Clauses::NOT_SET
 
@@ -152,6 +154,9 @@ module Hammerstone::Refine::Conditions
         Clause.new(CLAUSE_BETWEEN, "is between")
           .requires_inputs(["date1", "date2"]),
 
+        Clause.new(CLAUSE_NOT_BETWEEN, "is not between")
+          .requires_inputs(["date1", "date2"]),
+
         Clause.new(CLAUSE_GREATER_THAN, "is more than")
           .requires_inputs(["days", "modifier"]),
 
@@ -267,10 +272,19 @@ module Hammerstone::Refine::Conditions
 
     def apply_standardized_values_with_time(table)
       case clause
+      # At this point, `between` and `equal` are functionally the
+      # same, i.e. they are querying between two _times_.
       when CLAUSE_EQUALS
         apply_clause_between(table, start_of_day(date1), end_of_day(date1))
       when CLAUSE_BETWEEN
         apply_clause_between(table, start_of_day(date1), end_of_day(date2))
+
+      when CLAUSE_DOESNT_EQUAL
+        apply_clause_not_between(table, start_of_day(date1), end_of_day(date1))
+      when CLAUSE_NOT_BETWEEN
+        apply_clause_not_between(table, start_of_day(date1), end_of_day(date2))
+
+
       when CLAUSE_LESS_THAN
         apply_clause_less_than(comparison_time(date1), table)
       when CLAUSE_GREATER_THAN
@@ -310,6 +324,10 @@ module Hammerstone::Refine::Conditions
 
     def apply_clause_between(table, first_date, second_date)
       table.grouping(table[:"#{attribute}"].between(first_date..second_date))
+    end
+
+    def apply_clause_not_between(table, first_date, second_date)
+      table.grouping(table[:"#{attribute}"].not_between(first_date..second_date))
     end
 
     def apply_clause_equals(value, table)

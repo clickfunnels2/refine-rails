@@ -3,7 +3,7 @@ module Hammerstone::Refine::Conditions
     include ActiveModel::Validations
     include HasClauses
 
-    validate :dates_must_be_real
+    validate :date1_must_be_real, :date2_must_be_real
 
     cattr_accessor :default_user_timezone, default: "UTC", instance_accessor: false
     cattr_accessor :default_database_timezone, default: "UTC", instance_accessor: false
@@ -12,14 +12,16 @@ module Hammerstone::Refine::Conditions
     CLAUSE_EQUALS = Clauses::EQUALS
     CLAUSE_DOESNT_EQUAL = Clauses::DOESNT_EQUAL
 
+    CLAUSE_LESS_THAN = Clauses::LESS_THAN
     CLAUSE_LESS_THAN_OR_EQUAL = Clauses::LESS_THAN_OR_EQUAL
-    CLAUSE_BETWEEN = Clauses::BETWEEN
+
+    CLAUSE_GREATER_THAN = Clauses::GREATER_THAN
     CLAUSE_GREATER_THAN_OR_EQUAL = Clauses::GREATER_THAN_OR_EQUAL
 
-    CLAUSE_LESS_THAN = Clauses::LESS_THAN
-    CLAUSE_EXACTLY = Clauses::EXACTLY
-    CLAUSE_GREATER_THAN = Clauses::GREATER_THAN
+    CLAUSE_BETWEEN = Clauses::BETWEEN
+    CLAUSE_NOT_BETWEEN = Clauses::NOT_BETWEEN
 
+    CLAUSE_EXACTLY = Clauses::EXACTLY
     CLAUSE_SET = Clauses::SET
     CLAUSE_NOT_SET = Clauses::NOT_SET
 
@@ -27,23 +29,23 @@ module Hammerstone::Refine::Conditions
     ATTRIBUTE_TYPE_DATE_WITH_TIME = 1
     ATTRIBUTE_TYPE_UNIX_TIMESTAMP = 2
 
-    def dates_must_be_real
-      # If date parameter exists but cannot be coerce into a Date Object, add error
-      real_date1 = begin
+    def date1_must_be_real
+      return true unless date1
+      begin
         Date.strptime(date1, "%Y-%m-%d")
-      rescue
-        false
-      end
-      real_date2 = begin
-        Date.strptime(date2, "%Y-%m-%d")
-      rescue
-        false
-      end
-      if !real_date1 && date1
+      rescue ArgumentError
         errors.add(:base, "date1 is not a real date")
+        false
       end
-      if !real_date2 && date2
+    end
+
+    def date2_must_be_real
+      return true unless date2
+      begin
+        Date.strptime(date2, "%Y-%m-%d")
+      rescue ArgumentError
         errors.add(:base, "date2 is not a real date")
+        false
       end
     end
 
@@ -81,7 +83,7 @@ module Hammerstone::Refine::Conditions
       when *[CLAUSE_EQUALS, CLAUSE_DOESNT_EQUAL, CLAUSE_LESS_THAN_OR_EQUAL, CLAUSE_GREATER_THAN_OR_EQUAL]
         formatted_date1 = input[:date1].to_date.strftime("%m/%d/%y")
         "#{display} #{current_clause.display} #{formatted_date1}"
-      when CLAUSE_BETWEEN
+      when *[CLAUSE_BETWEEN, CLAUSE_NOT_BETWEEN]
         formatted_date1 = input[:date1].to_date.strftime("%m/%d/%y")
         formatted_date2 = input[:date2].to_date.strftime("%m/%d/%y")
         "#{display} #{current_clause.display} #{formatted_date1} and #{formatted_date2}"
@@ -150,6 +152,9 @@ module Hammerstone::Refine::Conditions
           .requires_inputs("date1"),
 
         Clause.new(CLAUSE_BETWEEN, "is between")
+          .requires_inputs(["date1", "date2"]),
+
+        Clause.new(CLAUSE_NOT_BETWEEN, "is not between")
           .requires_inputs(["date1", "date2"]),
 
         Clause.new(CLAUSE_GREATER_THAN, "is more than")
@@ -267,10 +272,19 @@ module Hammerstone::Refine::Conditions
 
     def apply_standardized_values_with_time(table)
       case clause
+      # At this point, `between` and `equal` are functionally the
+      # same, i.e. they are querying between two _times_.
       when CLAUSE_EQUALS
         apply_clause_between(table, start_of_day(date1), end_of_day(date1))
       when CLAUSE_BETWEEN
         apply_clause_between(table, start_of_day(date1), end_of_day(date2))
+
+      when CLAUSE_DOESNT_EQUAL
+        apply_clause_not_between(table, start_of_day(date1), end_of_day(date1))
+      when CLAUSE_NOT_BETWEEN
+        apply_clause_not_between(table, start_of_day(date1), end_of_day(date2))
+
+
       when CLAUSE_LESS_THAN
         apply_clause_less_than(comparison_time(date1), table)
       when CLAUSE_GREATER_THAN
@@ -280,6 +294,7 @@ module Hammerstone::Refine::Conditions
       when CLAUSE_LESS_THAN_OR_EQUAL
         apply_clause_less_than_or_equal(comparison_time(date1), table)
       end
+
     end
 
     def apply_standardized_values(table)
@@ -309,6 +324,10 @@ module Hammerstone::Refine::Conditions
 
     def apply_clause_between(table, first_date, second_date)
       table.grouping(table[:"#{attribute}"].between(first_date..second_date))
+    end
+
+    def apply_clause_not_between(table, first_date, second_date)
+      table.grouping(table[:"#{attribute}"].not_between(first_date..second_date))
     end
 
     def apply_clause_equals(value, table)

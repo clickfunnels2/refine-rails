@@ -178,7 +178,6 @@ module Hammerstone::Refine::Conditions
           errors.add(:base, "A #{k} is required")
         end
       end
-
       # Errors added to the errors array by individual conditions and standard rails validations
       if errors.any? || !valid?
         # When the error is rescued, it will stringify the message.

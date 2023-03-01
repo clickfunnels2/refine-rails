@@ -1,7 +1,7 @@
   <%= form.hidden_field :filter_class %>
   <%= form.hidden_field :client_id %>
   <%= form.hidden_field :blueprint_json %>
-  <%= hidden_field_tag :condition_id, params[:id] %>
+  <%= hidden_field_tag :condition_id, @criterion.condition_id %>
   <label style="color: black;"><%= @criterion.condition.display %></label>
 
   <%= render "hammerstone/refine/conditions/components/#{@criterion.component}", 

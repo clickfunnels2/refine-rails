@@ -1,5 +1,6 @@
 <%= turbo_frame_tag :refine_filter_modal do %>
   <% @conditions.each do |condition| %>
-    <%= link_to condition.display, hammerstone_refine_condition_path(condition.id, @refine_filter_builder.to_params), class: "refine-condition-list-item" %>
+    <%= link_to condition.display, new_hammerstone_refine_condition_url(
+        @refine_filter_builder.to_params.merge(id: condition.id)), class: "refine-condition-list-item" %>
   <% end %>
 <% end %>

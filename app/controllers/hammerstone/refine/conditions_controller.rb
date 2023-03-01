@@ -37,7 +37,7 @@ class Hammerstone::Refine::ConditionsController < ApplicationController
       "type" => "criterion",
       "condition_id" => params[:condition_id],
       "input" => {
-        "clause" => params[:clauses],
+        "clause" => params[:clause],
         "value" => params[params[:condition_id]]
       }
     }

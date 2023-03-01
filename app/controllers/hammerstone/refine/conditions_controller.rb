@@ -21,6 +21,13 @@ class Hammerstone::Refine::ConditionsController < ApplicationController
     )
   end
 
+  def edit
+    @criterion = @refine_filter_builder
+      .query
+      .criteria
+      .index(params[:id])
+  end
+
   def create
     refine_filter = @refine_filter_builder.refine_filter
     blueprint = refine_filter.blueprint

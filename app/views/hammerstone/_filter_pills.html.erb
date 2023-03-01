@@ -1,4 +1,3 @@
-
 <%= tag.div id: dom_id(@refine_filter_builder, "query"),
   class: "refine-filter-inline-conditions-container",
   data: {
@@ -13,20 +12,7 @@
     action: "filter-submit-success->turbo-visit#visit"
   } do
 %>
-
-
-  <% @refine_filter.human_readable_criterions.each_with_index do |condition, index| %>
-    <div class="filter-condition-wrapper">
-      <div class="filter-condition">
-        <div class="filter-value">
-          <%= condition %>
-        </div>
-      </div>
-      <div class="filter-remove">
-        <div class="material-icons">
-          X
-        </div>
-      </div>
-    </div>
+  <% @refine_filter_builder.query.criteria.each do |criterion| %>
+    <%= render criterion.to_partial_path, criterion: criterion %>
   <% end %>
 <% end %>

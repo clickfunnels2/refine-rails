@@ -1,0 +1,31 @@
+  <%= form.hidden_field :filter_class %>
+  <%= form.hidden_field :client_id %>
+  <%= form.hidden_field :blueprint_json %>
+  <%= hidden_field_tag :condition_id, params[:id] %>
+  <label style="color: black;"><%= @criterion.condition.display %></label>
+
+  <%= render "hammerstone/refine/conditions/components/#{@criterion.component}", 
+    criterion: @criterion,
+    condition: @criterion.condition,
+    input: @criterion.input,
+    criterion_id: 0,
+    meta: @criterion.meta,
+    # meta_clause: @criterion.selected_clause_meta,
+    input_id: nil
+  %>
+
+  <div class="refine-criterion-clause-container">
+    <%= render 'clause_select', meta: @criterion.meta, selected_clause: @criterion.input[:clause] %>
+  </div>
+
+  <div class="refine-filter-builder-dropdown-button-container">
+    <button
+      class="refine-filter-builder-dropdown-cancel-button"
+      data-action="click->refine--toggle#toggle"
+      type="button"
+    >
+      <%= t('global.buttons.cancel') %>
+    </button>
+    <%= form.submit t('global.buttons.apply') %>
+  </div>
+  <div>

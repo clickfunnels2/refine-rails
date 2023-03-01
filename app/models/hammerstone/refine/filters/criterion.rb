@@ -67,6 +67,26 @@ class Hammerstone::Refine::Filters::Criterion
     condition.component.underscore
   end
 
+  def to_key
+    [condition_id]
+  end
+
+  def human_readable
+    conjunction? ? word : condition.human_readable(input)
+  end
+
+  def conjunction?
+    type == "conjunction"
+  end
+
+  def to_partial_path
+    if conjunction?
+      "hammerstone/refine/conditions/criterion_conjunction"
+    else
+      "hammerstone/refine/conditions/criterion_editable"
+    end
+  end
+
   private
 
   def initialize_condition!

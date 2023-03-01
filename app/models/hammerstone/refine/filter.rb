@@ -26,6 +26,7 @@ module Hammerstone::Refine
       end
     end
 
+    # DEPRECATED use Hammerstone::Refine::Filters::Criterion#human_readable instead
     def human_readable_criterions
       output = []
       if blueprint.present?

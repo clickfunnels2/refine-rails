@@ -1,0 +1,30 @@
+<div class="filter-condition-wrapper">
+  <div class="filter-condition" data-controller="refine--toggle">
+    <div class="filter-value" data-action="refine--toggle#toggle">
+      <%= criterion.human_readable %>
+    </div>
+    <div
+      hidden
+      data-refine--toggle-target="content"
+      data-reveal
+      data-transition
+      data-transition-enter="transition ease-out duration-100"
+      data-transition-enter-start="transform opacity-0 scale-95"
+      data-transition-enter-end="transform opacity-100 scale-100"
+      data-transition-leave="transition ease-in duration-75"
+      data-transition-leave-start="transform opacity-100 scale-100"
+      data-transition-leave-end="transform opacity-0 scale-95"
+
+      class="refine-filter-builder-dropdown-search-box"
+      style="max-height: 66vh; overflow: auto;"
+    >
+      <%= turbo_frame_tag criterion, loading: :lazy,
+        src: edit_hammerstone_refine_condition_path(criterion.condition_id, @refine_filter_builder.to_params) %>
+    </div>
+  </div>
+  <div class="filter-remove">
+    <div class="material-icons">
+      X
+    </div>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-<%= turbo_frame_tag :refine_filter_modal do %>
+<%= turbo_frame_tag @criterion do %>
   <%= form_with model: @refine_filter_builder,
     url: hammerstone_refine_condition_path(@criterion.condition_id, @refine_filter_builder.to_params),
     method: :post,

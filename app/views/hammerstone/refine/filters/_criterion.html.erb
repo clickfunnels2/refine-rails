@@ -1,6 +1,6 @@
 <div class="filter-condition-wrapper">
   <div class="filter-condition" data-controller="refine--toggle">
-    <div class="filter-value" data-action="refine--toggle#toggle">
+    <div class="filter-value" data-action="click->refine--toggle#toggle">
       <%= criterion.human_readable %>
     </div>
     <div
@@ -19,7 +19,7 @@
       style="max-height: 66vh; overflow: auto;"
     >
       <%= turbo_frame_tag criterion, loading: :lazy,
-        src: edit_hammerstone_refine_condition_path(criterion.condition_id, @refine_filter_builder.to_params) %>
+        src: edit_hammerstone_refine_condition_path(criterion.uid, @refine_filter_builder.to_params) %>
     </div>
   </div>
   <div class="filter-remove">

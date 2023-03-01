@@ -25,7 +25,7 @@ class Hammerstone::Refine::ConditionsController < ApplicationController
     @criterion = @refine_filter_builder
       .query
       .criteria
-      .index(params[:id])
+      .detect { |c| c.uid.to_s == params[:id] }
   end
 
   def create

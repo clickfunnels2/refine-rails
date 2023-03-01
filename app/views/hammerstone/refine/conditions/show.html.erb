@@ -1,4 +1,5 @@
 <%= turbo_frame_tag :refine_filter_modal do %>
+  <%= debug @refine_filter_builder.blueprint_json %>
   <%= form_with model: @refine_filter_builder,
     url: hammerstone_refine_conditions_path(@refine_filter_builder.to_params),
     method: :post,

@@ -1,5 +1,6 @@
 
 <%= tag.div id: dom_id(@refine_filter_builder, "query"),
+  class: "refine-filter-inline-conditions-container",
   data: {
     controller: "refine--filter-pills refine--state turbo-visit",
     refine__state_conditions_value: @refine_filter_builder.query.available_conditions_attributes.to_json,
@@ -15,18 +16,17 @@
 
 
   <% @refine_filter.human_readable_criterions.each_with_index do |condition, index| %>
-
-  <div class="filter-condition-wrapper">
-    <div class="filter-condition">
-      <div class="filter-value">
-        <%= condition %>
+    <div class="filter-condition-wrapper">
+      <div class="filter-condition">
+        <div class="filter-value">
+          <%= condition %>
+        </div>
+      </div>
+      <div class="filter-remove">
+        <div class="material-icons">
+          X
+        </div>
       </div>
     </div>
-    <div class="filter-remove">
-      <div class="material-icons">
-        X
-      </div>
-    </div>
-  </div>
   <% end %>
 <% end %>

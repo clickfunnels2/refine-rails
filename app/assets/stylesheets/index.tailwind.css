@@ -78,6 +78,10 @@
   text-decoration: none;
 }
 
+.refine-filter-inline-conditions-container {
+  display: flex;
+}
+
 
 
 @tailwind components;

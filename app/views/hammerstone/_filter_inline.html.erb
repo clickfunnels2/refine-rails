@@ -33,9 +33,7 @@
       style="max-height: 66vh; overflow: auto;"
     >
       <%= turbo_frame_tag :refine_filter_modal, loading: :lazy,
-        src: hammerstone_refine_conditions_path(hammerstone_refine_filters_builder: {filter_class: @refine_filter.class.name}) do %>
-
-      <% end %>
+        src: hammerstone_refine_conditions_path(@refine_filter_builder.to_params) %>
     </div>
   </div>
 

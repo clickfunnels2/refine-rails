@@ -1,5 +1,4 @@
 <%= turbo_frame_tag :refine_filter_modal do %>
-  <%= debug @refine_filter_builder.blueprint_json %>
   <% @conditions.each do |condition| %>
     <%= link_to condition.display, hammerstone_refine_condition_path(condition.id, @refine_filter_builder.to_params), class: "refine-condition-list-item" %>
   <% end %>

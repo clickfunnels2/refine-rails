@@ -80,11 +80,7 @@ class Hammerstone::Refine::Filters::Criterion
   end
 
   def to_partial_path
-    if conjunction?
-      "hammerstone/refine/conditions/criterion_conjunction"
-    else
-      "hammerstone/refine/conditions/criterion_editable"
-    end
+    "hammerstone/refine/filters/criterion"
   end
 
   private

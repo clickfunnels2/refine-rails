@@ -37,37 +37,12 @@ window.jQuery = jquery
 window.$ = jquery
 ```
 
-7. Implement a Filter class in `app/filters` that inherits from `Hammerstone::Refine::Filter`. Use this class to define the conditions that can be filtered.
+7. Generate Filters for your given models and fields.
 
-Example (Contacts Filter on a Contact Model)
+Example (Contacts Filter on a Contact Model for name and date classes)
 
-```ruby 
-# app/filters/contacts_filter.rb
-class ContactsFilter < Hammerstone::Refine::Filter
-  include Hammerstone::Refine::Conditions
-  @@default_stabilizer = Hammerstone::Refine::Stabilizers::UrlEncodedStabilizer
-
-  def initial_query
-    Contact.all
-  end
-
-  def automatically_stabilize?
-    true
-  end
-
-  def table
-    Contact.arel_table
-  end
-
-  def conditions
-    [
-      TextCondition.new("name"),
-      DateCondition.new("created_at"),
-      DateCondition.new("updated_at"),
-
-    ]
-  end
-end
+```
+rails generate filter contact name:text created_at:date id:numeric
 ```
 
 8. Include the module in your `ApplicationController`: `include Hammerstone::FilterApplicationController`

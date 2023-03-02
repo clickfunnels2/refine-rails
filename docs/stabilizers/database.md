@@ -12,8 +12,7 @@ rails db:migrate
 
 This will create a `hammerstone_refine_stored_filters` table in your database. 
 
-The `StoredFilter` needs to be included in your application: 
-@TODO Move to gem
+The `StoredFilter` class can be overridden with additional functionality (i.e. additional validations). The following is the base class:
 
 ```ruby
 module Hammerstone::Refine

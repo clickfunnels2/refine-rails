@@ -32,33 +32,39 @@ class Hammerstone::Refine::ConditionsController < ApplicationController
     refine_filter = @refine_filter_builder.refine_filter
     blueprint = refine_filter.blueprint
 
-    blueprint << {
-      "depth" => 0,
-      "type" => "conjunction",
-      "word" => "and"
-    } unless blueprint.empty?
-
-    # TODO support multiple input conditions, refinements, etc
-    blueprint << {
-      "depth" => 0,
-      "type" => "criterion",
-      "condition_id" => params[:condition_id],
-      "input" => {
-        "clause" => params[:clause],
-        "value" => params[params[:condition_id]]
-      }
-    }
+    Hammerstone::Refine::Filters::BlueprintEditor
+      .new(refine_filter.blueprint)
+      .append({
+        condition_id: params[:condition_id],
+        input: {
+          clause: params[:clause],
+          value: params[params[:condition_id]]
+        }    
+      })
 
     redirect_to_stable_id(refine_filter.to_stable_id)
   end
 
   def update
     refine_filter = @refine_filter_builder.refine_filter
-    blueprint = refine_filter.blueprint
+    Hammerstone::Refine::Filters::BlueprintEditor
+      .new(refine_filter.blueprint)
+      .update(params[:id].to_i, {
+        input: {
+          clause: params[:clause],
+          value: params[params[:condition_id]]
+        }    
+      })
 
-    criterion_data = blueprint[params[:id].to_i]
-    criterion_data[:input][:clause] = params[:clause]
-    criterion_data[:input][:value] = params[params[:condition_id]]
+    redirect_to_stable_id(refine_filter.to_stable_id)
+  end
+
+  def destroy
+    refine_filter = @refine_filter_builder.refine_filter
+     Hammerstone::Refine::Filters::BlueprintEditor
+      .new(refine_filter.blueprint)
+      .delete(params[:id].to_i)
+
     redirect_to_stable_id(refine_filter.to_stable_id)
   end
 

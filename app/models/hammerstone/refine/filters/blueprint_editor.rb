@@ -23,16 +23,12 @@ class Hammerstone::Refine::Filters::BlueprintEditor
       depth: 0,
       type: "conjunction",
       word: "and",
-      uid: blueprint.length,
-      position: blueprint.length
     } unless blueprint.empty?
 
     blueprint << {
       depth: 0,
       type: "criterion",
       condition_id:,
-      uid: blueprint.length,
-      position: blueprint.length,
       input: {
         clause:,
         value:

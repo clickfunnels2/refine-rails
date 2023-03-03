@@ -34,7 +34,7 @@ class Hammerstone::Refine::ConditionsController < ApplicationController
 
     Hammerstone::Refine::Filters::BlueprintEditor
       .new(refine_filter.blueprint)
-      .append({
+      .add_criterion({
         condition_id: params[:condition_id],
         input: {
           clause: params[:clause],

@@ -26,7 +26,7 @@ application.load(refineControllers)
 import "@hammerstone/refine-stimulus/app/assets/stylesheets/index.css";
 ```
 
-5. Import the date range picker and icon (add and delete) style sheets. This is tyipcally done in your `application.html.erb` layout.
+5. Import the date range picker and icon (add and delete) style sheets. This is typically done in your `application.html.erb` layout.
 
 ```html
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />

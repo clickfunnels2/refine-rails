@@ -3,7 +3,7 @@
 <% if ['st', 'nst'].include? input[:clause] %>
 <!-- Render nothing -->
 <% elsif %>
-  <%= tag.div class: 'refine-option-condition-container' do %>
+  <div class="refine-option-condition-container <%= "has-error" if criterion.errors.any? %> "
     <%= tag.div data: {
       action: "$change->refine--update#selected blur->refine--update#refreshFromServer",
       controller: 'fields--super-select',
@@ -31,7 +31,7 @@
       <span class="refine-option-condition-postfix"><%= meta[:postfix] %></span>
     <% end %>
     <%= render partial: 'hammerstone/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
-  <% end %>
+  </div>
 <% end %>
 
 

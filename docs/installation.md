@@ -26,6 +26,13 @@ application.load(refineControllers)
 import "@hammerstone/refine-stimulus/app/assets/stylesheets/index.css";
 ```
 
+5. Import the date range picker and icon (add and delete) style sheets. This is typically done in your `application.html.erb` layout.
+
+```html
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<link rel="stylesheet" href="https://unpkg.com/@icon/themify-icons/themify-icons.css">
+```
+
 6. Add jquery (necessary for our custom select elements)
 `yarn add jquery`
 
@@ -91,7 +98,7 @@ end
 
 10. Add the following to your view to render a button that activates the filter. In the example above it would be in `contacts/index`.
 
-`<%= render partial: 'hammerstone/filter_builder_dropdown' %>`
+`<%= render partial: 'hammerstone/filter_builder_dropdown', stored_filters: false %>`
 
  You should see a working filter - something like [this loom](https://www.loom.com/share/ca1cc42740274ceabe0b7cc908fe1aba).
 
@@ -102,3 +109,7 @@ Celebrate!
 You can add this snippet to the same view using the filter to see the query being generated.
 
 `<%=@refine_filter&.get_query&.to_sql%>`
+
+## Stored filters
+
+For storing filters please refer to [database stabilization](/docs/stabilizers/database.md).

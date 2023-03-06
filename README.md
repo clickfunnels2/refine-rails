@@ -1,6 +1,6 @@
 ## How to integrate the refine filter
 
-Refer to the installation [documentation](https://github.com/hammerstonedev/refine-rails/blob/readme_clarity/docs/installation.md)
+Refer to the [installation instructions](/docs/installation.md)
 
 ## Troubleshooting
 
@@ -302,10 +302,6 @@ In `app/javascript/controllers/index.js` add
 import { controllerDefinitions as refineControllers } from "@hammerstone/refine-stimulus"
 application.load(refineControllers)
 ```
-
-### TODO
-- Documentation for stored filters
-
 
 ## Readme Installation Goals (what we're working towards - does not work yet) 
 

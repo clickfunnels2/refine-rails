@@ -1,20 +1,18 @@
-
 # Database Stabilization
 
-Database stabilization is the most straightforward of all the stabilizers, as it simply stores the filter's state in the database.
+Database stabilization is the most straightforward of all the [stabilizers](/docs/stabilizers/overview.md), as it simply stores the filter's state in the database.
 
 You need to create a migration to add the table that will hold filter ids and their corresponding state.
 If you choose to use this stabilizer, make sure you've published and run the provided migration:
 
 ```shell
-rails generate migration AddHammerstoneRefineStoredFilters json:state name:string
+rails generate migration CreateHammerstoneRefineStoredFilters state:json name:string filter_type:string
 rails db:migrate
 ```
 
 This will create a `hammerstone_refine_stored_filters` table in your database. 
 
-The `StoredFilter` needs to be included in your application: 
-@TODO Move to gem
+The `StoredFilter` class can be overridden with additional functionality (i.e. additional validations). The following is the base class:
 
 ```ruby
 module Hammerstone::Refine

@@ -23,6 +23,7 @@ module Hammerstone::Refine
         @blueprint = blueprint
         @relation = initial_query
         @immediately_commit_pending_relationship_subqueries = false
+        @@default_stabilizer = Hammerstone::Refine::Stabilizers::UrlEncodedStabilizer
       end
     end
 

@@ -30,3 +30,6 @@ module Hammerstone::Refine
   end
 end
 ```
+
+Render the filter with included stored filters view by setting `stored_filter` to `true`
+`<%= render partial: 'hammerstone/filter_builder_dropdown', locals: { stored_filters: true } %>`

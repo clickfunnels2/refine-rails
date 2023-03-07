@@ -98,7 +98,7 @@ end
 
 10. Add the following to your view to render a button that activates the filter. In the example above it would be in `contacts/index`.
 
-`<%= render partial: 'hammerstone/filter_builder_dropdown', stored_filters: false %>`
+`<%= render partial: 'hammerstone/filter_builder_dropdown' %>`
 
  You should see a working filter - something like [this loom](https://www.loom.com/share/ca1cc42740274ceabe0b7cc908fe1aba).
 

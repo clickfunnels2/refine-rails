@@ -5,17 +5,17 @@ class Hammerstone::Refine::Filters::BlueprintEditorTest < ActiveSupport::TestCas
   def test_single_basic_condition
     blueprint = []
     editor = Hammerstone::Refine::Filters::BlueprintEditor.new(blueprint)
-    editor.add_criterion(
+    editor.add_criterion(criterion: {
       condition_id: "id",
       input: {
         clause: "eq",
         value: "foo"
       }
-    )
+    })
 
     expected = [
       {
-        depth: 0,
+        depth: 1,
         type: "criterion",
         condition_id: "id",
         input: {
@@ -31,25 +31,25 @@ class Hammerstone::Refine::Filters::BlueprintEditorTest < ActiveSupport::TestCas
   def test_basic_filter_with_ands
     blueprint = []
     editor = Hammerstone::Refine::Filters::BlueprintEditor.new(blueprint)
-    editor.add_criterion(
+    editor.add_criterion(criterion: {
       condition_id: "id",
       input: {
         clause: "eq",
         value: "fun"
       }
-    )
+    })
 
-    editor.add_criterion(
+    editor.add_criterion(criterion: {
       condition_id: "id",
       input: {
         clause: "eq",
         value: "inthesun"
       }
-    )
+    })
 
     expected = [
       {
-        depth: 0,
+        depth: 1,
         type: "criterion",
         condition_id: "id",
         input: {
@@ -58,12 +58,12 @@ class Hammerstone::Refine::Filters::BlueprintEditorTest < ActiveSupport::TestCas
         }
       },
       { # conjunction
-        depth: 0,
+        depth: 1,
         type: "conjunction",
         word: "and"
       },
       { # criterion
-        depth: 0,
+        depth: 1,
         type: "criterion",
         condition_id: "id",
         input: {
@@ -79,25 +79,25 @@ class Hammerstone::Refine::Filters::BlueprintEditorTest < ActiveSupport::TestCas
   def test_basic_filter_with_ors
     blueprint = []
     editor = Hammerstone::Refine::Filters::BlueprintEditor.new(blueprint)
-    editor.add_criterion(
+    editor.add_criterion(criterion: {
       condition_id: "id",
       input: {
         clause: "eq",
         value: "dogs"
       }
-    )
+    })
 
-    editor.append_or(
+    editor.add_criterion(conjunction: "or", criterion: {
       condition_id: "id",
       input: {
         clause: "eq",
         value: "cats"
       }
-    )
+    })
 
     expected = [
       {
-        depth: 0,
+        depth: 1,
         type: "criterion",
         condition_id: "id",
         input: {
@@ -111,7 +111,7 @@ class Hammerstone::Refine::Filters::BlueprintEditorTest < ActiveSupport::TestCas
         word: "or"
       },
       { # criterion
-        depth: 0,
+        depth: 1,
         type: "criterion",
         condition_id: "id",
         input: {
@@ -127,35 +127,35 @@ class Hammerstone::Refine::Filters::BlueprintEditorTest < ActiveSupport::TestCas
   def test_basic_filter_with_groups
     blueprint = []
     editor = Hammerstone::Refine::Filters::BlueprintEditor.new(blueprint)
-    editor.add_criterion(
+    editor.add_criterion(criterion: {
       condition_id: "id",
       input: {
         clause: "eq",
         value: "one"
       }
-    )
+    })
 
-    editor.add_group_criterion(
+    editor.add_criterion(conjunction: "or", criterion: {
       condition_id: "id",
       input: {
         clause: "eq",
         value: "two"
       }
-    )
+    })
 
-    editor.add_criterion(
+    editor.add_criterion(criterion: {
       condition_id: "id",
       input: {
         clause: "eq",
         value: "three"
       }
-    )
+    })
 
     expected = [
       {
         type: "criterion",
         condition_id: "id",
-        depth: 0,
+        depth: 1,
         input: {
           clause: "eq",
           value: "one",
@@ -163,7 +163,7 @@ class Hammerstone::Refine::Filters::BlueprintEditorTest < ActiveSupport::TestCas
       },
       {
         type: "conjunction",
-        word: "and",
+        word: "or",
         depth: 0,
       },
       {

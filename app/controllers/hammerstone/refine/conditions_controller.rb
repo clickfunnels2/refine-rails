@@ -34,7 +34,7 @@ class Hammerstone::Refine::ConditionsController < ApplicationController
 
     Hammerstone::Refine::Filters::BlueprintEditor
       .new(refine_filter.blueprint)
-      .add_criterion({
+      .add(criterion: {
         condition_id: params[:condition_id],
         input: {
           clause: params[:clause],
@@ -49,7 +49,7 @@ class Hammerstone::Refine::ConditionsController < ApplicationController
     refine_filter = @refine_filter_builder.refine_filter
     Hammerstone::Refine::Filters::BlueprintEditor
       .new(refine_filter.blueprint)
-      .update(params[:id].to_i, {
+      .update(params[:id].to_i, criterion: {
         input: {
           clause: params[:clause],
           value: params[params[:condition_id]]

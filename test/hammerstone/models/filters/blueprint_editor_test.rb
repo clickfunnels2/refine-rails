@@ -5,7 +5,7 @@ class Hammerstone::Refine::Filters::BlueprintEditorTest < ActiveSupport::TestCas
   def test_single_basic_condition
     blueprint = []
     editor = Hammerstone::Refine::Filters::BlueprintEditor.new(blueprint)
-    editor.add_criterion(criterion: {
+    editor.add(criterion: {
       condition_id: "id",
       input: {
         clause: "eq",
@@ -31,7 +31,7 @@ class Hammerstone::Refine::Filters::BlueprintEditorTest < ActiveSupport::TestCas
   def test_basic_filter_with_ands
     blueprint = []
     editor = Hammerstone::Refine::Filters::BlueprintEditor.new(blueprint)
-    editor.add_criterion(criterion: {
+    editor.add(criterion: {
       condition_id: "id",
       input: {
         clause: "eq",
@@ -39,7 +39,7 @@ class Hammerstone::Refine::Filters::BlueprintEditorTest < ActiveSupport::TestCas
       }
     })
 
-    editor.add_criterion(criterion: {
+    editor.add(criterion: {
       condition_id: "id",
       input: {
         clause: "eq",
@@ -79,7 +79,7 @@ class Hammerstone::Refine::Filters::BlueprintEditorTest < ActiveSupport::TestCas
   def test_basic_filter_with_ors
     blueprint = []
     editor = Hammerstone::Refine::Filters::BlueprintEditor.new(blueprint)
-    editor.add_criterion(criterion: {
+    editor.add(criterion: {
       condition_id: "id",
       input: {
         clause: "eq",
@@ -87,7 +87,7 @@ class Hammerstone::Refine::Filters::BlueprintEditorTest < ActiveSupport::TestCas
       }
     })
 
-    editor.add_criterion(conjunction: "or", criterion: {
+    editor.add(conjunction: "or", criterion: {
       condition_id: "id",
       input: {
         clause: "eq",
@@ -127,7 +127,7 @@ class Hammerstone::Refine::Filters::BlueprintEditorTest < ActiveSupport::TestCas
   def test_basic_filter_with_groups
     blueprint = []
     editor = Hammerstone::Refine::Filters::BlueprintEditor.new(blueprint)
-    editor.add_criterion(criterion: {
+    editor.add(criterion: {
       condition_id: "id",
       input: {
         clause: "eq",
@@ -135,7 +135,7 @@ class Hammerstone::Refine::Filters::BlueprintEditorTest < ActiveSupport::TestCas
       }
     })
 
-    editor.add_criterion(conjunction: "or", criterion: {
+    editor.add(conjunction: "or", criterion: {
       condition_id: "id",
       input: {
         clause: "eq",
@@ -143,7 +143,7 @@ class Hammerstone::Refine::Filters::BlueprintEditorTest < ActiveSupport::TestCas
       }
     })
 
-    editor.add_criterion(criterion: {
+    editor.add(criterion: {
       condition_id: "id",
       input: {
         clause: "eq",

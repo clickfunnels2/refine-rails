@@ -1,7 +1,6 @@
 class Hammerstone::Refine::Filters::BlueprintEditor
   # Editor that will transform a given blueprint IN PLACE
-  # Designed to support operations for the v2 inline filter builder
-  # TODO add support for OR and groups
+  # Designed to support operations for the v2 inline filter builder via ConditionsController
 
   attr_reader :blueprint
 
@@ -10,7 +9,7 @@ class Hammerstone::Refine::Filters::BlueprintEditor
   end
 
   # add a criteria at the specified position (defaults to the end)
-  def add_criterion(position: -1, conjunction: "and", criterion:)
+  def add(position: -1, conjunction: "and", criterion:)
     # TODO support multiple input conditions, refinements, etc
 
     conjunction_depth = case conjunction
@@ -47,7 +46,7 @@ class Hammerstone::Refine::Filters::BlueprintEditor
     blueprint.insert position, *nodes_to_insert
   end
 
-  def update(index, criterion)
+  def update(index, criterion:)
     criterion => {
       input: {
         clause:,

@@ -44,7 +44,7 @@ class Hammerstone::Refine::Filters::BlueprintEditor
       }
     }
 
-    blueprint.insert postion, *nodes_to_insert
+    blueprint.insert position, *nodes_to_insert
   end
 
   def update(index, criterion)

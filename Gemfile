@@ -12,6 +12,7 @@ gem "byebug"
 group :development, :test do
   gem "minitest-around"
   gem "minitest-ci"
+  gem "net-http" # added to fix warnings - https://github.com/rails/rails/pull/44175#issuecomment-1023595691
   gem "standard"
 end
 

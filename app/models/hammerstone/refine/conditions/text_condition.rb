@@ -99,11 +99,7 @@ module Hammerstone::Refine::Conditions
     end
 
     def apply_clause_equals(value, table)
-      if @attribute.is_a? Arel::Nodes::SqlLiteral
-        table.grouping(@attribute.eq(value))
-      else
-        table.grouping(table[:"#{attribute}"].eq(value))
-      end
+      table.grouping(arel_attribute(table).eq(value))
     end
 
     def apply_clause_doesnt_equal(value, table)

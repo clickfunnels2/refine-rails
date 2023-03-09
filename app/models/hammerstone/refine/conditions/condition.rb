@@ -263,5 +263,13 @@ module Hammerstone::Refine::Conditions
       end
       value
     end
+
+    private
+
+    def arel_attribute(table)
+      return @attribute if @attribute.is_a? Arel::Nodes::SqlLiteral
+
+      table[:"#{attribute}"]
+    end
   end
 end

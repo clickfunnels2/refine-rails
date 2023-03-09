@@ -7,7 +7,7 @@ class FilterGenerator < Rails::Generators::NamedBase
 
   def create_filter
     @conditions = extract_conditions(args)
-    template 'filter.rb.erb', "app/filters/#{file_name}_filter.rb"
+    template 'filter.rb.erb', "app/filters/#{plural_name}_filter.rb"
   end
 
   private

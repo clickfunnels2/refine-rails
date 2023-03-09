@@ -6,10 +6,6 @@ class <%= class_name.pluralize %>Filter < Hammerstone::Refine::Filter
     <%= class_name %>.all
   end
 
-  def automatically_stabilize?
-    true
-  end
-
   def table
     <%= class_name %>.arel_table
   end

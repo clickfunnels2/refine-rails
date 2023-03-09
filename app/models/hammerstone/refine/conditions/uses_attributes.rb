@@ -141,6 +141,8 @@ module Hammerstone::Refine::Conditions
 
     def raw_attribute(attribute)
       @attribute = Arel.sql(attribute)
+
+      self
     end
 
     # TODO Examine the existing relationships and suggest model names if not instance is found 

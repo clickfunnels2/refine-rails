@@ -2,16 +2,27 @@
 
 require "faker"
 
-print "\n  Seeding Contacts ".colorize(:blue)
+ContactsTag.delete_all
+Tag.delete_all
+Contact.delete_all
 
-Contact.connection.truncate(Contact.table_name)
+print "\n  Seeding Tags "
+10.times do |i|
+  print "."
+  Tag.create(name: "tag_#{i + 1}")
+end
+puts " done!\n"
+
+print "\n  Seeding Contacts "
 
 50.times do
-  print ".".colorize(:black)
+  print "."
 
   preferences = {theme: %w[dark light].sample}
   data = {github_stars: rand(1000), username: Faker::Internet.username}
-  tags = %w[tag_1 tag_2 tag_3 tag_4 tag_5].sample(rand(3))
+
+  # Use `RAND()` for MySQL and `RANDOM()` for PostgreSQL and SQLite
+  tags = Tag.order(Arel.sql('RAND()')).limit(rand(0..3))
 
   Contact.create(
     avatar: Faker::Avatar.image,
@@ -30,4 +41,4 @@ Contact.connection.truncate(Contact.table_name)
   )
 end
 
-puts " done!\n".colorize(:blue)
+puts " done!\n"

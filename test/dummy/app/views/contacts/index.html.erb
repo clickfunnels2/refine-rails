@@ -20,7 +20,7 @@
         <td><%= contact.birthday.strftime("%b %d") %></tdc>
         <td>
           <% contact.tags.each do |tag| %>
-            <span class="badge"><%= tag %></span>
+            <span class="badge"><%= tag.name %></span>
           <% end %>
         </td>
       </tr>

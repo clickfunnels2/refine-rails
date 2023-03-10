@@ -68,11 +68,15 @@ GEM
     crass (1.0.6)
     date (3.3.3)
     erubi (1.12.0)
+    faker (3.1.1)
+      i18n (>= 1.8.11, < 2)
+    ffi (1.15.5)
     globalid (1.1.0)
       activesupport (>= 5.0)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
-    json (2.6.2)
+    json (2.6.3)
+    language_server-protocol (3.17.0.3)
     loofah (2.19.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -88,13 +92,12 @@ GEM
       nokogiri (~> 1)
       rake
     mini_mime (1.1.2)
-    mini_portile2 (2.8.1)
     minitest (5.18.0)
     minitest-around (0.5.0)
       minitest (~> 5.0)
     minitest-ci (3.4.0)
       minitest (>= 5.0.6)
-    mysql2 (0.5.4)
+    mysql2 (0.5.5)
     net-imap (0.3.4)
       date
       net-protocol
@@ -105,14 +108,17 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.8)
-    nokogiri (1.14.2)
-      mini_portile2 (~> 2.8.0)
+    nokogiri (1.14.2-arm64-darwin)
       racc (~> 1.4)
     parallel (1.22.1)
-    parser (3.1.2.1)
+    parser (3.2.1.1)
       ast (~> 2.4.1)
+    puma (5.6.5)
+      nio4r (~> 2.0)
     racc (1.6.2)
     rack (2.2.6.3)
+    rack-proxy (0.7.6)
+      rack
     rack-test (2.0.2)
       rack (>= 1.3)
     rails (6.1.1)
@@ -143,56 +149,86 @@ GEM
       thor (~> 1.0)
     rainbow (3.1.1)
     rake (13.0.6)
-    regexp_parser (2.6.0)
+    regexp_parser (2.7.0)
     rexml (3.2.5)
-    rubocop (1.35.1)
+    rubocop (1.44.1)
       json (~> 2.3)
       parallel (~> 1.10)
-      parser (>= 3.1.2.1)
+      parser (>= 3.2.0.0)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 1.8, < 3.0)
       rexml (>= 3.2.5, < 4.0)
-      rubocop-ast (>= 1.20.1, < 2.0)
+      rubocop-ast (>= 1.24.1, < 2.0)
       ruby-progressbar (~> 1.7)
-      unicode-display_width (>= 1.4.0, < 3.0)
-    rubocop-ast (1.21.0)
-      parser (>= 3.1.1.0)
-    rubocop-performance (1.14.3)
+      unicode-display_width (>= 2.4.0, < 3.0)
+    rubocop-ast (1.27.0)
+      parser (>= 3.2.1.0)
+    rubocop-performance (1.15.2)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
-    ruby-progressbar (1.11.0)
-    sprockets (4.1.1)
+    ruby-progressbar (1.13.0)
+    sass-rails (6.0.0)
+      sassc-rails (~> 2.1, >= 2.1.1)
+    sassc (2.4.0)
+      ffi (~> 1.9)
+    sassc-rails (2.1.2)
+      railties (>= 4.0.0)
+      sassc (>= 2.0)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
+    semantic_range (3.0.0)
+    sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
-      rack (> 1, < 3)
+      rack (>= 2.2.4, < 4)
     sprockets-rails (3.4.2)
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    standard (1.16.1)
-      rubocop (= 1.35.1)
-      rubocop-performance (= 1.14.3)
+    standard (1.24.3)
+      language_server-protocol (~> 3.17.0.2)
+      rubocop (= 1.44.1)
+      rubocop-performance (= 1.15.2)
     thor (1.2.1)
+    tilt (2.1.0)
     timeout (0.3.2)
+    turbolinks (5.2.1)
+      turbolinks-source (~> 5.2)
+    turbolinks-source (5.2.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    unicode-display_width (2.3.0)
+    unicode-display_width (2.4.2)
+    webpacker (5.4.4)
+      activesupport (>= 5.2)
+      rack-proxy (>= 0.6.1)
+      railties (>= 5.2)
+      semantic_range (>= 2.3.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     zeitwerk (2.6.7)
 
 PLATFORMS
-  ruby
+  arm64-darwin-22
 
 DEPENDENCIES
   byebug
   colorize
+  faker
   minitest-around
   minitest-ci
   mysql2
+  puma (~> 5.0)
   rails (= 6.1.1)
+  sass-rails (>= 6)
   sprockets-rails
   standard
+  turbolinks (~> 5)
+  tzinfo-data
+  webpacker (~> 5.0)
+
+RUBY VERSION
+   ruby 2.7.5p203
 
 BUNDLED WITH
    2.2.31

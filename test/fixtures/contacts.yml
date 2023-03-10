@@ -1,0 +1,48 @@
+---
+one:
+  avatar: https://robohash.org/eumreprehenderitvero.png?size=300x300&set=set1
+  active: false
+  birthday: 2000-01-18
+  last_login: !ruby/object:ActiveSupport::TimeWithZone
+    utc: 2023-03-03 16:08:23.000000000 Z
+    zone: &1 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: 2023-03-03 16:08:23.000000000 Z
+  salary: 81325
+  height: 31.33
+  age: 32
+  name: Mason Mills
+  bio: Temporibus repellat consequatur. Ea eos nobis.
+  wake_up_time: !ruby/object:ActiveSupport::TimeWithZone
+    utc: 2000-01-01 21:24:00.000000000 Z
+    zone: *1
+    time: 2000-01-01 21:24:00.000000000 Z
+  preferences:
+    theme: dark
+  data:
+    username: rickie.carroll
+    github_stars: 988
+
+two:
+  avatar: https://robohash.org/quamestest.png?size=300x300&set=set1
+  active: true
+  birthday: 1979-09-23
+  last_login: !ruby/object:ActiveSupport::TimeWithZone
+    utc: 2023-03-06 18:49:17.000000000 Z
+    zone: &1 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: 2023-03-06 18:49:17.000000000 Z
+  salary: 69759
+  height: 93.22
+  age: 18
+  name: Stevie Mohr
+  bio: Ut accusantium corporis. Veniam corporis ab.
+  wake_up_time: !ruby/object:ActiveSupport::TimeWithZone
+    utc: 2000-01-01 08:05:00.000000000 Z
+    zone: *1
+    time: 2000-01-01 08:05:00.000000000 Z
+  preferences:
+    theme: light
+  data:
+    username: tana
+    github_stars: 72

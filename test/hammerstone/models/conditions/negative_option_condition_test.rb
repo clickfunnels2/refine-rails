@@ -5,14 +5,6 @@ module Hammerstone::Refine::Conditions
   describe "Has Many Through Test" do
     include FilterTestHelper
 
-    around do |test|
-      ApplicationRecord.connection.execute("CREATE TABLE contacts (id bigint primary key);")
-      ApplicationRecord.connection.execute("CREATE TABLE contacts_applied_tags (id bigint primary key, contact_id bigint, tag_id bigint);")
-      ApplicationRecord.connection.execute("CREATE TABLE contacts_tags (id bigint primary key);")
-      test.call
-      ApplicationRecord.connection.execute("DROP TABLE contacts, contacts_applied_tags, contacts_tags")
-    end
-
     it "properly handles negative option conditions" do 
       query = create_filter(does_not_contain_option_condition)
       expected_sql = <<~SQL.squish

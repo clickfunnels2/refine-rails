@@ -11,7 +11,6 @@ system! "bin/dummy rails db:drop db:create"
 system! "bin/dummy rails db:migrate"
 system! "bin/dummy rails db:seed"
 system! "bin/dummy rails log:clear tmp:clear"
-system! "bin/dummy rails restart"
 
 puts "\n== DONE! ==\n".colorize(:yellow)
 puts <<~MSG

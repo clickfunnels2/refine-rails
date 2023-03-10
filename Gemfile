@@ -1,8 +1,17 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-# Specify your gem's dependencies in refine-rails.gemspec.
-gemspec
+# Considering we are using a specific version of Rails for testing
+# and that the gemspec's only dependency is `"rails", ">= 6.1.1"`,
+# we exclude the call to `gemspec` and instead specify the Rails
+# version that will be used when developing locally.
+#
+# This *should* have no impact on the Rails version that is used when
+# added to an app.
+#
+# gemspec
+#
+gem "rails", "6.1.1"
 
 gem "mysql2"
 

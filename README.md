@@ -239,6 +239,18 @@ Custom scoping Proc's should accept a single argument which is the default scope
 
 ## Local JavaScript Development
 
+Notes if linking with `yarn link` isn't working:
+1. Ran `bin/webpack-dev-server`
+2. In `berry-refine-demo-clean` delete node modules and re-yarn (just for fun probably not necessary)
+3. in `refine-rails` repo follow all yalc steps below -> you should see this message if successful
+
+```
+@hammerstone/refine-stimulus@2.4.2 published in store.
+Pushing @hammerstone/refine-stimulus@2.4.2 in /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/berry-refine-demo-clean
+Package @hammerstone/refine-stimulus@2.4.2 linked ==> /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/berry-refine-demo-clean/node_modules/@hammerstone/refine-stimulus
+```
+4. Restart server 
+
 From this repo's directory:
 We are using `yalc` for local package development.
 

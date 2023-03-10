@@ -1,0 +1,20 @@
+class <%= class_name.pluralize %>Filter < Hammerstone::Refine::Filter
+  include Hammerstone::Refine::Conditions
+  @@default_stabilizer = Hammerstone::Refine::Stabilizers::UrlEncodedStabilizer
+
+  def initial_query
+    <%= class_name %>.all
+  end
+
+  def table
+    <%= class_name %>.arel_table
+  end
+
+  def conditions
+    [
+<% @conditions.each do |condition| -%>
+      <%= condition[:condition] %>Condition.new("<%= condition[:field] %>"),
+<% end -%>
+    ]
+  end
+end

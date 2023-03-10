@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+
+require "colorize"
+require "fileutils"
+
+# Run the `rails` command within the dummy application
+# @example Run `rails db:migrate` from the root of the dummy app
+#  bin/dummy db:migrate
+
+DUMMY_ROOT = File.expand_path("../test/dummy", __dir__)
+
+def system!(*args)
+  system(*args) || abort("\n== Command `#{args.join(' ')}` failed ==".colorize(:red))
+end
+
+FileUtils.chdir DUMMY_ROOT do
+  puts [
+    "\n== Running".colorize(:black),
+    ARGV.join(" ").colorize(:yellow).underline,
+    "in the dummy application ==\n".colorize(:black)
+  ].join(" ")
+
+  # print "\n== Running ".colorize(:yellow)
+  # print " #{ARGV.join(' ') ".colorize(:dark_blue)
+  # puts "\n== Running ".col"`#{command}`
+  system! *ARGV
+end

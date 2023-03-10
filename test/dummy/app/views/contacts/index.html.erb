@@ -1,0 +1,30 @@
+<header>
+  <h1>Contacts</h1>
+</header>
+
+<main>
+  <table>
+    <thead>
+    <th scope="col">Avatar</th>
+    <th scope="col">Name</ths>
+    <th scope="col">Active?</th>
+    <th scope="col">Birthday</th>
+    <th scope="col">Tags</th>
+    </thead>
+    <tbody>
+    <% @contacts.each do |contact| %>
+      <tr>
+        <td><%= image_tag contact.avatar, style: "width: 24px; height: 24px;" %></div></td>
+        <td><%= contact.name %></td>
+        <td><%= contact.active? ? "Active" : "Inactive" %></td>
+        <td><%= contact.birthday.strftime("%b %d") %></tdc>
+        <td>
+          <% contact.tags.each do |tag| %>
+            <span class="badge"><%= tag %></span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</main>

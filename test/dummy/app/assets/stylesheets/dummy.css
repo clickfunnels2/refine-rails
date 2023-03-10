@@ -1,0 +1,68 @@
+:root {
+  --color-bg: #fff;
+  --color-text: #000;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-mode: 'dark';
+    --color-bg: #000;
+    --color-text: #fff;
+  }
+}
+
+html {
+  font-family: "Helvetica Neue", Helvetica, Arial, Sans-Serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-size: 1rem;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  padding: 1.25rem 2rem;
+}
+
+header {
+  padding: 1rem 2rem;
+  background-color: #efefef;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  padding: 0.5rem;
+  background-color: #efefef;
+}
+
+tr {
+  border-bottom: 1px solid #efefef;
+}
+
+td {
+  padding: 0.5rem;
+}
+
+span.badge {
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  background-color: lightskyblue;
+  color: #fff;
+}

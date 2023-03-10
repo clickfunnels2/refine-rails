@@ -1,13 +1,21 @@
 #!/usr/bin/env ruby
 
+require "colorize"
 require "fileutils"
 
-DUMMY_ROOT = File.expand_path("../test/dummy", __dir__)
-
 def system!(*args)
-  system(*args) || abort("\n== Command #{args} failed ==")
+  system(*args) || abort("\n== Command #{args} failed ==".colorize(:red))
 end
 
-FileUtils.chdir DUMMY_ROOT do
-  system!("bin/setup")
-end
+system! "bin/dummy rails db:drop db:create"
+system! "bin/dummy rails db:migrate"
+system! "bin/dummy rails db:seed"
+system! "bin/dummy rails log:clear tmp:clear"
+system! "bin/dummy rails restart"
+
+puts "\n== DONE! ==\n".colorize(:yellow)
+puts <<~MSG
+  You can now run the dummy app using 
+
+    bin/dummy rails s
+MSG

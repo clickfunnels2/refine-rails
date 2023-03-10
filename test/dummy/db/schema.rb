@@ -10,5 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 0) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_09_221634) do
+  create_table "contacts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.binary "avatar"
+    t.boolean "active"
+    t.date "birthday"
+    t.datetime "last_login"
+    t.decimal "salary", precision: 10
+    t.float "height"
+    t.integer "age"
+    t.string "name"
+    t.text "bio"
+    t.time "wake_up_time"
+    t.json "preferences"
+    t.json "data"
+    t.json "tags"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
 end

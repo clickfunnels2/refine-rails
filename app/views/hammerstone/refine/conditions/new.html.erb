@@ -1,4 +1,4 @@
-<%= turbo_frame_tag :refine_filter_modal do %>
+<%= turbo_frame_tag "refine_filter_modal_#{@conjunction}_#{@position}" do %>
   <%= form_with model: @refine_filter_builder,
     url: hammerstone_refine_conditions_path(@refine_filter_builder.to_params),
     method: :post,
@@ -11,6 +11,6 @@
       refine__condition_form_turbo_frame_value: "refine_filter_modal"
     } do |form|
   %>
-    <%= render "form_fields", form: form %>
+    <%= render "form_fields", form: form, conjunction: @conjunction, position: @position %>
   <% end %>
 <% end %>

@@ -13,7 +13,7 @@
   } do
 %>
   <% @refine_filter_builder.query.criteria.each do |criterion| %>
-    <%= render "hammerstone/refine/filters/criterion", criterion: criterion unless criterion.conjunction? %>
+    <%= render "hammerstone/refine/filter_inline/criterion", criterion: criterion unless criterion.conjunction? %>
   <% end %>
 <% end %>
  

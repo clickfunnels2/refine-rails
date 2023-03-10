@@ -2,6 +2,9 @@
   <%= form.hidden_field :client_id %>
   <%= form.hidden_field :blueprint_json %>
   <%= hidden_field_tag :condition_id, @criterion.condition_id %>
+  <%= hidden_field_tag :conjunction, @conjunction if @conjunction %>
+  <%= hidden_field_tag :position, @position if @position %>
+
   <label style="color: black;"><%= @criterion.condition.display %></label>
 
   <%= render "hammerstone/refine/conditions/components/#{@criterion.component}", 

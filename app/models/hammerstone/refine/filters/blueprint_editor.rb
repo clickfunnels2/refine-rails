@@ -31,7 +31,7 @@ class Hammerstone::Refine::Filters::BlueprintEditor
       depth: conjunction_depth,
       type: "conjunction",
       word: conjunction,
-    } if blueprint[position]
+    } if blueprint[position - 1]
 
     nodes_to_insert << {
       depth: 1,

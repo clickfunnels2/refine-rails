@@ -1,0 +1,28 @@
+<div class="refine-filter-inline-add-container" data-controller="refine--toggle">
+  <button
+      class="refine-filter-condition-toggle-button"
+      data-action="refine--toggle#toggle"
+      type="button"
+    >
+      + Add "OR" Group
+  </button>
+  <div
+    hidden
+    data-refine--toggle-target="content"
+    data-reveal
+    data-transition
+    data-transition-enter="transition ease-out duration-100"
+    data-transition-enter-start="transform opacity-0 scale-95"
+    data-transition-enter-end="transform opacity-100 scale-100"
+    data-transition-leave="transition ease-in duration-75"
+    data-transition-leave-start="transform opacity-100 scale-100"
+    data-transition-leave-end="transform opacity-0 scale-95"
+
+    class="refine-filter-builder-dropdown-search-box"
+    style="max-height: 66vh; overflow: auto;"
+  >
+    <%= turbo_frame_tag "refine_filter_modal_or_#{position}", loading: :lazy,
+      src: hammerstone_refine_conditions_path(@refine_filter_builder.to_params.merge(position: position, conjunction: "or")) %>
+  </div>
+</div>
+

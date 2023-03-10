@@ -4,19 +4,14 @@
   <title>Refine</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="dark light">
-  <meta name="theme-color" content="" />
 
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
   <%= stylesheet_link_tag "application" %>
-
-  <script type="module" src="https://unpkg.com/dark-mode-toggle"></script>
 </head>
 
 <body>
-  <%= render "shared/dark_mode" %>
   <%= yield %>
 </body>
 </html>

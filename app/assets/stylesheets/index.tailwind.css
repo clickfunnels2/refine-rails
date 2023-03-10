@@ -5,6 +5,10 @@
   margin-left: 28px;
 }
 
+.refine-filter-inline-group-separator {
+  margin-left: 28px;
+}
+
 .filter-wrapper .filter-condition-wrapper {
   position: relative;
 }

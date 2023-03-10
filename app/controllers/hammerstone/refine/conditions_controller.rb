@@ -30,6 +30,10 @@ class Hammerstone::Refine::ConditionsController < ApplicationController
       .query
       .criteria
       .detect { |c| c.uid.to_s == params[:id] }
+
+    if params[:clause]
+      @criterion.input[:clause] = params[:clause]
+    end
   end
 
   def create

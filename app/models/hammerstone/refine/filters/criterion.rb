@@ -68,7 +68,7 @@ class Hammerstone::Refine::Filters::Criterion
   end
 
   def to_key
-    [condition_id]
+    [uid]
   end
 
   def human_readable

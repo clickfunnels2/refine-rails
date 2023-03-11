@@ -1,6 +1,9 @@
 {
   "name": "refine-rails-dummy",
   "private": true,
+  "engines": {
+    "node": "18.x"
+  },
   "dependencies": {
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",

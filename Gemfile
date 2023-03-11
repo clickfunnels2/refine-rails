@@ -19,7 +19,6 @@ gem "sprockets-rails"
 gem "byebug"
 
 group :development, :test do
-  gem "colorize"
   gem "minitest-around"
   gem "minitest-ci"
   gem "standard"

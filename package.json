@@ -6,6 +6,9 @@
     "defaults",
     "not IE 11"
   ],
+  "engines": {
+    "node": "18.x"
+  },
   "main": "app/assets/javascripts/refine-stimulus.js",
   "module": "app/assets/javascripts/refine-stimulus.esm.js",
   "unpkg": "app/assets/javascripts/refine-stimulus.umd.js",

@@ -4,5 +4,9 @@
 
 import { application } from "./application"
 
+import { controllerDefinitions as refineControllers } from "@hammerstone/refine-stimulus"
+application.load(refineControllers)
+
 import HelloWorldController from "./hello_world_controller"
 application.register("hello-world", HelloWorldController)
+

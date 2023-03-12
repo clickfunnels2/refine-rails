@@ -1,2 +1,0 @@
-web: bin/rails s
-js: bin/webpacker-dev-server

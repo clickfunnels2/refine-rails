@@ -6,7 +6,7 @@
     "@babel/plugin-transform-runtime": "7",
     "@babel/preset-env": "7",
     "@babel/runtime": "7",
-    "@hammerstone/refine-stimulus": "^2.4.2",
+    "@hammerstone/refine-stimulus": "file:../../..",
     "@hotwired/stimulus": "^3.2.1",
     "@hotwired/turbo-rails": "^7.3.0",
     "babel-loader": "8",

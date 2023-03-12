@@ -6,11 +6,4 @@ def system!(*args)
   system(*args) || abort("\n== Command #{args} failed ==")
 end
 
-system! "bin/dummy bin/setup"
-
-puts "\n== DONE! ==\n"
-puts <<~MSG
-  You can now run the dummy app using 
-
-    bin/dev
-MSG
+system! "bin/dummy bin/dev"

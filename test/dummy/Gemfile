@@ -11,6 +11,10 @@ gem "refine-rails", path: "../../../refine-rails"
 gem 'sass-rails', '>= 6'
 gem 'shakapacker', '= 6.6'
 gem 'turbo-rails', '~> 1.4'
-gem 'turbolinks', '~> 5'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+
+# Use Redis for Action Cable
+gem 'redis', '~> 4.0'
+
+gem "stimulus-rails", "~> 1.2"

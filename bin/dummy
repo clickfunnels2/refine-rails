@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-require "colorize"
 require "fileutils"
 
 # Run the `rails` command within the dummy application
@@ -10,18 +9,10 @@ require "fileutils"
 DUMMY_ROOT = File.expand_path("../test/dummy", __dir__)
 
 def system!(*args)
-  system(*args) || abort("\n== Command `#{args.join(' ')}` failed ==".colorize(:red))
+  system(*args) || abort("\n== Command `#{args.join(' ')}` failed ==")
 end
 
 FileUtils.chdir DUMMY_ROOT do
-  puts [
-    "\n== Running".colorize(:black),
-    ARGV.join(" ").colorize(:yellow).underline,
-    "in the dummy application ==\n".colorize(:black)
-  ].join(" ")
-
-  # print "\n== Running ".colorize(:yellow)
-  # print " #{ARGV.join(' ') ".colorize(:dark_blue)
-  # puts "\n== Running ".col"`#{command}`
+  puts "\n== Running" + ARGV.join(" ") + "in the dummy application ==\n"
   system! *ARGV
 end

@@ -5,10 +5,12 @@ ruby '2.7.5'
 
 eval_gemfile(File.expand_path("../../Gemfile", __dir__))
 
+gem 'faker'
 gem 'puma', '~> 5.0'
+gem "refine-rails", path: "../../../refine-rails"
 gem 'sass-rails', '>= 6'
-gem 'webpacker', '~> 5.0'
+gem 'shakapacker', '= 6.6'
+gem 'turbo-rails', '~> 1.4'
 gem 'turbolinks', '~> 5'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'faker'

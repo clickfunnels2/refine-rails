@@ -1,0 +1,1 @@
+pin_all_from File.expand_path("../public/refine-assets/**/*.js", __dir__)

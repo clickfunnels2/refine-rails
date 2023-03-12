@@ -1,3 +1,2 @@
-web: bin/dummy bin/rails s -p 3000
-webpack: bin/dummy bin/webpacker-dev-server
-gem: yarn watch
+web: bin/dummy bin/rails server -p $PORT
+assets: yarn watch

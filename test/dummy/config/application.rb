@@ -5,7 +5,11 @@ require "rails/all"
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+
+require "turbo-rails"
 require "refine/rails"
+require "importmap-rails"
+require "sprockets/railtie"
 
 module Dummy
   class Application < Rails::Application

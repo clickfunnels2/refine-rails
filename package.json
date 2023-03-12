@@ -26,12 +26,16 @@
   },
   "scripts": {
     "prebuild": "$npm_execpath run clean",
-    "build": "$npm_execpath run build:js && $npm_execpath run build:css",
-    "build:js": "microbundle app/javascript/index.js -o app/assets/javascripts/ --globals @hotwired/stimulus=Stimulus",
-    "build:css": "tailwindcss -i app/assets/stylesheets/index.tailwind.css -o app/assets/stylesheets/index.css",
-    "clean": "rimraf app/assets/javascripts app/assets/stylesheets/index.css",
+    "build": "$npm_execpath run build:js && $npm_execpath run build:dummy:js && $npm_execpath run build:css",
+    "build:js": "node build.js",
+    "build:js:newer": "esbuild app/javascript/index.js --bundle --minify --sourcemap --outdir=public/refine-assets",
+    "build:dummy:js": "esbuild test/dummy/app/javascript/index.js --bundle --external:@hammerstone/refine-stimulus --minify --sourcemap --outdir=test/dummy/app/assets/build",
+    "build:css": "tailwindcss -i app/assets/stylesheets/index.tailwind.css -o public/refine-assets/refine.base.css",
+    "old:build:js": "microbundle app/javascript/index.js -o app/assets/javascripts/ --globals @hotwired/stimulus=Stimulus",
+    "old:build:css": "tailwindcss -i app/assets/stylesheets/index.tailwind.css -o app/assets/stylesheets/index.css",
+    "clean": "rimraf app/assets/javascripts app/assets/stylesheets/index.css public/refine-assets app/assets/builds",
     "watch": "npm-watch",
-    "update-local-installs": "$npm_execpath run build; yalc push"
+    "update-local-installs": "$npm_execpath run build:js; yalc push"
   },
   "directories": {
     "lib": "lib",
@@ -59,6 +63,9 @@
     "@babel/runtime": "^7.13.17",
     "@hotwired/stimulus-webpack-helpers": "^1.0.1",
     "babel-loader": "^8.2.2",
+    "esbuild": "^0.17.11",
+    "esbuild-plugin-globals": "^0.2.0",
+    "esbuild-plugin-manifest": "^0.5.0",
     "microbundle": "^0.13.0",
     "npm-watch": "^0.11.0",
     "rimraf": "^3.0.2",

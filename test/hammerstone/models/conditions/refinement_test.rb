@@ -114,7 +114,7 @@ module Hammerstone::Refine::Conditions
           (SELECT "hammerstone_events"."hammerstone_contact_id" FROM "hammerstone_events"
           WHERE ("hammerstone_events"."type" = 'Networking Event')
           GROUP BY "hammerstone_events"."hammerstone_contact_id"
-          HAVING COUNT(*) BETWEEN '1' AND '10'))
+          HAVING (COUNT(*) BETWEEN '1' AND '10')))
         SQL
         query = apply_condition_on_test_filter(condition, {
           clause: TextCondition::CLAUSE_EQUALS,
@@ -138,7 +138,7 @@ module Hammerstone::Refine::Conditions
           (SELECT "hammerstone_events"."hammerstone_contact_id" FROM "hammerstone_events"
           WHERE ("hammerstone_events"."type" = 'Networking Event')
           GROUP BY "hammerstone_events"."hammerstone_contact_id"
-          HAVING COUNT(*) BETWEEN '1' AND '10'))
+          HAVING (COUNT(*) BETWEEN '1' AND '10')))
         SQL
         query = apply_condition_on_test_filter(condition, {
           clause: TextCondition::CLAUSE_EQUALS,
@@ -193,7 +193,7 @@ module Hammerstone::Refine::Conditions
           AND ("hammerstone_events"."created_at"
           BETWEEN '2021-01-01 00:00:00' AND '2021-02-01 23:59:59.999999')
           GROUP BY "hammerstone_events"."hammerstone_contact_id"
-          HAVING COUNT(*) BETWEEN '1' AND '10'))
+          HAVING (COUNT(*) BETWEEN '1' AND '10')))
         SQL
         query = apply_condition_on_test_filter(condition, {
           clause: TextCondition::CLAUSE_EQUALS,
@@ -227,7 +227,7 @@ module Hammerstone::Refine::Conditions
           FROM "hammerstone_events"
           WHERE ("hammerstone_events"."type" = 'Networking Event')
           GROUP BY "hammerstone_events"."hammerstone_contact_id") interim_table ON interim_table."hammerstone_contact_id" = "hammerstone_contacts"."id"
-          WHERE coalesce(hs_refine_count_aggregate, 0) = '0'))
+          WHERE (coalesce(hs_refine_count_aggregate, 0) = '0')))
         SQL
 
         query = apply_condition_on_test_filter(condition, {

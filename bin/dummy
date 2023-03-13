@@ -13,6 +13,6 @@ def system!(*args)
 end
 
 FileUtils.chdir DUMMY_ROOT do
-  puts "\n== Running" + ARGV.join(" ") + "in the dummy application ==\n"
+  puts "\n== Running `" + ARGV.join(" ") + "` in the dummy application ==\n"
   system! *ARGV
 end

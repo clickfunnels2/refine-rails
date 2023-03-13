@@ -2,4 +2,8 @@
 
 import "@hotwired/turbo-rails"
 import "@hammerstone/refine-rails"
-import "./controllers"
+import "controllers"
+
+import jquery from "jquery"
+window.jQuery = jquery
+window.$ = jquery

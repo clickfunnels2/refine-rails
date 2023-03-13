@@ -6,4 +6,8 @@ const application = Application.start()
 application.debug = false
 window.Stimulus   = application
 
+// Load refine-rails controllers
+import { controllerDefinitions as refineControllers } from "@hammerstone/refine-rails"
+application.load(refineControllers)
+
 export { application }

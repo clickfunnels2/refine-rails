@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "boot"
+
 require "rails/all"
 
 # Require the gems listed in Gemfile, including any gems
@@ -8,6 +9,7 @@ require "rails/all"
 Bundler.require(*Rails.groups)
 
 require "turbo-rails"
+require "stimulus-rails"
 require "refine/rails"
 require "importmap-rails"
 require "sprockets/railtie"

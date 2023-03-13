@@ -1,3 +1,9 @@
+<% 
+  builder = @refine_filter_builder.dup
+  builder.position = position
+  builder.conjunction = "and"
+%>
+
 <div class="refine-filter-inline-add-container" data-controller="refine--toggle">
   <button
       class="refine-filter-condition-toggle-button"
@@ -21,8 +27,8 @@
     class="refine-filter-builder-dropdown-search-box"
     style="max-height: 66vh; overflow: auto;"
   >
-    <%= turbo_frame_tag "refine_filter_modal_and_#{position}", loading: :lazy,
-      src: hammerstone_refine_conditions_path(@refine_filter_builder.to_params.merge(position: position, conjunction: "and")) %>
+    <%= turbo_frame_tag builder, loading: :lazy,
+      src: hammerstone_refine_conditions_path(builder.to_params) %>
   </div>
 </div>
 

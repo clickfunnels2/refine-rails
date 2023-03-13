@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "refine_filter_modal_#{@conjunction}_#{@position}" do %>
+<%= turbo_frame_tag @refine_filter_builder do %>
   <%= form_with model: @refine_filter_builder,
     url: hammerstone_refine_conditions_path(@refine_filter_builder.to_params),
     method: :post,
@@ -6,9 +6,8 @@
       turbo_frame: "_top",
       controller: "refine--condition-form",
       refine__condition_form_url_value: new_hammerstone_refine_condition_url(
-        @refine_filter_builder.to_params.merge(id: @criterion.condition.id, conjunction: @conjunction, position: @position)
-      ),
-      refine__condition_form_turbo_frame_value: "refine_filter_modal_#{@conjunction}_#{@position}"
+        @refine_filter_builder.to_params.merge(id: @criterion.condition_id)),
+      refine__condition_form_turbo_frame_value: dom_id(@refine_filter_builder)
     } do |form|
   %>
     <%= render "form_fields", form: form, conjunction: @conjunction, position: @position %>

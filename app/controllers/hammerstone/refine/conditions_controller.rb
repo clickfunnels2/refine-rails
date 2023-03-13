@@ -3,8 +3,6 @@ class Hammerstone::Refine::ConditionsController < ApplicationController
   before_action :set_builder
 
   def index
-    @conjunction = params.fetch :conjunction
-    @position = params.fetch(:position).to_i
     refine_filter = @refine_filter_builder.refine_filter
     @conditions = @refine_filter_builder.query.available_conditions
     @conditions.each do |c|
@@ -14,8 +12,6 @@ class Hammerstone::Refine::ConditionsController < ApplicationController
   end
 
   def new
-    @conjunction = params.fetch :conjunction
-    @position = params.fetch(:position).to_i
     @criterion = Hammerstone::Refine::Filters::Criterion.new(
       condition_id: params[:id],
       query: @refine_filter_builder.query,
@@ -37,16 +33,14 @@ class Hammerstone::Refine::ConditionsController < ApplicationController
   end
 
   def create
-    @conjunction = params.fetch :conjunction
-    @position = params.fetch(:position).to_i
     refine_filter = @refine_filter_builder.refine_filter
     blueprint = refine_filter.blueprint
 
     Hammerstone::Refine::Filters::BlueprintEditor
       .new(refine_filter.blueprint)
       .add(
-        conjunction: @conjunction,
-        position: @position,
+        conjunction: @refine_filter_builder.conjunction,
+        position: @refine_filter_builder.position,
           criterion: {
           condition_id: params[:condition_id],
           input: {
@@ -102,8 +96,10 @@ class Hammerstone::Refine::ConditionsController < ApplicationController
       :stable_id,
       :stored_filter_id,
       :client_id,
+      :conjunction,
+      :position
     )
 
-    @refine_filter_builder = Hammerstone::Refine::Filters::Builder.new(builder_params)
+    @refine_filter_builder = Hammerstone::Refine::Filters::BuilderInline.new(builder_params)
   end
 end

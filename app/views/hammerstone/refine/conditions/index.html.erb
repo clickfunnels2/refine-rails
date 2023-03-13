@@ -1,6 +1,6 @@
-<%= turbo_frame_tag "refine_filter_modal_#{@conjunction}_#{@position}" do %>
+<%= turbo_frame_tag @refine_filter_builder do %>
   <% @conditions.each do |condition| %>
     <%= link_to condition.display, new_hammerstone_refine_condition_url(
-        @refine_filter_builder.to_params.merge(id: condition.id, conjunction: @conjunction, position: @position)), class: "refine-condition-list-item" %>
+        @refine_filter_builder.to_params.merge(id: condition.id)), class: "refine-condition-list-item" %>
   <% end %>
 <% end %>

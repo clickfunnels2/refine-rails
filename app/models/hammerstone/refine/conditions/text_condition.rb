@@ -99,43 +99,43 @@ module Hammerstone::Refine::Conditions
     end
 
     def apply_clause_equals(value, table)
-      table.grouping(table[:"#{attribute}"].eq(value))
+      table.grouping(arel_attribute(table).eq(value))
     end
 
     def apply_clause_doesnt_equal(value, table)
-      table.grouping(table[:"#{attribute}"].not_eq(value).or(table[:"#{attribute}"].eq(nil)))
+      table.grouping(arel_attribute(table).not_eq(value).or(arel_attribute(table).eq(nil)))
     end
 
     def apply_clause_starts_with(value, table)
-      table.grouping(table[:"#{attribute}"].matches("#{value}%"))
+      table.grouping(arel_attribute(table).matches("#{value}%"))
     end
 
     def apply_clause_ends_with(value, table)
-      table.grouping(table[:"#{attribute}"].matches("%#{value}"))
+      table.grouping(arel_attribute(table).matches("%#{value}"))
     end
 
     def apply_clause_contains(value, table)
-      table.grouping(table[:"#{attribute}"].matches("%#{value}%"))
+      table.grouping(arel_attribute(table).matches("%#{value}%"))
     end
 
     def apply_clause_doesnt_contain(value, table)
-      table.grouping(table[:"#{attribute}"].does_not_match("%#{value}%").or(table[:"#{attribute}"].eq(nil)))
+      table.grouping(arel_attribute(table).does_not_match("%#{value}%").or(arel_attribute(table).eq(nil)))
     end
 
-    def apply_clause_set(value, table)
-      table.grouping(table[:"#{attribute}"].not_eq_any([nil, ""]))
+    def apply_clause_set(_, table)
+      table.grouping(arel_attribute(table).not_eq_any([nil, ""]))
     end
 
-    def apply_clause_not_set(value, table)
-      table.grouping(table[:"#{attribute}"].eq_any([nil, ""]))
+    def apply_clause_not_set(_, table)
+      table.grouping(arel_attribute(table).eq_any([nil, ""]))
     end
 
     def apply_clause_doesnt_start_with(value, table)
-      table.grouping(table[:"#{attribute}"].does_not_match("#{value}%"))
+      table.grouping(arel_attribute(table).does_not_match("#{value}%"))
     end
 
     def apply_clause_doesnt_end_with(value, table)
-      table.grouping(table[:"#{attribute}"].does_not_match("%#{value}"))
+      table.grouping(arel_attribute(table).does_not_match("%#{value}"))
     end
   end
 end

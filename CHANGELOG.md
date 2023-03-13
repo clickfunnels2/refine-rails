@@ -4,6 +4,7 @@
   * bugfix
     * `Clause doesn't equal` and `clause not between` were not implemented for Date with time conditions. PR #98
     * Add in missing has_error classes as specified by Tamik
+    * Fix raw_attribute bug for text conditions
   * Clarified the installation documentation
   * Included the StoredFilter class in the gem assuming that the client would override it as
   necessary

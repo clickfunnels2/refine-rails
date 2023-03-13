@@ -6,6 +6,7 @@ def system!(*args)
   system(*args) || abort("\n== Command #{args} failed ==")
 end
 
+system! "yarn build"
 system! "bin/dummy bin/setup"
 
 puts "\n== DONE! ==\n"

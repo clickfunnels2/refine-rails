@@ -1,6 +1,9 @@
 @tailwind components;
 
 @layer components {
+  .refine-hidden {
+    display: none !important;
+  }
   
   .refine-button {
     @apply shadow-sm text-white hover:text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 hover:no-underline;

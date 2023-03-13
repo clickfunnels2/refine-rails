@@ -1,5 +1,10 @@
 # Installation
 
+```
+<%= stylesheet_link_tag "/refine-assets/refine-rails.css" %>
+<%= javascript_include_tag "/refine-assets/refine-rails.js", type: :module %>
+```
+
 1. Add the gem to your `Gemfile`:
 
 ```

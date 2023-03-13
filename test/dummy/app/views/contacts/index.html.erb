@@ -14,6 +14,7 @@
     <th scope="col">Active?</th>
     <th scope="col">Birthday</th>
     <th scope="col">Tags</th>
+    <th scope="col">Created</th>
     </thead>
     <tbody>
     <% @contacts.each do |contact| %>
@@ -21,12 +22,13 @@
         <td><%= image_tag contact.avatar, style: "width: 24px; height: 24px;" %></div></td>
         <td><%= contact.name %></td>
         <td><%= contact.active? ? "Active" : "Inactive" %></td>
-        <td><%= contact.birthday.strftime("%b %d") %></tdc>
+        <td><%= contact.birthday.strftime("%b %d") %></td>
         <td>
           <% contact.tags.each do |tag| %>
             <span class="badge"><%= tag.name %></span>
           <% end %>
         </td>
+        <td><%= contact.created_at.strftime("%b %d, %Y at %-I:%M%P") %></td>
       </tr>
     <% end %>
     </tbody>

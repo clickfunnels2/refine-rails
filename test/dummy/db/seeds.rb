@@ -37,7 +37,8 @@ print "\n  Seeding Contacts "
     wake_up_time: Faker::Time.between(from: Time.now - 1.day, to: Time.now, format: :short),
     preferences: preferences,
     data: data,
-    tags: tags
+    tags: tags,
+    created_at: Faker::Time.between(from: Time.now - 1.year, to: Time.now - 5.minutes)
   )
 end
 

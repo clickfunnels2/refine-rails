@@ -7,7 +7,7 @@
   refine__state_client_id_value: @refine_filter_builder.client_id } do %>
   <%= content_tag :div, class: "refine-query-content-container" do %>
     <div
-      class="refine-query-loading-container <%= "hidden" unless action_name == "create" %>"
+      class="refine-query-loading-container <%= "refine-hidden" unless action_name == "create" %>"
       id="refine-loader"
       data-refine--state-target="loading">
       <p class="refine-query-loading-text">Loading...</p>

@@ -1,1 +1,1 @@
-procfile: test/dummy/Procfile.dev
+procfile: Procfile.dev

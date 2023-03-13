@@ -1,5 +1,6 @@
 require "refine/rails/version"
 require "refine/rails/engine"
+require "turbo-rails"
 require_relative "../../app/models/hammerstone/refine/stabilizers/database_stabilizer"
 require_relative "../../app/models/hammerstone/refine/stabilizers/url_encoded_stabilizer"
 

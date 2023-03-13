@@ -26,14 +26,12 @@
   },
   "scripts": {
     "prebuild": "$npm_execpath run clean",
-    "build": "$npm_execpath run build:js && $npm_execpath run build:dummy:js && $npm_execpath run build:css",
-    "build:js": "node build.js",
-    "build:js:newer": "esbuild app/javascript/index.js --bundle --minify --sourcemap --outdir=public/refine-assets",
-    "build:dummy:js": "esbuild test/dummy/app/javascript/index.js --bundle --external:@hammerstone/refine-stimulus --minify --sourcemap --outdir=test/dummy/app/assets/build",
-    "build:css": "tailwindcss -i app/assets/stylesheets/index.tailwind.css -o public/refine-assets/refine.base.css",
+    "build": "$npm_execpath run build:js && $npm_execpath run build:css",
+    "build:js": "esbuild app/javascript/index.js --bundle --minify --sourcemap --format=esm --target=es2020,chrome58,firefox57,safari11 --analyze --outfile=app/assets/builds/@hammerstone/refine-rails.js",
+    "build:css": "tailwindcss -i app/assets/stylesheets/index.tailwind.css -o app/assets/builds/@hammerstone/refine-rails.css",
     "old:build:js": "microbundle app/javascript/index.js -o app/assets/javascripts/ --globals @hotwired/stimulus=Stimulus",
     "old:build:css": "tailwindcss -i app/assets/stylesheets/index.tailwind.css -o app/assets/stylesheets/index.css",
-    "clean": "rimraf app/assets/javascripts app/assets/stylesheets/index.css public/refine-assets app/assets/builds",
+    "clean": "rimraf app/assets/javascripts app/assets/stylesheets/index.css app/assets/builds",
     "watch": "npm-watch",
     "update-local-installs": "$npm_execpath run build:js; yalc push"
   },
@@ -79,5 +77,7 @@
     "jquery-events-to-dom-events": "^1.1.0",
     "lodash": "^4.0.8"
   },
-  "peerDependencies": {}
+  "peerDependencies": {
+    "@hotwired/turbo-rails": ">= 7.2.0"
+  }
 }

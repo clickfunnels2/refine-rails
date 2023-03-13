@@ -1,2 +1,0 @@
-web: bin/dummy bin/rails server -p $PORT
-assets: yarn watch

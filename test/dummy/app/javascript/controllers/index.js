@@ -7,6 +7,3 @@ application.register('hello', HelloController)
 
 // import { controllerDefinitions as refineControllers } from "@hammerstone/refine-rails"
 // application.load(refineControllers)
-
-window.Stimulus = application
-

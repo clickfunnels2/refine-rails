@@ -68,7 +68,7 @@ describe Hammerstone::Refine::Filter do
             class_name: "TestDoubleFilter",
             blueprint: [],
             conditions: expected_conditions,
-            stable_id: nil,
+            stable_id: filter.to_stable_id,
 
           }
         assert_equal expected_value, filter.configuration
@@ -86,7 +86,7 @@ describe Hammerstone::Refine::Filter do
             class_name: "TestDoubleFilter",
             blueprint: [],
             conditions: expected_conditions_with_meta,
-            stable_id: nil,
+            stable_id: filter.to_optional_stable_id
           }
         assert_equal expected_value, filter.configuration
       end

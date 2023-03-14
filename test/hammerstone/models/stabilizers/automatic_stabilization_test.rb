@@ -27,11 +27,6 @@ module Hammerstone::Refine::Stabilizers
       assert_equal ["blue"], filter.blueprint
     end
 
-    it "doesn't stabilize if method is not overriden" do
-      filter = BlankTestFilter.new
-      assert_nil filter.configuration[:stable_id]
-    end
-
     it "throws error if automatic stabilization is true but nothing set" do
       filter = AutomaticStabilizationTestFilter.new
       AutomaticStabilizationTestFilter.default_stabilizer = nil

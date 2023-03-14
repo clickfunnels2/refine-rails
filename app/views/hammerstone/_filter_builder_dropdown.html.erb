@@ -1,9 +1,8 @@
 <%
   unless defined? stored_filters
-    stored_filters = true
+    stored_filters = false
   end
 %>
-
   <div
   data-controller="refine--search-filter"
    data-refine--search-filter-search-frame-id-value="index_search"
@@ -38,7 +37,7 @@
       style="min-width: 50vw; max-height: 66vh; overflow: auto;"
     >
       <%= turbo_frame_tag :refine_filter_modal, loading: :lazy,
-        src: new_hammerstone_refine_blueprint_path(hammerstone_refine_filters_builder: {stable_id: @stable_id, filter_class: @refine_filter.class.name}, stored_filters: stored_filters) do %>
+        src: new_hammerstone_refine_blueprint_path(hammerstone_refine_filters_builder: {stable_id: @stable_id, filter_class: @refine_filter.class.name}, stored_filters: stored_filters.presence) do %>
 
       <% end %>
       <div class="refine-filter-builder-dropdown-button-container">

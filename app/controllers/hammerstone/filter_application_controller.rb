@@ -11,6 +11,7 @@ module Hammerstone::FilterApplicationController
         filter_class: filter_class.name,
         initial_query: initial_query)
       @refine_filter = @refine_filter_builder.refine_filter
+      @refine_filter_query = @refine_filter_builder.query
     end
   end
 end

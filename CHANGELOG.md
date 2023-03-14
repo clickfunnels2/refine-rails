@@ -8,6 +8,10 @@
   * Clarified the installation documentation
   * Included the StoredFilter class in the gem assuming that the client would override it as
   necessary
+  * Default stored filters to false in filter_builder_dropdown
+  * Add automatically stabilize to the gem because it is always required 
+  * Add the filter pill partial view to the gem (not to docs because CSS is still an issue)
+  * Set default stabilizers to be URL Encoded in filter.rb
 
 ### 2.4.2
   * Update the configuration of stabilizer classes

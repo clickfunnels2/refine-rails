@@ -39,4 +39,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "tailwindcss-rails"
   spec.add_development_dependency "web-console"
   spec.add_development_dependency "webdrivers"
+  spec.add_development_dependency "minitest-around"
 end

@@ -3,6 +3,7 @@ ENV["RAILS_ENV"] = "test"
 
 require "minitest/mock"
 require "minitest/reporters"
+require 'minitest/around'
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 require_relative "../test/dummy/config/environment"

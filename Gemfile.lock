@@ -114,6 +114,8 @@ GEM
     mini_mime (1.1.2)
     mini_portile2 (2.8.1)
     minitest (5.18.0)
+    minitest-around (0.5.0)
+      minitest (~> 5.0)
     minitest-reporters (1.6.0)
       ansi
       builder
@@ -141,8 +143,8 @@ GEM
     puma (5.6.5)
       nio4r (~> 2.0)
     racc (1.6.2)
-    rack (2.2.6.3)
-    rack-test (2.0.2)
+    rack (2.2.6.4)
+    rack-test (2.1.0)
       rack (>= 1.3)
     rails (6.1.1)
       actioncable (= 6.1.1)
@@ -188,11 +190,11 @@ GEM
       sprockets (>= 3.0.0)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
-    tailwindcss-rails (2.0.24)
+    tailwindcss-rails (2.0.25)
       railties (>= 6.0.0)
-    tailwindcss-rails (2.0.24-arm64-darwin)
+    tailwindcss-rails (2.0.25-arm64-darwin)
       railties (>= 6.0.0)
-    tailwindcss-rails (2.0.24-x86_64-linux)
+    tailwindcss-rails (2.0.25-x86_64-linux)
       railties (>= 6.0.0)
     thor (1.2.1)
     timeout (0.3.2)
@@ -229,6 +231,7 @@ DEPENDENCIES
   capybara
   faker
   importmap-rails
+  minitest-around
   minitest-reporters
   mysql2
   puma
@@ -240,4 +243,4 @@ DEPENDENCIES
   webdrivers
 
 BUNDLED WITH
-   2.4.8
+   2.3.19

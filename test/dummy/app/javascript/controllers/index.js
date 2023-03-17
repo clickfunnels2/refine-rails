@@ -4,5 +4,7 @@
 
 import { application } from "./application"
 
-import HelloController from "./hello_controller"
-application.register("hello", HelloController)
+// Load refine-rails stimulus controllers from the importmap
+import { controllerDefinitions as refineControllers } from "@hammerstone/refine-rails"
+window.refineControllers = refineControllers
+application.load(refineControllers)

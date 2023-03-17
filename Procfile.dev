@@ -1,2 +1,6 @@
+---
+# Run the dummy app on port 3000
 web: bin/dummy bin/rails s -p 3000
+
+# Build the engine assets
 assets: yarn watch

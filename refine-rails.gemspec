@@ -3,11 +3,15 @@ require_relative "lib/refine/rails/version"
 Gem::Specification.new do |spec|
   spec.name        = "refine-rails"
   spec.version     = Refine::Rails::VERSION
-  spec.authors     = ["Colleen Schnettler", "Aaron Francis"]
+  spec.authors     = ["Colleen Schnettler", "Aaron Francis", "Eric Berry (coderberry)"]
   spec.email       = %w[colleen@hammerstone.dev aaron@hammerstone.dev eric@berry.sh]
   spec.homepage    = "https://hammerstone.dev"
   spec.summary     = "Visual query builder for Rails"
-  spec.description = "Refine is a flexible query builder for your apps. It lets your users filter down to exactly what they're looking for. Completely configured on the backend."
+  spec.description = <<~DESC
+    Refine is a flexible query builder for your apps. It lets your users 
+    filter down to exactly what they're looking for. Completely configured 
+    on the backend.
+  DESC
   spec.license     = "Nonstandard"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"

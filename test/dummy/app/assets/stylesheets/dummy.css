@@ -1,20 +1,7 @@
-:root {
-  --color-bg: #fff;
-  --color-text: #000;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --color-mode: 'dark';
-    --color-bg: #000;
-    --color-text: #fff;
-  }
-}
-
 html {
   font-family: "Helvetica Neue", Helvetica, Arial, Sans-Serif;
-  background-color: var(--color-bg);
-  color: var(--color-text);
+  background-color: white;
+  color: black;
   font-size: 1rem;
 }
 

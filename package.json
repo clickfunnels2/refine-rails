@@ -10,11 +10,7 @@
   "module": "app/assets/javascripts/refine-stimulus.esm.js",
   "unpkg": "app/assets/javascripts/refine-stimulus.umd.js",
   "files": [
-    "app/assets/javascripts/*.js",
-    "app/assets/javascripts/*.js.map",
-    "app/javascript/**/*.js",
-    "app/assets/stylesheets/index.css",
-    "app/assets/stylesheets/index.tailwind.css"
+    "app/assets/builds/**/*"
   ],
   "watch": {
     "update-local-installs": {
@@ -27,13 +23,13 @@
   "scripts": {
     "prebuild": "$npm_execpath run clean",
     "build": "$npm_execpath run build:js && $npm_execpath run build:css && $npm_execpath run build:public",
-    "build:js": "esbuild app/javascript/index.js --bundle --minify --sourcemap --format=esm --target=es2020,chrome58,firefox57,safari11 --analyze --outfile=app/assets/builds/@hammerstone/refine-rails.js",
+    "build:js": "esbuild app/javascript/index.js --bundle --sourcemap --format=esm --target=es2020,chrome58,firefox57,safari11 --analyze --outfile=app/assets/builds/@hammerstone/refine-rails.js",
     "build:css": "tailwindcss -i app/assets/stylesheets/index.tailwind.css -o app/assets/builds/@hammerstone/refine-rails.css",
     "build:public": "$npm_execpath run build:public:js && $npm_execpath run build:public:css",
     "build:public:js": "esbuild app/javascript/index.js --bundle --minify --sourcemap --format=esm --target=es2020,chrome58,firefox57,safari11 --analyze --outfile=public/refine-assets/refine-rails.js",
     "build:public:css": "tailwindcss -i app/assets/stylesheets/index.tailwind.css -m -o public/refine-assets/refine-rails.css",
-    "old:build:js": "microbundle app/javascript/index.js -o app/assets/javascripts/ --globals @hotwired/stimulus=Stimulus",
-    "old:build:css": "tailwindcss -i app/assets/stylesheets/index.tailwind.css -o app/assets/stylesheets/index.css",
+    "legacy:build:js": "microbundle app/javascript/index.js -o app/assets/javascripts/ --globals @hotwired/stimulus=Stimulus",
+    "legacy:build:css": "tailwindcss -i app/assets/stylesheets/index.tailwind.css -o app/assets/stylesheets/index.css",
     "clean": "rimraf app/assets/javascripts app/assets/stylesheets/index.css app/assets/builds",
     "watch": "npm-watch",
     "update-local-installs": "$npm_execpath run build; yalc push"
@@ -65,8 +61,6 @@
     "@hotwired/stimulus-webpack-helpers": "^1.0.1",
     "babel-loader": "^8.2.2",
     "esbuild": "^0.17.11",
-    "esbuild-plugin-globals": "^0.2.0",
-    "esbuild-plugin-manifest": "^0.5.0",
     "microbundle": "^0.13.0",
     "npm-watch": "^0.11.0",
     "rimraf": "^3.0.2",

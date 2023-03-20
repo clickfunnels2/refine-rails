@@ -24,11 +24,6 @@ module Refine
         Refine::Rails::Engine.config.assets.precompile += %w[ refine_rails_manifest.js ]
       end
 
-      ActiveSupport.on_load(:action_controller_base) do
-        # `self` is ActionController::Base
-        helper Hammerstone::Refine::RefineHelper
-      end
-
       initializer "refine-rails.register" do |app|
         begin
           BulletTrain.linked_gems << "refine-rails"

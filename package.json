@@ -10,11 +10,7 @@
   "module": "app/assets/javascripts/refine-stimulus.esm.js",
   "unpkg": "app/assets/javascripts/refine-stimulus.umd.js",
   "files": [
-    "app/assets/javascripts/*.js",
-    "app/assets/javascripts/*.js.map",
-    "app/javascript/**/*.js",
-    "app/assets/stylesheets/index.css",
-    "app/assets/stylesheets/index.tailwind.css"
+    "app/assets/builds/**/*"
   ],
   "watch": {
     "update-local-installs": {

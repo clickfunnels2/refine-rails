@@ -178,7 +178,6 @@ module Hammerstone::Refine::Conditions
           errors.add(:base, "A #{k} is required")
         end
       end
-
       # Errors added to the errors array by individual conditions and standard rails validations
       if errors.any? || !valid?
         # When the error is rescued, it will stringify the message.
@@ -263,6 +262,14 @@ module Hammerstone::Refine::Conditions
         recursively_evaluate_lazy_enumerable(value)
       end
       value
+    end
+
+    private
+
+    def arel_attribute(table)
+      return @attribute if @attribute.is_a? Arel::Nodes::SqlLiteral
+
+      table[:"#{attribute}"]
     end
   end
 end

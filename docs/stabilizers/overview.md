@@ -18,21 +18,6 @@ We landed on the term "stabilization" because it encompasses both concepts.
 
 By default, the filters are URL Encoded stabilized. This enables us to pass a `stable_id` to your controller and it is used in the `apply_filter` method that is included in the `FilterApplicationController` helper.
 
-## Configure Automatic Stabilization
-
-You'll need to configure your filter for automatic stabilization. In your filter class add: 
-
-```ruby
-def automatically_stabilize?
-  true
-end
-```
-
-And add the `default_stabilizer` to your class: 
-```ruby
-  @@default_stabilizer = Hammerstone::Refine::Stabilizers::UrlEncodedStabilizer
-```
-
 ## Stabilization - Rehydrating Filters 
 
 You may call `from_stable_id` on a filter at any time. You'll need to pass in the Stabilizer that you want to use.
@@ -66,7 +51,7 @@ If you'd like **some** of your filters to be saved to you `hammerstone_refine_st
 
 ```ruby
   def save_filter_and_return_id(id:, initial_query: nil)
-    # How to use (in controller) -> filter_id = save_filter_and_return_id(id: params[:stable_id], intial_query: scope)
+    # How to use (in controller) -> filter_id = save_filter_and_return_id(id: params[:stable_id], initial_query: scope)
     # This method returns a primary key of the filter in your hammerstone_refine_stored_filters table which you can then add to your model
     filter = Stabilizers::UrlEncodedStabilizer.new.from_stable_id(id: id, initial_query: initial_query)
     Stabilizers::DatabaseStabilizer.new.to_stable_id(filter: filter)

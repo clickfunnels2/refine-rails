@@ -114,7 +114,7 @@ module Hammerstone::Refine::Conditions
           (SELECT "hammerstone_events"."hammerstone_contact_id" FROM "hammerstone_events"
           WHERE ("hammerstone_events"."type" = 'Networking Event')
           GROUP BY "hammerstone_events"."hammerstone_contact_id"
-          HAVING COUNT(*) BETWEEN '1' AND '10'))
+          HAVING (COUNT(*) BETWEEN '1' AND '10')))
         SQL
         query = apply_condition_on_test_filter(condition, {
           clause: TextCondition::CLAUSE_EQUALS,
@@ -138,7 +138,7 @@ module Hammerstone::Refine::Conditions
           (SELECT "hammerstone_events"."hammerstone_contact_id" FROM "hammerstone_events"
           WHERE ("hammerstone_events"."type" = 'Networking Event')
           GROUP BY "hammerstone_events"."hammerstone_contact_id"
-          HAVING COUNT(*) BETWEEN '1' AND '10'))
+          HAVING (COUNT(*) BETWEEN '1' AND '10')))
         SQL
         query = apply_condition_on_test_filter(condition, {
           clause: TextCondition::CLAUSE_EQUALS,
@@ -193,7 +193,7 @@ module Hammerstone::Refine::Conditions
           AND ("hammerstone_events"."created_at"
           BETWEEN '2021-01-01 00:00:00' AND '2021-02-01 23:59:59.999999')
           GROUP BY "hammerstone_events"."hammerstone_contact_id"
-          HAVING COUNT(*) BETWEEN '1' AND '10'))
+          HAVING (COUNT(*) BETWEEN '1' AND '10')))
         SQL
         query = apply_condition_on_test_filter(condition, {
           clause: TextCondition::CLAUSE_EQUALS,
@@ -227,7 +227,7 @@ module Hammerstone::Refine::Conditions
           FROM "hammerstone_events"
           WHERE ("hammerstone_events"."type" = 'Networking Event')
           GROUP BY "hammerstone_events"."hammerstone_contact_id") interim_table ON interim_table."hammerstone_contact_id" = "hammerstone_contacts"."id"
-          WHERE coalesce(hs_refine_count_aggregate, 0) = '0'))
+          WHERE (coalesce(hs_refine_count_aggregate, 0) = '0')))
         SQL
 
         query = apply_condition_on_test_filter(condition, {
@@ -250,7 +250,7 @@ module Hammerstone::Refine::Conditions
     def complete_refinement_config
       [{id: "date_refinement", component: "date-condition", display: "Date Refinement",
         meta: {clauses:
-          [{id: "eq", display: "on", meta: {}}, {id: "dne", display: "not on", meta: {}}, {id: "lte", display: "is on or before", meta: {}}, {id: "gte", display: "is on or after", meta: {}}, {id: "btwn", display: "is between", meta: {}}, {id: "gt", display: "is more than", meta: {}}, {id: "exct", display: "is", meta: {}}, {id: "lt", display: "is less than", meta: {}}, {id: "st", display: "is set", meta: {}}, {id: "nst", display: "is not set", meta: {}}]}, refinements: []}, {id: "count_refinement", component: "numeric-condition", display: "Count Refinement", meta: {clauses: [{id: "eq", display: "is", meta: {}}, {id: "dne", display: "is not", meta: {}}, {id: "gt", display: "is greater than", meta: {}}, {id: "gte", display: "is greater than or equal to", meta: {}}, {id: "lt", display: "is less than", meta: {}}, {id: "lte", display: "is less than or equal to", meta: {}}, {id: "btwn", display: "is between", meta: {}}, {id: "nbtwn", display: "is not between", meta: {}}, {id: "st", display: "is set", meta: {}}, {id: "nst", display: "is not set", meta: {}}]}, refinements: []}]
+          [{id: "eq", display: "on", meta: {}}, {id: "dne", display: "not on", meta: {}}, {id: "lte", display: "is on or before", meta: {}}, {id: "gte", display: "is on or after", meta: {}}, {id: "btwn", display: "is between", meta: {}},{id: "nbtwn", display: "is not between", meta: {}}, {id: "gt", display: "is more than", meta: {}}, {id: "exct", display: "is", meta: {}}, {id: "lt", display: "is less than", meta: {}}, {id: "st", display: "is set", meta: {}}, {id: "nst", display: "is not set", meta: {}}]}, refinements: []}, {id: "count_refinement", component: "numeric-condition", display: "Count Refinement", meta: {clauses: [{id: "eq", display: "is", meta: {}}, {id: "dne", display: "is not", meta: {}}, {id: "gt", display: "is greater than", meta: {}}, {id: "gte", display: "is greater than or equal to", meta: {}}, {id: "lt", display: "is less than", meta: {}}, {id: "lte", display: "is less than or equal to", meta: {}}, {id: "btwn", display: "is between", meta: {}}, {id: "nbtwn", display: "is not between", meta: {}}, {id: "st", display: "is set", meta: {}}, {id: "nst", display: "is not set", meta: {}}]}, refinements: []}]
     end
   end
 

@@ -2,10 +2,10 @@
 <% if ['st', 'nst'].include? input[:clause] %>
   <!-- render nothing -->
 <% else %>
-    <div class="<% input[:clause] != 'btwn' ? 'refine-numeric-condition-container' : 'refine-numeric-condition-container-btwn' %>">
+    <div class="<%= input[:clause] != 'btwn' ? 'refine-numeric-condition-container' : 'refine-numeric-condition-container-btwn' %>">
 
       <input
-        class="refine-numeric-condition-input"
+        class="refine-numeric-condition-input <%="has-error" if criterion.errors.any? %> "
         name="<%= condition_id %>"
         type="text"
         value="<%= input[:value1] %>"

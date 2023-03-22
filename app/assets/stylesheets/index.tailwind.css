@@ -86,6 +86,11 @@
   display: flex;
 }
 
+.refine-filter-inline-stored-filters-controls {
+  margin-top: 12px;
+  display: flex;
+}
+
 
 
 @tailwind components;

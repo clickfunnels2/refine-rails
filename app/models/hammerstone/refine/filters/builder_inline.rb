@@ -6,7 +6,7 @@ class Hammerstone::Refine::Filters::BuilderInline < Hammerstone::Refine::Filters
 
   def initialize(attrs = {})
     super
-    self.position = position.to_i if position
+    self.position = position.to_i if position.present?
   end
 
   def to_params
@@ -20,5 +20,6 @@ class Hammerstone::Refine::Filters::BuilderInline < Hammerstone::Refine::Filters
   def to_key
     result = super
     result += [conjunction, position]
+    result.compact
   end
 end

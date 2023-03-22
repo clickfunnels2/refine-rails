@@ -15,4 +15,12 @@
     <%= render "hammerstone/refine/filter_inline/and_button", position: 0 %>
   <% end %>
 
+  <div class="refine-filter-inline-stored-filters-controls">
+    <% if @refine_filter_builder.blueprint.present? %>
+      <%= render "hammerstone/refine/filter_inline/save_button" %>
+    <% end %>
+    <%= render "hammerstone/refine/filter_inline/load_button" %>
+  </div>
+
+
 </div>

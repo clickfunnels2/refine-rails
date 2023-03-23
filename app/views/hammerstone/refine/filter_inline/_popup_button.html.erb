@@ -1,4 +1,13 @@
+<%#
+  Generic partial for placing a button that will load popup content via hotwire.
+  Required params:
+    - frame_id (the DOM ID of the turbo frame)
+    - src (the URL to load popup content from) 
+%>
+
 <%= tag.div class: "refine-filter-inline-add-container", data: {controller: "refine--popup", refine__popup_src_value: src} do %>
-  <%= yield %>
+  <button class="refine-filter-inline-btn" data-action="refine--popup#show" type="button">
+    <%= yield %>
+  </button>
   <%= turbo_frame_tag frame_id, class: "refine-filter-inline-popup", data: {refine__popup_target: "frame"} %>
 <% end %>

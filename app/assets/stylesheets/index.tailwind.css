@@ -417,6 +417,7 @@
 .refine-filter-inline-btn {
   padding: 2px 8px;
   border: solid 1px black;
+  cursor: pointer;
 }
 
 .filter-wrapper .filter-condition-wrapper {

@@ -20,6 +20,6 @@ class Hammerstone::Refine::Filters::BuilderInline < Hammerstone::Refine::Filters
   def to_key
     result = super
     result += [conjunction, position]
-    result.compact
+    result.map(&:presence).compact
   end
 end

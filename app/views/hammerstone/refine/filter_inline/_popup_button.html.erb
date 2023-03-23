@@ -1,22 +1,4 @@
-<div class="refine-filter-inline-add-container" data-controller="refine--toggle">
+<%= tag.div class: "refine-filter-inline-add-container", data: {controller: "refine--popup", refine__popup_src_value: src} do %>
   <%= yield %>
-  <div
-    hidden
-    data-refine--toggle-target="content"
-    data-reveal
-    data-transition
-    data-transition-enter="transition ease-out duration-100"
-    data-transition-enter-start="transform opacity-0 scale-95"
-    data-transition-enter-end="transform opacity-100 scale-100"
-    data-transition-leave="transition ease-in duration-75"
-    data-transition-leave-start="transform opacity-100 scale-100"
-    data-transition-leave-end="transform opacity-0 scale-95"
-
-    class="refine-filter-inline-popup"
-    style="max-height: 66vh; overflow: auto;"
-  >
-    <%= turbo_frame_tag frame_id, loading: :lazy,
-      src: src %>
-  </div>
-</div>
-
+  <%= turbo_frame_tag frame_id, class: "refine-filter-inline-popup", data: {refine__popup_target: "frame"} %>
+<% end %>

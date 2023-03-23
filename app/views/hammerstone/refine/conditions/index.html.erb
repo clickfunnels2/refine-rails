@@ -3,4 +3,13 @@
     <%= link_to condition.display, new_hammerstone_refine_condition_url(
         @refine_filter_builder.to_params.merge(id: condition.id)), class: "refine-condition-list-item" %>
   <% end %>
+  <div style="margin-top: 12px">
+    <button
+      class="refine-filter-builder-dropdown-cancel-button"
+      data-action="click->refine--toggle#toggle"
+      type="button"
+    >
+      <%= t('global.buttons.cancel') %>
+    </button>
+  </div>
 <% end %>

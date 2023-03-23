@@ -1,99 +1,3 @@
-.refine-filter-inline-group {
-  display: flex;
-  align-items: center;
-  margin-top: 12px;
-  margin-left: 28px;
-}
-
-.refine-filter-inline-group-separator {
-  margin-left: 28px;
-}
-
-.filter-wrapper .filter-condition-wrapper {
-  position: relative;
-}
-.filter-wrapper .filter-condition-wrapper .filter-condition {
-  margin-right: 5px;
-}
-.filter-wrapper .filter-condition-wrapper .filter-remove {
-  position: absolute;
-  top: 0;
-  right: 5px;
-  transform: translate3d(50%, -50%, 0);
-  cursor: pointer;
-  color: #ce3451;
-  display: none;
-}
-.filter-wrapper .filter-condition-wrapper .filter-remove:hover {
-  color: #f55876;
-}
-.filter-wrapper .filter-condition-wrapper .filter-remove .material-icons {
-  font-size: 18px;
-}
-.filter-wrapper .filter-condition-wrapper:hover .filter-remove {
-  display: block;
-}
-.filter-wrapper .filter-condition {
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  position: relative;
-  background-color: #efeff2;
-  border-radius: 6px;
-  padding: 4px;
-}
-.filter-wrapper .filter-condition.filter-condition-tags, .filter-wrapper .filter-condition.filter-condition-price {
-  display: none;
-}
-.filter-wrapper .filter-condition .filter-property {
-  font-weight: 500;
-  padding: 0px 4px 0px 4px;
-  border-radius: 6px 0px 0px 6px;
-}
-.filter-wrapper .filter-condition .filter-operator {
-  padding: 0px 6px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-.filter-wrapper .filter-condition .filter-operator:hover {
-  background-color: #e1e1e7;
-}
-.filter-wrapper .filter-condition .filter-value {
-  padding: 0px 6px;
-  border-radius: 6px;
-  cursor: pointer;
-  color: black;
-}
-.filter-wrapper .filter-condition .filter-value:hover {
-  background-color: #e1e1e7;
-}
-
-.refine-condition-list-item {
-  color: black;
-  display: block;
-  padding: 3px 5px;
-  color: #111;
-  border-radius: 6px;
-}
-
-.refine-condition-list-item:hover {
-  background-color: #eee;
-  color: #111;
-  text-decoration: none;
-}
-
-.refine-filter-inline-conditions-container {
-  display: flex;
-}
-
-.refine-filter-inline-stored-filters-controls {
-  margin-top: 12px;
-  display: flex;
-  justify-content: flex-start;
-}
-
-
-
 @tailwind components;
 
 @layer components {
@@ -449,7 +353,114 @@
     @apply flex-grow-0 mt-3 sm:mr-3;
   }
 
+  /* 
+    Inline
+  */
+
   .refine-filter-inline-add-container {
-    @apply px-8 hidden md:block w-auto relative ml-auto;
+    @apply hidden md:block w-auto relative;
   }
+
+  .refine-filter-inline-popup {
+    @apply px-4 mt-2 origin-top-right absolute z-[100] rounded shadow-2xl bg-white opacity-100 scale-100 w-screen sm:max-w-max;
+  }
+}
+
+.refine-filter-inline-group {
+  display: flex;
+  margin-top: 12px;
+  margin-left: 28px;
+  column-gap: 12px;
+}
+
+.refine-filter-inline-group-separator {
+  margin-left: 28px;
+}
+
+.filter-wrapper .filter-condition-wrapper {
+  position: relative;
+}
+.filter-wrapper .filter-condition-wrapper .filter-condition {
+  margin-right: 5px;
+}
+.filter-wrapper .filter-condition-wrapper .filter-remove {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  transform: translate3d(50%, -50%, 0);
+  cursor: pointer;
+  color: #ce3451;
+  display: none;
+}
+.filter-wrapper .filter-condition-wrapper .filter-remove:hover {
+  color: #f55876;
+}
+.filter-wrapper .filter-condition-wrapper .filter-remove .material-icons {
+  font-size: 18px;
+}
+.filter-wrapper .filter-condition-wrapper:hover .filter-remove {
+  display: block;
+}
+.filter-wrapper .filter-condition {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  position: relative;
+  background-color: #efeff2;
+  border-radius: 6px;
+  padding: 4px;
+}
+.filter-wrapper .filter-condition.filter-condition-tags, .filter-wrapper .filter-condition.filter-condition-price {
+  display: none;
+}
+.filter-wrapper .filter-condition .filter-property {
+  font-weight: 500;
+  padding: 0px 4px 0px 4px;
+  border-radius: 6px 0px 0px 6px;
+}
+.filter-wrapper .filter-condition .filter-operator {
+  padding: 0px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.filter-wrapper .filter-condition .filter-operator:hover {
+  background-color: #e1e1e7;
+}
+.filter-wrapper .filter-condition .filter-value {
+  padding: 0px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: black;
+}
+.filter-wrapper .filter-condition .filter-value:hover {
+  background-color: #e1e1e7;
+}
+
+.refine-condition-list-item {
+  color: black;
+  display: block;
+  padding: 3px 5px;
+  color: #111;
+  border-radius: 6px;
+}
+
+.refine-condition-list-item:hover {
+  background-color: #eee;
+  color: #111;
+  text-decoration: none;
+}
+
+.refine-filter-inline-conditions-container {
+  display: flex;
+}
+
+.refine-filter-inline-stored-filters-controls {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.refine-filter-inline-btn {
+  padding: 2px 8px;
+  border: solid 1px black;
 }

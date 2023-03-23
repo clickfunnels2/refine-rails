@@ -9,13 +9,15 @@
     <%= render "hammerstone/refine/filter_inline/group", group: group %>
   <% end %>
 
-  <% if @refine_filter_builder.blueprint.present? %>
-    <%= render "hammerstone/refine/filter_inline/or_button", position: @refine_filter_builder.blueprint.length %>
-  <% else %>  
-    <%= render "hammerstone/refine/filter_inline/and_button", position: 0 %>
-  <% end %>
+  <div class="refine-filter-inline-group">
+    <% if @refine_filter_builder.blueprint.present? %>
+      <%= render "hammerstone/refine/filter_inline/or_button", position: @refine_filter_builder.blueprint.length %>
+    <% else %>  
+      <%= render "hammerstone/refine/filter_inline/and_button", position: 0 %>
+    <% end %>
+  </div>
 
-  <div class="refine-filter-inline-stored-filters-controls">
+  <div class="refine-filter-inline-group">
     <% if @refine_filter_builder.blueprint.present? %>
       <%= render "hammerstone/refine/filter_inline/save_button" %>
     <% end %>

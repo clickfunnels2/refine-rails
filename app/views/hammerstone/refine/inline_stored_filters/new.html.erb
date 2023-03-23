@@ -1,0 +1,34 @@
+<%= turbo_frame_tag dom_id(@refine_filter_builder, :save) do %>
+  <%= content_tag :div, class: "refine-stored-filter-container" do %>
+    <% if @stored_filter.errors.any? %>
+      <% @stored_filter.errors.full_messages.each do |message|%>
+        <p class="refine-stored-filter-error"><%= message %></p>
+      <% end %>
+    <% end %>
+    <%= form_with(
+      model: @refine_filter_builder,
+      url: hammerstone_refine_inline_stored_filters_path,
+      method: :post,
+      scope: "hammerstone_refine_filters_builder",
+      class: "refine-stored-filter-form",
+        data: {
+        turbo_frame: dom_id(@refine_filter_builder, :save)
+      }) do |form| %>
+        <%= form.hidden_field :client_id %>
+        <%= form.hidden_field :filter_class %>
+        <%= form.hidden_field :blueprint_json %>
+        <input type="text" name="name" placeholder="<%= t('global.filter_name_placeholder')%>"
+          class="refine-stored-filter-input"
+          value="<%= @stored_filter.name %>"
+        />
+        <button
+          class="refine-filter-builder-dropdown-cancel-button"
+          data-action="click->refine--toggle#toggle"
+          type="button"
+        >
+          <%= t('global.buttons.cancel') %>
+        </button>
+        <%= button_tag t('global.buttons.save'), type: "submit", class: "refine-stored-filter-button-submit" %>
+      <% end %>
+    <% end %>
+<% end%>

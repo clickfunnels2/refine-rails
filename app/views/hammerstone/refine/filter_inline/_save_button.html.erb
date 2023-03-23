@@ -1,5 +1,5 @@
 <%= render "hammerstone/refine/filter_inline/popup_button",
-  frame_id: [@refine_filter_builder, :save],
+  frame_id: dom_id(@refine_filter_builder, :save),
   src: new_hammerstone_refine_inline_stored_filter_path(@refine_filter_builder.to_params) do
 %>
 

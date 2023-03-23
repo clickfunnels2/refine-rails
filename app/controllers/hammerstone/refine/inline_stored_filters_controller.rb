@@ -19,19 +19,17 @@ class Hammerstone::Refine::InlineStoredFiltersController < ApplicationController
   def create
     @refine_filter = @refine_filter_builder.refine_filter
 
-    @stored_filter = Hammerstone::Refine::StoredFilter.new(name: params[:name], state: @refine_filter.state, filter_type: @refine_filter.type, **instance_exec(&Refine::Rails.configuration.custom_stored_filter_attributes))
-    @refine_filter_query = @refine_filter_builder.query
+    @stored_filter = Hammerstone::Refine::StoredFilter.new(
+      name: params[:name],
+      state: @refine_filter.state,
+      filter_type: @refine_filter.type,
+      **instance_exec(&Refine::Rails.configuration.custom_stored_filter_attributes)
+    )
 
-    if !@refine_filter_query.valid?
-      # replace the filter form with errors
-      render :create
-    elsif !@stored_filter.save
-      # replace the stored filter form
-      render :new, status: :unprocessable_entity
+    if @stored_filter.save
+      redirect_to_stable_id @stored_filter.refine_filter.to_stable_id
     else
-      # return to stored filters header and load the filter into the query builder
-      @refine_filter_builder.stored_filter_id = @stored_filter.id
-      render :find
+      render :new, status: :unprocessable_entity
     end
   end
 

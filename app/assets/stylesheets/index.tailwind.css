@@ -89,6 +89,7 @@
 .refine-filter-inline-stored-filters-controls {
   margin-top: 12px;
   display: flex;
+  justify-content: flex-start;
 }
 
 

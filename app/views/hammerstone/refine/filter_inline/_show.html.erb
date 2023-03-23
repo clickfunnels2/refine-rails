@@ -1,7 +1,7 @@
 <div class="filter-wrapper">
   <% @refine_filter_builder.query.grouped_criteria.each.with_index do |group, i| %>
     <% unless i == 0 %>
-      <div class="refine-filter-inline-group-separator">
+      <div class="refine--inline-group-separator">
         OR
       </div>
     <% end %>
@@ -9,7 +9,7 @@
     <%= render "hammerstone/refine/filter_inline/group", group: group %>
   <% end %>
 
-  <div class="refine-filter-inline-group">
+  <div class="refine--inline-group">
     <% if @refine_filter_builder.blueprint.present? %>
       <%= render "hammerstone/refine/filter_inline/or_button", position: @refine_filter_builder.blueprint.length %>
     <% else %>  
@@ -17,7 +17,7 @@
     <% end %>
   </div>
 
-  <div class="refine-filter-inline-group">
+  <div class="refine--inline-group">
     <% if @refine_filter_builder.blueprint.present? %>
       <%= render "hammerstone/refine/filter_inline/save_button" %>
     <% end %>

@@ -21,10 +21,10 @@
           class="refine-stored-filter-input"
           value="<%= @stored_filter.name %>"
         />
-        <button class="refine-filter-inline-btn" data-action="click->refine--popup#hide" type="button">
+        <button class="refine--inline-btn" data-action="click->refine--popup#hide" type="button">
           <%= t('global.buttons.cancel') %>
         </button>
-        <%= button_tag t('global.buttons.save'), type: "submit", class: "refine-filter-inline-btn" %>
+        <%= button_tag t('global.buttons.save'), type: "submit", class: "refine--inline-btn" %>
       <% end %>
     <% end %>
 <% end%>

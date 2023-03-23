@@ -353,12 +353,20 @@
     @apply flex-grow-0 mt-3 sm:mr-3;
   }
 
-  /* 
+  /*
+    ********************************************* 
     Inline
+    *********************************************
   */
 }
 
-.refine-filter-inline-popup {
+.refine--inline-btn {
+  padding: 2px 8px;
+  border: solid 1px black;
+  cursor: pointer;
+}
+
+.refine--inline-popup {
   position: absolute;
   z-index: 100;
   margin-top: 0.5rem;
@@ -373,24 +381,25 @@
   display: block;
 }
 
-.refine-filter-inline-add-container {
+.refine--inline-popup-container {
   display: block;
   width: auto;
   position: relative;
 }
 
-.refine-filter-inline-group {
+.refine--inline-group {
   display: flex;
   margin-top: 12px;
   margin-left: 28px;
   column-gap: 12px;
 }
 
-.refine-filter-inline-group-separator {
+.refine--inline-group-separator {
+  margin-top: 12px;
   margin-left: 28px;
 }
 
-.refine-condition-list-item {
+.refine--condition-list-item {
   color: black;
   display: block;
   padding: 3px 5px;
@@ -398,27 +407,13 @@
   border-radius: 6px;
 }
 
-.refine-condition-list-item:hover {
+.refine--condition-list-item:hover {
   background-color: #eee;
   color: #111;
   text-decoration: none;
 }
 
-.refine-filter-inline-conditions-container {
-  display: flex;
-}
-
-.refine-filter-inline-stored-filters-controls {
-  margin-top: 12px;
-  display: flex;
-  justify-content: flex-start;
-}
-
-.refine-filter-inline-btn {
-  padding: 2px 8px;
-  border: solid 1px black;
-  cursor: pointer;
-}
+/* TODO update these styles from Tamik */
 
 .filter-wrapper .filter-condition-wrapper {
   position: relative;

@@ -1,10 +1,10 @@
 <%= turbo_frame_tag @refine_filter_builder do %>
   <% @conditions.each do |condition| %>
     <%= link_to condition.display, new_hammerstone_refine_condition_url(
-        @refine_filter_builder.to_params.merge(id: condition.id)), class: "refine-condition-list-item" %>
+        @refine_filter_builder.to_params.merge(id: condition.id)), class: "refine--condition-list-item" %>
   <% end %>
   <div style="margin-top: 12px">
-    <button class="refine-filter-inline-btn" data-action="click->refine--popup#hide" type="button">
+    <button class="refine--inline-btn" data-action="click->refine--popup#hide" type="button">
       <%= t('global.buttons.cancel') %>
     </button>
   </div>

@@ -9038,6 +9038,9 @@ var controllerDefinitions = [
     controllerConstructor: controller
   };
 });
+
+// app/javascript/index.js
+window.RefineControllers = controllerDefinitions;
 export {
   add_controller_default as AddController,
   date_controller_default as DateController,

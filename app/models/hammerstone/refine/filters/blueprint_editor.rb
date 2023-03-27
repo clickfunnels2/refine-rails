@@ -4,6 +4,16 @@ class Hammerstone::Refine::Filters::BlueprintEditor
 
   attr_reader :blueprint
 
+  VALUE_ATTRS = %i[
+    date1
+    date2
+    days
+    selected
+    value
+    value1
+    value2
+  ].freeze
+
   def initialize(blueprint)
     @blueprint = blueprint
   end
@@ -17,45 +27,34 @@ class Hammerstone::Refine::Filters::BlueprintEditor
     in "or" then 0
     end
 
-    # extract local variables from criterion with pattern matching
-    criterion => {
-      condition_id:,
-      input: {
-        clause:,
-        value:
-      }
-    }
+    # extract data from criterion
+    condition_id = criterion[:condition_id]
+    input = criterion[:input].slice(*VALUE_ATTRS)
+    input[:clause] = criterion[:input][:clause]
 
     nodes_to_insert = []
     nodes_to_insert << {
       depth: conjunction_depth,
       type: "conjunction",
       word: conjunction,
-    } if blueprint[position - 1]
+    } if blueprint[(position.negative? ? position + 1 : position - 1)]
 
     nodes_to_insert << {
       depth: 1,
       type: "criterion",
-      condition_id:,
-      input: {
-        clause:,
-        value:
-      }
+      condition_id: condition_id,
+      input: input
     }
 
     blueprint.insert position, *nodes_to_insert
   end
 
   def update(index, criterion:)
-    criterion => {
-      input: {
-        clause:,
-        value:
-      }
-    }
+    # extract data from criterion
+    input = criterion[:input].slice(*VALUE_ATTRS)
+    input[:clause] = criterion[:input][:clause]
 
-    blueprint[index][:input][:clause] = clause
-    blueprint[index][:input][:value] = value
+    blueprint[index][:input] = input
   end
 
   def delete(index)

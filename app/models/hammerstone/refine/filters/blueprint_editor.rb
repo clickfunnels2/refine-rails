@@ -4,7 +4,8 @@ class Hammerstone::Refine::Filters::BlueprintEditor
 
   attr_reader :blueprint
 
-  VALUE_ATTRS = %i[
+  INPUT_ATTRS = %i[
+    clause
     date1
     date2
     days
@@ -29,8 +30,7 @@ class Hammerstone::Refine::Filters::BlueprintEditor
 
     # extract data from criterion
     condition_id = criterion[:condition_id]
-    input = criterion[:input].slice(*VALUE_ATTRS)
-    input[:clause] = criterion[:input][:clause]
+    input = criterion[:input].slice(*INPUT_ATTRS)
 
     nodes_to_insert = []
     nodes_to_insert << {
@@ -51,8 +51,7 @@ class Hammerstone::Refine::Filters::BlueprintEditor
 
   def update(index, criterion:)
     # extract data from criterion
-    input = criterion[:input].slice(*VALUE_ATTRS)
-    input[:clause] = criterion[:input][:clause]
+    input = criterion[:input].slice(*INPUT_ATTRS)
 
     blueprint[index][:input] = input
   end

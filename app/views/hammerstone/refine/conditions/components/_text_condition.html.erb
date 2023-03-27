@@ -3,7 +3,7 @@
     <label for="<%= condition.id %>" class="sr-only"><%= condition.display %></label>
     <input
       class="refine-text-condition-input <%="has-error" if criterion.errors.any? %> "
-      name="<%= condition.id %>"
+      name="value"
       type="text"
       value="<%= input[:value] %>"
       data-action="input->refine--update#updateBlueprint keydown->refine--update#cancelEnter"

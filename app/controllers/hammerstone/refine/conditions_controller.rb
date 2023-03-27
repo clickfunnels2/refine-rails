@@ -43,10 +43,7 @@ class Hammerstone::Refine::ConditionsController < ApplicationController
         position: @refine_filter_builder.position,
           criterion: {
           condition_id: params[:condition_id],
-          input: {
-            clause: params[:clause],
-            value: params[params[:condition_id]]
-          }    
+          input: input_params   
         }
       )
 
@@ -58,10 +55,7 @@ class Hammerstone::Refine::ConditionsController < ApplicationController
     Hammerstone::Refine::Filters::BlueprintEditor
       .new(refine_filter.blueprint)
       .update(params[:id].to_i, criterion: {
-        input: {
-          clause: params[:clause],
-          value: params[params[:condition_id]]
-        }    
+        input: input_params   
       })
 
     redirect_to_stable_id(refine_filter.to_stable_id)
@@ -101,5 +95,9 @@ class Hammerstone::Refine::ConditionsController < ApplicationController
     )
 
     @refine_filter_builder = Hammerstone::Refine::Filters::BuilderInline.new(builder_params)
+  end
+
+  def input_params
+    params.permit(*Hammerstone::Refine::Filters::BlueprintEditor::INPUT_ATTRS)
   end
 end

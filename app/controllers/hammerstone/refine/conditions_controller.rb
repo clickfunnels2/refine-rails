@@ -1,10 +1,10 @@
 class Hammerstone::Refine::ConditionsController < ApplicationController
   layout false
-  before_action :set_builder
+  before_action :set_refine_filter
 
   def index
-    refine_filter = @refine_filter_builder.refine_filter
-    @conditions = @refine_filter_builder.query.available_conditions
+    @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params)
+    @conditions = @refine_filter.available_conditions
     @conditions.each do |c|
       c.set_filter refine_filter
       refine_filter.translate_display(c)
@@ -12,65 +12,84 @@ class Hammerstone::Refine::ConditionsController < ApplicationController
   end
 
   def new
-    @criterion = Hammerstone::Refine::Filters::Criterion.new(
-      condition_id: params[:id],
-      query: @refine_filter_builder.query,
-      input: {
-        clause: params[:clause].presence
-      }
-    )
-  end
-
-  def edit
-    @criterion = @refine_filter_builder
-      .query
-      .criteria
-      .detect { |c| c.uid.to_s == params[:id] }
-
-    if params[:clause]
-      @criterion.input[:clause] = params[:clause]
-    end
+    @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params)
   end
 
   def create
-    refine_filter = @refine_filter_builder.refine_filter
+    @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params)    
     blueprint = refine_filter.blueprint
 
     Hammerstone::Refine::Filters::BlueprintEditor
       .new(refine_filter.blueprint)
-      .add(
-        conjunction: @refine_filter_builder.conjunction,
-        position: @refine_filter_builder.position,
-          criterion: {
-          condition_id: params[:condition_id],
-          input: input_params   
-        }
-      )
+      .add(**@criterion.to_editor_args)
 
     redirect_to_stable_id(refine_filter.to_stable_id)
   end
 
+  def edit
+    @criterion = Hammerstone::Refine::Inline::Criterion
+      .criteria_from_blueprint(@refine_filter.blueprint)
+      .detect { |c| c.position.to_s == params[:id] }
+
+    @criterion.attributes = criterion_params
+  end
+
   def update
-    refine_filter = @refine_filter_builder.refine_filter
+    @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params) 
     Hammerstone::Refine::Filters::BlueprintEditor
-      .new(refine_filter.blueprint)
-      .update(params[:id].to_i, criterion: {
-        input: input_params   
-      })
+      .new(@refine_filter.blueprint)
+      .update(@criterion)
 
     redirect_to_stable_id(refine_filter.to_stable_id)
   end
 
   def destroy
-    refine_filter = @refine_filter_builder.refine_filter
-     Hammerstone::Refine::Filters::BlueprintEditor
-      .new(refine_filter.blueprint)
+    Hammerstone::Refine::Filters::BlueprintEditor
+      .new(@refine_filter.blueprint)
       .delete(params[:id].to_i)
 
     redirect_to_stable_id(refine_filter.to_stable_id)
   end
 
   private
+
+  def refine_filter
+    @refine_filter ||= Refine::Rails.configuration.stabilizer_classes[:url]
+      .new
+      .from_stable_id(criterion_params[:stable_id])
+  end
+
+  def criterion_params
+    params.require(:hammerstone_refine_inline_criterion).permit(
+      :stable_id,
+      :client_id,
+      :condition_id,
+      :input,
+      :position,
+      :conjunction,
+      input_attributes: {
+        :clause,
+        :date1,
+        :date2,
+        :days,
+        :value,
+        :value1,
+        :value2,
+        selected: [],
+        :count_refinement_attributes: {
+          :clause,
+          :value1,
+          :value2
+        },
+        :date_refinement_attributes: {
+          :clause,
+          :date1,
+          :date2,
+          :days
+        }
+      }
+    )
+  end
 
   def redirect_to_stable_id stable_id
     # update_stable_id in url
@@ -81,20 +100,6 @@ class Hammerstone::Refine::ConditionsController < ApplicationController
     uri.query = URI.encode_www_form(new_query_ar)
     
     redirect_to uri.to_s
-  end
-
-  def set_builder
-    builder_params = params.require(:hammerstone_refine_filters_builder).permit(
-      :blueprint_json,
-      :filter_class,
-      :stable_id,
-      :stored_filter_id,
-      :client_id,
-      :conjunction,
-      :position
-    )
-
-    @refine_filter_builder = Hammerstone::Refine::Filters::BuilderInline.new(builder_params)
   end
 
   def input_params

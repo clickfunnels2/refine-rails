@@ -1,14 +1,14 @@
-<%= turbo_frame_tag @criterion do %>
+<%= turbo_frame_tag @refine_inline_criterion do %>
   <%= form_with model: @refine_filter_builder,
-    url: hammerstone_refine_condition_path(@criterion.uid, @refine_filter_builder.to_params),
+    url: hammerstone_refine_condition_path(@refine_inline_criterion.uid, @refine_filter_builder.to_params),
     method: :put,
     data: {
       turbo_frame: "_top",
       controller: "refine--condition-form",
       refine__condition_form_url_value: edit_hammerstone_refine_condition_url(
-        @criterion.uid, @refine_filter_builder.to_params
+        @refine_inline_criterion.uid, @refine_filter_builder.to_params
       ),
-      refine__condition_form_turbo_frame_value: dom_id(@criterion)
+      refine__condition_form_turbo_frame_value: dom_id(@refine_inline_criterion)
     } do |form|
   %>
     <%= render "form_fields", form: form %>

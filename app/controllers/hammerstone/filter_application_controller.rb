@@ -25,8 +25,6 @@ module Hammerstone::FilterApplicationController
       blueprint = JSON.parse(json).map(&:deep_symbolize_keys)
       @refine_filter = filter_class.constantize.new(blueprint, initial_query)
     end
-
-    @refine_inline_criterion = Hammerstone::Refine::Inline::Criterion.new(stable_id: stable_id)
-    @refine_filter_criterion.client_id = SecureRandom.uuid
+    @refine_client_id = SecureRandom.uuid
   end
 end

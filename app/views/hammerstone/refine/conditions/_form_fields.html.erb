@@ -1,24 +1,16 @@
   <%= form.hidden_field :filter_class %>
   <%= form.hidden_field :client_id %>
   <%= form.hidden_field :blueprint_json %>
-  <%= hidden_field_tag :condition_id, @criterion.condition_id %>
-  <%= hidden_field_tag :conjunction, @conjunction if @conjunction %>
-  <%= hidden_field_tag :position, @position if @position %>
+  <%= form.hidden_field :condition_id %>
+  <%= form.hidden_field :conjunction%>
+  <%= form.hidden_field :position %>
 
-  <label style="color: black;"><%= @criterion.condition.display %></label>
+  <label style="color: black;"><%= @refine_inline_criterion.condition.display %></label>
 
-  <%= render "hammerstone/refine/conditions/components/#{@criterion.component}", 
-    criterion: @criterion,
-    condition: @criterion.condition,
-    input: @criterion.input,
-    criterion_id: 0,
-    meta: @criterion.meta,
-    # meta_clause: @criterion.selected_clause_meta,
-    input_id: nil
-  %>
+  <%= render @refine_inline_criterion.form_fields_partial, criterion: @refine_inline_criterion, form: form %>
 
   <div class="refine-criterion-clause-container">
-    <%= render 'clause_select', meta: @criterion.meta, selected_clause: @criterion.input[:clause] %>
+    <%= render 'clause_select', meta: @refine_inline_criterion.meta, selected_clause: @refine_inline_criterion.input[:clause] %>
   </div>
 
   <div class="refine-filter-builder-dropdown-button-container">

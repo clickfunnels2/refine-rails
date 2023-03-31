@@ -1,7 +1,11 @@
 <% 
-  criterion = @refine_inline_criterion.deep_dup
-  criterion.position = position
-  criterion.conjunction = "or"
+  criterion = Hammerstone::Refine::Inline::Criterion.new(
+    stable_id: @refine_filter.to_stable_id,
+    refine_filter: @refine_filter,
+    client_id: @refine_client_id,
+    conjunction: "and",
+    position: position
+  )
 %>
 
 <%= render "hammerstone/refine/filter_inline/popup_button",

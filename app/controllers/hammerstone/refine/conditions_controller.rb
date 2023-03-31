@@ -3,20 +3,16 @@ class Hammerstone::Refine::ConditionsController < ApplicationController
   before_action :set_refine_filter
 
   def index
-    @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params)
-    @conditions = @refine_filter.available_conditions
-    @conditions.each do |c|
-      c.set_filter refine_filter
-      refine_filter.translate_display(c)
-    end
+    @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params.merge(refine_filter: @refine_filter))
+    @conditions = @refine_filter.instantiated_conditions
   end
 
   def new
-    @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params)
+    @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params.merge(refine_filter: @refine_filter))
   end
 
   def create
-    @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params)    
+    @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params.merge(refine_filter: @refine_filter))    
     blueprint = refine_filter.blueprint
 
     Hammerstone::Refine::Filters::BlueprintEditor
@@ -28,7 +24,7 @@ class Hammerstone::Refine::ConditionsController < ApplicationController
 
   def edit
     @criterion = Hammerstone::Refine::Inline::Criterion
-      .criteria_from_blueprint(@refine_filter.blueprint)
+      .groups_from_filter(@refine_filter, client)
       .detect { |c| c.position.to_s == params[:id] }
 
     @criterion.attributes = criterion_params
@@ -53,14 +49,14 @@ class Hammerstone::Refine::ConditionsController < ApplicationController
 
   private
 
-  def refine_filter
+  def set_refine_filter
     @refine_filter ||= Refine::Rails.configuration.stabilizer_classes[:url]
       .new
       .from_stable_id(criterion_params[:stable_id])
   end
 
   def criterion_params
-    params.require(:hammerstone_refine_inline_criterion).permit(
+    params.require(:hammerstone_criterion).permit(
       :stable_id,
       :client_id,
       :condition_id,

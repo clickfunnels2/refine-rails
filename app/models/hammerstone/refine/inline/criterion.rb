@@ -6,48 +6,38 @@ class Hammerstone::Refine::Inline::Criterion
     :condition_id,
     :input,
     :position,
-    :conjunction
+    :conjunction,
+    :refine_filter
 
   # initialize a Crtierion object from a blueprint node
-  def self.from_blueprint_node(node)
-    attrs = node.deep_dup
+  def self.from_blueprint_node(node, **additional_attrs)
+    attrs = node.deep_dup.merge(additional_attrs)
     attrs[:input_attributes] = attrs.delete[:input]
     if input_attrs = attrs[:input_attributes]
-      input_attrs[:count_refinement_attributes] = input_attrs[:count_refinement]
-      input_attrs[:date_refinement_attributes] = input_attrs[:date_refinement]
+      input_attrs[:count_refinement_attributes] = input_attrs.delete(:count_refinement)
+      input_attrs[:date_refinement_attributes] = input_attrs.delete(:date_refinement)
     end
     new(attrs)
   end
 
   # 
-  # Returns a nested array of Criterion objects reflecting the grouping of the OR groups in a blueprint
-  # @param blueprint Array<Hash>
-  # 
-  # @return Array<Array<Hammerstone::Refine::Inline::Criterion>> [description]  
-  def self.groups_from_blueprint(blueprint)
+  # Returns a nested array of Criterion objects reflecting the grouping of the OR groups in a filter's blueprint
+  def self.groups_from_filter(refine_filter, **attrs)
     return [] unless blueprint
     [].tap do |result|
       result.push([])
-      blueprint.each_with_index do |node, i|
+      refine_filter.blueprint.each_with_index do |node, i|
         case node[:word]
         when "or"
           result.push []
         when "and"
           next
         else
-          criterion = from_blueprint_node(node)
-          criterion.position = i
+          criterion = from_blueprint_node(node, **attrs.merge(refine_filter: refine_filter, position: i))
           result.last.push criterion
         end
       end
     end
-  end
-
-  # returns a flat list of all the criteria in the blueprint (no conjunctions)
-  def self.criteria_from_blueprint(blueprint)
-    groups_from_blueprint(blueprint)
-      .flatten
-      .filter { |node| node[:type] == "criterion" }
   end
 
   def attributes
@@ -73,6 +63,18 @@ class Hammerstone::Refine::Inline::Criterion
 
   def to_key
     [client_id, position, conjunction].compact
+  end
+
+  def condition
+    @condition ||= begin
+      @refine_filter
+        .instantiated_conditons
+        .find { |c| c.id == condition_id })
+    end
+  end
+
+  def form_fields_partial
+    "hammerstone/refine/conditions/components/#{condition.component}"
   end
 
   class Input

@@ -1,13 +1,13 @@
-<%= turbo_frame_tag @refine_filter_builder do %>
-  <%= form_with model: @refine_filter_builder,
-    url: hammerstone_refine_conditions_path(@refine_filter_builder.to_params),
+<%= turbo_frame_tag @refine_inline_criterion do %>
+  <%= form_with model: @refine_inline_criterion,
+    url: hammerstone_refine_conditions_path(@refine_inline_criterion.to_params),
     method: :post,
     data: {
       turbo_frame: "_top",
       controller: "refine--condition-form",
       refine__condition_form_url_value: new_hammerstone_refine_condition_url(
-        @refine_filter_builder.to_params.merge(id: @criterion.condition_id)),
-      refine__condition_form_turbo_frame_value: dom_id(@refine_filter_builder)
+        @refine_inline_criterion.to_params.merge(id: @criterion.condition_id)),
+      refine__condition_form_turbo_frame_value: dom_id(@refine_inline_criterion)
     } do |form|
   %>
     <%= render "form_fields", form: form, conjunction: @conjunction, position: @position %>

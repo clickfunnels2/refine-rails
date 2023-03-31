@@ -220,10 +220,14 @@ module Hammerstone::Refine
       conditions.map { |condition| instantiate_condition(condition) }.map(&:to_array)
     end
 
-    def instantiate_condition(condition_class)
-      condition_class.set_filter(self)
-      translate_display(condition_class)
-      condition_class
+    def instantiate_condition(condition)
+      condition.set_filter(self)
+      translate_display(condition)
+      condition
+    end
+
+    def instantiated_conditions
+      conditions.map { |c| instantiate_condtion(c.dup) }
     end
 
     def translate_display(condition)

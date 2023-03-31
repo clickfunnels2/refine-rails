@@ -1,6 +1,13 @@
+<% 
+  criterion = Hammerstone::Refine::Inline::Criterion.new(
+    stable_id: @refine_filter.to_stable_id,
+    client_id: @refine_client_id,
+  )
+%>
+
 <%= render "hammerstone/refine/filter_inline/popup_button",
-  frame_id: dom_id(@refine_inline_criterion, :load),
-  src: hammerstone_refine_inline_stored_filters_path(@refine_inline_criterion.attributes) do
+  frame_id: dom_id(criterion, :load),
+  src: hammerstone_refine_inline_stored_filters_path(criterion.attributes) do
 %>
   Load Filter
 <% end %>

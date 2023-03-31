@@ -1,6 +1,6 @@
 <div class="refine--inline-group">
   <% group.each do |criterion| %>
-    <%= render "hammerstone/refine/filter_inline/criterion", criterion: criterion unless criterion.conjunction? %>
+    <%= render "hammerstone/refine/filter_inline/criterion", criterion: criterion %>
   <% end %>
 
   <%= render "hammerstone/refine/filter_inline/and_button", position: group.last.position + 1 %>

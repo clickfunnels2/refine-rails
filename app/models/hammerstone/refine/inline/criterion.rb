@@ -35,7 +35,9 @@ class Hammerstone::Refine::Inline::Criterion
         when "and"
           next
         else
-          result.last.push from_blueprint_node(node)
+          criterion = from_blueprint_node(node)
+          criterion.position = i
+          result.last.push criterion
         end
       end
     end
@@ -67,6 +69,10 @@ class Hammerstone::Refine::Inline::Criterion
   def input_attributes=(attrs = {})
     self.input ||= Input.new
     input.attributes = attrs
+  end
+
+  def to_key
+    [client_id, position, conjunction].compact
   end
 
   class Input

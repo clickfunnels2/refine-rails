@@ -20,10 +20,10 @@
       style="max-height: 66vh; overflow: auto;"
     >
       <%= turbo_frame_tag criterion, loading: :lazy,
-        src: edit_hammerstone_refine_condition_path(criterion.uid, @refine_filter_builder.to_params) %>
+        src: edit_hammerstone_refine_condition_path(criterion.position, criterion.to_params.to_params) %>
     </div>
   </div>
-  <%= button_to hammerstone_refine_condition_path(criterion.uid, @refine_filter_builder.to_params), class: "filter-remove", method: :delete do %>
+  <%= button_to hammerstone_refine_condition_path(criterion.position, criterion.to_params), class: "filter-remove", method: :delete do %>
     <div class="material-icons">
       X
     </div>

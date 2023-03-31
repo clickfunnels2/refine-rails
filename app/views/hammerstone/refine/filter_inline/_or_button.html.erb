@@ -1,12 +1,12 @@
 <% 
-  builder = @refine_filter_builder.dup
-  builder.position = position
-  builder.conjunction = "or"
+  criterion = @refine_inline_criterion.deep_dup
+  criterion.position = position
+  criterion.conjunction = "or"
 %>
 
 <%= render "hammerstone/refine/filter_inline/popup_button",
   frame_id: builder,
-  src: hammerstone_refine_conditions_path(builder.to_params) do
+  src: hammerstone_refine_conditions_path(criterion.attributes) do
 %>
   + Add "OR" Group
 <% end %>

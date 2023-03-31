@@ -1,12 +1,12 @@
 <% 
-  builder = @refine_filter_builder.dup
-  builder.position = position
-  builder.conjunction = "and"
+  criterion = @refine_inline_criterion.deep_dup
+  criterion.position = position
+  criterion.conjunction = "and"
 %>
 
 <%= render "hammerstone/refine/filter_inline/popup_button",
   frame_id: builder,
-  src: hammerstone_refine_conditions_path(builder.to_params) do
+  src: hammerstone_refine_conditions_path(criterion.attributes) do
 %>
   + Add Filter
 <% end %>

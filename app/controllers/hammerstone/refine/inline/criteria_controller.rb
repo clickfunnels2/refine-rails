@@ -1,4 +1,4 @@
-class Hammerstone::Refine::ConditionsController < ApplicationController
+class Hammerstone::Refine::CriteriaController < ApplicationController
   layout false
   before_action :set_refine_filter
 
@@ -56,7 +56,7 @@ class Hammerstone::Refine::ConditionsController < ApplicationController
   end
 
   def criterion_params
-    params.require(:hammerstone_criterion).permit(
+    params.require(:hammerstone_refine_inline_criterion).permit(
       :stable_id,
       :client_id,
       :condition_id,

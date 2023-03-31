@@ -7,22 +7,22 @@
       </div>
     <% end %>
 
-    <%= render "hammerstone/refine/filter_inline/group", group: group %>
+    <%= render "hammerstone/refine/inline/filters/group", group: group %>
   <% end %>
 
   <div class="refine--inline-group">
     <% if @refine_filter.blueprint.present? %>
-      <%= render "hammerstone/refine/filter_inline/or_button", position: @refine_filter.blueprint.length %>
+      <%= render "hammerstone/refine/inline/filters/or_button", position: @refine_filter.blueprint.length %>
     <% else %>  
-      <%= render "hammerstone/refine/filter_inline/and_button", position: 0 %>
+      <%= render "hammerstone/refine/inline/filters/and_button", position: 0 %>
     <% end %>
   </div>
 
   <div class="refine--inline-group">
     <% if @refine_filter.blueprint.present? %>
-      <%= render "hammerstone/refine/filter_inline/save_button" %>
+      <%= render "hammerstone/refine/inline/filters/save_button" %>
     <% end %>
-    <%= render "hammerstone/refine/filter_inline/load_button" %>
+    <%= render "hammerstone/refine/inline/filters/load_button" %>
   </div>
 
 

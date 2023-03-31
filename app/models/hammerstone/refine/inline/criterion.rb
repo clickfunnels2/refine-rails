@@ -57,7 +57,7 @@ class Hammerstone::Refine::Inline::Criterion
   end
 
   def input_attributes=(attrs = {})
-    self.input ||= Input.new
+    self.input ||= Hammerstone::Refine::Inline::Criteria::Input.new
     input.attributes = attrs
   end
 
@@ -76,82 +76,4 @@ class Hammerstone::Refine::Inline::Criterion
   def form_fields_partial
     "hammerstone/refine/conditions/components/#{condition.component}"
   end
-
-  class Input
-    include ActiveModel::Model
-
-    attr_accessor :clause,
-      :date1,
-      :date2,
-      :days,
-      :selected,
-      :value,
-      :value1,
-      :value2,
-      :count_refinement,
-      :date_refinement
-
-    def attributes
-      {
-        clause: clause,
-        date1: date1,
-        date2: date2,
-        days: days,
-        selected: selected,
-        value: value,
-        value1: value1,
-        value2: value2,
-        count_refinement_attributes: count_refinement_attributes,
-        date_refinement_attributes: date_refinement_attributes
-      }
-    end
-
-    def count_refinement_attributes
-      count_refinement&.attributes
-    end
-
-    def count_refinement_attributes=(attrs = {})
-      self.count_refinement ||= NumericRefinement.new
-      count_refinement.attributes = attrs
-    end
-
-    def date_refinement_attributes
-      date_refinement&.attributes
-    end
-
-    def date_refinement_attributes=(attrs = {})
-      self.date_refinement ||= DateRefinement.new
-      date_refinement.attributes = attrs
-    end
-  end
-
-  class NumericRefinement
-    include ActiveModel::Model
-
-    attr_accessor :clause, :value1, :value2
-
-    def attributes
-      {
-        clause: clause,
-        value1: value1,
-        value2: value2
-      }.compact
-    end
-  end
-
-  class DateRefinement
-    include ActiveModel::Model
-
-    attr_accessor :clause, :date1, :date2, :days
-
-    def attributes
-      {
-        clause: clause,
-        date1: date1,
-        date2: date2,
-        days: days
-      }.compact
-    end
-  end
-
 end

@@ -23,7 +23,7 @@ class Hammerstone::Refine::Inline::Criterion
   # 
   # Returns a nested array of Criterion objects reflecting the grouping of the OR groups in a filter's blueprint
   def self.groups_from_filter(refine_filter, **attrs)
-    return [] unless blueprint
+    return [] unless refine_filter&.blueprint.present?
     [].tap do |result|
       result.push([])
       refine_filter.blueprint.each_with_index do |node, i|
@@ -52,6 +52,10 @@ class Hammerstone::Refine::Inline::Criterion
     }.compact
   end
 
+  def to_params
+    {hammerstone_refine_inline_criterion: attributes}
+  end
+
   def input_attributes
     input&.attributes
   end
@@ -69,7 +73,7 @@ class Hammerstone::Refine::Inline::Criterion
     @condition ||= begin
       @refine_filter
         .instantiated_conditons
-        .find { |c| c.id == condition_id })
+        .find { |c| c.id == condition_id }
     end
   end
 

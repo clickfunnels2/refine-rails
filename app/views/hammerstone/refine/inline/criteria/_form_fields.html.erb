@@ -5,12 +5,12 @@
   <%= form.hidden_field :conjunction%>
   <%= form.hidden_field :position %>
 
-  <label style="color: black;"><%= @refine_inline_criterion.condition.display %></label>
+  <label style="color: black;"><%= @criterion.condition.display %></label>
 
-  <%= render @refine_inline_criterion.form_fields_partial, criterion: @refine_inline_criterion, form: form %>
+  <%= render @criterion.form_fields_partial, criterion: @criterion, form: form %>
 
   <div class="refine-criterion-clause-container">
-    <%= render 'clause_select', meta: @refine_inline_criterion.meta, selected_clause: @refine_inline_criterion.input[:clause] %>
+    <%= render 'clause_select', meta: @criterion.meta, selected_clause: @criterion.input[:clause] %>
   </div>
 
   <div class="refine-filter-builder-dropdown-button-container">

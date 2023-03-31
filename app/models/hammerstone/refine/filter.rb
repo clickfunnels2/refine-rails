@@ -227,7 +227,7 @@ module Hammerstone::Refine
     end
 
     def instantiated_conditions
-      conditions.map { |c| instantiate_condtion(c.dup) }
+      conditions.map { |c| instantiate_condition(c.dup) }
     end
 
     def translate_display(condition)

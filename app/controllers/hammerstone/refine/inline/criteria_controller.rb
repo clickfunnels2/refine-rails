@@ -1,4 +1,4 @@
-class Hammerstone::Refine::CriteriaController < ApplicationController
+class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
   layout false
   before_action :set_refine_filter
 
@@ -52,7 +52,7 @@ class Hammerstone::Refine::CriteriaController < ApplicationController
   def set_refine_filter
     @refine_filter ||= Refine::Rails.configuration.stabilizer_classes[:url]
       .new
-      .from_stable_id(criterion_params[:stable_id])
+      .from_stable_id(id: criterion_params[:stable_id])
   end
 
   def criterion_params
@@ -63,7 +63,7 @@ class Hammerstone::Refine::CriteriaController < ApplicationController
       :input,
       :position,
       :conjunction,
-      input_attributes: {
+      input_attributes: [
         :clause,
         :date1,
         :date2,
@@ -72,18 +72,18 @@ class Hammerstone::Refine::CriteriaController < ApplicationController
         :value1,
         :value2,
         selected: [],
-        :count_refinement_attributes: {
+        count_refinement_attributes: [
           :clause,
           :value1,
           :value2
-        },
-        :date_refinement_attributes: {
+        ],
+        date_refinement_attributes: [
           :clause,
           :date1,
           :date2,
           :days
-        }
-      }
+        ]
+      ]
     )
   end
 

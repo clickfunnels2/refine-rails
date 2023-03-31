@@ -9,8 +9,8 @@
 %>
 
 <%= render "hammerstone/refine/inline/filters/popup_button",
-  frame_id: builder,
-  src: hammerstone_refine_conditions_path(criterion.attributes) do
+  frame_id: dom_id(criterion),
+  src: hammerstone_refine_inline_criteria_path(criterion.to_params) do
 %>
   + Add Filter
 <% end %>

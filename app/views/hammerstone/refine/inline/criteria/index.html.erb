@@ -1,7 +1,7 @@
-<%= turbo_frame_tag @refine_inline_criterion do %>
+<%= turbo_frame_tag @criterion do %>
   <% @conditions.each do |condition| %>
-    <%= link_to condition.display, new_hammerstone_refine_condition_url(
-        @refine_inline_criterion.to_params.merge(id: condition.id)), class: "refine--condition-list-item" %>
+    <%= link_to condition.display, new_hammerstone_refine_inline_criterion_url(
+        @criterion.to_params.merge(id: condition.id)), class: "refine--condition-list-item" %>
   <% end %>
   <div style="margin-top: 12px">
     <button class="refine--inline-btn" data-action="click->refine--popup#hide" type="button">

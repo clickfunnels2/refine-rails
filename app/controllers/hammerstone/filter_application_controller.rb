@@ -21,9 +21,7 @@ module Hammerstone::FilterApplicationController
     if stable_id.present?
       @refine_filter = Refine::Rails.configuration.stabilizer_classes[:url].new.from_stable_id(id: stable_id, initial_query: initial_query)
     else
-      json = blueprint_json || "[]"
-      blueprint = JSON.parse(json).map(&:deep_symbolize_keys)
-      @refine_filter = filter_class.constantize.new(blueprint, initial_query)
+      @refine_filter = filter_class.new([], initial_query)
     end
     @refine_client_id = SecureRandom.uuid
   end

@@ -9,6 +9,7 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
 
   def new
     @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params.merge(refine_filter: @refine_filter))
+    @criterion.condition_id = params[:id]
   end
 
   def create
@@ -60,7 +61,6 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
       :stable_id,
       :client_id,
       :condition_id,
-      :input,
       :position,
       :conjunction,
       input_attributes: [

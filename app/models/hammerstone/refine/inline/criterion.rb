@@ -45,7 +45,6 @@ class Hammerstone::Refine::Inline::Criterion
       stable_id: stable_id,
       client_id: client_id,
       condition_id: condition_id,
-      input: input,
       position: position,
       conjunction: conjunction,
       input_attributes: input_attributes
@@ -56,12 +55,15 @@ class Hammerstone::Refine::Inline::Criterion
     {hammerstone_refine_inline_criterion: attributes}
   end
 
+  def input
+    @input ||= Hammerstone::Refine::Inline::Criteria::Input.new
+  end
+
   def input_attributes
-    input&.attributes
+    input.attributes
   end
 
   def input_attributes=(attrs = {})
-    self.input ||= Hammerstone::Refine::Inline::Criteria::Input.new
     input.attributes = attrs
   end
 
@@ -72,12 +74,12 @@ class Hammerstone::Refine::Inline::Criterion
   def condition
     @condition ||= begin
       @refine_filter
-        .instantiated_conditons
+        .instantiated_conditions
         .find { |c| c.id == condition_id }
     end
   end
 
-  def form_fields_partial
-    "hammerstone/refine/conditions/components/#{condition.component}"
+  def input_partial
+    "hammerstone/refine/inline/inputs/#{condition.component}".underscore
   end
 end

@@ -5,7 +5,7 @@
     data: {
       turbo_frame: "_top",
       controller: "refine--condition-form",
-      refine__condition_form_url_value: new_hammerstone_refine_condition_url(
+      refine__condition_form_url_value: new_hammerstone_refine_inline_criterion_url(
         @criterion.to_params.merge(id: @criterion.condition_id)),
       refine__condition_form_turbo_frame_value: dom_id(@criterion)
     } do |form|

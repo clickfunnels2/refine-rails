@@ -1,22 +1,33 @@
-  <%= form.hidden_field :filter_class %>
-  <%= form.hidden_field :client_id %>
-  <%= form.hidden_field :blueprint_json %>
-  <%= form.hidden_field :condition_id %>
-  <%= form.hidden_field :conjunction%>
-  <%= form.hidden_field :position %>
+<%= form.hidden_field :filter_class %>
+<%= form.hidden_field :client_id %>
+<%= form.hidden_field :blueprint_json %>
+<%= form.hidden_field :condition_id %>
+<%= form.hidden_field :conjunction%>
+<%= form.hidden_field :position %>
 
-  <label style="color: black;"><%= @criterion.condition.display %></label>
+<label style="color: black;"><%= @criterion.condition.display %></label>
 
-  <%= render @criterion.form_fields_partial, criterion: @criterion, form: form %>
+<%= form.fields :input_attributes, model: @criterion.input do |input_fields| %>
+
+  <%= render @criterion.input_partial, criterion: @criterion, form: form, input_fields: input_fields %>
 
   <div class="refine-criterion-clause-container">
-    <%= render 'clause_select', meta: @criterion.meta, selected_clause: @criterion.input[:clause] %>
+    <div>
+      <%= input_fields.collection_select :clause,
+        @criterion.condition.clauses,
+        :id,
+        :display,
+        {},
+        class: "refine-clause-select",
+        data: {action: "change->refine--condition-form#updateClause"}
+      %>
+    </div>
   </div>
+<% end %>
 
-  <div class="refine-filter-builder-dropdown-button-container">
-    <button class="refine--inline-btn" data-action="click->refine--popup#hide" type="button">
-      <%= t('global.buttons.cancel') %>
-    </button>
-    <%= form.submit t('global.buttons.apply'), class: "refine--inline-btn" %>
-  </div>
-  <div>
+<div class="refine-filter-builder-dropdown-button-container">
+  <button class="refine--inline-btn" data-action="click->refine--popup#hide" type="button">
+    <%= t('global.buttons.cancel') %>
+  </button>
+  <%= form.submit t('global.buttons.apply'), class: "refine--inline-btn" %>
+</div>

@@ -1,11 +1,9 @@
 <% unless ['st', 'nst'].include? criterion.input.clause %>
   <div class="refine-text-condition-container">
     <%= form.label :condition_id, criterion.condition.display, class: "sr-only" %>
-    <%= form.fields_for :input_attributes do |input_fields| %>
-      <%= input_fields.text_field :value,
-        class: "refine-text-condition-input #{"has-error" if criterion.errors.any?}" 
-      %>
-    <% end %>
+    <%= input_fields.text_field :value,
+      class: "refine-text-condition-input #{"has-error" if criterion.errors.any?}" 
+    %>
     <%# TODO validation errors %>  
   </div>
 <% end %>

@@ -10,7 +10,11 @@ export default class extends Controller {
     // update the url with the clause param from the form
     const formData = new FormData(this.element)
     const url = new URL(this.urlValue)
-    url.searchParams.set("clause", formData.get("clause"))
+
+    url.searchParams.set(
+      "hammerstone_refine_inline_criterion[input_attributes][clause]",
+      formData.get("hammerstone_refine_inline_criterion[input_attributes][clause]")
+    )
 
     // navigate the modal to refresh the form
     window.Turbo.visit(url.toString(), {frame: this.turboFrameValue})

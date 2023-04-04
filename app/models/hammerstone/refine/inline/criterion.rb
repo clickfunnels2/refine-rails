@@ -12,7 +12,13 @@ class Hammerstone::Refine::Inline::Criterion
   # initialize a Crtierion object from a blueprint node
   def self.from_blueprint_node(node, **additional_attrs)
     attrs = node.deep_dup.merge(additional_attrs)
-    attrs[:input_attributes] = attrs.delete[:input]
+
+    # delete some attributes we don't need
+    attrs.delete(:depth)
+    attrs.delete(:type)
+
+    # suffix nested hash keys with '_attributes' to initialize objects
+    attrs[:input_attributes] = attrs.delete(:input)
     if input_attrs = attrs[:input_attributes]
       input_attrs[:count_refinement_attributes] = input_attrs.delete(:count_refinement)
       input_attrs[:date_refinement_attributes] = input_attrs.delete(:date_refinement)
@@ -64,7 +70,7 @@ class Hammerstone::Refine::Inline::Criterion
   end
 
   def input_attributes=(attrs = {})
-    input.attributes = attrs
+    input.attributes = attrs.to_h
   end
 
   def to_key
@@ -81,5 +87,19 @@ class Hammerstone::Refine::Inline::Criterion
 
   def input_partial
     "hammerstone/refine/inline/inputs/#{condition.component}".underscore
+  end
+
+  def to_blueprint_node
+    result = attributes.slice(:condition_id, :input_attributes)
+    result[:input] = result.delete(:input_attributes)
+    if input_attrs = result[:input]
+      input_attrs[:count_refinement] = input_attrs.delete(:count_refinement_attributes)
+      input_attrs[:date_refinement] = input_attrs.delete(:date_refinement_attributes)
+    end
+    result
+  end
+
+  def human_readable
+    condition.human_readable(to_blueprint_node[:input])
   end
 end

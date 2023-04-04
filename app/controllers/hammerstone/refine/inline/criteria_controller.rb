@@ -14,18 +14,23 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
 
   def create
     @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params.merge(refine_filter: @refine_filter))    
-    blueprint = refine_filter.blueprint
+    blueprint = @refine_filter.blueprint
 
     Hammerstone::Refine::Filters::BlueprintEditor
-      .new(refine_filter.blueprint)
-      .add(**@criterion.to_editor_args)
+      .new(@refine_filter.blueprint)
+      .add(
+        position: @criterion.position.to_i,
+        conjunction: @criterion.conjunction,
+        criterion: @criterion.to_blueprint_node
+      )
 
-    redirect_to_stable_id(refine_filter.to_stable_id)
+    redirect_to_stable_id(@refine_filter.to_stable_id)
   end
 
   def edit
     @criterion = Hammerstone::Refine::Inline::Criterion
       .groups_from_filter(@refine_filter, client)
+      .flatten
       .detect { |c| c.position.to_s == params[:id] }
 
     @criterion.attributes = criterion_params

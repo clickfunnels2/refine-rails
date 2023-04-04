@@ -27,21 +27,28 @@ class Hammerstone::Refine::Inline::Criteria::Input
     }.compact
   end
 
+  def count_refinement
+    @count_refinement ||= Hammerstone::Refine::Inline::Criteria::NumericRefinement.new
+  end
+
   def count_refinement_attributes
-    count_refinement&.attributes
+    count_refinement.attributes
   end
 
   def count_refinement_attributes=(attrs = {})
-    self.count_refinement ||= Hammerstone::Refine::Inline::Criteria::NumericRefinement.new
-    count_refinement.attributes = attrs
+    count_refinement.attributes = attrs.to_h
+  end
+
+  def date_refinement
+    @date_refinement ||= Hammerstone::Refine::Inline::Criteria::DateRefinement.new
   end
 
   def date_refinement_attributes
-    date_refinement&.attributes
+    date_refinement.attributes
   end
 
   def date_refinement_attributes=(attrs = {})
     self.date_refinement ||= Hammerstone::Refine::Inline::Criteria::DateRefinement.new
-    date_refinement.attributes = attrs
+    date_refinement.attributes = attrs.to_h
   end
 end

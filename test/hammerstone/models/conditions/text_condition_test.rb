@@ -53,7 +53,7 @@ module Hammerstone::Refine::Conditions
 
     it "correctly executes clause set" do
       data = {clause: TextCondition::CLAUSE_SET}
-      expected_sql = "SELECT \"t\".* FROM \"t\" WHERE (\"t\".\"text_test\" IS NOT NULL OR \"t\".\"text_test\" != '')"
+      expected_sql = "SELECT \"t\".* FROM \"t\" WHERE (\"t\".\"text_test\" IS NOT NULL AND \"t\".\"text_test\" != '')"
       assert_equal convert(expected_sql), apply_condition_on_test_filter(condition_under_test, data).to_sql
     end
 

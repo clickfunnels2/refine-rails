@@ -1,4 +1,7 @@
-### 2.4.3 (not yet released)
+### 2.4.4
+  * features
+    * Hotfix to allow end user to create custom condition with a left joins
+### 2.4.3 
   * features
     * added generator for creating filters
   * bugfix

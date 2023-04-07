@@ -62,25 +62,45 @@ module Hammerstone::Refine
       (instance.is_a? ActiveRecord::Reflection::BelongsToReflection) || (instance.is_a? ActiveRecord::Reflection::HasOneReflection)
     end
 
-    def release_pending_relationship
+    # This method can be challenging to understand. Walk through the values with the `can handle nested relationships` test.
+    # The query will eventually return the following SQL:
+    #     SELECT "btt_phones".* FROM "btt_phones"
+    #     WHERE ("btt_phones"."btt_user_id" IN
+    #     (SELECT "btt_users"."id" FROM "btt_users" WHERE "btt_users"."id" IN
+    #     (SELECT "btt_notes"."btt_user_id" FROM "btt_notes" WHERE ("btt_notes"."body" LIKE \'%foo%\'))))
 
+    def release_pending_relationship
+      # instance is the ActiveRecord::Reflection::HasManyReflection between btt_notes and BttUser
       instance = get_pending_relationship_instance
-      # Pop off the last key (last relationship) 
+      # Pop off the last key (last relationship)
+      # popped = :btt_notes
       popped = pending_relationship_subquery_depth.pop.to_sym
       return if relationship_supports_collapsing(instance)
+      # current = [:btt_user]
       current = get_current_relationship
-
       if current.blank?
         @immediately_commit_pending_relationship_subqueries = true
         return
       end
       # Grab the query one level higher than the current stack (removed during pop)
+      # query is the pending_relationship_subqueries[:btt_user][:query] = "SELECT `btt_users`.`id` FROM `btt_users`"
       query = pending_relationship_subqueries.dig(*current)[:query]
       # Build hash to send to commit_subset with popped -> value at popped
       subset = {}
+      # subset is a hash with key [:btt_notes] (the popped relationship) = value at popped.
+      # subset[:btt_notes].keys = [:instance, :query, :key, :secondary, :inverse_clause]
+      #  subset[:btt_notes][:query].to_sql
+      # "SELECT `btt_notes`.`btt_user_id` FROM `btt_notes` WHERE (`btt_notes`.`body` LIKE '%foo%')"
+
       subset[popped] = pending_relationship_subqueries.dig(*current)[:children][popped]
       # Remove popped from pending relationships subqueries -> handled in commit_subset
+      # We are removing the "child" relationship we just set to subset (in this case :btt_notes)
+      # pending_relationship_subqueries[:btt_user][:children] = {}
+      # And assigning the value at [:btt_user][:query] to what is returned in commit_subset
       pending_relationship_subqueries.dig(*current)[:children].except!(popped)
+      # query is the high level linking query = "SELECT `btt_users`.`id` FROM `btt_users`"
+      # and subset is the hash of the child relationship we just removed from pending_relationship_subqueries
+      # subset[:btt_notes].keys = [:instance, :query, :key, :secondary, :inverse_clause]
       pending_relationship_subqueries.dig(*current)[:query] = commit_subset(subset: subset, query: query)
     end
 
@@ -128,7 +148,6 @@ module Hammerstone::Refine
         current_model = subquery[:instance]&.klass 
         parent_model = subquery[:instance]&.active_record
         use_multiple_databases = (inner_query.is_a? Arel::SelectManager) && use_multiple_databases?(current_model, parent_model)
-
         if query.present?
           # If query exists and is a Select Manager we are deeply nested and need to build the query
           # with a WHERE statement

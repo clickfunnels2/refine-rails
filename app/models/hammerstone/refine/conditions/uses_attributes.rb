@@ -6,15 +6,6 @@ module Hammerstone::Refine::Conditions
       self
     end
 
-    def apply_and_add_to_query(query_class:, table:, input:, subquery:, inverse_clause: false)
-      node = apply(input, table, query_class, inverse_clause)
-      if node
-        subquery.where(node)
-      else
-        node
-      end
-    end
-
     def apply_relationship_attribute(input:, query:)
       # Split on first .
       decompose_attribute = @attribute.split(".", 2)
@@ -79,18 +70,32 @@ module Hammerstone::Refine::Conditions
     end
 
     def create_pending_wherein_subquery(input:, relation:, instance:, query:)
-      # This method builds out the linking keys between the provided query model and the relation 
+      # This method builds out the linking keys between the provided query model and the relation
       # and saves it to pending relationship subqueries
-      # Class of the relation as held in the AR::Relation object 
+      # Class of the relation as held in the AR::Relation object
       relation_class = instance.klass
 
       # Pull what's already in the tracker at this depth if already traversed
       subquery = filter.get_pending_relationship_subquery || relation_class.select([key_2(instance)]).arel
-      # Primary/secondary keys keep track of how to link workspace to parent (workspaces to contact in this example)
-      # Add to tracker/does nothing if already have a value at this level
+
+      # Primary/secondary keys keep track of how to link tables
+      # If depth has been added (i.e. filter.pending_relationship_subquery_depth = [:btt_user, :btt_notes])
+      # This will add the [:children] key to the pending_relationship_subqueries tracker under the parent key [:btt_user]
       filter.add_pending_relationship_subquery(subquery: subquery, primary_key: key_1(instance), secondary_key: key_2(instance))
-      # Apply condition scoped to existing subquery
-      apply_and_add_to_query(query_class: relation_class, table: relation_class.arel_table, input: input, subquery: subquery)
+
+      # Apply the condition. If a nested relationship, this apply is adding the children key (with values) to the pending_relationship_subqueries tracker
+      # due to the recursive nature of the apply method. This is critical because it get is then "rolled up" in release_pending_relationship
+      node = apply(input, relation_class.arel_table, relation_class, false)
+
+      # If node is an AREL::SELECT manager we are allowing the apply condition to return a fully formed subquery - we replace
+      # the linking keys in the tracker with the fully formed select query
+      # Has not been tested more than one level deep
+      if node.is_a? Arel::SelectManager
+        filter.add_pending_relationship_subquery(subquery: node, primary_key: key_1(instance), secondary_key: key_2(instance))
+      elsif node
+        # This modifies subquery *in* the pending_relationship_subqueries tracker.
+        subquery.where(node)
+      end
     end
 
     def group(nodes)

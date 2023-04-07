@@ -1,37 +1,22 @@
-<% selected = input.has_key?(:selected) ? input[:selected] : [] %>
-<% multiple = meta_clause[:multiple] ? "multiple" : "" %>
-<% if ['st', 'nst'].include? input[:clause] %>
-<!-- Render nothing -->
-<% elsif %>
-  <%= tag.div class: 'refine-option-condition-container' do %>
-    <%= tag.div data: {
-      action: "$change->refine--update#selected blur->refine--update#refreshFromServer",
-      controller: 'fields--super-select',
-      fields__super_select_enable_search_value: 'true',
-      fields__super_select_container_width_value: 'resolve',
-    } do %>
-      <select <%=multiple%>
-        class="refine-option-condition-select"
-        data-fields--super-select-target="select"
-        name="selected"
-        data-input-id='<%= input_id if input_id%>'
-      >
-      <% condition.meta[:options].each do |option| %>
-        <option
-          value="<%= option[:id] %>"
-          <% if selected.find { |id|  id == option[:id] } %>selected<% end %>
-        >
-          <%= option[:display] %>
-        </option>
-      <% end %>
-
-      </select>
-    <% end %>
-    <% if meta[:postfix] %>
-      <span class="refine-option-condition-postfix"><%= meta[:postfix] %></span>
-    <% end %>
-    <%= render partial: 'hammerstone/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
+<%= tag.div class: 'refine-option-condition-container' do %>
+  <%= tag.div data: {
+    controller: 'fields--super-select',
+    fields__super_select_enable_search_value: 'true',
+    fields__super_select_container_width_value: 'resolve',
+  } do %>
+    <%= input_fields.collection_select :selected
+      criterion.condition.meta[:options],
+      :id,
+      :display,
+      {},
+      class: "refine-option-condition-select",
+      data: { fields__super_select_target: "select" }
+      # TODO multiple
+    %>
   <% end %>
-<% end %>
+  <% if false #TODO replace meta[:postfix] %>
+    <span class="refine-option-condition-postfix"><%= meta[:postfix] %></span>
+  <% end %>
+</div>
 
 

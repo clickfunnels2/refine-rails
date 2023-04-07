@@ -1,21 +1,13 @@
-<div
-  data-controller="refine--date"
-  class="refine-date-picker-container"
->
-  <label for="<%= condition_id %>" class="sr-only"><%= label %></label>
+<div data-controller="refine--date" class="refine-date-picker-container">
+  <%= input_fields.label attribute, label %>
   <input
     class="refine-date-picker-input"
     type="text"
     value="<%= date&.to_date&.strftime('%m/%d/%y') %>"
     data-refine--date-target="field"
   />
-  <input
-    type="hidden"
-    name="<%= input_key %>"
-    value="<%= date&.to_date&.strftime('%y-%m-%d') %>"
-    data-refine--date-target="hiddenField"
-    data-input-key="<%= input_key %>"
-    data-input-id="<%= defined?(input_id) && input_id %>"
-    data-action="change->refine--update#value"
-  >
+  <%= input_fields.hidden_field attribute,
+    value: value&.to_date&.strftime('%m/%d/%y'),
+    data: { refine__date_target: "hiddenField" },
+  %>
 </div>

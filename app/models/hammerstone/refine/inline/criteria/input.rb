@@ -1,6 +1,11 @@
 class Hammerstone::Refine::Inline::Criteria::Input
   include ActiveModel::Model
 
+  MODIFIERS = {
+    ago: "Ago",
+    form_now: "From now"
+  }.freeze
+
   attr_accessor :clause,
   :date1,
   :date2,

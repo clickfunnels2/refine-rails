@@ -1,36 +1,19 @@
-<% selected = input.has_key?(:selected) ? input[:selected] : [] %>
-
-<% if ['st', 'nst'].include? input[:clause] %>
-<!-- Render nothing -->
-<% elsif %>
-  <%= tag.div class: 'refine-filter-condition-container' do %>
-    <%= tag.div data: {
-      action: "$change->refine--update#selected blur->refine--update#refreshFromServer",
-      controller: 'fields--super-select',
-      fields__super_select_enable_search_value: 'true',
-      fields__super_select_container_width_value: 'resolve',
-    } do %>
-      <select
-        class="refine-filter-condition-select"
-        data-fields--super-select-target="select"
-        name="selected"
-        data-input-id='<%= input_id if input_id%>'
-      >
-      <% condition.meta[:options].each do |option| %>
-        <option
-          value="<%= option[:id] %>"
-          <% if selected.find { |id|  id == option[:id] } %>selected<% end %>
-        >
-          <%= option[:display] %>
-        </option>
-      <% end %>
-
-      </select>
-    <% end %>
-    <% if meta[:postfix] %>
-      <span class="refine-filter-condition-postfix"><%= meta[:postfix] %></span>
-    <% end %>
+<div class="refine-filter-condition-container">
+  <%= tag.div data: {
+    controller: 'fields--super-select',
+    fields__super_select_enable_search_value: 'true',
+    fields__super_select_container_width_value: 'resolve',
+  } do %>
+    <%= input_fields.collection_select :selected
+      criterion.condition.meta[:options],
+      :id,
+      :display,
+      {},
+      class: "refine-filter-condition-select",
+      data: { fields__super_select_target: "select" }
+    %>
   <% end %>
-<% end %>
-
-
+  <% if false #TODO replace meta[:postfix] %>
+    <span class="refine-option-condition-postfix"><%= meta[:postfix] %></span>
+  <% end %>
+</div>

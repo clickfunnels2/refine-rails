@@ -9,7 +9,7 @@ module Hammerstone::Refine::Conditions
 
     def boot_has_clauses
       @show_clauses = {}
-      add_rules({ clause: "required" })
+      add_rules({ field: "clause", rule: "required", message_key: Hammerstone::Refine::Conditions::Errors::ValidationErrors::CLAUSE_REQUIRED })
       with_meta({ clauses: get_clauses })
       add_ensurance(ensure_clauses)
       before_validate(before_clause_validation)

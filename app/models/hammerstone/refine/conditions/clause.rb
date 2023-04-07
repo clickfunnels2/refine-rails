@@ -8,19 +8,18 @@ module Hammerstone::Refine::Conditions
     def initialize(id = nil, display = nil)
       @id = id
       @display = display || id.humanize(keep_id_suffix: true).titleize
-      @rules = {}
-      @messages
+      @rules = []
     end
 
     def with_rules(user_defined_hash)
-      @rules.merge!(user_defined_hash)
+      @rules << (user_defined_hash)
       self
     end
 
     def requires_inputs(fields)
       # Coerce field to an array
       [*fields].each do |field|
-        @rules.merge!({"#{field}": "required"})
+        @rules << ({field: "#{field}", rule: "required", message_key: Hammerstone::Refine::Conditions::Errors::ValidationErrors::FIELD_REQUIRED})
       end
       self
     end

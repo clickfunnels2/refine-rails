@@ -11,7 +11,7 @@ module Hammerstone::Refine::Conditions
     include UsesAttributes
     include HasRefinements
 
-    attr_reader :ensurances, :before_validations, :clause, :filter
+    attr_reader :ensurances, :before_validations, :clause, :filter, :messages
     attr_accessor :display, :id, :is_refinement, :attribute
 
     def initialize(id = nil, display = nil)
@@ -21,7 +21,8 @@ module Hammerstone::Refine::Conditions
       @id = id
       # Optimistically set attribute to the id
       @attribute = id
-      @rules = {}
+      @rules = []
+      @messages = {}
 
       # Ensurance validations -> every condition must have an id and an attribute evaluated after
       # developer configuration
@@ -81,19 +82,12 @@ module Hammerstone::Refine::Conditions
     def boot
     end
 
-    def add_rules(new_rules, new_messages = {})
-      # TODO add messages if desired
-      @rules.merge!(new_rules)
-      add_messages(new_messages)
-      self
-    end
-
-    def messages
-      @messages ||= {}
-    end
-
-    def add_messages(new_messages)
-      messages.merge!(new_messages)
+    def add_rules(new_rules)
+      if new_rules.is_a? Array
+        @rules  = @rules.concat(new_rules)
+      else
+        @rules << (new_rules)
+      end
       self
     end
 
@@ -124,10 +118,7 @@ module Hammerstone::Refine::Conditions
       # Ensurance validations are checking the developer configured correctly
       run_ensurance_validations
       # Allow developer to modify user input
-      # TODO run_before_validate(input) -> what is this for?
-
       run_before_validate_validations(input)
-
       # TODO Determine right place to set the clause
       validate_user_input(input)
       if input.dig(:filter_refinement).present?
@@ -167,15 +158,30 @@ module Hammerstone::Refine::Conditions
       end
     end
 
+    # Compares @messages (which can be user overridden) to the message_key. Message_key points to the constants in VALIDATION
+    def validation_message(field, message_key)
+      if @messages.include? message_key
+        @messages[message_key]
+      else
+        "#{field} is required"
+      end
+    end
+
+    def remap_validation_messages(new_messages)
+      @messages.merge!(new_messages)
+      self
+    end
+
     def validate_user_input(input)
       evaluated_rules = recursively_evaluate_lazy_enumerable(@rules)
       # Set input parameters on the condition in order to use condition level validations
       # TODO set this somewhere more obvious 
       @clause = input[:clause]
       set_input_parameters(input)
-      evaluated_rules.each_pair do |k, v|
-        if input[k].blank?
-          errors.add(:base, "A #{k} is required")
+      # TODO allow for additional rules
+      evaluated_rules.each do | rule |
+        if input[rule[:field].to_sym].blank?
+          errors.add(:base, self.validation_message(rule[:field], rule[:message_key]))
         end
       end
       # Errors added to the errors array by individual conditions and standard rails validations

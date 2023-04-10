@@ -7,4 +7,7 @@
     class: "refine-option-condition-select",
     multiple: criterion.multiple?
   %>
+  <% if criterion.condition.meta[:postfix] %>
+    <span class="refine-option-condition-postfix"><%= meta[:postfix] %></span>
+  <% end %>
 </div>

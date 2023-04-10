@@ -83,6 +83,17 @@ class Hammerstone::Refine::Filters::Criterion
     "hammerstone/refine/filters/criterion"
   end
 
+  def options
+    if condition.respond_to? :options
+      condition.options.map {|option_hash| Hammerstone::Refine::Inline::Criteria::Option.new(**option_hash)}
+    end
+  end
+
+  def multiple?
+    selected_clause = condition.clauses.detect {|c| c.id == input.clause }
+    selected_clause.meta[:multiple].present?
+  end
+
   private
 
   def initialize_condition!

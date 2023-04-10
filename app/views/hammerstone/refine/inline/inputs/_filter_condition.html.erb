@@ -1,13 +1,9 @@
 <div class="refine-filter-condition-container">
   <%= input_fields.collection_select :selected
-    criterion.condition.meta[:options],
+    criterion.options,
     :id,
     :display,
     {},
     class: "refine-filter-condition-select",
-    data: { fields__super_select_target: "select" }
   %>
-  <% if false #TODO replace meta[:postfix] %>
-    <span class="refine-option-condition-postfix"><%= meta[:postfix] %></span>
-  <% end %>
 </div>

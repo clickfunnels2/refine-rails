@@ -1,19 +1,13 @@
 <%= tag.div class: 'refine-option-condition-container' do %>
-  <%= tag.div data: {
-    controller: 'fields--super-select',
-    fields__super_select_enable_search_value: 'true',
-    fields__super_select_container_width_value: 'resolve',
-  } do %>
-    <%= input_fields.collection_select :selected
-      criterion.condition.meta[:options],
-      :id,
-      :display,
-      {},
-      class: "refine-option-condition-select",
-      data: { fields__super_select_target: "select" }
-      # TODO multiple
-    %>
-  <% end %>
+  <%= input_fields.collection_select :selected
+    criterion.condition.meta[:options],
+    :id,
+    :display,
+    {},
+    class: "refine-option-condition-select",
+    data: { fields__super_select_target: "select" }
+    # TODO multiple
+  %>
   <% if false #TODO replace meta[:postfix] %>
     <span class="refine-option-condition-postfix"><%= meta[:postfix] %></span>
   <% end %>

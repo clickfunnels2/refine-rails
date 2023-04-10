@@ -73,6 +73,7 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
         :date1,
         :date2,
         :days,
+        :modifier,
         :value,
         :value1,
         :value2,

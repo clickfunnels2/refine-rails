@@ -29,8 +29,8 @@ class Hammerstone::Refine::Inline::Criteria::Input
       value: value,
       value1: value1,
       value2: value2,
-      count_refinement_attributes: count_refinement_attributes,
-      date_refinement_attributes: date_refinement_attributes
+      count_refinement_attributes: count_refinement_attributes.presence,
+      date_refinement_attributes: date_refinement_attributes.presence
     }.compact
   end
 

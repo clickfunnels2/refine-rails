@@ -1,30 +1,39 @@
-<%= turbo_frame_tag dom_id(@refine_filter_builder, :save) do %>
-  <%= content_tag :div, class: "refine-stored-filter-container" do %>
+<%= turbo_frame_tag dom_id(@criterion, :save) do %>
+  <div class="refine-stored-filter-container">
+
     <% if @stored_filter.errors.any? %>
       <% @stored_filter.errors.full_messages.each do |message|%>
         <p class="refine-stored-filter-error"><%= message %></p>
       <% end %>
     <% end %>
+
     <%= form_with(
-      model: @refine_filter_builder,
       url: hammerstone_refine_inline_stored_filters_path,
       method: :post,
-      scope: "hammerstone_refine_filters_builder",
       class: "refine-stored-filter-form",
         data: {
-        turbo_frame: dom_id(@refine_filter_builder, :save)
-      }) do |form| %>
-        <%= form.hidden_field :client_id %>
-        <%= form.hidden_field :filter_class %>
-        <%= form.hidden_field :blueprint_json %>
-        <input type="text" name="name" placeholder="<%= t('global.filter_name_placeholder')%>"
-          class="refine-stored-filter-input"
-          value="<%= @stored_filter.name %>"
-        />
-        <button class="refine--inline-btn" data-action="click->refine--popup#hide" type="button">
-          <%= t('global.buttons.cancel') %>
-        </button>
-        <%= button_tag t('global.buttons.save'), type: "submit", class: "refine--inline-btn" %>
-      <% end %>
+        turbo_frame: dom_id(@criterion, :save)
+      }) do |f| %>
+
+        <%= fields model: @criterion do |criteria_fields| %>
+          <%= criteria_fields.hidden_field :client_id %>
+          <%= criteria_fields.hidden_field :stable_id %>
+        <% end %>
+
+        <%= fields model: @stored_filter do |stored_filter_fields| %>
+          <%= stored_filter_fields.text_field :name,
+            class: "refine-stored-filter-input",
+            placeholder: t('global.filter_name_placeholder')
+           %>
+        <% end %>
+
+        <%= f.button t('global.buttons.cancel'),
+          type: "button",
+          class: "refine--inline-btn",
+          data: { action: "click->refine--popup#hide" }
+        %>
+
+       <%= f.button t('global.buttons.save'), type: "submit", class: "refine--inline-btn" %>
     <% end %>
-<% end%>
+  </div>
+<% end %>

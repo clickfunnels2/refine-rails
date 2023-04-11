@@ -1,29 +1,31 @@
-class Hammerstone::Refine::InlineStoredFiltersController < ApplicationController
+class Hammerstone::Refine::Inline::StoredFiltersController < ApplicationController
   layout false
-  before_action :set_builder
+  before_action :set_refine_filter
+
 
   def index
-    @stored_filters = Hammerstone::Refine::StoredFilter.where(filter_type: @refine_filter_builder.filter_class)
+    @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params)
+    @stored_filters = Hammerstone::Refine::StoredFilter.where(filter_type: @refine_filter.type)
     @stored_filters = instance_exec(@stored_filters, &Refine::Rails.configuration.stored_filter_scope)
   end
 
   def find
-    @stored_filter = Hammerstone::Refine::StoredFilter.find_by(id: params[:id])
+    @stored_filter = Hammerstone::Refine::StoredFilter.find_by(id: params[:id], filter_type: @refine_filter.type)
     redirect_to_stable_id @stored_filter.refine_filter.to_stable_id
   end
 
   def new
-    @stored_filter = Hammerstone::Refine::StoredFilter.new(filter_type: @refine_filter_builder.filter_class)
+    @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params)
+    @stored_filter = Hammerstone::Refine::StoredFilter.new(filter_type: @refine_filter.type)
   end
 
   def create
-    @refine_filter = @refine_filter_builder.refine_filter
-
-    @stored_filter = Hammerstone::Refine::StoredFilter.new(
-      name: params[:name],
-      state: @refine_filter.state,
-      filter_type: @refine_filter.type,
-      **instance_exec(&Refine::Rails.configuration.custom_stored_filter_attributes)
+    @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params)
+    @stored_filter = Hammerstone::Refine::StoredFilter.new(stored_filter_params.merge(
+        state: @refine_filter.state,
+        filter_type: @refine_filter.type,
+        **instance_exec(&Refine::Rails.configuration.custom_stored_filter_attributes)
+      )
     )
 
     if @stored_filter.save
@@ -35,6 +37,23 @@ class Hammerstone::Refine::InlineStoredFiltersController < ApplicationController
 
   private
 
+  def set_refine_filter
+    @refine_filter ||= Refine::Rails.configuration.stabilizer_classes[:url]
+      .new
+      .from_stable_id(id: criterion_params[:stable_id])
+  end
+
+  def criterion_params
+    params.require(:hammerstone_refine_inline_criterion).permit(
+      :stable_id,
+      :client_id
+    )
+  end
+
+  def stored_filter_params
+    params.require(:hammerstone_refine_stored_filter).permit(:name)
+  end
+
   def redirect_to_stable_id stable_id
     # update_stable_id in url
     uri = URI(request.referrer)
@@ -44,19 +63,5 @@ class Hammerstone::Refine::InlineStoredFiltersController < ApplicationController
     uri.query = URI.encode_www_form(new_query_ar)
     
     redirect_to uri.to_s
-  end
-
-  def set_builder
-    builder_params = params.require(:hammerstone_refine_filters_builder).permit(
-      :blueprint_json,
-      :filter_class,
-      :stable_id,
-      :stored_filter_id,
-      :client_id,
-      :conjunction,
-      :position
-    )
-
-    @refine_filter_builder = Hammerstone::Refine::Filters::BuilderInline.new(builder_params)
   end
 end

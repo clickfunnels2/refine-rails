@@ -3,11 +3,11 @@
   <input
     class="refine-date-picker-input"
     type="text"
-    value="<%= date&.to_date&.strftime('%m/%d/%y') %>"
+    value="<%= value&.to_date&.strftime('%m/%d/%y') %>"
     data-refine--date-target="field"
   />
   <%= input_fields.hidden_field attribute,
     value: value&.to_date&.strftime('%m/%d/%y'),
-    data: { refine__date_target: "hiddenField" },
+    data: { refine__date_target: "hiddenField" }
   %>
 </div>

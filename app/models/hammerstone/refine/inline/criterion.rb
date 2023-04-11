@@ -102,4 +102,15 @@ class Hammerstone::Refine::Inline::Criterion
   def human_readable
     condition.human_readable(to_blueprint_node[:input])
   end
+
+  def options
+    if condition.respond_to? :options
+      condition.options.map {|option_hash| Hammerstone::Refine::Inline::Criteria::Option.new(**option_hash)}
+    end
+  end
+
+  def multiple?
+    selected_clause = condition.clauses.detect {|c| c.id == input.clause } || condition.clauses.first
+    selected_clause.meta[:multiple].present?
+  end
 end

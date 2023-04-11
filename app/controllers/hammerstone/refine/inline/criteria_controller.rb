@@ -9,7 +9,6 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
 
   def new
     @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params.merge(refine_filter: @refine_filter))
-    @criterion.condition_id = params[:id]
   end
 
   def create
@@ -74,6 +73,7 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
         :date2,
         :days,
         :modifier,
+        :selected,
         :value,
         :value1,
         :value2,
@@ -102,9 +102,5 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
     uri.query = URI.encode_www_form(new_query_ar)
     
     redirect_to uri.to_s
-  end
-
-  def input_params
-    params.permit(*Hammerstone::Refine::Filters::BlueprintEditor::INPUT_ATTRS)
   end
 end

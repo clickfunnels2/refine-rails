@@ -7,11 +7,6 @@
 <label style="color: black;"><%= @criterion.condition.display %></label>
 
 <%= form.fields :input_attributes, model: @criterion.input do |input_fields| %>
-
-  <% unless ['st', 'nst'].include? @criterion.input.clause %>
-    <%= render @criterion.input_partial, criterion: @criterion, form: form, input_fields: input_fields %>
-  <% end %>
-
   <div class="refine-criterion-clause-container">
     <div>
       <%= input_fields.collection_select :clause,
@@ -24,6 +19,10 @@
       %>
     </div>
   </div>
+
+  <% unless ['st', 'nst'].include? @criterion.input.clause %>
+    <%= render @criterion.input_partial, criterion: @criterion, form: form, input_fields: input_fields %>
+  <% end %>
 <% end %>
 
 <div class="refine-filter-builder-dropdown-button-container">

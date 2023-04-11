@@ -58,4 +58,8 @@ class Hammerstone::Refine::Inline::Criteria::Input
     self.date_refinement ||= Hammerstone::Refine::Inline::Criteria::DateRefinement.new
     date_refinement.attributes = attrs.to_h
   end
+
+  def selected=(value)
+    @selected = Array.wrap(value)
+  end
 end

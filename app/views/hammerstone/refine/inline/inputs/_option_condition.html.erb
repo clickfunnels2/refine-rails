@@ -1,5 +1,5 @@
-<%= tag.div class: 'refine-option-condition-container' do %>
-  <%= input_fields.collection_select :selected
+<div class="refine-option-condition-container">
+  <%= input_fields.collection_select :selected,
     criterion.options,
     :id,
     :display,

@@ -24,5 +24,6 @@ module Hammerstone::FilterApplicationController
       @refine_filter = filter_class.new([], initial_query)
     end
     @refine_client_id = SecureRandom.uuid
+    @refine_stable_id = @refine_filter.to_stable_id
   end
 end

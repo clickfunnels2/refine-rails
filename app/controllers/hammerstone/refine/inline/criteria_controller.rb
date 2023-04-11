@@ -28,7 +28,7 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
 
   def edit
     @criterion = Hammerstone::Refine::Inline::Criterion
-      .groups_from_filter(@refine_filter, client)
+      .groups_from_filter(@refine_filter, **criterion_params.slice(:client_id, :stable_id))
       .flatten
       .detect { |c| c.position.to_s == params[:id] }
 
@@ -39,9 +39,9 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
     @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params) 
     Hammerstone::Refine::Filters::BlueprintEditor
       .new(@refine_filter.blueprint)
-      .update(@criterion)
+      .update(params[:id].to_i, criterion: @criterion.to_blueprint_node)
 
-    redirect_to_stable_id(refine_filter.to_stable_id)
+    redirect_to_stable_id(@refine_filter.to_stable_id)
   end
 
   def destroy
@@ -49,7 +49,7 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
       .new(@refine_filter.blueprint)
       .delete(params[:id].to_i)
 
-    redirect_to_stable_id(refine_filter.to_stable_id)
+    redirect_to_stable_id(@refine_filter.to_stable_id)
   end
 
   private

@@ -1,5 +1,5 @@
 <div class="filter-wrapper">
-  <% Hammerstone::Refine::Inline::Criterion.groups_from_filter(@refine_filter).each.with_index do |group, i| %>
+  <% Hammerstone::Refine::Inline::Criterion.groups_from_filter(@refine_filter, client_id: @refine_client_id, stable_id: @refine_stable_id).each.with_index do |group, i| %>
   <%  %>
     <% unless i == 0 %>
       <div class="refine--inline-group-separator">

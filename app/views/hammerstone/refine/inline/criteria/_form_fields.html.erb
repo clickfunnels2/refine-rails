@@ -49,6 +49,12 @@
 
 <% end %>
 
+<% @error_messages&.each do |msg| %>
+  <p class="refine-criterion-error">
+    <%= msg %>
+  </p>
+<% end %>
+
 <div class="refine-filter-builder-dropdown-button-container">
   <button class="refine--inline-btn" data-action="click->refine--popup#hide" type="button">
     <%= t('global.buttons.cancel') %>

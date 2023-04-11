@@ -8,12 +8,7 @@ export default class extends Controller {
     src: String
   }
 
-  connect() {
-    console.log("Hello world!")
-  }
-
   show(_event) {
-    console.log("Show me the money!", this.frameTarget, this.srcValue)
     this.frameTarget.src = this.srcValue;
   }
 

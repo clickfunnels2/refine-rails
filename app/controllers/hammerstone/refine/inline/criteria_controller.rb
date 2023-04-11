@@ -23,7 +23,15 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
         criterion: @criterion.to_blueprint_node
       )
 
-    redirect_to_stable_id(@refine_filter.to_stable_id)
+    if filter_valid?(@refine_filter)
+      redirect_to_stable_id(@refine_filter.to_stable_id)
+    else
+      @error_messages = ["Input is not valid"]
+      render turbo_stream: turbo_stream.update(
+        @criterion,
+        self.class.render("new", assigns: {criterion: @criterion, refine_filter: @refine_filter, error_messages: @error_messages})
+      )
+    end
   end
 
   def edit
@@ -36,12 +44,20 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
   end
 
   def update
-    @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params) 
+    @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params.merge(refine_filter: @refine_filter)) 
     Hammerstone::Refine::Filters::BlueprintEditor
       .new(@refine_filter.blueprint)
       .update(params[:id].to_i, criterion: @criterion.to_blueprint_node)
 
-    redirect_to_stable_id(@refine_filter.to_stable_id)
+    if filter_valid?(@refine_filter)
+      redirect_to_stable_id(@refine_filter.to_stable_id)
+    else
+      @error_messages = ["Sorry that input is not valid"]
+      render turbo_stream: turbo_stream.update(
+        @criterion,
+        self.class.render("edit", assigns: {criterion: @criterion, refine_filter: @refine_filter, error_messages: @error_messages})
+      )
+    end
   end
 
   def destroy
@@ -102,5 +118,12 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
     uri.query = URI.encode_www_form(new_query_ar)
     
     redirect_to uri.to_s
+  end
+
+  def filter_valid?(refine_filter)
+    Hammerstone::Refine::Inline::Criterion
+      .groups_from_filter(@refine_filter, **criterion_params.slice(:client_id, :stable_id))
+      .flatten
+      .all?(&:valid?)
   end
 end

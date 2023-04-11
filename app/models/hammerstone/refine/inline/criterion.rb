@@ -74,7 +74,7 @@ class Hammerstone::Refine::Inline::Criterion
   end
 
   def to_key
-    [client_id, position, conjunction].compact
+    [client_id, position, conjunction].map(&:presence).compact
   end
 
   def condition
@@ -112,5 +112,22 @@ class Hammerstone::Refine::Inline::Criterion
   def multiple?
     selected_clause = condition.clauses.detect {|c| c.id == input.clause } || condition.clauses.first
     selected_clause.meta[:multiple].present?
+  end
+
+  def validate!
+    return if (input_attributes&.has_key?(:count_refinement) || input_attributes&.has_key?(:date_refinement))
+    errors.clear
+    begin
+      condition&.apply(input_attributes, refine_filter.table, refine_filter.initial_query || refine_filter.fallback_initial_condition)
+    rescue Hammerstone::Refine::Conditions::Errors::ConditionClauseError => e
+      e.errors.each do |error|
+        errors.add(:base, error.full_message)
+      end
+    end
+  end
+
+  def valid?
+    validate!
+    errors.empty?
   end
 end

@@ -15,8 +15,7 @@ class Hammerstone::Refine::Inline::Criteria::Input
   :value,
   :value1,
   :value2,
-  :count_refinement,
-  :date_refinement
+  :count_refinement
 
   def attributes
     {
@@ -29,8 +28,7 @@ class Hammerstone::Refine::Inline::Criteria::Input
       value: value,
       value1: value1,
       value2: value2,
-      count_refinement_attributes: count_refinement_attributes.presence,
-      date_refinement_attributes: date_refinement_attributes.presence
+      count_refinement_attributes: count_refinement_attributes.presence
     }.compact
   end
 
@@ -44,19 +42,6 @@ class Hammerstone::Refine::Inline::Criteria::Input
 
   def count_refinement_attributes=(attrs = {})
     count_refinement.attributes = attrs.to_h
-  end
-
-  def date_refinement
-    @date_refinement ||= Hammerstone::Refine::Inline::Criteria::DateRefinement.new
-  end
-
-  def date_refinement_attributes
-    date_refinement.attributes
-  end
-
-  def date_refinement_attributes=(attrs = {})
-    self.date_refinement ||= Hammerstone::Refine::Inline::Criteria::DateRefinement.new
-    date_refinement.attributes = attrs.to_h
   end
 
   def selected=(value)

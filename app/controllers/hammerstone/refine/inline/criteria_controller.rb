@@ -98,12 +98,6 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
           :clause,
           :value1,
           :value2
-        ],
-        date_refinement_attributes: [
-          :clause,
-          :date1,
-          :date2,
-          :days
         ]
       ]
     )

@@ -21,7 +21,6 @@ class Hammerstone::Refine::Inline::Criterion
     attrs[:input_attributes] = attrs.delete(:input)
     if input_attrs = attrs[:input_attributes]
       input_attrs[:count_refinement_attributes] = input_attrs.delete(:count_refinement)
-      input_attrs[:date_refinement_attributes] = input_attrs.delete(:date_refinement)
     end
     new(attrs)
   end
@@ -94,7 +93,6 @@ class Hammerstone::Refine::Inline::Criterion
     result[:input] = result.delete(:input_attributes)
     if input_attrs = result[:input]
       input_attrs[:count_refinement] = input_attrs.delete(:count_refinement_attributes)
-      input_attrs[:date_refinement] = input_attrs.delete(:date_refinement_attributes)
     end
     result
   end
@@ -115,7 +113,8 @@ class Hammerstone::Refine::Inline::Criterion
   end
 
   def validate!
-    return if (input_attributes&.has_key?(:count_refinement) || input_attributes&.has_key?(:date_refinement))
+    # TODO figure out how to validate inputs with count refinements
+    return if input_attributes&.has_key?(:count_refinement)
     errors.clear
     begin
       condition&.apply(input_attributes, refine_filter.table, refine_filter.initial_query || refine_filter.fallback_initial_condition)

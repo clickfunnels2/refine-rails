@@ -114,7 +114,7 @@ class Hammerstone::Refine::Inline::Criterion
 
   def validate!
     # TODO figure out how to validate inputs with count refinements
-    return if input_attributes&.has_key?(:count_refinement)
+    return if input.count_refinement.attributes.present?
     errors.clear
     begin
       condition&.apply(input_attributes, refine_filter.table, refine_filter.initial_query || refine_filter.fallback_initial_condition)

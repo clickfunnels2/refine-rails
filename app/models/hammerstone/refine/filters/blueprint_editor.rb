@@ -15,7 +15,6 @@ class Hammerstone::Refine::Filters::BlueprintEditor
     value1
     value2
     count_refinement
-    date_refinement
   ].freeze
 
   def initialize(blueprint)

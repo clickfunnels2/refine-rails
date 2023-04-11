@@ -9,10 +9,13 @@ class Hammerstone::Refine::Filters::BlueprintEditor
     date1
     date2
     days
+    modifier
     selected
     value
     value1
     value2
+    count_refinement
+    date_refinement
   ].freeze
 
   def initialize(blueprint)

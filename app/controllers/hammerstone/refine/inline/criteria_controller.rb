@@ -12,7 +12,7 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
   end
 
   def create
-    @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params.merge(refine_filter: @refine_filter))    
+    @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params.merge(refine_filter: @refine_filter))
     blueprint = @refine_filter.blueprint
 
     Hammerstone::Refine::Filters::BlueprintEditor

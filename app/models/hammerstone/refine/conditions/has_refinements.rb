@@ -50,7 +50,15 @@ module Hammerstone::Refine::Conditions
     end
 
     def has_any_refinements?
-      @date_refinement_proc || @count_refinement_proc ? true : false
+      !!(has_date_refinement? || has_count_refinement?)
+    end
+
+    def has_count_refinement?
+      @count_refinement_proc
+    end
+
+    def has_date_refinement?
+      @date_refinement_proc
     end
 
     def refinements_allowed?

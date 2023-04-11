@@ -2,7 +2,7 @@
 
   <%= input_fields.text_field :value1, class: "refine-numeric-condition-input" %>
 
-  <% if ['btwn', 'nbtwn'].include? criterion.input.clause %>
+  <% if ['btwn', 'nbtwn'].include? input_fields.object.clause %>
     <span class="refine-numeric-condition-and">and</span>
     <div class="refine-numeric-condition-second-container">
       <%= input_fields.text_field :value2, class: "refine-numeric-condition-second-input" %>

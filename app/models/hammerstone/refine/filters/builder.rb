@@ -45,7 +45,6 @@ class Hammerstone::Refine::Filters::Builder
     if stable_id.present?
       @refine_filter = Refine::Rails.configuration.stabilizer_classes[:url].new.from_stable_id(id: stable_id, initial_query: initial_query)
       @blueprint = @refine_filter.blueprint
-      @blueprint_json = @blueprint.to_json
     else
       json = blueprint_json || "[]"
       @blueprint = JSON.parse(json).map(&:deep_symbolize_keys)

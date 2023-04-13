@@ -3,10 +3,10 @@ module Hammerstone::FilterApplicationController
   # The current scope can be used to modify the query
 
 
-  def apply_filter(filter_class, initial_query: nil, builder_class: Hammerstone::Refine::Filters::Builder)
+  def apply_filter(filter_class, initial_query: nil)
     if filter_class.present?
       @stable_id = params[:stable_id]
-      @refine_filter_builder = builder_class.new(
+      @refine_filter_builder = Hammerstone::Refine::Filters::Builder.new(
         stable_id: @stable_id,
         filter_class: filter_class.name,
         initial_query: initial_query)

@@ -2,7 +2,7 @@ class Hammerstone::Refine::Filters::Query
   include ActiveModel::Model
   # View Model for the main section of the filter builder- the dynamic query form
 
-  attr_reader :filter, :criteria
+  attr_reader :filter
 
   def initialize(filter)
     @filter = filter

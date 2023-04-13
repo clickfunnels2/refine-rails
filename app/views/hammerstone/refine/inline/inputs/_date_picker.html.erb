@@ -1,0 +1,13 @@
+<div data-controller="refine--date" class="refine-date-picker-container">
+  <%= input_fields.label attribute, label %>
+  <input
+    class="refine-date-picker-input"
+    type="text"
+    value="<%= value&.to_date&.strftime('%m/%d/%y') %>"
+    data-refine--date-target="field"
+  />
+  <%= input_fields.hidden_field attribute,
+    value: value&.to_date&.strftime('%m/%d/%y'),
+    data: { refine__date_target: "hiddenField" }
+  %>
+</div>

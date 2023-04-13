@@ -1,0 +1,7 @@
+<div class="refine-text-condition-container">
+  <%= form.label :condition_id, criterion.condition.display, class: "sr-only" %>
+  <%= input_fields.text_field :value,
+    class: "refine-text-condition-input #{"has-error" if criterion.errors.any?}" 
+  %>
+  <%# TODO validation errors %>  
+</div>

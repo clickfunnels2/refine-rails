@@ -1,0 +1,7 @@
+<div class="refine--inline-group">
+  <% group.each do |criterion| %>
+    <%= render "hammerstone/refine/inline/filters/criterion", criterion: criterion %>
+  <% end %>
+
+  <%= render "hammerstone/refine/inline/filters/and_button", position: group.last.position + 1 %>
+</div>

@@ -1,0 +1,29 @@
+<div class="filter-wrapper">
+  <% Hammerstone::Refine::Inline::Criterion.groups_from_filter(@refine_filter, client_id: @refine_client_id, stable_id: @refine_stable_id).each.with_index do |group, i| %>
+  <%  %>
+    <% unless i == 0 %>
+      <div class="refine--inline-group-separator">
+        OR
+      </div>
+    <% end %>
+
+    <%= render "hammerstone/refine/inline/filters/group", group: group %>
+  <% end %>
+
+  <div class="refine--inline-group">
+    <% if @refine_filter.blueprint.present? %>
+      <%= render "hammerstone/refine/inline/filters/or_button", position: @refine_filter.blueprint.length %>
+    <% else %>  
+      <%= render "hammerstone/refine/inline/filters/and_button", position: 0 %>
+    <% end %>
+  </div>
+
+  <div class="refine--inline-group">
+    <% if @refine_filter.blueprint.present? %>
+      <%= render "hammerstone/refine/inline/filters/save_button" %>
+    <% end %>
+    <%= render "hammerstone/refine/inline/filters/load_button" %>
+  </div>
+
+
+</div>

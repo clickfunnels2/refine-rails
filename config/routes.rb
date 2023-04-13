@@ -7,6 +7,12 @@ Rails.application.routes.draw do
       resources :stored_filters, only: [:index, :new, :create] do
         post "find", on: :collection
       end
+      namespace :inline do
+        resources :criteria, except: [:show]
+        resources :stored_filters, only: [:index, :new, :create] do
+          post "find", on: :collection
+        end
+      end
     end
   end
 end

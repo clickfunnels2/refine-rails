@@ -1,3 +1,5 @@
+### 2.5.0
+  * V2 "filter pill" UI and architecture. Not a breaking change, existing filters still work. This introduces an entire new concept of an inline filter. 
 ### 2.4.4
   * features
     * Hotfix to allow end user to create custom condition with a left joins

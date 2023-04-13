@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    refine-rails (2.4.4)
+    refine-rails (2.5.0)
       rails (>= 6.0)
 
 GEM
@@ -111,7 +111,7 @@ GEM
       timeout
     net-smtp (0.3.3)
       net-protocol
-    nio4r (2.5.8)
+    nio4r (2.5.9)
     nokogiri (1.13.8)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)

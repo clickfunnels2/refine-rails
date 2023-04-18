@@ -9,6 +9,7 @@ module Hammerstone::Refine
     after_initialize :valid?
 
     cattr_accessor :default_stabilizer, default: nil, instance_accessor: false
+    cattr_accessor :max_conditions, default: 5, instance_accessor: true
 
     attr_reader :blueprint
 
@@ -24,6 +25,7 @@ module Hammerstone::Refine
         @relation = initial_query
         @immediately_commit_pending_relationship_subqueries = false
         @@default_stabilizer = Hammerstone::Refine::Stabilizers::UrlEncodedStabilizer
+        raise Errors::ConditionsLimitExceededError if max_conditions_exceeded?
       end
     end
 
@@ -263,6 +265,22 @@ module Hammerstone::Refine
 
     def to_stable_id
        Refine::Rails.configuration.stabilizer_classes[:url].new.to_stable_id(filter: self)
+    end
+
+    def blueprint_conditions
+      blueprint.filter { |node| node[:type] == 'condition' }
+    end
+
+    def max_conditions_exceeded?
+      max_conditions_set? && max_conditions > blueprint_conditions.length
+    end
+
+    def max_conditions_reached?
+      max_conditions_set? && max_conditions >= blueprint_conditions.length
+    end
+
+    def max_conditions_set?
+      max_conditions.to_i.positive?
     end
   end
 end

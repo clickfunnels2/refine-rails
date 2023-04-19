@@ -1,12 +1,26 @@
-<%= tag.div class: "refine-add-container", data: {
-  controller: "refine--add",
-  refine__add_previous_criterion_id_value: criteria.last.position,
-} do %>
-  <div
-    class="refine-add-button"
-    style="transition: all .15s ease"
-    data-action="click->refine--add#criterion"
-  >
+<% 
+  is_disabled = @refine_filter_builder.refine_filter.criteria_limit_reached?
+  criteria_limit = @refine_filter_builder.refine_filter.criteria_limit
+%>
+
+<%= tag.div(
+  class: "refine-add-container",
+  data: {
+    controller: 'refine--add',
+    refine__add_previous_criterion_id_value: (criteria.last.position unless is_disabled)
+  }) do %>
+
+  <%= tag.div(
+    class: class_names(
+      "refine-add-group" => true,
+      "refine-add-disabled" => is_disabled
+    ),
+    style: "transition: all .15s ease",
+    data: {
+      action: ("click->refine--add#group" unless is_disabled),
+      disabled_message: ("You can only create up to #{criteria_limit} filter conditions" if is_disabled)
+    }
+  ) do %>
     <span class="refine-add-button-text"><%= t(".add_and") %></span><i class="refine-add-icon fal fa-plus"></i>
-  </div>
+  <% end %>
 <% end %>

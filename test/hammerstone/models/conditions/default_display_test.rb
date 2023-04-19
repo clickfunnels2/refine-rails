@@ -6,7 +6,7 @@ require "support/hammerstone/test_double_filter"
 module Hammerstone::Refine::Conditions
   describe "Default Display no locales file" do
     before do
-      @filter = BlankTestFilter.new("random id")
+      @filter = BlankTestFilter.new([])
     end
 
     it "correctly displays string" do
@@ -47,7 +47,7 @@ module Hammerstone::Refine::Conditions
   describe "Display with locales file" do
     before do
       # Test filter is defined to use the tangible things locale file
-      @filter = TestDoubleFilter.new("random id")
+      @filter = TestDoubleFilter.new(["random id"])
     end
 
     it "correctly translates string when locales file present" do

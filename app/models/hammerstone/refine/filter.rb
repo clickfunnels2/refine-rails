@@ -9,7 +9,7 @@ module Hammerstone::Refine
     after_initialize :valid?
 
     cattr_accessor :default_stabilizer, default: nil, instance_accessor: false
-    cattr_accessor :max_conditions, default: 5, instance_accessor: true
+    cattr_accessor :criteria_limit, default: 5, instance_accessor: true
 
     attr_reader :blueprint
 
@@ -25,7 +25,7 @@ module Hammerstone::Refine
         @relation = initial_query
         @immediately_commit_pending_relationship_subqueries = false
         @@default_stabilizer = Hammerstone::Refine::Stabilizers::UrlEncodedStabilizer
-        raise Errors::ConditionsLimitExceededError if max_conditions_exceeded?
+        raise Hammerstone::Refine::Conditions::Errors::CriteriaLimitExceededError if criteria_limit_exceeded?
       end
     end
 
@@ -267,20 +267,20 @@ module Hammerstone::Refine
        Refine::Rails.configuration.stabilizer_classes[:url].new.to_stable_id(filter: self)
     end
 
-    def blueprint_conditions
-      blueprint.filter { |node| node[:type] == 'condition' }
+    def blueprint_criteria
+      blueprint&.filter { |node| node.is_a?(Hash) && node[:type] == 'criterion' }.to_a
     end
 
-    def max_conditions_exceeded?
-      max_conditions_set? && max_conditions > blueprint_conditions.length
+    def criteria_limit_exceeded?
+      criteria_limit_set? && blueprint_criteria.length > criteria_limit
     end
 
-    def max_conditions_reached?
-      max_conditions_set? && max_conditions >= blueprint_conditions.length
+    def criteria_limit_reached?
+      criteria_limit_set? && blueprint_criteria.length >= criteria_limit
     end
 
-    def max_conditions_set?
-      max_conditions.to_i.positive?
+    def criteria_limit_set?
+      criteria_limit.to_i.positive?
     end
   end
 end

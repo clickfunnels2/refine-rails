@@ -1,3 +1,5 @@
+### 2.6.0
+  * Add criteria limit to filters.  The default is 5 and any filters over the limit will raise `Hammerstone::Refine::Conditions::Errors::CriteriaLimitExceededError` when loaded.
 ### 2.5.0
   * V2 "filter pill" UI and architecture. Not a breaking change, existing filters still work. This introduces an entire new concept of an inline filter. 
 ### 2.4.4

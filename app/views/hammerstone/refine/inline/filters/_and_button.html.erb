@@ -9,7 +9,7 @@
 %>
 
 <% if @refine_filter.criteria_limit_reached? %>
-  <button disabled class="refine--inline-btn" type="button" data-disabled-message="You can only create up to <%= @refine_filter.criteria_limit %> filter conditions">
+  <button disabled class="refine--inline-btn" type="button" title="You can only create up to <%= @refine_filter.criteria_limit %> filter conditions">
     + Add Filter
   </button>
 <% else %>

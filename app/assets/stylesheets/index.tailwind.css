@@ -370,6 +370,10 @@
   cursor: pointer;
 }
 
+.refine--inline-btn:disabled {
+  cursor: not-allowed;
+}
+
 .refine--inline-popup {
   position: absolute;
   z-index: 100;

@@ -123,7 +123,7 @@ module Hammerstone::Refine::Conditions
     end
 
     def apply_clause_set(_, table)
-      table.grouping(arel_attribute(table).not_eq_any([nil, ""]))
+      table.grouping(arel_attribute(table).not_eq_all([nil, ""]))
     end
 
     def apply_clause_not_set(_, table)

@@ -180,6 +180,10 @@
   .refine-add-group {
     @apply cursor-pointer text-blue-600 bg-transparent font-bold underline pt-4 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150;
   }
+
+  .refine-add-group.refine-add-disabled {
+    cursor: not-allowed;
+  }
   
   .prefixed {
     /* keep it because the dropdown select uses it */
@@ -364,6 +368,10 @@
   padding: 2px 8px;
   border: solid 1px black;
   cursor: pointer;
+}
+
+.refine--inline-btn:disabled {
+  cursor: not-allowed;
 }
 
 .refine--inline-popup {

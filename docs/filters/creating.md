@@ -88,3 +88,18 @@ end
 ```
 
 The package comes with many conditions out of the box that you can use to build your perfect filter. To learn more about conditions, jump to the [conditions overview](/conditions/overview) page.
+
+## Criteria Limit
+The filter builder includes a criteria limit to keep the size of user-generated SQL queries under control.  The default is set to 5 criteria per filter.
+
+You can adjust the criteria limit for all filters in your application by setting the following in an initializer:
+
+```ruby
+# config/initializers/refine_rails.rb
+
+# limit all filters to 7 criteria
+Hammerstone::Refine::Filter.criteria_limit = 7
+
+# remove the criteria limit for all filters
+Hammerstone::Refine::Filter.criteria_limit = nil
+```

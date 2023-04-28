@@ -1,3 +1,5 @@
+### 2.5.3
+  * Fix existing error for existing filters that exceed criteria limit
 ### 2.5.2
   * Bugfix for "and" buttons creating OR groups
 ### 2.5.1

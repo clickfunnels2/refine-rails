@@ -25,7 +25,6 @@ module Hammerstone::Refine
         @relation = initial_query
         @immediately_commit_pending_relationship_subqueries = false
         @@default_stabilizer = Hammerstone::Refine::Stabilizers::UrlEncodedStabilizer
-        raise Hammerstone::Refine::Conditions::Errors::CriteriaLimitExceededError if criteria_limit_exceeded?
       end
     end
 

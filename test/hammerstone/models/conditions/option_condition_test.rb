@@ -358,6 +358,42 @@ module Hammerstone::Refine::Conditions
         assert_equal "Option Test is one of: Option 1, Option 2", condition.human_readable(data)
       end
 
+      it "correctly outputs human readable text for 'is set' clause" do
+        condition = OptionCondition.new("option_test")
+          .with_options(
+            [{
+              id: "option_1",
+              display: "Option 1"
+            }, {
+              id: "option_2",
+              display: "Option 2"
+            }]
+          )
+
+        data = {clause: OptionCondition::CLAUSE_SET}
+        filter = apply_condition_and_return_filter(condition, data)
+        filter.translate_display(condition)
+        assert_equal "Option Test is set", condition.human_readable(data)
+      end
+
+      it "correctly outputs human readable text for 'is not set' clause" do
+        condition = OptionCondition.new("option_test")
+          .with_options(
+            [{
+              id: "option_1",
+              display: "Option 1"
+            }, {
+              id: "option_2",
+              display: "Option 2"
+            }]
+          )
+
+        data = {clause: OptionCondition::CLAUSE_NOT_SET}
+        filter = apply_condition_and_return_filter(condition, data)
+        filter.translate_display(condition)
+        assert_equal "Option Test is not set", condition.human_readable(data)
+      end
+
     end
   end
 end

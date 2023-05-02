@@ -24,7 +24,7 @@ module Hammerstone::Refine::Conditions
 
     def human_readable(input)
       current_clause = get_clause_by_id(input[:clause])
-      display_values = input[:selected].map {|option_id| get_options.call.find{|option| option[:id] == option_id}[:display]}
+      display_values = input[:selected]&.map {|option_id| get_options.call.find{|option| option[:id] == option_id}[:display]}.to_a
       case input[:clause]
       when *[CLAUSE_EQUALS, CLAUSE_DOESNT_EQUAL]
         "#{display} #{current_clause.display} #{display_values.first}"
@@ -33,6 +33,8 @@ module Hammerstone::Refine::Conditions
           display_values = display_values.take(2) + ["..."]
         end
         "#{display} #{current_clause.display}: #{display_values.join(", ")}"
+      when *[CLAUSE_SET, CLAUSE_NOT_SET]
+        "#{display} #{current_clause.display}"
       else
         raise "#{input[:clause]} not supported"
       end

@@ -1,3 +1,5 @@
+### 2.5.4
+  * Fixes a rendering error that occurred with multiple OptionConditions in a single filter 
 ### 2.5.3
   * Fixes an error when generating human readable display of OptionConditions that use is set / is not set
   * Fix existing error for existing filters that exceed criteria limit

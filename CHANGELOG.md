@@ -1,3 +1,5 @@
+### 2.5.5
+  * Fix a potential issue with updating Option Conditions introduced in 2.5.4
 ### 2.5.4
   * Fixes a rendering error that occurred with multiple OptionConditions in a single filter 
 ### 2.5.3

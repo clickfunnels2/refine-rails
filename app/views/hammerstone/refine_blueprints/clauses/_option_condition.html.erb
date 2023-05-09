@@ -3,9 +3,9 @@
 <% if ['st', 'nst'].include? input[:clause] %>
 <!-- Render nothing -->
 <% elsif %>
-  <div class="refine-option-condition-container <%= "has-error" if criterion.errors.any? %> "
+  <div class="refine-option-condition-container <%= "has-error" if criterion.errors.any? %> ">
     <%= tag.div data: {
-      action: "$change->refine--update#selected blur->refine--update#refreshFromServer",
+
       controller: 'fields--super-select',
       fields__super_select_enable_search_value: 'true',
       fields__super_select_container_width_value: 'resolve',

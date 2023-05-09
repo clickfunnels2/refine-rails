@@ -1,4 +1,10 @@
-### 2.6.0
+### 2.5.3
+  * Fixes an error when generating human readable display of OptionConditions that use is set / is not set
+  * Fix existing error for existing filters that exceed criteria limit
+
+### 2.5.2
+  * Bugfix for "and" buttons creating OR groups
+### 2.5.1
   * Add criteria limit to filters.  The default is 5 and any filters over the limit will raise `Hammerstone::Refine::Conditions::Errors::CriteriaLimitExceededError` when loaded.
 ### 2.5.0
   * V2 "filter pill" UI and architecture. Not a breaking change, existing filters still work. This introduces an entire new concept of an inline filter. 

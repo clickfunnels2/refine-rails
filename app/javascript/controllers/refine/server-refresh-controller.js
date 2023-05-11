@@ -23,7 +23,8 @@ export default class extends Controller {
     return null
   }
 
-  async refreshFromServer() {
+  async refreshFromServer(options = {}) {
+    const { includeErrors } = options
     this.state.startUpdate()
     const request = new FetchRequest(
       "GET",
@@ -33,11 +34,11 @@ export default class extends Controller {
         query: {
           "hammerstone_refine_filters_builder[filter_class]": this.state.filterName,
           "hammerstone_refine_filters_builder[blueprint_json]": JSON.stringify(this.state.blueprint),
-          "hammerstone_refine_filters_builder[client_id]": this.state.clientIdValue
+          "hammerstone_refine_filters_builder[client_id]": this.state.clientIdValue,
+          include_errors: !!includeErrors
         }
       }
     )
     await request.perform()
   }
-
 }

@@ -7,18 +7,19 @@ export default class extends ServerRefreshController {
   }
 
   criterion() {
-    if (this.validateBlueprint) {
+    const isValid = this.validateBlueprint
+    if (isValid) {
       this.state.addCriterion(this.previousCriterionIdValue)
     }
-    this.refreshFromServer({includeErrors: true})
+    this.refreshFromServer({includeErrors: !isValid})
   }
 
   group() {
     const isValid = this.validateBlueprint
-    if (this.validateBlueprint) {
+    if (isValid) {
       this.state.addGroup()
     }
-    this.refreshFromServer({includeErrors: true})
+    this.refreshFromServer({includeErrors: !isValid})
   }
 
   async validateBlueprint(blueprint) {

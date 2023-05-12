@@ -12,10 +12,9 @@ export default class extends Controller {
     let currentElement = this.element
 
     while(currentElement !== document.body) {
-      const controller = this.application.getControllerForElementAndIdentifier(currentElement, 'refine--state')
-      if (controller) {
-        return controller
-      } else {
+      if (currentElement.matches('[data-controller~="refine--state"]'))
+        return this.application.getControllerForElementAndIdentifier(currentElement, 'refine--state')
+      else {
         currentElement = currentElement.parentNode
       }
     }

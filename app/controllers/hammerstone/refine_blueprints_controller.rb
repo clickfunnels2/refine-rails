@@ -16,7 +16,8 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
     end
 
     # don't display errors
-    @refine_filter_query.clear_errors
+    include_errors = ActiveRecord::Type::Boolean.new.cast(params[:include_errors])
+    @refine_filter_query.clear_errors unless include_errors
 
     respond_to do |format|
       format.turbo_stream
@@ -45,6 +46,14 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
     render partial: "stored_filters", layout: false
   end
 
+  def validate
+    if @refine_filter_query.valid?
+      head :ok
+    else
+      head :unprocessable_entity
+    end
+  end
+
   private
 
   def set_builder
@@ -53,7 +62,7 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
       :filter_class,
       :stable_id,
       :stored_filter_id,
-      :client_id,
+      :client_id
     )
 
     @refine_filter_builder = Hammerstone::Refine::Filters::Builder.new(builder_params)

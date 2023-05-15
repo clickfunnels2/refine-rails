@@ -58,7 +58,8 @@ export default class extends Controller {
     conditions: Array,
     className: String,
     refreshUrl: String,
-    clientId: String
+    clientId: String,
+    validateBlueprintUrl: String
   }
   static targets = ['loading']
 

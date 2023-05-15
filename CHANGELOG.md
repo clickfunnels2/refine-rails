@@ -1,3 +1,5 @@
+### 2.6.0
+  * Prevent users from adding criteria if values for existing criteria are blank
 ### 2.5.5
   * Fix a potential issue with updating Option Conditions introduced in 2.5.4
 ### 2.5.4

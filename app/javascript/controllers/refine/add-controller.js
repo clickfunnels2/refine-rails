@@ -6,16 +6,16 @@ export default class extends ServerRefreshController {
     previousCriterionId: Number,
   }
 
-  criterion() {
-    const isValid = this.validateBlueprint
+  async criterion() {
+    const isValid = await this.validateBlueprint()
     if (isValid) {
       this.state.addCriterion(this.previousCriterionIdValue)
     }
     this.refreshFromServer({includeErrors: !isValid})
   }
 
-  group() {
-    const isValid = this.validateBlueprint
+  async group() {
+    const isValid = await this.validateBlueprint()
     if (isValid) {
       this.state.addGroup()
     }
@@ -27,7 +27,7 @@ export default class extends ServerRefreshController {
 
     const request = new FetchRequest(
       "GET",
-      this.state.validateBlueprintValue,
+      this.state.validateBlueprintUrlValue,
       {
         query: {
           "hammerstone_refine_filters_builder[filter_class]": this.state.filterName,

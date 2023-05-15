@@ -16,7 +16,8 @@ class Hammerstone::RefineBlueprintsController < ApplicationController
     end
 
     # don't display errors
-    @refine_filter_query.clear_errors unless params[:include_errors]
+    include_errors = ActiveRecord::Type::Boolean.new.cast(params[:include_errors])
+    @refine_filter_query.clear_errors unless include_errors
 
     respond_to do |format|
       format.turbo_stream

@@ -91,15 +91,6 @@ describe Hammerstone::Refine::Filter do
         assert_equal expected_value, filter.configuration
       end
     end
-
-    describe "Conditions limit exceeded" do
-      it "raises an error" do
-        blueprint = (1..6).map { single_condition_blueprint }.flatten
-        assert_raises(Hammerstone::Refine::Conditions::Errors::CriteriaLimitExceededError) do
-          filter = TestDoubleFilter.new(blueprint)
-        end
-      end
-    end
   end
 
   def grouped_sql

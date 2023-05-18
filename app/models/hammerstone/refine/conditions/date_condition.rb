@@ -292,7 +292,7 @@ module Hammerstone::Refine::Conditions
       when CLAUSE_GREATER_THAN_OR_EQUAL
         apply_clause_greater_than_or_equal(comparison_time(date1), table)
       when CLAUSE_LESS_THAN_OR_EQUAL
-        apply_clause_less_than_or_equal(comparison_time(date1), table)
+        apply_clause_less_than_or_equal(end_of_day(comparison_time(date1)), table)
       end
 
     end

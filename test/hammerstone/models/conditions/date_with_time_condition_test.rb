@@ -177,7 +177,7 @@ module Hammerstone::Refine::Conditions
         condition = DateWithTimeCondition.new("date_test")
         data = {clause: DateCondition::CLAUSE_LESS_THAN_OR_EQUAL, date1: "2019-05-15"}
         expected_sql = <<~SQL.squish
-          SELECT "t".* FROM "t" WHERE ("t"."date_test" <= '2019-05-15 12:02:34')
+          SELECT "t".* FROM "t" WHERE ("t"."date_test" <= '2019-05-15 23:59:59.999999')
         SQL
         assert_equal convert(expected_sql), apply_condition_on_test_filter(condition, data).to_sql
       end

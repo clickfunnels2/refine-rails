@@ -5,7 +5,13 @@ require_relative "../../app/models/hammerstone/refine/stabilizers/url_encoded_st
 
 module Refine
   module Rails
-    class Config < Struct.new(:stored_filter_scope, :custom_stored_filter_attributes, :stabilizer_classes, keyword_init: true); end
+    class Config < Struct.new(
+      :stored_filter_scope,
+      :custom_stored_filter_attributes,
+      :stabilizer_classes,
+      :date_lte_uses_eod,
+      keyword_init: true
+    ); end
 
     @configuration = Config.new(
       stored_filter_scope: ->(scope) { scope },
@@ -13,7 +19,8 @@ module Refine
       stabilizer_classes: {
         db: Hammerstone::Refine::Stabilizers::DatabaseStabilizer,
         url: Hammerstone::Refine::Stabilizers::UrlEncodedStabilizer
-      }
+      },
+      date_lte_uses_eod: false
     )
 
     module_function def configuration

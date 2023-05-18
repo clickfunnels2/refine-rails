@@ -292,7 +292,9 @@ module Hammerstone::Refine::Conditions
       when CLAUSE_GREATER_THAN_OR_EQUAL
         apply_clause_greater_than_or_equal(comparison_time(date1), table)
       when CLAUSE_LESS_THAN_OR_EQUAL
-        apply_clause_less_than_or_equal(end_of_day(comparison_time(date1)), table)
+        time = comparison_time(date1)
+        time = end_of_day(time) if Refine::Rails.configuration.date_lte_uses_eod
+        apply_clause_less_than_or_equal(time, table)
       end
 
     end

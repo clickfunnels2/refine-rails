@@ -177,9 +177,29 @@ module Hammerstone::Refine::Conditions
         condition = DateWithTimeCondition.new("date_test")
         data = {clause: DateCondition::CLAUSE_LESS_THAN_OR_EQUAL, date1: "2019-05-15"}
         expected_sql = <<~SQL.squish
-          SELECT "t".* FROM "t" WHERE ("t"."date_test" <= '2019-05-15 23:59:59.999999')
+          SELECT "t".* FROM "t" WHERE ("t"."date_test" <= '2019-05-15 12:02:34')
         SQL
         assert_equal convert(expected_sql), apply_condition_on_test_filter(condition, data).to_sql
+      end
+
+      describe 'date_lte_uses_eod set' do
+        before do
+          @date_lte_uses_eod_was = Refine::Rails.configuration.date_lte_uses_eod
+          Refine::Rails.configuration.date_lte_uses_eod = true
+        end
+
+        after do
+          Refine::Rails.configuration.date_lte_uses_eod = @date_lte_uses_eod_was
+        end
+
+        it 'uses end of day for clause less than or equal' do
+         condition = DateWithTimeCondition.new("date_test")
+         data = {clause: DateCondition::CLAUSE_LESS_THAN_OR_EQUAL, date1: "2019-05-15"}
+         expected_sql = <<~SQL.squish
+           SELECT "t".* FROM "t" WHERE ("t"."date_test" <= '2019-05-15 23:59:59.999999')
+         SQL
+         assert_equal convert(expected_sql), apply_condition_on_test_filter(condition, data).to_sql 
+        end
       end
 
       describe "Human readable text representation" do

@@ -237,6 +237,14 @@ Refine::Rails.configuration.stored_filter_scope = ->(scope) { scope.where(worksp
 
 Custom scoping Proc's should accept a single argument which is the default scope defined by the gem.  It will be executed in the context of the Rails controller so methods like `current_user` and `params` are available.
 
+## Tweaking Date Comparison behavior
+You may run into a situation where users can only pick whole days that are being compared to a date column.  In this case, the default less than or equal behavior will compare to the current time on the day selected, which may exclude some records the user intended to include.  To include the entire selected day in the range, you can set the following in an initializer:
+
+# config/initializers/refine_rails.rb
+```ruby
+Refine::Rails.date_lte_uses_eod = true
+```
+
 ## Local JavaScript Development
 
 Notes if linking with `yarn link` isn't working:

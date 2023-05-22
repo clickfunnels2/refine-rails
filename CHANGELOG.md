@@ -1,3 +1,6 @@
+### 2.6.1
+  * Add configuration option `date_lte_uses_eod` to include a whole day in the range when using a <= comparison
+  * Fix a bug where option condition selections were being forced to the first value
 ### 2.6.0
   * Prevent users from adding criteria if values for existing criteria are blank
 ### 2.5.5

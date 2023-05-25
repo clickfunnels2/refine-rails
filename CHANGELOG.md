@@ -1,3 +1,5 @@
+### 2.6.2
+  * Add configuration option `option_condition_ordering` to allow apps to specify a custom ordering of OptionCondition options (e.g. alphabetizing)
 ### 2.6.1
   * Add configuration option `date_lte_uses_eod` to include a whole day in the range when using a <= comparison
   * Fix a bug where option condition selections were being forced to the first value

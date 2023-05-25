@@ -245,6 +245,15 @@ You may run into a situation where users can only pick whole days that are being
 Refine::Rails.date_lte_uses_eod = true
 ```
 
+## Customizing OptionCondition ordering
+You can customize sorting behavior for all OptionConditon options in an initializer:
+```ruby
+# config/initializers/refine_rails.rb
+
+# always alphabetize option condition lists
+Refine::Rails.configuration.option_condition_ordering = ->(options) { options.sort_by { |o| o[:display] } }
+```
+
 ## Local JavaScript Development
 
 Notes if linking with `yarn link` isn't working:

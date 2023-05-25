@@ -427,7 +427,7 @@ module Hammerstone::Refine::Conditions
             display: "Option C"
           }]
 
-          assert_equal expected, condition.get_options
+          assert_equal expected, condition.get_options.call
         ensure
           Refine::Rails.configuration.option_condition_ordering = option_condition_ordering_was
         end

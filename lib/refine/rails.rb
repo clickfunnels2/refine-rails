@@ -10,6 +10,7 @@ module Refine
       :custom_stored_filter_attributes,
       :stabilizer_classes,
       :date_lte_uses_eod,
+      :option_condition_ordering,
       keyword_init: true
     ); end
 
@@ -20,7 +21,8 @@ module Refine
         db: Hammerstone::Refine::Stabilizers::DatabaseStabilizer,
         url: Hammerstone::Refine::Stabilizers::UrlEncodedStabilizer
       },
-      date_lte_uses_eod: false
+      date_lte_uses_eod: false,
+      option_condition_ordering: ->(options) { options }
     )
 
     module_function def configuration

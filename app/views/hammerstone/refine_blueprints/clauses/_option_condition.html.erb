@@ -16,7 +16,7 @@
         name="values"
         data-input-id='<%= input_id if input_id%>'
       >
-      <% condition.meta[:options].each do |option| %>
+      <% condition.options.each do |option| %>
         <option
           value="<%= option[:id] %>"
           <% if selected.find { |id|  id == option[:id] } %>selected<% end %>

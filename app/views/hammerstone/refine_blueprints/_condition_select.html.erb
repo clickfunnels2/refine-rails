@@ -15,21 +15,11 @@
     name="conditions"
     class="refine-condition-select"
   >
-    <% categories.each do |category| %>
-      <optgroup label="<%= category %>">
-        <% conditions_for_category(category).each do |condition_option| %>
-          <option
-            value="<%= condition_option[:id] %>"
-            <% if selected_condition_id == condition_option[:id] %>selected<% end %>
-          ><%= condition_option[:display] %></option>
-        <% end %>
-      </optgroup>
-    <% end %>
-    <% uncategorized_conditions.each do |condition_option| %>
+    <% conditions.each do |condition| %>
       <option
-        value="<%= condition_option[:id] %>"
-        <% if selected_condition_id == condition_option[:id] %>selected<% end %>
-      ><%= condition_option[:display] %></option>
+        value="<%= condition[:id] %>"
+        <% if selected_condition_id == condition[:id] %>selected<% end %>
+      ><%= condition[:display] %></option>
     <% end %>
   </select>
 <% end %>

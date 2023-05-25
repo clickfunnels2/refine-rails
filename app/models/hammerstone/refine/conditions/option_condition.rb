@@ -69,7 +69,9 @@ module Hammerstone::Refine::Conditions
 
     def get_options
       proc do
-        @options = call_proc_if_callable(options)
+        @options = Refine::Rails.configuration.option_condition_ordering.call(
+          call_proc_if_callable(options)
+        )
       end
     end
 
@@ -233,10 +235,6 @@ module Hammerstone::Refine::Conditions
 
     def apply_clause_not_set(table)
       table.grouping(table[:"#{attribute}"].eq_any([nil, ""]))
-    end
-
-    def sorted_options
-      Refine::Rails.configuration.option_condition_ordering.call(options.to_a)
     end
   end
 end

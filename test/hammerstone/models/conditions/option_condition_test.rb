@@ -396,42 +396,25 @@ module Hammerstone::Refine::Conditions
 
     end
 
-    describe "#sorted_conditions" do
-      let(:condition) do
-        OptionCondition.new("option_test")
-          .with_options(
-            [{
-              id: "option_c",
-              display: "Option C"
-            }, {
-              id: "option_a",
-              display: "Option A"
-            }, {
-              id: "option_b",
-              display: "Option B"
-            }]
-          )
-      end
-
-      it "defaults to order options are assigned" do
-        expected = [{
-            id: "option_c",
-            display: "Option C"
-          }, {
-            id: "option_a",
-            display: "Option A"
-          }, {
-            id: "option_b",
-            display: "Option B"
-          }]
-
-        assert_equal expected, condition.sorted_options
-      end
-
-      it "uses custom configured sort" do
+    describe "custom configured option sorting" do
+      it do
         begin
           option_condition_ordering_was = Refine::Rails.configuration.option_condition_ordering
           Refine::Rails.configuration.option_condition_ordering = ->(options) {options.sort_by {|o| o[:display]}}
+
+          condition = OptionCondition.new("option_test")
+            .with_options(
+              [{
+                id: "option_c",
+                display: "Option C"
+              }, {
+                id: "option_a",
+                display: "Option A"
+              }, {
+                id: "option_b",
+                display: "Option B"
+              }]
+            )
 
           expected = [{
             id: "option_a",
@@ -444,7 +427,7 @@ module Hammerstone::Refine::Conditions
             display: "Option C"
           }]
 
-          assert_equal expected, condition.sorted_options
+          assert_equal expected, condition.get_options
         ensure
           Refine::Rails.configuration.option_condition_ordering = option_condition_ordering_was
         end

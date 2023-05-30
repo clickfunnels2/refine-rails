@@ -75,6 +75,12 @@ module Hammerstone::Refine
       end
     end
 
+    def get_query!
+      result = get_query
+      raise Hammerstone::Refine::InvalidFilterError.new(filter: self) unless errors.none?
+      result
+    end
+
     def add_nodes_to_query(subquery:, nodes:, query_method:)
       # Apply existing nodes to existing subquery
       if subquery.present? && nodes.present?

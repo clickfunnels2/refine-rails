@@ -1,5 +1,6 @@
 require "test_helper"
 require "support/hammerstone/test_double_filter"
+require "hammerstone/refine/invalid_filter_error"
 
 describe Hammerstone::Refine::Filter do
   include FilterTestHelper
@@ -26,6 +27,14 @@ describe Hammerstone::Refine::Filter do
       query.conditions = [Hammerstone::Refine::Conditions::TextCondition.new("text_field_value")]
       query.get_query
       assert query.errors.added? :filter, "The condition ID fake was not found"
+    end
+
+    it "get_query! raises exception" do
+      filter = TestDoubleFilter.new(bad_id)
+      filter.conditions = [Hammerstone::Refine::Conditions::TextCondition.new("text_field_value")]
+      assert_raises(Hammerstone::Refine::InvalidFilterError) do
+        filter.get_query!
+      end
     end
   end
 

@@ -281,5 +281,18 @@ module Hammerstone::Refine
     def criteria_limit_set?
       criteria_limit.to_i.positive?
     end
+
+    # Give each Filter subclass its own default_condition_id,
+    # that is also also readable from instances
+    #
+    # class UserFilter
+    #   UserFilter.default_condition_id = "email"
+    # # ...
+    # end
+    #
+    class << self
+      attr_accessor :default_condition_id
+    end
+    delegate :default_condition_id, to: :class
   end
 end

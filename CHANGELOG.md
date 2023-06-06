@@ -1,3 +1,5 @@
+### 2.6.4
+  * Add `get_query!` method to raise an error on invalid filters
 ### 2.6.3
   * Add `default_condition_id` attribute to filter classes.
 ### 2.6.2

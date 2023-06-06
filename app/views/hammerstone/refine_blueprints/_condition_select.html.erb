@@ -1,6 +1,8 @@
 <%
   conditions = @refine_filter_query.available_conditions_attributes
-  selected_condition_id ||= conditions.first[:id]
+  # Note that the stimulus controllers set default condition id for new conditions
+  # so this is only for rare cases where it gets unset
+  selected_condition_id ||= @refine_filter_query.filter.default_condition_id
 %>
 
 <%= tag.div data: {

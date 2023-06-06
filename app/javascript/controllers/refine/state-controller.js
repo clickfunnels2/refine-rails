@@ -59,7 +59,8 @@ export default class extends Controller {
     className: String,
     refreshUrl: String,
     clientId: String,
-    validateBlueprintUrl: String
+    validateBlueprintUrl: String,
+    defaultConditionId: String
   }
   static targets = ['loading']
 
@@ -107,7 +108,7 @@ export default class extends Controller {
 
   addGroup() {
     const { blueprint, conditions } = this
-    const condition = conditions[0]
+    const condition = ( conditions.find(c => c.id == this.defaultConditionIdValue) || conditions[0] )
     const { meta } = condition
 
     if (this.blueprint.length > 0) {
@@ -119,7 +120,7 @@ export default class extends Controller {
 
   addCriterion(previousCriterionId) {
     const { blueprint, conditions } = this
-    const condition = conditions[0]
+    const condition = ( conditions.find(c => c.id == this.defaultConditionIdValue) || conditions[0] )
     const { meta } = condition
     blueprint.splice(previousCriterionId + 1, 0, and(), criterion(condition.id, 1, condition))
     blueprintUpdatedEvent(this.element, {blueprint: this.blueprint, formId: this.formIdValue})

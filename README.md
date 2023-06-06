@@ -309,17 +309,6 @@ yalc push
 
 Running `yarn` again from your project's directory will revert back to the published version of the package on npm.
 
-
-## Release
-
-1. Publish the gem with a new version number
-2. Copy the version number in package.json
-3. run `yarn build`. This will prepare the different javascript outputs
-4. run `yarn pack`. This will create a new `.tgz` file for the new version
-5. run `yarn publish <tgz filename> --new-version <version number in package.json>`
-6. remove the `*.tgz` file
-
-
 ## Bullet Train Installation
 Add ruby gem 
 ```
@@ -355,3 +344,26 @@ If you need even more customization you can override the views with `rails gener
 
 5. Add custom datepicker if desired and scope stored filters. 
  
+## Releasing New Versions
+
+### General Guidelines
+- Every release should update the gem and NPM package so version numbers stay in sync.
+- Make sure to update the CHANGELOG with a note explaining what the new version does
+
+### Releasing the Ruby Gem
+
+```
+bump patch (or bump minor, major, etc) 
+gem build
+fury push *.gem --as=hammerstonedev
+rm *.gem
+```
+
+### Releasing the NPM Package
+
+1.  Publish the gem with a new version number
+2.  Copy the version number in package.json
+3.  run `yarn build`. This will prepare the different javascript outputs
+4.  run `yarn pack`. This will create a new `.tgz` file for the new version
+5.  run `yarn publish <tgz filename> --new-version <version number in package.json>`
+6.  remove the `*.tgz` file

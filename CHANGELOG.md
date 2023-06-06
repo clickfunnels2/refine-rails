@@ -1,3 +1,5 @@
+### 2.6.3
+  * Add `default_condition_id` attribute to filter classes.
 ### 2.6.2
   * Add configuration option `option_condition_ordering` to allow apps to specify a custom ordering of OptionCondition options (e.g. alphabetizing)
 ### 2.6.1

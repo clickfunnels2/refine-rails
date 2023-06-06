@@ -254,6 +254,15 @@ You can customize sorting behavior for all OptionConditon options in an initiali
 Refine::Rails.configuration.option_condition_ordering = ->(options) { options.sort_by { |o| o[:display] } }
 ```
 
+## Default Condition
+Filters can specify which of their conditions will be selected by default when adding new criteria
+```ruby
+class UserFilter
+  self.default_condition_id = "email"
+  # ...
+end
+```
+
 ## Local JavaScript Development
 
 Notes if linking with `yarn link` isn't working:

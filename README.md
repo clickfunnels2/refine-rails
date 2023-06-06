@@ -346,9 +346,9 @@ If you need even more customization you can override the views with `rails gener
  
 ## Releasing New Versions
 
-### General Guidelines
 - Every release should update the gem and NPM package so version numbers stay in sync.
 - Make sure to update the CHANGELOG with a note explaining what the new version does
+- Make sure you have the [bump](https://rubygems.org/gems/bump) and [gemfury](https://rubygems.org/gems/gemfury) gems installed locally
 
 ### Releasing the Ruby Gem
 

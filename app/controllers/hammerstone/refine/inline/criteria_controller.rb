@@ -123,7 +123,7 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
       format.turbo_stream do
         @stable_id = stable_id
         @url_for_redirect = uri
-        @client_id = @criterion.client_id
+        @refine_client_id = @criterion.client_id
         render :create
       end
       format.html {redirect_to uri.to_s }

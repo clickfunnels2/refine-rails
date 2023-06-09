@@ -6,7 +6,7 @@
         detail: {
           stableId: <%= @stable_id.to_json.html_safe %>,
           url: <%= @url_for_redirect.to_json.html_safe %>,
-          formId: <%= @client_id.to_json.html_safe %>
+          formId: <%= @refine_client_id.to_json.html_safe %>
         }
       })
       document
@@ -15,3 +15,5 @@
     })()
   </script>
 <% end %>
+
+<%= turbo_stream.replace "refine-inline-filter-#{@refine_client_id}", partial: "hammerstone/refine/inline/filters/show" %>

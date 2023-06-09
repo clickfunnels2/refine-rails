@@ -2,15 +2,19 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
   layout false
   before_action :set_refine_filter
 
+  # List available conditions for new criteria
+  # Carries position and index forward
   def index
     @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params.merge(refine_filter: @refine_filter))
     @conditions = @refine_filter.instantiated_conditions
   end
 
+  # Show the form to add a new criteria
   def new
     @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params.merge(refine_filter: @refine_filter))
   end
 
+  # Create a new criterion
   def create
     @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params.merge(refine_filter: @refine_filter))
     blueprint = @refine_filter.blueprint
@@ -24,7 +28,7 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
       )
 
     if filter_valid?(@refine_filter)
-      redirect_to_stable_id(@refine_filter.to_stable_id)
+      handle_filter_update(@refine_filter.to_stable_id)
     else
       @error_messages = ["Input is not valid"]
       render turbo_stream: turbo_stream.update(
@@ -34,6 +38,7 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
     end
   end
 
+  # show the form to edit an existing criterion
   def edit
     @criterion = Hammerstone::Refine::Inline::Criterion
       .groups_from_filter(@refine_filter, **criterion_params.slice(:client_id, :stable_id))
@@ -43,6 +48,7 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
     @criterion.attributes = criterion_params
   end
 
+  # update an exsiting criterion
   def update
     @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params.merge(refine_filter: @refine_filter)) 
     Hammerstone::Refine::Filters::BlueprintEditor
@@ -50,7 +56,7 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
       .update(params[:id].to_i, criterion: @criterion.to_blueprint_node)
 
     if filter_valid?(@refine_filter)
-      redirect_to_stable_id(@refine_filter.to_stable_id)
+      handle_filter_update(@refine_filter.to_stable_id)
     else
       @error_messages = ["Sorry that input is not valid"]
       render turbo_stream: turbo_stream.update(
@@ -60,12 +66,13 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
     end
   end
 
+  # remove an existing criterion
   def destroy
     Hammerstone::Refine::Filters::BlueprintEditor
       .new(@refine_filter.blueprint)
       .delete(params[:id].to_i)
 
-    redirect_to_stable_id(@refine_filter.to_stable_id)
+    handle_filter_update(@refine_filter.to_stable_id)
   end
 
   private
@@ -103,7 +110,8 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
     )
   end
 
-  def redirect_to_stable_id stable_id
+  # either directly redirect or emit a `filter-submit-success` event
+  def handle_filter_update stable_id
     # update_stable_id in url
     uri = URI(request.referrer)
     new_query_ar = URI.decode_www_form(String(uri.query))
@@ -111,7 +119,15 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
     new_query_ar << ["stable_id", stable_id]
     uri.query = URI.encode_www_form(new_query_ar)
     
-    redirect_to uri.to_s
+    respond_to do |format|
+      format.turbo_stream do
+        @stable_id = stable_id
+        @url_for_redirect = uri
+        @client_id = @criterion.client_id
+        render :create
+      end
+      format.html {redirect_to uri.to_s }
+    end
   end
 
   def filter_valid?(refine_filter)

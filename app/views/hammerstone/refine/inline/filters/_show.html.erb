@@ -1,4 +1,4 @@
-<div class="filter-wrapper">
+<%= tag.div class: "filter-wrapper", id: "refine-inline-filter-#{@refine_client_id}" do %>
   <% Hammerstone::Refine::Inline::Criterion.groups_from_filter(@refine_filter, client_id: @refine_client_id, stable_id: @refine_stable_id).each.with_index do |group, i| %>
   <%  %>
     <% unless i == 0 %>
@@ -25,5 +25,4 @@
     <%= render "hammerstone/refine/inline/filters/load_button" %>
   </div>
 
-
-</div>
+<% end %>

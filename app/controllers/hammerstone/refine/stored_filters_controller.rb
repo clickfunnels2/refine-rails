@@ -14,6 +14,10 @@ module Hammerstone::Refine
       @refine_filter_builder.stored_filter_id = @stored_filter.id
       @refine_filter = @stored_filter.refine_filter
       @refine_filter_query = Hammerstone::Refine::Filters::Query.new(@refine_filter)
+      unless @refine_filter.valid_query?
+        redirect_to hammerstone_refine_stored_filters_path(@refine_filter_builder.to_params),
+          alert: "Sorry, that filter is not valid"
+      end
     end
 
     def new

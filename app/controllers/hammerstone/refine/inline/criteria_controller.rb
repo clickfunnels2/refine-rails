@@ -68,6 +68,11 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
 
   # remove an existing criterion
   def destroy
+    @criterion = Hammerstone::Refine::Inline::Criterion
+      .groups_from_filter(@refine_filter, **criterion_params.slice(:client_id, :stable_id))
+      .flatten
+      .detect { |c| c.position.to_s == params[:id] }
+
     Hammerstone::Refine::Filters::BlueprintEditor
       .new(@refine_filter.blueprint)
       .delete(params[:id].to_i)
@@ -118,10 +123,10 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
     new_query_ar.reject! { |(k, _v)| k == "stable_id" }
     new_query_ar << ["stable_id", stable_id]
     uri.query = URI.encode_www_form(new_query_ar)
-    
+
     respond_to do |format|
       format.turbo_stream do
-        @stable_id = stable_id
+        @refine_stable_id = stable_id
         @url_for_redirect = uri
         @refine_client_id = @criterion.client_id
         render :create

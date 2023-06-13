@@ -4,7 +4,7 @@
       const event = new CustomEvent("filter-submit-success", {
         bubbles: true,
         detail: {
-          stableId: <%= @stable_id.to_json.html_safe %>,
+          stableId: <%= @refine_stable_id.to_json.html_safe %>,
           url: <%= @url_for_redirect.to_json.html_safe %>,
           formId: <%= @refine_client_id.to_json.html_safe %>
         }

@@ -1,4 +1,10 @@
 <%= turbo_frame_tag "stored_filters" do %>
+  <% if flash.alert %>
+    <p class="refine-criterion-error">
+      <%= flash.alert %>
+    </p>
+  <% end %>
+
   <%= content_tag :div, class: "refine-stored-filter-search-container" do %>
     <%= form_with(
         model: @refine_filter_builder,

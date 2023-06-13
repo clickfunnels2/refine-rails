@@ -1,3 +1,5 @@
+### 2.6.6
+  * Inline filters can now emit a `filter-submit-success` event for use in rich front-end apps #123
 ### 2.6.5
   * Add configuration option `date_gte_uses_bod` to include a whole day in the range when using a >= comparison
   * Fix a bug rendering option conditions when options were defined as a Proc

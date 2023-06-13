@@ -79,6 +79,11 @@ module Hammerstone::Refine
       initial_query.model.arel_table
     end
 
+    def valid_query?
+      get_query
+      errors.none?
+    end
+
     def get_query
       raise "Initial query must exist" if initial_query.nil?
       if blueprint.present?

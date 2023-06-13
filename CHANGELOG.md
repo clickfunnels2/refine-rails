@@ -1,3 +1,7 @@
+### 2.6.5
+  * Add configuration option `date_gte_uses_bod` to include a whole day in the range when using a >= comparison
+  * Fix a bug rendering option conditions when options were defined as a Proc
+  * Add error handling for invalid stored filters
 ### 2.6.4
   * Add `get_query!` method to raise an error on invalid filters
 ### 2.6.3

@@ -202,6 +202,26 @@ module Hammerstone::Refine::Conditions
         end
       end
 
+      describe 'date_gte_uses_bod set' do
+        before do
+          @date_gte_uses_bod_was = Refine::Rails.configuration.date_gte_uses_bod
+          Refine::Rails.configuration.date_gte_uses_bod = true
+        end
+
+        after do
+          Refine::Rails.configuration.date_gte_uses_bod = @date_gte_uses_bod_was
+        end
+
+        it 'uses end of day for clause greater than or equal' do
+         condition = DateWithTimeCondition.new("date_test")
+         data = {clause: DateCondition::CLAUSE_GREATER_THAN_OR_EQUAL, date1: "2019-05-15"}
+         expected_sql = <<~SQL.squish
+           SELECT "t".* FROM "t" WHERE ("t"."date_test" >= '2019-05-15 00:00:00')
+         SQL
+         assert_equal convert(expected_sql), apply_condition_on_test_filter(condition, data).to_sql 
+        end
+      end
+
       describe "Human readable text representation" do
         it "correctly outputs human readable text for 'is set' clause" do
           condition = DateWithTimeCondition.new("date_test")

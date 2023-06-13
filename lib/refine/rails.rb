@@ -10,6 +10,7 @@ module Refine
       :custom_stored_filter_attributes,
       :stabilizer_classes,
       :date_lte_uses_eod,
+      :date_gte_uses_bod,
       :option_condition_ordering,
       keyword_init: true
     ); end
@@ -22,6 +23,7 @@ module Refine
         url: Hammerstone::Refine::Stabilizers::UrlEncodedStabilizer
       },
       date_lte_uses_eod: false,
+      date_gte_uses_bod: false,
       option_condition_ordering: ->(options) { options }
     )
 

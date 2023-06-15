@@ -352,8 +352,8 @@ If you need even more customization you can override the views with `rails gener
 
 ### Releasing the Ruby Gem
 
-```
-bump patch (or bump minor, major, etc) 
+```sh
+bump patch #(or bump minor, major, etc)
 gem build
 fury push *.gem --as=hammerstonedev
 rm *.gem
@@ -363,7 +363,7 @@ rm *.gem
 
 1.  Publish the gem with a new version number
 2.  Copy the version number in package.json
-3.  run `yarn build`. This will prepare the different javascript outputs
-4.  run `yarn pack`. This will create a new `.tgz` file for the new version
-5.  run `yarn publish <tgz filename> --new-version <version number in package.json>`
-6.  remove the `*.tgz` file
+3.  run `yarn build`. This will prepare the different javascript outputs
+4.  run `yarn pack`. This will create a new`.tgz`file for the new version
+5.  run `yarn publish <tgz filename> --new-version <version number in package.json>`
+6.  remove the`*.tgz`file

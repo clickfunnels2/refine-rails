@@ -10,6 +10,10 @@ class <%= class_name.pluralize %>Filter < Hammerstone::Refine::Filter
     <%= class_name %>.arel_table
   end
 
+  def model
+    <%= class_name %>
+  end
+
   def conditions
     [
 <% @conditions.each do |condition| -%>

@@ -65,6 +65,11 @@ module Hammerstone::Refine
       true
     end
 
+    # override this in filter classes
+    def model
+      ActiveRecord::Base
+    end
+
     # If the initial condition has not been set in the filter, validation for relationships will error.
     # The BT implementation builds the filter *then* sets the initial condition
     # This pulls a "smart" default from the filter arel table - Arel::Table provides the table name, can extract the model then call "all"

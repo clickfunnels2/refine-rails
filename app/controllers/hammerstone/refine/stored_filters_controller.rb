@@ -12,7 +12,16 @@ module Hammerstone::Refine
     def find
       @stored_filter = StoredFilter.find_by(id: params[:id])
       @refine_filter_builder.stored_filter_id = @stored_filter.id
-      @refine_filter = @stored_filter.refine_filter
+
+      # KLUDGE we need a base scope for determining if the filter is valid.
+      # We set initial_queryto model.all because this filter is used just for validation
+      # and is never evaluated.
+      #
+      # This method is a temporary workaround until we clean up input validation and
+      # filter evaluation
+      filter_for_model = @stored_filter.refine_filter
+      model = filter_for_model.model # AR::Base subclass
+      @refine_filter = @stored_filter.refine_filter(initial_query: model.all)
       @refine_filter_query = Hammerstone::Refine::Filters::Query.new(@refine_filter)
       unless @refine_filter.valid_query?
         redirect_to hammerstone_refine_stored_filters_path(@refine_filter_builder.to_params),

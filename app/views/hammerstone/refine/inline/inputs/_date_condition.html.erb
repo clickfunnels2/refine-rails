@@ -1,27 +1,27 @@
 <% if ["exct", "gt", "lt"].include? criterion.input.clause %>
-  <div class="refine-date-condition-days-container">
+  <div class="refine--date-condition-days-container">
     <%= input_fields.label :days, "Number of days", class: "sr-only" %>
     <%= input_fields.text_field :days,
-      class: "refine-date-condition-days-input",
+      class: "refine--date-condition-days-input",
       placeholder: "Number of"
     %>
   </div>
-  <div class="refine-date-condition-days-text">
+  <div class="refine--date-condition-days-text">
     <span>days</span>
   </div>
-  <div class="refine-date-condition-days-modifier-container">
+  <div class="refine--date-condition-days-modifier-container">
     <%= input_fields.collection_select :modifier,
       Hammerstone::Refine::Inline::Criteria::Input::MODIFIERS,
       :first,
       :last,
       {},
-      class: "refine-date-condition-days-modifier-select"
+      class: "refine--date-condition-days-modifier-select"
     %>
   </div>
 <% else %>
   <% container_class = criterion.input.clause == "btwn" ?
-    "refine-date-condition-first-date-container-btwn" :
-    "refine-date-condition-first-date-container" %>
+    "refine--date-condition-first-date-container-btwn" :
+    "refine--date-condition-first-date-container" %>
   <%= tag.div class: container_class do %>
     <%= render "hammerstone/refine/inline/inputs/date_picker",
       input_fields: input_fields,
@@ -31,8 +31,8 @@
     %>
   <% end %>
   <% if criterion.input.clause == "btwn" %>
-    <span class="refine-date-condition-and">and</span>
-    <div class="refine-date-condition-second-date-container">
+    <span class="refine--date-condition-and">and</span>
+    <div class="refine--date-condition-second-date-container">
       <%= render "hammerstone/refine/inline/inputs/date_picker",
         input_fields: input_fields,
         attribute: :date2,

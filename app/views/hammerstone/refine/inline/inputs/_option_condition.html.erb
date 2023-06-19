@@ -1,13 +1,13 @@
-<div class="refine-option-condition-container">
+<div class="refine-option--condition-container">
   <%= input_fields.collection_select :selected,
     criterion.options,
     :id,
     :display,
     {},
-    class: "refine-option-condition-select",
+    class: "refine-option--condition-select",
     multiple: criterion.multiple?
   %>
   <% if criterion.condition.meta[:postfix] %>
-    <span class="refine-option-condition-postfix"><%= meta[:postfix] %></span>
+    <span class="refine-option--condition-postfix"><%= meta[:postfix] %></span>
   <% end %>
 </div>

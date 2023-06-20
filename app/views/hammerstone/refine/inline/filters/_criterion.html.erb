@@ -4,13 +4,13 @@
   src: edit_hammerstone_refine_inline_criterion_path(criterion.position, criterion.to_params) do
 %>
 
-  <div class="filter-condition-wrapper">
-    <div class="filter-condition">
-      <div class="filter-value" data-action="click->refine--popup#show">
+  <div class="refine--filter-condition-wrapper">
+    <div class="refine--filter-condition">
+      <div class="refine--filter-value" data-action="click->refine--popup#show">
         <%= criterion.human_readable %>
       </div>
     </div>
-    <%= button_to hammerstone_refine_inline_criterion_path(criterion.position, criterion.to_params), class: "filter-remove", method: :delete do %>
+    <%= button_to hammerstone_refine_inline_criterion_path(criterion.position, criterion.to_params), class: "refine--filter-remove", method: :delete do %>
       <div class="material-icons">
         X
       </div>

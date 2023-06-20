@@ -1,3 +1,5 @@
+### 2.6.8
+  * Updated class names for the Inline UI views
 ### 2.6.7
   * Filters should now define a `#model` method which is used to generate a base scope for evaluating stored filters when they are loaded [#124](https://github.com/hammerstonedev/refine-rails/pull/124)
 ### 2.6.6

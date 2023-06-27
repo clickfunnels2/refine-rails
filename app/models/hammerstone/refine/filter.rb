@@ -65,23 +65,13 @@ module Hammerstone::Refine
       true
     end
 
-    # override this in filter classes
+    # e.g. ContactsFilter -> Contact
     def model
-      ActiveRecord::Base
-    end
-
-    # If the initial condition has not been set in the filter, validation for relationships will error.
-    # The BT implementation builds the filter *then* sets the initial condition
-    # This pulls a "smart" default from the filter arel table - Arel::Table provides the table name, can extract the model then call "all"
-    # to return and AR::R object which is what `uses_attributes` expects.
-    # TODO: This breaks for namespaced classes.
-    def fallback_initial_condition
-      # TODO: Figure out a better way to do this.
-      table.name.classify.constantize.all
+      initial_query&.model || self.class.to_s.gsub(/Filter$/, "").singularize.constantize
     end
 
     def table
-      initial_query.model.arel_table
+      model.arel_table
     end
 
     def valid_query?

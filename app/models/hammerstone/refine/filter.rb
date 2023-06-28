@@ -11,7 +11,7 @@ module Hammerstone::Refine
     cattr_accessor :default_stabilizer, default: nil, instance_accessor: false
     cattr_accessor :criteria_limit, default: 5, instance_accessor: true
 
-    attr_reader :blueprint
+    attr_reader :blueprint, :initial_query
 
     # Give each Filter subclass its own default_condition_id,
     # that is also also readable from instances
@@ -54,11 +54,6 @@ module Hammerstone::Refine
         end
       end
       output
-    end
-
-    def initial_query
-      raise NotImplementedError if @initial_query.nil?
-      @initial_query
     end
 
     def automatically_stabilize?

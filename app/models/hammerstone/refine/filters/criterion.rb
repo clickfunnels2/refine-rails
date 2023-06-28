@@ -27,7 +27,8 @@ class Hammerstone::Refine::Filters::Criterion
     errors.clear
     return true if type == "conjunction"
     begin
-      condition&.apply(input, filter.table, filter.initial_query || filter.fallback_initial_condition)
+      query_for_validate = filter.initial_query || filter.model.all
+      condition&.apply(input, filter.table, query_for_validate)
     rescue Hammerstone::Refine::Conditions::Errors::ConditionClauseError => e
       e.errors.each do |error|
         errors.add(:base, error.full_message)

@@ -11,7 +11,7 @@ module Hammerstone::Refine
     cattr_accessor :default_stabilizer, default: nil, instance_accessor: false
     cattr_accessor :criteria_limit, default: 5, instance_accessor: true
 
-    attr_reader :blueprint
+    attr_reader :blueprint, :initial_query
 
     # Give each Filter subclass its own default_condition_id,
     # that is also also readable from instances
@@ -56,32 +56,17 @@ module Hammerstone::Refine
       output
     end
 
-    def initial_query
-      raise NotImplementedError if @initial_query.nil?
-      @initial_query
-    end
-
     def automatically_stabilize?
       true
     end
 
-    # override this in filter classes
+    # e.g. ContactsFilter -> Contact
     def model
-      ActiveRecord::Base
-    end
-
-    # If the initial condition has not been set in the filter, validation for relationships will error.
-    # The BT implementation builds the filter *then* sets the initial condition
-    # This pulls a "smart" default from the filter arel table - Arel::Table provides the table name, can extract the model then call "all"
-    # to return and AR::R object which is what `uses_attributes` expects.
-    # TODO: This breaks for namespaced classes.
-    def fallback_initial_condition
-      # TODO: Figure out a better way to do this.
-      table.name.classify.constantize.all
+      initial_query&.model || self.class.to_s.gsub(/Filter$/, "").singularize.constantize
     end
 
     def table
-      initial_query.model.arel_table
+      model.arel_table
     end
 
     def valid_query?

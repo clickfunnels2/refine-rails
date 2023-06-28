@@ -7,10 +7,10 @@ en:
       find_filter: Find a saved filter
       save_filter: Save this filter 
       choose_filter: Load filter 
-      filter_name: Filter Name
       filter: Filter
       back: Back
       save: Save
+      save_filter: Save this filter
   hammerstone:
     refine_blueprints:
       add_group:
@@ -18,4 +18,3 @@ en:
         add_or: "OR"
       add_and:
         add_and: "AND"
-

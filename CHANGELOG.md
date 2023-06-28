@@ -1,3 +1,5 @@
+### 2.6.9
+  * Allow filters to determine associated model for validations
 ### 2.6.8
   * Updated class names for the Inline UI views
 ### 2.6.7

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    refine-rails (2.6.8)
+    refine-rails (2.6.9)
       rails (>= 6.0)
 
 GEM
@@ -179,7 +179,7 @@ GEM
       rubocop (= 1.35.1)
       rubocop-performance (= 1.14.3)
     thor (1.2.2)
-    timeout (0.3.2)
+    timeout (0.4.0)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.3.0)

@@ -6,7 +6,7 @@
   <!-- render nothing -->
 <% elsif ['exct', 'gt', 'lt'].include? input[:clause] %>
   <div class="refine-date-condition-days-container">
-    <label for="<%= condition_id %>" class="sr-only">Number of days</label>
+    <label for="<%= condition_id %>" class="sr-only"><%= t(".number_of") %></label>
     <input
       class="refine-date-condition-days-input"
       type="text"
@@ -18,7 +18,7 @@
     />
   </div>
   <div class="refine-date-condition-days-text">
-    <span>days</span>
+    <span><%= t(".days") %></span>
   </div>
   <div class="refine-date-condition-days-modifier-container">
     <select
@@ -38,13 +38,13 @@
         <% if input[:modifier] == 'ago' %>selected<% end %>
         value="ago"
       >
-        ago
+        <%= t("ago") %>
       </option>
       <option
         <% if input[:modifier] == 'from_now' %>selected<% end %>
         value="from_now"
       >
-        from now
+        <%= t("from now") %>
       </option>
     </select>
     <%= render partial: 'hammerstone/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
@@ -55,7 +55,7 @@
   >
     <%= render partial: "hammerstone/refine_blueprints/clauses/date_picker", locals: {
       criterion: criterion,
-      label: "First Date",
+      label: t(".first_date"),
       condition_id: condition_id,
       date: input[:date1],
       input_key: 'date1',
@@ -64,11 +64,11 @@
     <%= render partial: 'hammerstone/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
   </div>
   <% if (input[:clause] == 'btwn' || input[:clause] == 'nbtwn') %>
-    <span class="refine-date-condition-and">and</span>
+    <span class="refine-date-condition-and"><%= t(".and") %></span>
     <div class="refine-date-condition-second-date-container">
       <%= render partial: "hammerstone/refine_blueprints/clauses/date_picker", locals: {
         criterion: criterion,
-        label: "Second Date",
+        label: t(".second_date"),
         condition_id: condition_id,
         date: input[:date2],
         input_key: 'date2',

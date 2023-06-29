@@ -14,6 +14,8 @@ module Hammerstone::Refine::Conditions
     attr_reader :ensurances, :before_validations, :clause, :filter
     attr_accessor :display, :id, :is_refinement, :attribute
 
+    I18N_PREFIX = "hammerstone.refine_blueprints.condition."
+
     def initialize(id = nil, display = nil)
       # Capture display value if sent it. Not translated, takes precedence
       # If no display value explicitly sent, use locales to translate in translate_display
@@ -60,7 +62,7 @@ module Hammerstone::Refine::Conditions
     def ensure_attribute_configured
       proc do
         if @attribute.nil?
-          errors.add(:base, "An attribute is required.")
+          errors.add(:base, I18n.t("#{I18N_PREFIX}attribute_required"))
         end
       end
     end
@@ -68,7 +70,7 @@ module Hammerstone::Refine::Conditions
     def ensure_id
       proc do
         if @id.nil?
-          errors.add(:base, "Every condition must have an ID")
+          errors.add(:base, I18n.t("#{I18N_PREFIX}condition_must_have_id"))
         end
       end
     end
@@ -163,7 +165,7 @@ module Hammerstone::Refine::Conditions
     def clause_in_approved_list?
       # Is the requested clause in the approved list configured by developer?
       unless get_clauses.call.map(&:id).include? clause
-        errors.add(:base, "The clause with id #{clause} was not found")
+        errors.add(:base, I18n.t("#{I18N_PREFIX}clause_not_found", clause: clause))
       end
     end
 
@@ -175,7 +177,7 @@ module Hammerstone::Refine::Conditions
       set_input_parameters(input)
       evaluated_rules.each_pair do |k, v|
         if input[k].blank?
-          errors.add(:base, "A #{k} is required")
+          errors.add(:base, I18n.t("#{I18N_PREFIX}a_is_required", k: k))
         end
       end
       # Errors added to the errors array by individual conditions and standard rails validations

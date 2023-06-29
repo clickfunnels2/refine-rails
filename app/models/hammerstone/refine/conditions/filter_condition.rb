@@ -9,6 +9,8 @@ module Hammerstone::Refine::Conditions
     CLAUSE_IN = Clauses::IN
     CLAUSE_NOT_IN = Clauses::NOT_IN
 
+    I18N_PREFIX = "hammerstone.refine_blueprints.filter_condition."
+
     def component
       "filter-condition"
     end
@@ -24,7 +26,7 @@ module Hammerstone::Refine::Conditions
     end
 
     def select_is_array
-      errors.add(:base, "Select must be an array") unless selected.is_a?(Array)
+      errors.add(:base, I18n.t("#{I18N_PREFIX}must_be_array")) unless selected.is_a?(Array)
     end
 
     def ensure_options
@@ -32,12 +34,12 @@ module Hammerstone::Refine::Conditions
         developer_options = get_options.call
         # Options must evaluate to an array
         if !developer_options.is_a? Array
-          raise "No options could be determined"
+          raise I18n.t("#{I18N_PREFIX}options_not_determined")
         end
         # Each option must be a hash of values that includes :id and :display
         developer_options.each do |option|
           if (!option.is_a? Hash) || option.keys.exclude?(:id) || option.keys.exclude?(:display)
-            raise Hammerstone::Refine::Conditions::Errors::OptionError.new("An option must have an id and a display attribute.")
+            raise Hammerstone::Refine::Conditions::Errors::OptionError.new(I18n.t("#{I18N_PREFIX}must_have_id_and_display"))
           end
         end
         ensure_no_duplicates(developer_options)
@@ -48,7 +50,7 @@ module Hammerstone::Refine::Conditions
       id_array = developer_options.map { |option| option[:id] }
       duplicates = id_array.select { |id| id_array.count(id) > 1 }.uniq
       if duplicates.present?
-        raise Hammerstone::Refine::Conditions::Errors::OptionError.new("Options must have unique IDs. Duplicate #{duplicates} found.")
+        raise Hammerstone::Refine::Conditions::Errors::OptionError.new(I18n.t("#{I18N_PREFIX}must_be_unique", duplicates: duplicates))
       end
     end
 
@@ -75,7 +77,7 @@ module Hammerstone::Refine::Conditions
       filter_id = input[:selected].first.to_i
       filter = Refine::Rails.configuration.stabilizer_classes[:db].new.from_stable_id(id: filter_id)
       # TODO handle this more elegantly
-      raise "Filter not found" if filter.blank?
+      raise I18n.t("#{I18N_PREFIX}not_found") if filter.blank?
       # TODO - Filter initial query is currently handled on the filter class. ProductFilter.where....
       # Is this the right way to handle it?
       filter.make_sub_query(filter.blueprint)
@@ -83,8 +85,8 @@ module Hammerstone::Refine::Conditions
 
     def clauses
       [
-        Clause.new(CLAUSE_IN, "Includes"),
-        Clause.new(CLAUSE_NOT_IN, "Does Not Include")
+        Clause.new(CLAUSE_IN, I18n.t("#{I18N_PREFIX}in")),
+        Clause.new(CLAUSE_NOT_IN, I18n.t("#{I18N_PREFIX}not_in"))
       ]
     end
   end

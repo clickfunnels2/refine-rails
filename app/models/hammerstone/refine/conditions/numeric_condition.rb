@@ -29,6 +29,8 @@ module Hammerstone::Refine::Conditions
     CLAUSE_SET = Clauses::SET
     CLAUSE_NOT_SET = Clauses::NOT_SET
 
+    I18N_PREFIX = "hammerstone.refine_blueprints.numeric_condition."
+
     def boot
       @floats = false
     end
@@ -48,11 +50,11 @@ module Hammerstone::Refine::Conditions
       when *[CLAUSE_EQUALS, CLAUSE_DOESNT_EQUAL, CLAUSE_GREATER_THAN, CLAUSE_GREATER_THAN_OR_EQUAL, CLAUSE_LESS_THAN, CLAUSE_LESS_THAN_OR_EQUAL]
         "#{display} #{current_clause.display} #{input[:value1]}"
       when *[CLAUSE_BETWEEN, CLAUSE_NOT_BETWEEN]
-        "#{display} #{current_clause.display} #{input[:value1]} and #{input[:value2]}"
+        "#{display} #{current_clause.display} #{input[:value1]} #{I18n.t("#{I18N_PREFIX}and")} #{input[:value2]}"
       when *[CLAUSE_SET, CLAUSE_NOT_SET]
         "#{display} #{current_clause.display}"
       else
-        raise "#{input[:clause]} not supported"
+        raise "#{input[:clause]} #{I18n.t("#{I18N_PREFIX}not_supported")}"
       end
     end
 
@@ -60,25 +62,25 @@ module Hammerstone::Refine::Conditions
 
     def clauses
       [
-        Clause.new(CLAUSE_EQUALS, "is").requires_inputs(["value1"]),
+        Clause.new(CLAUSE_EQUALS, I18n.t("#{I18N_PREFIX}is")).requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_DOESNT_EQUAL, "is not").requires_inputs(["value1"]),
+        Clause.new(CLAUSE_DOESNT_EQUAL, I18n.t("#{I18N_PREFIX}is_not")).requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_GREATER_THAN, "is greater than").requires_inputs(["value1"]),
+        Clause.new(CLAUSE_GREATER_THAN, I18n.t("#{I18N_PREFIX}is_gt")).requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_GREATER_THAN_OR_EQUAL, "is greater than or equal to").requires_inputs(["value1"]),
+        Clause.new(CLAUSE_GREATER_THAN_OR_EQUAL, I18n.t("#{I18N_PREFIX}is_gtteq")).requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_LESS_THAN, "is less than").requires_inputs(["value1"]),
+        Clause.new(CLAUSE_LESS_THAN, I18n.t("#{I18N_PREFIX}is_lt")).requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_LESS_THAN_OR_EQUAL, "is less than or equal to").requires_inputs(["value1"]),
+        Clause.new(CLAUSE_LESS_THAN_OR_EQUAL, I18n.t("#{I18N_PREFIX}is_lteq")).requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_BETWEEN, "is between").requires_inputs(["value1", "value2"]),
+        Clause.new(CLAUSE_BETWEEN, I18n.t("#{I18N_PREFIX}is_between")).requires_inputs(["value1", "value2"]),
 
-        Clause.new(CLAUSE_NOT_BETWEEN, "is not between").requires_inputs(["value1", "value2"]),
+        Clause.new(CLAUSE_NOT_BETWEEN, I18n.t("#{I18N_PREFIX}is_not_between")).requires_inputs(["value1", "value2"]),
 
-        Clause.new(CLAUSE_SET, "is set"),
+        Clause.new(CLAUSE_SET, I18n.t("#{I18N_PREFIX}is_set")),
 
-        Clause.new(CLAUSE_NOT_SET, "is not set"),
+        Clause.new(CLAUSE_NOT_SET, I18n.t("#{I18N_PREFIX}is_not_set")),
       ]
     end
 

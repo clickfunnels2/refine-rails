@@ -18,6 +18,8 @@ module Hammerstone::Refine::Conditions
     CLAUSE_SET = Clauses::SET
     CLAUSE_NOT_SET = Clauses::NOT_SET
 
+    I18N_PREFIX = "hammerstone.refine_blueprints.option_condition."
+
     def component
       "option-condition"
     end
@@ -36,7 +38,7 @@ module Hammerstone::Refine::Conditions
       when *[CLAUSE_SET, CLAUSE_NOT_SET]
         "#{display} #{current_clause.display}"
       else
-        raise "#{input[:clause]} not supported"
+        raise "#{input[:clause]} #{I18n.t("#{I18N_PREFIX}not_supported")}"
       end
     end
 
@@ -53,7 +55,7 @@ module Hammerstone::Refine::Conditions
     end
 
     def select_is_array
-      errors.add(:base, "Select must be an array") unless selected.is_a?(Array)
+      errors.add(:base, I18n.t("#{I18N_PREFIX}must_be_array")) unless selected.is_a?(Array)
     end
 
     def option_in_approved_list?
@@ -62,7 +64,7 @@ module Hammerstone::Refine::Conditions
       selected.each do |select|
         select.join if select.is_a? Array
         unless get_options.call.map { |option| option[:id] }.include? select
-          errors.add(:base, "Selected #{select} is not configured in options list")
+          errors.add(:base, I18n.t("#{I18N_PREFIX}not_approved", select: select))
         end
       end
     end
@@ -80,12 +82,12 @@ module Hammerstone::Refine::Conditions
         developer_options = get_options.call
         # Options must be sent in as an array
         if !developer_options.is_a? Array
-          raise "No options could be determined"
+          raise I18n.t("#{I18N_PREFIX}not_determined")
         end
         # Each option must be a hash of values that includes :id and :display
         developer_options.each do |option|
           if (!option.is_a? Hash) || option.keys.exclude?(:id) || option.keys.exclude?(:display)
-            raise Hammerstone::Refine::Conditions::Errors::OptionError.new("An option must have an id and a display attribute.")
+            raise Hammerstone::Refine::Conditions::Errors::OptionError.new(I18n.t("#{I18N_PREFIX}must_have_id_and_display"))
           end
         end
         ensure_no_duplicates(developer_options)
@@ -96,31 +98,31 @@ module Hammerstone::Refine::Conditions
       id_array = developer_options.map { |option| option[:id] }
       duplicates = id_array.select { |id| id_array.count(id) > 1 }.uniq
       if duplicates.present?
-        raise Hammerstone::Refine::Conditions::Errors::OptionError.new("Options must have unique IDs. Duplicate #{duplicates} found.")
+        raise Hammerstone::Refine::Conditions::Errors::OptionError.new(I18n.t("#{I18N_PREFIX}must_be_unique", duplicates: duplicates))
       end
     end
 
     def clauses
       [
-        Clause.new(CLAUSE_EQUALS, "is")
+        Clause.new(CLAUSE_EQUALS, I18n.t("#{I18N_PREFIX}is"))
           .requires_inputs(["selected"])
           .with_meta({multiple: false}),
 
-        Clause.new(CLAUSE_DOESNT_EQUAL, "is not")
+        Clause.new(CLAUSE_DOESNT_EQUAL, I18n.t("#{I18N_PREFIX}is_not"))
           .requires_inputs(["selected"])
           .with_meta({multiple: false}),
 
-        Clause.new(CLAUSE_IN, "is one of")
+        Clause.new(CLAUSE_IN, I18n.t("#{I18N_PREFIX}is_one_of"))
           .requires_inputs(["selected"])
           .with_meta({multiple: true}),
 
-        Clause.new(CLAUSE_NOT_IN, "is not one of")
+        Clause.new(CLAUSE_NOT_IN, I18n.t("#{I18N_PREFIX}is_not_one_of"))
           .requires_inputs(["selected"])
-          .with_meta({multiple:true}),
+          .with_meta({multiple: true}),
 
-        Clause.new(CLAUSE_SET, "is set"),
+        Clause.new(CLAUSE_SET, I18n.t("#{I18N_PREFIX}is_set")),
 
-        Clause.new(CLAUSE_NOT_SET, "is not set")
+        Clause.new(CLAUSE_NOT_SET, I18n.t("#{I18N_PREFIX}is_not_set"))
       ]
     end
 

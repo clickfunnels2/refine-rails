@@ -1,0 +1,25 @@
+en:
+  date:
+    order:
+    - :year
+    - :month
+    - :day
+    formats:
+      default: "%Y-%m-%d"
+      long: "%B %d, %Y"
+      short: "%b %d"
+      dmy: "%m/%d/%y"
+      stamp: "%Y%m%d" # YYYYMMDD
+      # formats shared with datetimes
+      month_and_year: "%B %Y" # results like: June 2018
+      month_day_year: "%B %e, %Y" # results like: June 6, 2018
+      abrv_month_day: "%b %-d" # results like: Jan 30
+      abrv_month_day_year: "%b %e, %Y" # results like: June 6, 2018
+      pretty: "%a, %b %e at %l:%M%p %Z" # results like: Wed, Jun 6 at 7:19AM UTC
+      pretty_time: "%l:%M%p %Z" # results like: 7:19AM UTC
+      pretty_time_simple: "%l:%M%p" # results like: 7:19AM
+      display_time: "%l:%M %p" # results like 4:22 PM
+      pretty_date_time_zone: "%a, %b %d, %Y at %l:%M %p %Z" # results like: Thu, Apr 19, 2018 at 2:32 PM UTC
+      pretty_day: "%A, %B %e"
+      date_range_field: "%m/%d/%y" # results like: 05/26/2022
+      date_plus_time_with_zone: "%m/%d/%y %l:%M%p %Z" # results like: 05/26/22 7:19AM UTC

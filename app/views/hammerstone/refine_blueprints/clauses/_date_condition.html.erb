@@ -38,13 +38,13 @@
         <% if input[:modifier] == 'ago' %>selected<% end %>
         value="ago"
       >
-        <%= t("ago") %>
+        <%= t(".ago") %>
       </option>
       <option
         <% if input[:modifier] == 'from_now' %>selected<% end %>
         value="from_now"
       >
-        <%= t("from now") %>
+        <%= t(".from_now") %>
       </option>
     </select>
     <%= render partial: 'hammerstone/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>

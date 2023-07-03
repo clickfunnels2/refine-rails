@@ -265,17 +265,46 @@ end
 
 ## Local JavaScript Development
 
-Notes if linking with `yarn link` isn't working:
-1. Ran `bin/webpack-dev-server`
-2. In `berry-refine-demo-clean` delete node modules and re-yarn (just for fun probably not necessary)
-3. in `refine-rails` repo follow all yalc steps below -> you should see this message if successful
+There are a couple different methods developers have used.  One is based on `yarn link` and the other based on `yalc`
 
+### Yarn link method
+
+1. In the gem's folder run:
+
+```sh
+yarn link
+yarn build --watch # leave this running to automatically rebuild when you change a file
 ```
-@hammerstone/refine-stimulus@2.4.2 published in store.
-Pushing @hammerstone/refine-stimulus@2.4.2 in /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/berry-refine-demo-clean
-Package @hammerstone/refine-stimulus@2.4.2 linked ==> /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/berry-refine-demo-clean/node_modules/@hammerstone/refine-stimulus
+
+2.  From your application's folder run:
+
+```sh
+yarn link "@hammerstone/refine-stimulus"
 ```
-4. Restart server 
+
+3. Restart your asset build server (webpacker/esbuild/etc)
+
+When you're ready to switch back to the published npm package, run:
+```sh
+yarn unlink "@hammerstone/refine-stimulus"
+```
+
+#### Troubleshooting yarn link
+Note that theoretically, any changes you make to the javascript and css assets should be automatically recompiled by `yarn build --watch` and then picked up by your application.  In practice automatic recompilation can be unreliable.  Here are some things to try if the app isn't picking up your changes:
+
+1.  Confirm that the app is indeed not using your latest changes by adding a `console.log` to the connect method of a stimulus controller
+2.  Try restarting `yarn build --watch` from the gem directory
+3.  Restart your webpacker/esbuild/etc server
+4.  Restart your web server
+5.  Run `bin/rails assets:clean` from your app's directory and restart servers
+
+If none of the above steps work, try tearing down the package link and setting it up again:
+1. Run `yarn link "@hammerstone-stimulus"` from your app's directory and shut down all servers.
+2. Run `yarn unlink` from the gem directory.
+3. Redo the steps listed in this section for setting up the linked package
+4. Start up your web and asset servers
+
+### Yalc method:
 
 From this repo's directory:
 We are using `yalc` for local package development.
@@ -308,6 +337,18 @@ yalc push
 ```
 
 Running `yarn` again from your project's directory will revert back to the published version of the package on npm.
+
+#### Notes if linking with `yarn link` isn't working:
+1. Ran `bin/webpack-dev-server`
+2. In `berry-refine-demo-clean` delete node modules and re-yarn (just for fun probably not necessary)
+3. in `refine-rails` repo follow all yalc steps below -> you should see this message if successful
+
+```
+@hammerstone/refine-stimulus@2.4.2 published in store.
+Pushing @hammerstone/refine-stimulus@2.4.2 in /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/berry-refine-demo-clean
+Package @hammerstone/refine-stimulus@2.4.2 linked ==> /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/berry-refine-demo-clean/node_modules/@hammerstone/refine-stimulus
+```
+4. Restart server 
 
 ## Bullet Train Installation
 Add ruby gem 

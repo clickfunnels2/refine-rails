@@ -75,7 +75,7 @@ module Hammerstone::Refine::Conditions
 
     def ensure_clause(clause)
       if !clause.is_a? Clause
-        I18n.t("hammerstone.refine_blueprints.has_clauses.must_be_instance_of", instance: "#{Clause::class}")
+        errors.add(:base, I18n.t("hammerstone.refine_blueprints.has_clauses.must_be_instance_of", instance: "#{Clause::class}"))
         raise Errors::ConditionClauseError, "#{errors.full_messages}"
       end
       if clause.id.blank? || clause.display.blank?

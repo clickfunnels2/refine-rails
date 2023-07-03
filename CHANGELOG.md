@@ -1,3 +1,5 @@
+### 2.6.10
+  * Adds additional localization support. See yml file for new supported keys
 ### 2.6.9
   * Allow filters to determine associated model for validations
 ### 2.6.8

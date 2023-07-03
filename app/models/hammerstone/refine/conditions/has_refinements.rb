@@ -32,7 +32,7 @@ module Hammerstone::Refine::Conditions
 
     def apply_refinements(input)
       if has_any_refinements? && !refinements_allowed?
-        raise Errors::RelationshipError, "Refinements are not allowed"
+        raise Errors::RelationshipError, I18n.t("hammerstone.refine_blueprints.has_refinements.not_allowed")
       end
 
       instance = filter.get_pending_relationship_instance

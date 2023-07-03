@@ -5,6 +5,8 @@ module Hammerstone::Refine::Conditions
     attr_reader :id, :rules
     attr_accessor :display
 
+    I18N_PREFIX = "hammerstone.refine_blueprints.clause."
+
     def initialize(id = nil, display = nil)
       @id = id
       @display = display || id.humanize(keep_id_suffix: true).titleize
@@ -20,7 +22,7 @@ module Hammerstone::Refine::Conditions
     def requires_inputs(fields)
       # Coerce field to an array
       [*fields].each do |field|
-        @rules.merge!({"#{field}": "required"})
+        @rules.merge!({"#{field}": I18n.t("#{I18N_PREFIX}required")})
       end
       self
     end

@@ -17,6 +17,8 @@ module Hammerstone::Refine::Conditions
 
     CLAUSE_NOT_SET = Clauses::NOT_SET
 
+    I18N_PREFIX = "hammerstone.refine_blueprints.text_condition."
+
     def component
       "text-condition"
     end
@@ -32,33 +34,33 @@ module Hammerstone::Refine::Conditions
 
     def clauses
       [
-        Clause.new(CLAUSE_EQUALS, "is")
+        Clause.new(CLAUSE_EQUALS, I18n.t("#{I18N_PREFIX}is"))
           .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_DOESNT_EQUAL, "is not")
+        Clause.new(CLAUSE_DOESNT_EQUAL, I18n.t("#{I18N_PREFIX}is_not"))
           .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_STARTS_WITH, "starts with")
+        Clause.new(CLAUSE_STARTS_WITH, I18n.t("#{I18N_PREFIX}starts_with"))
           .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_ENDS_WITH, "ends with")
+        Clause.new(CLAUSE_ENDS_WITH, I18n.t("#{I18N_PREFIX}ends_with"))
           .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_DOESNT_START_WITH, "does not start with")
+        Clause.new(CLAUSE_DOESNT_START_WITH, I18n.t("#{I18N_PREFIX}does_not_start_with"))
           .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_DOESNT_END_WITH, "does not end with")
+        Clause.new(CLAUSE_DOESNT_END_WITH, I18n.t("#{I18N_PREFIX}does_not_end_with"))
           .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_CONTAINS, "contains")
+        Clause.new(CLAUSE_CONTAINS, I18n.t("#{I18N_PREFIX}contains"))
           .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_DOESNT_CONTAIN, "does not contain")
+        Clause.new(CLAUSE_DOESNT_CONTAIN, I18n.t("#{I18N_PREFIX}does_not_contain"))
           .requires_inputs(["value"]),
 
-        Clause.new(CLAUSE_SET, "is set"),
+        Clause.new(CLAUSE_SET, I18n.t("#{I18N_PREFIX}is_set")),
 
-        Clause.new(CLAUSE_NOT_SET, "is not set")
+        Clause.new(CLAUSE_NOT_SET, I18n.t("#{I18N_PREFIX}is_not_set"))
       ]
     end
 

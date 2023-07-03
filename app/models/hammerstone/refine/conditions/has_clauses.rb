@@ -67,7 +67,7 @@ module Hammerstone::Refine::Conditions
         if clauses.any?
           clauses.each { |clause| ensure_clause(clause) }
         else
-          errors.add(:base, "No clause could be determined?")
+          errors.add(:base, I18n.t("hammerstone.refine_blueprints.has_clauses.not_determined"))
           raise Errors::ConditionClauseError, "#{errors.full_messages}"
         end
       end
@@ -75,18 +75,18 @@ module Hammerstone::Refine::Conditions
 
     def ensure_clause(clause)
       if !clause.is_a? Clause
-        errors.add(:base, "Every clause must be an instance of #{Clause::class}")
+        I18n.t("hammerstone.refine_blueprints.has_clauses.must_be_instance_of", instance: "#{Clause::class}")
         raise Errors::ConditionClauseError, "#{errors.full_messages}"
       end
       if clause.id.blank? || clause.display.blank?
-        errors.add(:base, "A clause must have both id and display keys")
+        errors.add(:base, I18n.t("hammerstone.refine_blueprints.has_clauses.must_have_id_and_display"))
         raise Errors::ConditionClauseError, "#{errors.full_messages}"
       end
     end
 
     def get_clause_by_id(id)
       clause = get_clauses.call().find{ |clause| clause.id == id }
-      raise "Clause with id: #{id} not found" unless clause
+      raise I18n.t("hammerstone.refine_blueprints.has_clauses.not_found", id: id) unless clause
       clause
     end
 

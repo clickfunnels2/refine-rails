@@ -14,3 +14,97 @@ en:
         buttons:
           add_or: "Add an 'Or'"
           create_filter: "Create a filter"
+
+      boolean_condition:
+        is_true: is true
+        is_false: is false
+        is_set: is set
+        is_not_set: is not set
+      clause:
+        required: required
+      clauses:
+        date_condition:
+          number_of: "Number of"
+          days: days
+          ago: ago
+          from_now: from now
+          and: and
+          first_date: First Date
+          second_date: Second Date
+      condition:
+        attribute_required: An attribute is required.
+        condition_must_have_id: Every condition must have an ID
+        clause_not_found:  "The clause with id %{clause} was not found"
+        a_is_required: "A %{k} is required"
+      date_condition:
+        date1_error: date1 is not a real date
+        date2_error: date2 is not a real date
+        timezone_error: "%{zone} timezone does not exist in ActiveSupport::TimeZone"
+        and: and
+        days: days
+        ago: ago
+        from_now: from now
+        not_supported: not supported
+        is_on: "on"
+        not_on: not on
+        is_on_or_before: is on or before
+        is_on_or_after: is on or after
+        is_between: is between
+        is_not_between: is not between
+        is_more_than: is more than
+        is: is
+        is_less_than: is less than
+        is_set: is set
+        is_not_set: is not set
+      filter_condition:
+        must_be_array: Select must be an array
+        options_not_determined: "No options could be determined"
+        must_have_id_and_display: An option must have an id and a display attribute.
+        must_be_unique: "Options must have unique IDs. Duplicate %{duplicates} found."
+        not_found: Filter not found
+        in: "Includes"
+        not_in: "Does Not Include"
+      has_clauses:
+        not_determined: "No clause could be determined?"
+        must_be_instance_of: "Every clause must be an instance of %{instance}"
+        must_have_id_and_display: "A clause must have both id and display keys"
+        not_found: "Clause with id: %{id} not found"
+      has_refinements:
+        not_allowed: "Refinements are not allowed"
+      numeric_condition:
+        and: and
+        not_supported: not supported
+        is: is
+        is_not: is not
+        is_gt: is greater than
+        is_gtteq: is greater than or equal to
+        is_lt: is less than
+        is_lteq: is less than or equal to
+        is_between: is between
+        is_not_between: is not between
+        is_set: is set
+        is_not_set: is not set
+      option_condition:
+        not_supported: not supported
+        must_be_array: "Select must be an array"
+        not_approved: "Selected %{select} is not configured in options list"
+        not_determined: "No options could be determined"
+        must_have_id_and_display: "An option must have an id and a display attribute."
+        must_be_unique: "Options must have unique IDs. Duplicate %{duplicates} found."
+        is: is
+        is_not: is not
+        is_one_of: is one of
+        is_not_one_of: is not one of
+        is_set: is set
+        is_not_set: is not set
+      text_condition:
+        is: "is"
+        is_not: "is not"
+        starts_with: "starts with"
+        ends_with: "ends with"
+        does_not_start_with: "does not start with"
+        does_not_end_with: "does not end with"
+        contains: "contains"
+        does_not_contain: "does not contain"
+        is_set: "is set"
+        is_not_set: "is not set"

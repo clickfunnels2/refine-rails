@@ -7,6 +7,8 @@ module Hammerstone::Refine::Conditions
     CLAUSE_SET = Clauses::SET # non null
     CLAUSE_NOT_SET = Clauses::NOT_SET # null
 
+    I18N_PREFIX = "hammerstone.refine_blueprints.boolean_condition."
+
     def component
       "boolean-condition"
     end
@@ -58,10 +60,10 @@ module Hammerstone::Refine::Conditions
 
     def clauses
       [
-        Clause.new(CLAUSE_TRUE, "is true"),
-        Clause.new(CLAUSE_FALSE, "is false"),
-        Clause.new(CLAUSE_SET, "is set"),
-        Clause.new(CLAUSE_NOT_SET, "is not set"),
+        Clause.new(CLAUSE_TRUE, I18n.t("#{I18N_PREFIX}is_true")),
+        Clause.new(CLAUSE_FALSE, I18n.t("#{I18N_PREFIX}is_false")),
+        Clause.new(CLAUSE_SET, I18n.t("#{I18N_PREFIX}is_set")),
+        Clause.new(CLAUSE_NOT_SET, I18n.t("#{I18N_PREFIX}is_not_set")),
       ]
     end
 

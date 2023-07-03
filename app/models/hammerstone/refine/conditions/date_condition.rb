@@ -29,12 +29,14 @@ module Hammerstone::Refine::Conditions
     ATTRIBUTE_TYPE_DATE_WITH_TIME = 1
     ATTRIBUTE_TYPE_UNIX_TIMESTAMP = 2
 
+    I18N_PREFIX = "hammerstone.refine_blueprints.date_condition."
+
     def date1_must_be_real
       return true unless date1
       begin
         Date.strptime(date1, "%Y-%m-%d")
       rescue ArgumentError
-        errors.add(:base, "date1 is not a real date")
+        errors.add(:base, I18n.t("#{I18N_PREFIX}date1_error"))
         false
       end
     end
@@ -44,7 +46,7 @@ module Hammerstone::Refine::Conditions
       begin
         Date.strptime(date2, "%Y-%m-%d")
       rescue ArgumentError
-        errors.add(:base, "date2 is not a real date")
+        errors.add(:base, I18n.t("#{I18N_PREFIX}date2_error"))
         false
       end
     end
@@ -69,7 +71,7 @@ module Hammerstone::Refine::Conditions
 
     def timezone_exists(zone)
       return if ActiveSupport::TimeZone[zone].present?
-      errors.add(:base, "#{zone} timezone does not exist in ActiveSupport::TimeZone")
+      errors.add(:base, I18n.t("#{I18N_PREFIX}timezone_error", zone: zone))
     end
 
     def component
@@ -81,18 +83,23 @@ module Hammerstone::Refine::Conditions
 
       case input[:clause]
       when *[CLAUSE_EQUALS, CLAUSE_DOESNT_EQUAL, CLAUSE_LESS_THAN_OR_EQUAL, CLAUSE_GREATER_THAN_OR_EQUAL]
-        formatted_date1 = input[:date1].to_date.strftime("%m/%d/%y")
+        formatted_date1 = I18n.l(input[:date1].to_date, format: :dmy)
         "#{display} #{current_clause.display} #{formatted_date1}"
       when *[CLAUSE_BETWEEN, CLAUSE_NOT_BETWEEN]
-        formatted_date1 = input[:date1].to_date.strftime("%m/%d/%y")
-        formatted_date2 = input[:date2].to_date.strftime("%m/%d/%y")
-        "#{display} #{current_clause.display} #{formatted_date1} and #{formatted_date2}"
+        formatted_date1 = I18n.l(input[:date1].to_date, format: :dmy)
+        formatted_date2 = I18n.l(input[:date2].to_date, format: :dmy)
+        and_i18n = I18n.t("#{I18N_PREFIX}and")
+        "#{display} #{current_clause.display} #{formatted_date1} #{and_i18n} #{formatted_date2}"
       when *[CLAUSE_GREATER_THAN, CLAUSE_LESS_THAN, CLAUSE_EXACTLY]
-        "#{display} #{current_clause.display} #{input[:days]} days #{input[:modifier] == 'ago' ? "ago" : "from now"}"
+        days_i18n = I18n.t("#{I18N_PREFIX}and")
+        ago_i18n = I18n.t("#{I18N_PREFIX}days")
+        from_now_i18n = I18n.t("#{I18N_PREFIX}ago")
+        "#{display} #{current_clause.display} #{input[:days]} #{days_i18n} #{input[:modifier] == 'ago' ? ago_i18n : from_now_i18n}"
       when *[CLAUSE_SET, CLAUSE_NOT_SET]
         "#{display} #{current_clause.display}"
       else
-        raise "#{input[:clause]} not supported"
+        not_supported_i18n = I18n.t("#{I18N_PREFIX}not_supported")
+        raise "#{input[:clause]} #{not_supported_i18n}"
       end
     end
 
@@ -139,36 +146,36 @@ module Hammerstone::Refine::Conditions
 
     def clauses
       [
-        Clause.new(CLAUSE_EQUALS, "on")
+        Clause.new(CLAUSE_EQUALS, I18n.t("#{I18N_PREFIX}is_on"))
           .requires_inputs("date1"),
 
-        Clause.new(CLAUSE_DOESNT_EQUAL, "not on")
+        Clause.new(CLAUSE_DOESNT_EQUAL, I18n.t("#{I18N_PREFIX}not_on"))
           .requires_inputs("date1"),
 
-        Clause.new(CLAUSE_LESS_THAN_OR_EQUAL, "is on or before")
+        Clause.new(CLAUSE_LESS_THAN_OR_EQUAL, I18n.t("#{I18N_PREFIX}is_on_or_before"))
           .requires_inputs("date1"),
 
-        Clause.new(CLAUSE_GREATER_THAN_OR_EQUAL, "is on or after")
+        Clause.new(CLAUSE_GREATER_THAN_OR_EQUAL, I18n.t("#{I18N_PREFIX}is_on_or_after"))
           .requires_inputs("date1"),
 
-        Clause.new(CLAUSE_BETWEEN, "is between")
+        Clause.new(CLAUSE_BETWEEN, I18n.t("#{I18N_PREFIX}is_between"))
           .requires_inputs(["date1", "date2"]),
 
-        Clause.new(CLAUSE_NOT_BETWEEN, "is not between")
+        Clause.new(CLAUSE_NOT_BETWEEN, I18n.t("#{I18N_PREFIX}is_not_between"))
           .requires_inputs(["date1", "date2"]),
 
-        Clause.new(CLAUSE_GREATER_THAN, "is more than")
+        Clause.new(CLAUSE_GREATER_THAN, I18n.t("#{I18N_PREFIX}is_more_than"))
           .requires_inputs(["days", "modifier"]),
 
-        Clause.new(CLAUSE_EXACTLY, "is")
+        Clause.new(CLAUSE_EXACTLY, I18n.t("#{I18N_PREFIX}is"))
           .requires_inputs(["days", "modifier"]),
 
-        Clause.new(CLAUSE_LESS_THAN, "is less than")
+        Clause.new(CLAUSE_LESS_THAN, I18n.t("#{I18N_PREFIX}is_less_than"))
           .requires_inputs(["days", "modifier"]),
 
-        Clause.new(CLAUSE_SET, "is set"),
+        Clause.new(CLAUSE_SET, I18n.t("#{I18N_PREFIX}is_set")),
 
-        Clause.new(CLAUSE_NOT_SET, "is not set"),
+        Clause.new(CLAUSE_NOT_SET, I18n.t("#{I18N_PREFIX}is_not_set")),
       ]
     end
 

@@ -76,7 +76,6 @@ export default class extends Controller {
 
 
   connect() {
-    console.log("This is STILL my state controller!")
     // for select2 jquery events and datepicker
     this.element.refineStateController = this
     this.changeDelegate = delegate('change', ['event', 'picker'])

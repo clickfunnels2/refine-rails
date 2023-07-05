@@ -1,3 +1,6 @@
+### 2.6.11
+  * Further improves localization support by having calendars support spanish and fixing hardcoded strings.
+  * Fixes an issue where if clause options dont exist, the filter form would behave erratically
 ### 2.6.10
   * Adds additional localization support. See yml file for new supported keys
 ### 2.6.9

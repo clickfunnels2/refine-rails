@@ -6,7 +6,7 @@ en:
       filters:
         add_filter: "+ Add Filter"
         load_button: "Load Filter"
-        or_button: "+ Add "OR" Group"
+        or_button: "+ Add OR Group"
         criteria_limit: "You can only create up to %{criteria_limit} filter conditions"
         save_filter: "Save Filter"
         or: "or"

@@ -8,22 +8,32 @@ const criterion = (id, depth, condition) => {
   const meta = condition?.meta || { clauses: [], options: {}}
   const refinements = condition?.refinements || []
   const { clauses, options } = meta
-  const isOptionCondition = component === 'option-condition'
+  let selected
+  if (component === 'option-condition') {
+    selected = options[0] ? [options[0].id] : []
+  } else {
+    selected = undefined
+  }
   // Set newInput based on component
 
   let newInput = {
     clause: clauses[0]?.id,
-    selected: isOptionCondition ? [options[0].id] : undefined,
+    selected: selected,
   }
 
   // If refinements are present, add to input array
   refinements.forEach((refinement) => {
     const { meta, component } = refinement
     const { clauses, options } = meta
-    const isOptionCondition = component === 'option-condition'
+    let selected
+    if (component === 'option-condition') {
+      selected = options[0] ? [options[0].id] : []
+    } else {
+      selected = undefined
+    }
     newInput[refinement.id] = {
       clause: clauses[0].id,
-      selected: isOptionCondition ? [options[0]?.id] : undefined,
+      selected: selected,
     }
   })
 
@@ -66,6 +76,7 @@ export default class extends Controller {
 
 
   connect() {
+    console.log("This is STILL my state controller!")
     // for select2 jquery events and datepicker
     this.element.refineStateController = this
     this.changeDelegate = delegate('change', ['event', 'picker'])

@@ -18,7 +18,7 @@
 
     <% if ['btwn', 'nbtwn'].include? input[:clause] %>
       <!-- Add second input for value2 if clause is between or not between -->
-      <span class="refine-numeric-condition-and">and</span>
+      <span class="refine-numeric-condition-and"><%= t(".and") %></span>
       <div class="refine-numeric-condition-second-container">
         <input
           class="refine-numeric-condition-second-input"

@@ -12,13 +12,13 @@
       class="refine-query-loading-container <%= "hidden" unless action_name == "create" %>"
       id="refine-loader"
       data-refine--state-target="loading">
-      <p class="refine-query-loading-text">Loading...</p>
+      <p class="refine-query-loading-text"><%= t(".loading") %></p>
     </div>
 
     <%= tag.div id: dom_id(@refine_filter_builder, "groups") do %>
       <% @refine_filter_query.grouped_criteria.each_with_index do |criteria, index| %>
         <% if index > 0 %>
-          <p class="refine-query-or">or</p>
+          <p class="refine-query-or"><%= t(".query_or") %></p>
         <% end %>
         <%= render partial: 'hammerstone/refine_blueprints/group', locals: {
           criteria: criteria,

@@ -9,8 +9,8 @@
 %>
 
 <% if @refine_filter.criteria_limit_reached? %>
-  <button disabled class="refine--inline-btn" type="button" title="You can only create up to <%= @refine_filter.criteria_limit %> filter conditions">
-    + Add "OR" Group
+  <button disabled class="refine--inline-btn" type="button" title="<%= I18n.t("hammerstone.inline.criteria_limit", criteria_limit: @refine_filter.criteria_limit) %>">
+    <%= t(".inline.or_button") %>
   </button>
 <% else %>
   <%= render "hammerstone/refine/inline/filters/popup",
@@ -18,7 +18,7 @@
     src: hammerstone_refine_inline_criteria_path(criterion.to_params) do
   %>
     <button class="refine--inline-btn" type="button" data-action="click->refine--popup#show">
-      + Add "OR" Group
+      <%= t(".inline.or_button") %>
     </button>
   <% end %>
 <% end %>

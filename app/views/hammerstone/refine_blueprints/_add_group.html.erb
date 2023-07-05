@@ -13,7 +13,7 @@
       "refine-add-disabled" => is_disabled
     ),
     data: {action: ("click->refine--add#group" unless is_disabled)},
-    title: ("You can only create up to #{criteria_limit} filter conditions" if is_disabled)
+    title: (t(".criteria_limit", criteria_limit: criteria_limit) if is_disabled)
   ) do %>
     <% if @refine_filter_query.grouped_criteria.any? %>
       <%= t(".add_or") %>

@@ -22,7 +22,7 @@
             data-fields--super-select-target="select"
             name="id"
           >
-            <option disabled selected value>&mdash; Select a saved filter &mdash;</option>
+            <option disabled selected value>&mdash; <%= t("hammerstone.stored_filters.select_saved_filter") %> &mdash;</option>
             <% @stored_filters.each do |filter| %>
               <option
                 value="<%= filter.id %>"

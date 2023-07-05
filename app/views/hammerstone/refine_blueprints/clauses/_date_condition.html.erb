@@ -11,7 +11,7 @@
       class="refine-date-condition-days-input"
       type="text"
       value="<%= input[:days] %>"
-      placeholder="Number of"
+      placeholder="<%= t(".date_number_of_placeholder") %>"
       data-input-key="days"
       data-action="input->refine--update#value blur->refine--update#refreshFromServer"
       data-input-id='<%= input_id if defined? input_id %>'

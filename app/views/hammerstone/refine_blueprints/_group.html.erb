@@ -5,7 +5,7 @@
         <%= render "hammerstone/refine_blueprints/criterion", criterion: criterion %>
       </div>
       <% if criteria.count > 1 && index < criteria.count - 1 %>
-        <p class="refine-group-and">and</p>
+        <p class="refine-group-and"><%= t("hammerstone.refine_blueprints.add_and.add_and") %></p>
       <% end %>
     <% end %>
     <%= render 'hammerstone/refine_blueprints/add_and', criteria: criteria %>

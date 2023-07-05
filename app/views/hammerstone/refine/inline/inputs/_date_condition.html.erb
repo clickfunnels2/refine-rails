@@ -3,11 +3,11 @@
     <%= input_fields.label :days, "Number of days", class: "sr-only" %>
     <%= input_fields.text_field :days,
       class: "refine--date-condition-days-input",
-      placeholder: "Number of"
+      placeholder: <%= t(".date_number_of_placeholder") %>
     %>
   </div>
   <div class="refine--date-condition-days-text">
-    <span>days</span>
+    <span><%= t(".days") %></span>
   </div>
   <div class="refine--date-condition-days-modifier-container">
     <%= input_fields.collection_select :modifier,

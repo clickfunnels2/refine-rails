@@ -1,19 +1,37 @@
 en:
   hammerstone:
+    stored_filters:
+      select_saved_filter: "Select a saved filter"
+    inline:
+      filters:
+        add_filter: "+ Add Filter"
+        load_button: "Load Filter"
+        or_button: "+ Add OR Group"
+        criteria_limit: "You can only create up to %{criteria_limit} filter conditions"
+        save_filter: "Save Filter"
+        or: "or"
+      inputs:
+        date_number_of_placeholder: "Number of"
+        days: "days"
+        and: "and"
+
     refine_blueprints:
       add_and:
-        add_and: "And"
+        add_and: "AND"
       add_group: 
-        add_or: "Add Or"
+        add_or: "Add OR"
         create_filter: "Create a filter"
       group:
         buttons:
           add_and: "And"
 
       query:
+        loading: "Loading..."
         buttons:
-          add_or: "Add an 'Or'"
+          add_or: "Add an 'OR'"
           create_filter: "Create a filter"
+          remove_filter: "Remove filter"
+        query_or: "or"
 
       boolean_condition:
         is_true: is true
@@ -31,6 +49,7 @@ en:
           and: and
           first_date: First Date
           second_date: Second Date
+          date_number_of_placeholder: "Number of"
       condition:
         attribute_required: An attribute is required.
         condition_must_have_id: Every condition must have an ID

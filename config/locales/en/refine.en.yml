@@ -17,9 +17,9 @@ en:
 
     refine_blueprints:
       add_and:
-        add_and: "And"
+        add_and: "AND"
       add_group: 
-        add_or: "Add Or"
+        add_or: "Add OR"
         create_filter: "Create a filter"
       group:
         buttons:
@@ -28,10 +28,10 @@ en:
       query:
         loading: "Loading..."
         buttons:
-          add_or: "Add an 'Or'"
+          add_or: "Add an 'OR'"
           create_filter: "Create a filter"
           remove_filter: "Remove filter"
-        query_or: "o"
+        query_or: "or"
 
       boolean_condition:
         is_true: is true

@@ -14,7 +14,8 @@
     <% if @refine_filter.blueprint.present? %>
       <%= render "hammerstone/refine/inline/filters/or_button", position: @refine_filter.blueprint.length %>
     <% else %>  
-      <%= render "hammerstone/refine/inline/filters/and_button", position: 0 %>
+      <%= render "hammerstone/refine/inline/filters/and_button", position: 0, btn_class: "
+      refine--add-first-condition-btn" %>
     <% end %>
   </div>
 

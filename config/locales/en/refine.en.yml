@@ -127,3 +127,7 @@ en:
         does_not_contain: "does not contain"
         is_set: "is set"
         is_not_set: "is not set"
+
+    refine:
+      inline:
+        filter: Filter

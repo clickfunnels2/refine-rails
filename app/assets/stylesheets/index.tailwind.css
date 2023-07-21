@@ -106,6 +106,8 @@
     @apply px-8 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded;
   }
 
+
+
   .refine-filter-builder-dropdown-button-container {
     @apply py-6 flex sticky bottom-0 bg-white;
   }
@@ -384,12 +386,6 @@
   max-height: 66vh;
   overflow: auto;
   display: block;
-}
-
-.refine--inline-popup-container {
-  display: block;
-  width: auto;
-  position: relative;
 }
 
 /* filter pills */
@@ -749,4 +745,53 @@
 .refine--stored-filter-search-form {
     display: flex;
     width: 100%;
+}
+
+/*
+  *********************************************
+  Inline Final Styles
+  *********************************************
+*/
+
+.refine--add-condition-button.refine--add-first-condition-button,
+.refine--add-condition-group-button.refine--add-first-condition-button {
+    border: 1px dotted #aaa;
+    padding-right: 8px;
+}
+
+.refine--add-condition-button, .refine--add-condition-group-button {
+    display: flex;
+    gap: 5px;
+    color: #767676;
+    font-size: 14px;
+    border-radius: 6px;
+    padding: 5px;
+    align-items: center;
+    background-color: #fff;
+}
+
+.refine--inline-popup-container {
+  display: block;
+  width: auto;
+  position: relative;
+}
+
+.refine--inline-popup {
+  animation: .15s cubic-bezier(.45,1.1,.7,1) 0s up10;
+  animation-fill-mode: both;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,.3), 0 8px 30px -3px rgba(0,0,0,.25);
+  border-radius: 8px;
+  z-index: 9999;
+  background-color: #ffffff;
+  position: absolute;
+
+  /* TODO see if these are still needed */
+  margin-top: 0.5rem;
+  width: 100vw;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  max-width: max-content;
+  max-height: 66vh;
+  overflow: auto;
+  display: block;
 }

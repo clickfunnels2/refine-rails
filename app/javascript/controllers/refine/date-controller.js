@@ -4,6 +4,7 @@ import 'moment/locale/es'
 import flatpickr from "flatpickr"
 require("flatpickr/dist/flatpickr.css")
 require('flatpickr/dist/l10n/es')
+require('flatpickr/dist/l10n/pt')
 
 /*
   Stimulus controller for initializing the datepicker.
@@ -21,6 +22,8 @@ export default class extends Controller {
 
   static values = {
     locale: { type: String, default: 'en' },
+    dateFormat: { type: String, default:  'MM/DD/YYYY' },
+    datetimeFormat: { type: String, default:  'MM/DD/YYYY h:mm A' },
   }
 
   connect() {
@@ -58,7 +61,7 @@ export default class extends Controller {
         return momentDate.format(format)
       },
       onChange: (selectedDates, dateStr, instance) => {
-        const format = this.includeTimeValue ? 'L LT' : 'L'
+        const format = this.includeTimeValue ? this.datetimeFormatValue : this.dateFormatValue
         // display format
         this.fieldTarget.value = instance.formatDate(selectedDates[0], format)
         // internal format saved in db
@@ -69,7 +72,7 @@ export default class extends Controller {
         () => {
           const momentDate = moment(this.hiddenFieldTarget.value)
           if (momentDate.isValid()) {
-            const format = this.includeTimeValue ? 'L LT' : 'L'
+            const format = this.includeTimeValue ? this.datetimeFormatValue : this.dateFormatValue
             this.fieldTarget.value = momentDate.format(format)
           }
         },

@@ -1,5 +1,13 @@
 en:
   hammerstone:
+    date:
+      formats:
+        ruby: "%m/%d/%y"
+        moment: "MM/DD/YYYY"
+    time:
+      formats:
+        ruby: "%m/%d/%Y %l:%M %p"
+        moment: "MM/DD/YYYY h:mm A"
     stored_filters:
       select_saved_filter: "Select a saved filter"
     inline:

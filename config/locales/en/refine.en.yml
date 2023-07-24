@@ -4,7 +4,6 @@ en:
       select_saved_filter: "Select a saved filter"
     inline:
       filters:
-        add_filter: "+ Add Filter"
         load_button: "Load Filter"
         or_button: "+ Add OR Group"
         criteria_limit: "You can only create up to %{criteria_limit} filter conditions"
@@ -130,4 +129,8 @@ en:
 
     refine:
       inline:
-        filter: Filter
+        filters:
+          add_first_condition_button:
+            filter: "Filter"
+          load_button:
+            load_filter: "Load Filter"

@@ -11,10 +11,10 @@
   <% end %>
 
   <div class="refine--inline-group">
-    <% if @refine_filter.blueprint.present? %>
+    <% if @refine_filter.blueprint.length > 0 %>
       <%= render "hammerstone/refine/inline/filters/or_button", position: @refine_filter.blueprint.length %>
     <% else %>  
-      <%= render "hammerstone/refine/inline/filters/and_button", position: 0, btn_class: "
+      <%= render "hammerstone/refine/inline/filters/add_first_condition_button", position: 0, btn_class: "
       refine--add-first-condition-btn" %>
     <% end %>
   </div>

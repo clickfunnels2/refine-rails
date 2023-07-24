@@ -12,8 +12,8 @@
   frame_id: dom_id(criterion),
   src: hammerstone_refine_inline_criteria_path(criterion.to_params) do
 %>
-  <a class=".refine--add-condition-button refine--inline-add-first-condition-btn" href="#" data-action="click->refine--popup#show">
+  <button class="refine--add-condition-button refine--add-first-condition-button" href="#" data-action="click->refine--popup#show">
     <span class="material-icons-outlined">add</span>
     <span><%= t(".filter") %></span>
-  </a>
+  </button>
 <% end %>

@@ -486,25 +486,22 @@
   background-color: #e1e1e7;
 }
 
-/* criterion pick list and form */
-.refine--criterion-clause-container {
-  padding-top: 0;
-  margin-right: 6px;
-  margin-top: 0;
-  width: auto;
-}
-
 .refine--clause-select {
-    width: 100%;
-    flex-shrink: 0;
-    flex-grow: 1;
+  flex: 1;
+  margin-left: 10px;
+  line-height: 1;
+  color: #111;
+  border: 1px solid #ddd;
+  border-bottom-color: #aaa;
+  box-shadow: 0 1px 2px rgba(0,0,0,.1);
+  border-radius: 6px;
+  padding: 3px;
+  background-color: #fff;
 }
 
 .refine--criterion-form {
-    display: flex;
     width: 100%;
-    gap: 12px;
-    align-items: center;
+    padding: 0.5rem 0;
 }
 
 
@@ -705,19 +702,23 @@
 }
 
 /* _text_condition.html.erb */
-.refine--text-condition-container {
-  margin-top: 0.75rem;
-  margin-right: 0.75rem;
+input.refine--text-condition-input {
+  width: 100%;
+  font-size: 14px;
+  display: block;
+  /* TODO 25px L for icon */
+  padding: 5px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  outline: 0;
+  line-height: 1.125;
 }
 
-.refine--text-condition-input {
-  border-radius: 0.25rem;
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgba(229, 231, 235, 1);
+input.refine--text-condition-input::placeholder {
+  color: #aaa;
 }
 
-.refine--text-condition-input:focus {
+input.refine--text-condition-input:focus {
   border-color: rgba(59, 130, 246, 1);
 }
 
@@ -757,6 +758,12 @@
 .refine--add-condition-group-button.refine--add-first-condition-button {
     border: 1px dotted #aaa;
     padding-right: 8px;
+    line-height: 16px;
+    &:hover {
+      background-color: #fff;
+      border-style: solid;
+      color: #111;
+    }
 }
 
 .refine--add-condition-button, .refine--add-condition-group-button {
@@ -786,12 +793,31 @@
   position: absolute;
 
   /* TODO see if these are still needed */
-  margin-top: 0.5rem;
+  margin-top: 3px;
   width: 100vw;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 0 0.5rem;
   max-width: max-content;
   max-height: 66vh;
   overflow: auto;
   display: block;
+}
+
+.refine--separator {
+    height: 1px;
+    background-color: #eee;
+    margin: 5px 0;
+}
+
+input.refine--apply-button {
+  padding: 4px 6px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  font-weight: 500;
+  box-shadow: 0 2px 2px rgba(0,0,0,.08), 0 1px 5px -2px rgba(0,0,0,.04);
+  font-size: 14px;
+  border-radius: 6px;
+  margin-left: 4px;
+  background-color: #0c5cef;
+  color: #fff;
+  border-color: #0c5cef;
 }

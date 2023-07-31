@@ -10,6 +10,7 @@
   <%# Input Value %>
   <% unless ['st', 'nst'].include? @criterion.input.clause %>
     <%= render @criterion.input_partial, criterion: @criterion, form: form, input_fields: input_fields %>
+    <div class="refine--separator"></div>
   <% end %>
 
   <%# Count Refinement  %>
@@ -34,7 +35,7 @@
 
   <% end %>
 
-  <div class="refine--separator"></div>
+
 
   <%# Clause Select %>
   <div class="refine--criterion-clause-container">
@@ -44,7 +45,7 @@
       :id,
       :display,
       {},
-      class: "refine--clause-select",
+      class: "refine--select refine--clause-select",
       data: {action: "change->refine--condition-form#refresh"}
     %>
     <%= form.submit t('global.buttons.apply'), class: "refine--apply-button" %>

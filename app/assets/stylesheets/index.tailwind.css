@@ -486,18 +486,23 @@
   background-color: #e1e1e7;
 }
 
-.refine--clause-select {
-  flex: 1;
-  margin-left: 10px;
-  line-height: 1;
+.refine--select {
+  line-height: 1.125;
   color: #111;
   border: 1px solid #ddd;
   border-bottom-color: #aaa;
   box-shadow: 0 1px 2px rgba(0,0,0,.1);
   border-radius: 6px;
-  padding: 3px;
+  padding: 3px 3px 3px 6px;
   background-color: #fff;
+
 }
+
+.refine--clause-select {
+  flex: 1;
+  margin-left: 10px;
+}
+
 
 .refine--criterion-form {
     width: 100%;
@@ -506,20 +511,12 @@
 
 
 /*  _date_condition.html.erb */
-.refine--date-condition-days-container {
-    margin-top: 0.75rem;
-}
-
 .refine--date-condition-days-text {
     margin-top: 0.75rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
 }
 
 .refine--date-condition-days-modifier-container {
-    margin-right: 0.75rem;
     margin-top: 0.75rem;
-    width: 8rem;
 }
 
 .refine--date-picker-input {
@@ -553,14 +550,11 @@
 }
 
 .refine--date-condition-and {
-    margin-top: 0.75rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+  margin-top: 0.75rem;
 }
 
 .refine--date-condition-second-date-container {
-    margin-top: 0px;
-    margin-right: 0.75rem;
+    margin-top: 0.75rem;
 }
 
 .refine--date-condition-days-modifier-select {
@@ -614,8 +608,6 @@
 
 .refine--numeric-condition-and {
   margin-top: 0.75rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
 }
 
 .refine--numeric-condition-second-container {
@@ -702,7 +694,7 @@
 }
 
 /* _text_condition.html.erb */
-input.refine--text-condition-input {
+input.refine--input {
   width: 100%;
   font-size: 14px;
   display: block;
@@ -714,7 +706,7 @@ input.refine--text-condition-input {
   line-height: 1.125;
 }
 
-input.refine--text-condition-input::placeholder {
+input.refine--input::placeholder {
   color: #aaa;
 }
 

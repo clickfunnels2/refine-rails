@@ -3,12 +3,12 @@
   class="refine-date-picker-container"
   data-refine--date-locale-value="<%= I18n.locale %>"
 >
-  <%= input_fields.label attribute, label %>
   <input
-    class="refine-date-picker-input"
+    class="refine--input"
     type="text"
     value="<%= value&.to_date&.strftime('%m/%d/%y') %>"
     data-refine--date-target="field"
+    placeholder="<%= label %>"
   />
   <%= input_fields.hidden_field attribute,
     value: value&.to_date&.strftime('%m/%d/%y'),

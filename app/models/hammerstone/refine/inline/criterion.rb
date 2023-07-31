@@ -102,8 +102,8 @@ class Hammerstone::Refine::Inline::Criterion
   end
 
   def options
-    if condition.respond_to? :options
-      condition.options.map {|option_hash| Hammerstone::Refine::Inline::Criteria::Option.new(**option_hash)}
+    if condition.respond_to? :get_options
+      condition.get_options.call.map {|option_hash| Hammerstone::Refine::Inline::Criteria::Option.new(**option_hash)}
     end
   end
 

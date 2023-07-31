@@ -8,14 +8,14 @@
 <%= tag.div class: ('btwn' ? 'refine--numeric-condition-container' : 'refine-numeric-condition-container-btwn') do %>
 
   <%= input_fields.text_field :value1,
-    class: "refine--input",
+    class: "refine--input refine--numeric-input",
     placeholder: value1_placeholder
   %>
 
   <% if is_range %>
     <div class="refine--numeric-condition-and"><%= t(".and") %></div>
     <div class="refine--numeric-condition-second-container">
-      <%= input_fields.text_field :value2, class: "refine--input", placeholder: value2_placeholder %>
+      <%= input_fields.text_field :value2, class: "refine--input refine--numeric-input", placeholder: value2_placeholder %>
     </div>
   <% end %>
 <% end %>

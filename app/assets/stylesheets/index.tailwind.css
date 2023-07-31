@@ -401,12 +401,20 @@
   margin-left: 28px;
 }
 
+/* Condition List  */
+.refine--condition-list {
+  margin-top: 5px;
+  max-height: 180px;
+  overflow: auto;
+}
+
 .refine--condition-list-item {
   color: black;
   display: block;
   padding: 3px 5px;
   color: #111;
   border-radius: 6px;
+  line-height: 1.15;
 }
 
 .refine--condition-list-item:hover {
@@ -770,4 +778,19 @@ input.refine--apply-button {
   background-color: #0c5cef;
   color: #fff;
   border-color: #0c5cef;
+}
+
+.refine--saved-filters-link {
+  color: black;
+  display: block;
+  padding: 3px 5px;
+  color: #111;
+  border-radius: 6px;
+  line-height: 1.15;
+  margin-bottom: 5px;
+  &:hover {
+    background-color: #eee;
+    color: #111;
+    text-decoration: none;
+  }
 }

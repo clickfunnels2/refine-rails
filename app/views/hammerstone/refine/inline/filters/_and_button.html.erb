@@ -9,7 +9,7 @@
 %>
 
 <% if @refine_filter.criteria_limit_reached? %>
-  <button disabled class="refine--inline-btn" type="button" title="<%= t(".criteria_limit", criteria_limit: @refine_filter.criteria_limit) %>">
+  <button disabled class="refine--inline-btn" type="button" title="<%= t("hammerstone.inline.filters.criteria_limit", criteria_limit: @refine_filter.criteria_limit) %>">
     <%= t(".add_filter") %>
   </button>
 <% else %>

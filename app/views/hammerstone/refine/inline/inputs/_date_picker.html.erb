@@ -2,16 +2,18 @@
   data-controller="refine--date" 
   class="refine-date-picker-container"
   data-refine--date-locale-value="<%= I18n.locale %>"
+  data-refine--date-date-format-value="<%=  I18n.t("hammerstone.date.formats.moment") %>"
+  data-refine--date-datetime-format-value="<%= I18n.t("hammerstone.time.formats.moment") %>"
 >
   <%= input_fields.label attribute, label %>
   <input
     class="refine-date-picker-input"
     type="text"
-    value="<%= value&.to_date&.strftime('%m/%d/%y') %>"
+    value="<%= value&.to_date && I18n.l(value&.to_date, format: I18n.t("hammerstone.date.formats.ruby"))  %>"
     data-refine--date-target="field"
   />
   <%= input_fields.hidden_field attribute,
-    value: value&.to_date&.strftime('%m/%d/%y'),
+    value: value&.to_date&.strftime('%Y-%m-%d'),
     data: { refine__date_target: "hiddenField" }
   %>
 </div>

@@ -4,17 +4,22 @@
   src: edit_hammerstone_refine_inline_criterion_path(criterion.position, criterion.to_params) do
 %>
 
-  <div class="refine--filter-condition-wrapper">
-    <div class="refine--filter-condition">
-      <div class="refine--filter-value" data-action="click->refine--popup#show">
-        <%= criterion.human_readable %>
+  <div class="refine--condition-pill-wrapper">
+    <div class="refine--condition-pill">
+      <div class="refine--condition-pill-name" data-action="click->refine--popup#show">
+        <%= criterion.condition_display %>
+      </div>
+      <div class="refine--remove-condition"></div>
+      <%= button_to hammerstone_refine_inline_criterion_path(criterion.position, criterion.to_params), class: "refine--remove-condition", method: :delete do %>
+      <% end %>
+      <div class="refine--condition-value-wrapper">
+         <div class="refine--condition-value-clause"><%= criterion.clause_display %></div>
+         <div class="refine--condition-value-self">
+            <div><%= criterion.human_readable_value %></div>
+         </div>
       </div>
     </div>
-    <%= button_to hammerstone_refine_inline_criterion_path(criterion.position, criterion.to_params), class: "refine--filter-remove", method: :delete do %>
-      <div class="material-icons">
-        X
-      </div>
-    <% end %>
+
   </div>
 
 <% end %>

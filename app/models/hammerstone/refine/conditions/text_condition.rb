@@ -32,6 +32,15 @@ module Hammerstone::Refine::Conditions
       end
     end
 
+    def human_readable_value(input)
+      current_clause = get_clause_by_id(input[:clause])
+      if input[:clause].in? [CLAUSE_SET, CLAUSE_NOT_SET]
+        ""
+      else
+        input[:value]
+      end
+    end
+
     def clauses
       [
         Clause.new(CLAUSE_EQUALS, I18n.t("#{I18N_PREFIX}is"))

@@ -58,6 +58,20 @@ module Hammerstone::Refine::Conditions
       end
     end
 
+    def human_readable_value(input)
+      current_clause = get_clause_by_id(input[:clause])
+      case input[:clause]
+      when *[CLAUSE_EQUALS, CLAUSE_DOESNT_EQUAL, CLAUSE_GREATER_THAN, CLAUSE_GREATER_THAN_OR_EQUAL, CLAUSE_LESS_THAN, CLAUSE_LESS_THAN_OR_EQUAL]
+        input[:value1]
+      when *[CLAUSE_BETWEEN, CLAUSE_NOT_BETWEEN]
+        "#{input[:value1]} #{I18n.t("#{I18N_PREFIX}and")} #{input[:value2]}"
+      when *[CLAUSE_SET, CLAUSE_NOT_SET]
+        ""
+      else
+        raise "#{input[:clause]} #{I18n.t("#{I18N_PREFIX}not_supported")}"
+      end
+    end
+
 
 
     def clauses

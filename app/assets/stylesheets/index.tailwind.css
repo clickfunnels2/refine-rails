@@ -407,12 +407,13 @@
   flex-wrap: wrap;
 }
 
-.refine--group-join {
+.refine--group-join, .refine--condition-join {
   position: relative;
   padding: 5px 0;
   width: 35px;
   text-align: center;
   border-radius: 6px;
+  cursor: default;
   &:hover {
     background-color: #f8f8f8;
   }
@@ -797,6 +798,11 @@ input.refine--text-condition-input:focus {
   Inline Final Styles
   *********************************************
 */
+.refine--filter-label {
+  white-space: nowrap;
+  color: #767676;
+}
+
 
 .refine--add-condition-button.refine--add-first-condition-button,
 .refine--add-condition-group-button.refine--add-first-condition-button {
@@ -810,15 +816,19 @@ input.refine--text-condition-input:focus {
     }
 }
 
-.refine--add-condition-button, .refine--add-condition-group-button {
-    display: flex;
-    gap: 5px;
-    color: #767676;
-    font-size: 14px;
-    border-radius: 6px;
-    padding: 5px;
-    align-items: center;
-    background-color: #fff;
+.refine--add-condition-button, .refine--add-group-button {
+  display: flex;
+  gap: 5px;
+  color: #767676;
+  font-size: 14px;
+  border-radius: 6px;
+  padding: 5px;
+  align-items: center;
+  background-color: #fff;
+  &:hover {
+    color: #111;
+    background-color: #f8f8f8;
+  }
 }
 
 .refine--inline-popup-container {

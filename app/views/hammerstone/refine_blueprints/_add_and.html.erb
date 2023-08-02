@@ -17,7 +17,7 @@
     ),
     style: "transition: all .15s ease",
     data: {action: ("click->refine--add#criterion" unless is_disabled)},
-    title: (t(".criteria_limit", criteria_limit: criteria_limit) if is_disabled)
+    title: (t("hammerstone.inline.filters.criteria_limit", criteria_limit: criteria_limit) if is_disabled)
 
   ) do %>
     <span class="refine-add-button-text"><%= t(".add_and") %></span><i class="refine-add-icon fal fa-plus"></i>

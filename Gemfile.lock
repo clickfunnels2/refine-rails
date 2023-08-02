@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    refine-rails (2.6.12)
+    refine-rails (2.6.13)
       rails (>= 6.0)
 
 GEM

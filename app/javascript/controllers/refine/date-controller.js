@@ -1,10 +1,16 @@
 import { Controller } from "@hotwired/stimulus"
 import moment from 'moment'
-import 'moment/locale/es'
 import flatpickr from "flatpickr"
 require("flatpickr/dist/flatpickr.css")
-require('flatpickr/dist/l10n/es')
-require('flatpickr/dist/l10n/pt')
+import { english } from "flatpickr/dist/l10n/default.js"
+import { Spanish } from "flatpickr/dist/l10n/es.js"
+import { Portuguese } from "flatpickr/dist/l10n/pt.js"
+
+const locales  = {
+  "en": english,
+  "es": Spanish,
+  "pt": Portuguese
+}
 
 /*
   Stimulus controller for initializing the datepicker.
@@ -27,8 +33,6 @@ export default class extends Controller {
   }
 
   connect() {
-    window.HammerstoneRefine ||= {}
-    window.HammerstoneRefine.locale = this.localeValue
     if (window.HammerstoneRefine?.datePicker) {
       window.HammerstoneRefine.datePicker.connect.bind(this)()
     } else {
@@ -45,18 +49,16 @@ export default class extends Controller {
   }
 
   defaultConnect() {
+    const localeCode = ( this.localeValue?.slice(0,2) || "en" )
     this.plugin = flatpickr(this.fieldTarget, {
       minDate: this.futureOnlyValue ? new Date() : null,
       dateFormat: 'YYYY-MM-DD',
-      locale: window.HammerstoneRefine.locale,
+      locale: locales[localeCode],
       defaultDate: this.hiddenFieldTarget.value,
       parseDate: (datestr, format) => {
         return moment(datestr, format, true).toDate()
       },
       formatDate: (date, format) => {
-        if (typeof window.HammerstoneRefine.locale === 'string') {
-          moment.locale(window.HammerstoneRefine.locale)
-        }
         const momentDate = moment(date)
         return momentDate.format(format)
       },

@@ -33,8 +33,6 @@ export default class extends Controller {
   }
 
   connect() {
-    window.HammerstoneRefine ||= {}
-    window.HammerstoneRefine.locale = this.localeValue
     if (window.HammerstoneRefine?.datePicker) {
       window.HammerstoneRefine.datePicker.connect.bind(this)()
     } else {
@@ -51,7 +49,7 @@ export default class extends Controller {
   }
 
   defaultConnect() {
-    const localeCode = window.HammerstoneRefine.locale.slice(0,2)
+    const localeCode = ( this.localeValue?.slice(0,2) || "en" )
     this.plugin = flatpickr(this.fieldTarget, {
       minDate: this.futureOnlyValue ? new Date() : null,
       dateFormat: 'YYYY-MM-DD',

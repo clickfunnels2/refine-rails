@@ -1,4 +1,4 @@
-<div class="refine--filter-wrapper">
+<%= tag.div class: "refine--filter-wrapper", id: "refine-inline-filter-#{@refine_client_id}" do %>
   <% if @refine_filter.blueprint.empty? %>
     <%= render "hammerstone/refine/inline/filters/add_first_condition_button", position: 0, btn_class: "
     refine--add-first-condition-btn" %>
@@ -20,4 +20,4 @@
       </div>
     </div>
   <% end %>
-</div>
+<% end %>

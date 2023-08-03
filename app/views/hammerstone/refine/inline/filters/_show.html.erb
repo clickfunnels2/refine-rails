@@ -1,11 +1,18 @@
-<%= tag.div class: "refine--filter-wrapper", id: "refine-inline-filter-#{@refine_client_id}" do %>
+<%
+  groups = Hammerstone::Refine::Inline::Criterion.groups_from_filter(@refine_filter, client_id: @refine_client_id, stable_id: @refine_stable_id)
+
+  wrapper_class = class_names "refine--filter-wrapper" => true,
+    "refine--has-many-groups" => groups.many?
+%>
+
+<%= tag.div class: wrapper_class, id: "refine-inline-filter-#{@refine_client_id}" do %>
   <% if @refine_filter.blueprint.empty? %>
     <%= render "hammerstone/refine/inline/filters/add_first_condition_button", position: 0, btn_class: "
     refine--add-first-condition-btn" %>
   <% else %>
     <div class="refine--filter-label"><%= t('.filter') %>:</div>
     <div class="refine--groups-wrapper">
-      <% Hammerstone::Refine::Inline::Criterion.groups_from_filter(@refine_filter, client_id: @refine_client_id, stable_id: @refine_stable_id).each.with_index do |group, i| %>
+      <% groups.each.with_index do |group, i| %>
         <% unless i == 0 %>
           <div class="refine--group-join"><%= t(".or") %></div>
         <% end %>

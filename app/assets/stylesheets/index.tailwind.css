@@ -831,6 +831,15 @@ input.refine--text-condition-input:focus {
   }
 }
 
+.refine--has-many-groups .refine--add-button-label {
+  display: none;
+}
+
+.refine--has-many-groups .refine--add-condition-button .refine--add-button-icon {
+  position: relative;
+  top: 0;
+}
+
 .refine--inline-popup-container {
   display: block;
   width: auto;

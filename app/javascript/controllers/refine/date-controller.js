@@ -1,6 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
 import moment from 'moment'
-import 'moment/locale/es'
 import flatpickr from "flatpickr"
 require("flatpickr/dist/flatpickr.css")
 require('flatpickr/dist/l10n/es')

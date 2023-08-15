@@ -27,10 +27,10 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
         criterion: @criterion.to_blueprint_node
       )
 
-    if filter_valid?(@refine_filter)
+    @error_messages = filter_error_messages(@refine_filter)
+    if @error_messages.none?
       handle_filter_update(@refine_filter.to_stable_id)
     else
-      @error_messages = ["Input is not valid"]
       render turbo_stream: turbo_stream.update(
         @criterion,
         self.class.render("new", assigns: {criterion: @criterion, refine_filter: @refine_filter, error_messages: @error_messages})
@@ -55,10 +55,10 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
       .new(@refine_filter.blueprint)
       .update(params[:id].to_i, criterion: @criterion.to_blueprint_node)
 
-    if filter_valid?(@refine_filter)
-      handle_filter_update(@refine_filter.to_stable_id)
+    @error_messages = filter_error_messages(@refine_filter)
+    if @error_messages.none?
+        handle_filter_update(@refine_filter.to_stable_id)
     else
-      @error_messages = ["Sorry that input is not valid"]
       render turbo_stream: turbo_stream.update(
         @criterion,
         self.class.render("edit", assigns: {criterion: @criterion, refine_filter: @refine_filter, error_messages: @error_messages})
@@ -137,8 +137,17 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
 
   def filter_valid?(refine_filter)
     Hammerstone::Refine::Inline::Criterion
-      .groups_from_filter(@refine_filter, **criterion_params.slice(:client_id, :stable_id))
+      .groups_from_filter(refine_filter, **criterion_params.slice(:client_id, :stable_id))
       .flatten
       .all?(&:valid?)
+  end
+
+  def filter_error_messages(refine_filter)
+    criteria = Hammerstone::Refine::Inline::Criterion
+      .groups_from_filter(refine_filter, **criterion_params.slice(:client_id, :stable_id))
+      .flatten
+
+    criteria.each(&:validate!)
+    criteria.flat_map {|c| c.errors.full_messages }
   end
 end

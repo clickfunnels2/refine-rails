@@ -46,7 +46,9 @@ class Hammerstone::Refine::Inline::StoredFiltersController < ApplicationControll
   def criterion_params
     params.require(:hammerstone_refine_inline_criterion).permit(
       :stable_id,
-      :client_id
+      :client_id,
+      :position,
+      :conjunction
     )
   end
 

@@ -9,7 +9,7 @@
 %>
 
 <% if @refine_filter.criteria_limit_reached? %>
-  <button disabled class="refine--add-group-button" type="button" title="<%= I18n.t("hammerstone.inline.criteria_limit", criteria_limit: @refine_filter.criteria_limit) %>">
+  <button disabled class="refine--add-group-button" type="button" title="<%= t(".criteria_limit", criteria_limit: @refine_filter.criteria_limit) %>">
     <span class="fa fa-plus"></span>
     <span class="refine--add-group-button-label"><%= t(".group") %></span>
   </button>

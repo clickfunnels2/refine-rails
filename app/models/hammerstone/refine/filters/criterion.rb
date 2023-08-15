@@ -37,7 +37,8 @@ class Hammerstone::Refine::Filters::Criterion
   end
 
   def condition_attributes
-    condition.to_array(allow_errors: true)
+    result = condition&.to_array(allow_errors: true)
+    result.to_h
   end
 
   def meta

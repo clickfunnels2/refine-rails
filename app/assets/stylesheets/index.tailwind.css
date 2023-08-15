@@ -865,6 +865,25 @@ input.refine--text-condition-input:focus {
   display: block;
 }
 
+.refine--stored-filter-list-popup {
+  animation: .15s cubic-bezier(.45,1.1,.7,1) 0s up10;
+  animation-fill-mode: both;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,.3), 0 8px 30px -3px rgba(0,0,0,.25);
+  border-radius: 8px;
+  z-index: 9999;
+  background-color: #ffffff;
+  position: absolute;
+
+  /* TODO see if these are still needed */
+  margin-top: 3px;
+  width: 100vw;
+  padding: 0 0.5rem;
+  max-width: max-content;
+  max-height: 66vh;
+  overflow: auto;
+  display: block;
+}
+
 .refine--separator {
     height: 1px;
     background-color: #eee;

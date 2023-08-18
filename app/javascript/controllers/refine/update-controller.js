@@ -64,17 +64,6 @@ export default class extends ServerRefreshController {
     )
   }
 
-  date(event) {
-    const { picker } = event.detail
-    const format = this.includeTimeValue ? 'MM/DD/YYYY h:mm A' : 'MM/DD/YYYY'
-    const value = picker.startDate.format(format)
-    console.log("Handling update-controller value")
-    console.log(event)
-    console.log(value)
-    this.value(event, value)
-    this.refreshFromServer()
-  }
-
   condition(event) {
     const { criterionIdValue, state } = this
     const element = event.target

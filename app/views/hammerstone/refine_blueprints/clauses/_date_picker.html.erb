@@ -13,6 +13,8 @@
     type="text"
     value="<%= date&.to_date && I18n.l(date&.to_date, format: I18n.t("hammerstone.date.formats.ruby")) %>"
     data-refine--date-target="field"
-    data-action="$change->refine--update#date change->refine--update#date"
+    data-input-id="<%= defined?(input_id) && input_id %>"
+    data-input-key="<%= input_key %>"
+    data-action="$change->refine--update#value"
   />
 </div>

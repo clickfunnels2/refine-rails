@@ -18,6 +18,7 @@
   </div>
 
   <!-- Render correct type of condition -->
+  Criterion <%= criterion.input %>
   <%= render partial: "hammerstone/refine_blueprints/clauses/#{criterion.component}", locals: {
     criterion: criterion,
     condition: criterion.condition, input: criterion.input, criterion_id: criterion_id, meta: criterion.meta, meta_clause: criterion.selected_clause_meta, input_id: nil } %>

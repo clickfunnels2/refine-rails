@@ -1,6 +1,5 @@
 import ServerRefreshController from './server-refresh-controller'
 import { debounce } from 'lodash'
-import flatpickr from 'flatpickr'
 
 export default class extends ServerRefreshController {
   static values = {
@@ -63,6 +62,17 @@ export default class extends ServerRefreshController {
       },
       inputId
     )
+  }
+
+  date(event) {
+    const { picker } = event.detail
+    const format = this.includeTimeValue ? 'MM/DD/YYYY h:mm A' : 'MM/DD/YYYY'
+    const value = picker.startDate.format(format)
+    console.log("Handling update-controller value")
+    console.log(event)
+    console.log(value)
+    this.value(event, value)
+    this.refreshFromServer()
   }
 
   condition(event) {

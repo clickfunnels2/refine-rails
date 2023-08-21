@@ -363,16 +363,6 @@
 */
 
 /* buttons and popups */
-.refine--inline-btn {
-  padding: 2px 8px;
-  border: solid 1px black;
-  cursor: pointer;
-}
-
-.refine--inline-btn:disabled {
-  cursor: not-allowed;
-}
-
 .refine--inline-popup {
   position: absolute;
   z-index: 100;
@@ -390,13 +380,19 @@
 
 /* groups and filter pills */
 .refine--filter-wrapper {
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.refine--filter-row {
   display: flex;
   gap: 10px;
   row-gap: 15px;
   align-items: center;
-  font-size: 14px;
   flex-wrap: wrap;
-  margin-top: 20px;
 }
 
 .refine--groups-wrapper {
@@ -796,6 +792,9 @@ input.refine--text-condition-input:focus {
   text-decoration: none;
 }
 
+.refine--save-filter-link-label {
+  border-bottom: 1px dotted #111;
+}
 /*
   *********************************************
   Inline Final Styles
@@ -929,5 +928,15 @@ input.refine--apply-button {
     transform: translateY(-50%);
     rotate: 270deg;
   }
+}
 
+input.refine--save-filter-input {
+  border: none;
+  padding: 0;
+  font-size: 14px;
+  &:focus {
+    outline: unset;
+    border: none;
+    box-shadow: none;
+  }
 }

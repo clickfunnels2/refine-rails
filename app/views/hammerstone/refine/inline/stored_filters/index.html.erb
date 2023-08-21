@@ -1,7 +1,7 @@
 <%= turbo_frame_tag dom_id(@criterion, :load), class: "refine--stored-filter-list-popup" do %>
   <div class="refine--stored-filter-list">
     <% if @stored_filters.empty? %>
-      <a>You have no saved filters</a>
+      <a><%= t('.no_stored_filters') %></a>
     <% end %>
 
 

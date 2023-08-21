@@ -8,7 +8,6 @@ en:
       formats:
         ruby: "%m/%d/%Y %l:%M %p"
         moment: "MM/DD/YYYY h:mm A"
-
     daterangepicker:
       firstDay: 1
       separator: " - "
@@ -47,7 +46,10 @@ en:
       last30Days: Last 30 Days
       thisMonth: This Month
       lastMonth: Last Month
-
+    filter_pills:
+      pill_and:
+        and: and
+        or: or
     stored_filters:
       select_saved_filter: "Select a saved filter"
     inline:

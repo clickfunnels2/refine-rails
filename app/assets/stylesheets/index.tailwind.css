@@ -384,7 +384,7 @@
   padding-right: 1rem;
   max-width: max-content;
   max-height: 66vh;
-  overflow: auto;
+  overflow: visible;
   display: block;
 }
 
@@ -861,7 +861,7 @@ input.refine--text-condition-input:focus {
   padding: 0 0.5rem;
   max-width: max-content;
   max-height: 66vh;
-  overflow: auto;
+  overflow: visible;
   display: block;
 }
 
@@ -873,6 +873,8 @@ input.refine--text-condition-input:focus {
   z-index: 9999;
   background-color: #ffffff;
   position: absolute;
+  top: -8px;
+  left: 100%;
 
   /* TODO see if these are still needed */
   margin-top: 3px;
@@ -880,7 +882,6 @@ input.refine--text-condition-input:focus {
   padding: 0 0.5rem;
   max-width: max-content;
   max-height: 66vh;
-  overflow: auto;
   display: block;
 }
 
@@ -904,7 +905,7 @@ input.refine--apply-button {
   border-color: #0c5cef;
 }
 
-.refine--saved-filters-link {
+.refine--stored-filters-link {
   color: black;
   display: block;
   padding: 3px 5px;
@@ -917,4 +918,13 @@ input.refine--apply-button {
     color: #111;
     text-decoration: none;
   }
+  &:before {
+    content: "V";
+    font-size: 14px;
+    position: absolute;
+    right: 0;
+    transform: translateY(-50%);
+    rotate: 270deg;
+  }
+
 }

@@ -6,15 +6,20 @@
   data-refine--date-datetime-format-value="<%= I18n.t("hammerstone.time.formats.moment") %>"
 >
   <label for="<%= condition_id %>" class="sr-only"><%= label %></label>
-  date: <%= date %>
+
   <input
-    name="<%= condition_id %>"
     class="refine--date-picker-input"
     type="text"
     value="<%= date&.to_date && I18n.l(date&.to_date, format: I18n.t("hammerstone.date.formats.ruby")) %>"
     data-refine--date-target="field"
-    data-input-id="<%= defined?(input_id) && input_id %>"
-    data-input-key="<%= input_key %>"
-    data-action="$change->refine--update#value"
   />
+  <input
+    type="hidden"
+    name="<%= condition_id %>"
+    value="<%= date&.to_date&.strftime('%Y-%m-%d') %>"
+    data-refine--date-target="hiddenField"
+    data-input-key="<%= input_key %>"
+    data-input-id="<%= defined?(input_id) && input_id %>"
+    data-action="change->refine--update#value"
+  >
 </div>

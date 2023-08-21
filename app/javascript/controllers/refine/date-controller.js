@@ -9,6 +9,7 @@ import 'daterangepicker'
 export default class extends Controller {
   static targets = [
     'field',
+    'hiddenField',
     'clearButton',
     'currentTimeZoneField',
     'currentTimeZoneWrapper',
@@ -25,6 +26,9 @@ export default class extends Controller {
     inline: Boolean,
     cancelButtonLabel: { type: String, default: 'Cancel' },
     applyButtonLabel: { type: String, default: 'Apply' },
+    locale: { type: String, default: 'en' },
+    dateFormat: { type: String, default:  'MM/DD/YYYY' },
+    datetimeFormat: { type: String, default:  'MM/DD/YYYY h:mm A' },
   }
 
   connect() {
@@ -45,15 +49,17 @@ export default class extends Controller {
   }
 
   applyDateToField(event, picker) {
-    const format = this.includeTimeValue ? 'MM/DD/YYYY h:mm A' : 'MM/DD/YYYY'
-    console.log("Setting applyDateToField")
-    console.log(picker)
-    window.$(this.fieldTarget).val(picker.startDate.format(format))
+    const format = this.includeTimeValue ? this.datetimeFormatValue : this.dateFormatValue
+    console.log("Applying change")
+    console.log(this.hiddenFieldTarget)
+    console.log(picker.startDate.format('YYYY-MM-DD'))
+    this.fieldTarget.value = picker.startDate.format(format)
+    this.hiddenFieldTarget.value = picker.startDate.format('YYYY-MM-DD')
     // bubble up a change event when the input is updated for other listeners
-    window.$(this.fieldTarget).trigger('change', picker)
+    // window.$(this.fieldTarget).trigger('change', picker)
 
     // emit native change event
-    this.element.dispatchEvent(new Event('change', { detail: picker, bubbles: true }))
+    this.hiddenFieldTarget.dispatchEvent(new Event('change', { detail: picker, bubbles: true }))
   }
 
   showTimeZoneButtons(event) {

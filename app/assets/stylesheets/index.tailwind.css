@@ -775,22 +775,25 @@ input.refine--text-condition-input:focus {
 }
 
 /* stored filters */
-.refine--stored-filter-search-container {
-    padding: 11px 0px;
-    display: flex;
-    width: 100%;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+.refine--stored-filter-list {
+  padding: 10px;
+  max-height: 180px;
+  overflow: auto;
 }
 
-.refine--stored-filter-search-selector-container {
-    margin-right: 1rem;
-    width: 100%;
+.refine--stored-filter-list-item {
+  color: black;
+  display: block;
+  padding: 3px 5px;
+  color: #111;
+  border-radius: 6px;
+  line-height: 1.15;
 }
 
-.refine--stored-filter-search-form {
-    display: flex;
-    width: 100%;
+.refine--stored-filter-list-item:hover {
+  background-color: #eee;
+  color: #111;
+  text-decoration: none;
 }
 
 /*

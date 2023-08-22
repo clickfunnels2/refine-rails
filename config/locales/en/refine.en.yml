@@ -8,6 +8,46 @@ en:
       formats:
         ruby: "%m/%d/%Y %l:%M %p"
         moment: "MM/DD/YYYY h:mm A"
+
+    daterangepicker:
+      firstDay: 1
+      separator: " - "
+      applyLabel: "Apply"
+      cancelLabel: "Cancel"
+      fromLabel: "From"
+      toLabel: "To"
+      customRangeLabel: "Custom"
+      weekLabel: "W"
+      daysOfWeek:
+      - "Su"
+      - "Mo"
+      - "Tu"
+      - "We"
+      - "Th"
+      - "Fr"
+      - "Sa"
+      monthNames:
+      - "January"
+      - "February"
+      - "March"
+      - "April"
+      - "May"
+      - "June"
+      - "July"
+      - "August"
+      - "September"
+      - "October"
+      - "November"
+      - "December"
+      firstDay: 0
+    date_range_controller:
+      today: Today
+      yesterday: yesterday
+      last7Days: Last 7 Days
+      last30Days: Last 30 Days
+      thisMonth: This Month
+      lastMonth: Last Month
+
     stored_filters:
       select_saved_filter: "Select a saved filter"
     inline:

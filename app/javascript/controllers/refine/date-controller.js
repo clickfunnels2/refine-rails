@@ -11,23 +11,15 @@ export default class extends Controller {
     'field',
     'hiddenField',
     'clearButton',
-    'currentTimeZoneField',
-    'currentTimeZoneWrapper',
-    'timeZoneButtons',
-    'timeZoneSelectWrapper',
-    'timeZoneField',
-    'timeZoneSelect',
   ]
 
   static values = {
     includeTime: Boolean,
-    defaultTimeZones: Array,
     futureOnly: Boolean,
     drops: String,
     inline: Boolean,
     dateFormat: String,
     timeFormat: String,
-    currentTimeZone: String,
     isAmPm: Boolean,
     locale: { type: String, default: 'en' },
     datetimeFormat: { type: String, default:  'MM/DD/YYYY h:mm A' },
@@ -53,11 +45,10 @@ export default class extends Controller {
 
   applyDateToField(event, picker) {
     const format = this.includeTimeValue ? this.timeFormatValue : this.dateFormatValue
-    const newTimeZone = this.currentTimeZone()
 
     const momentVal = picker
-      ? moment(picker.startDate.toISOString()).tz(newTimeZone, true)
-      : moment.tz(moment(this.fieldTarget.value, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DDTHH:mm'), newTimeZone)
+      ? moment(picker.startDate.toISOString())
+      : moment(this.fieldTarget.value, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DDTHH:mm')
     const displayVal = momentVal.format(format)
     const dataVal = this.includeTimeValue ? momentVal.toISOString(true) : momentVal.format('YYYY-MM-DD')
 
@@ -68,58 +59,6 @@ export default class extends Controller {
 
     // emit native change event
     this.hiddenFieldTarget.dispatchEvent(new Event('change', { detail: picker, bubbles: true }))
-  }
-
-  showTimeZoneButtons(event) {
-    // don't follow the anchor
-    event.preventDefault()
-
-    $(this.currentTimeZoneWrapperTarget).toggleClass('hidden')
-    $(this.timeZoneButtonsTarget).toggleClass('hidden')
-  }
-
-  // triggered on other click from the timezone buttons
-  showTimeZoneSelectWrapper(event) {
-    // don't follow the anchor
-    event.preventDefault()
-
-    $(this.timeZoneButtonsTarget).toggleClass('hidden')
-
-    if (this.hasTimeZoneSelectWrapperTarget) {
-      $(this.timeZoneSelectWrapperTarget).toggleClass('hidden')
-    }
-  }
-
-  resetTimeZoneUI(e) {
-    e && e.preventDefault()
-
-    $(this.currentTimeZoneWrapperTarget).removeClass('hidden')
-    $(this.timeZoneButtonsTarget).addClass('hidden')
-
-    if (this.hasTimeZoneSelectWrapperTarget) {
-      $(this.timeZoneSelectWrapperTarget).addClass('hidden')
-    }
-  }
-
-  // triggered on selecting a new timezone using the buttons
-  setTimeZone(event) {
-    // don't follow the anchor
-    event.preventDefault()
-
-    const currentTimeZoneEl = this.currentTimeZoneWrapperTarget.querySelector('span')
-    $(this.timeZoneFieldTarget).val(event.target.dataset.value)
-    $(currentTimeZoneEl).text(event.target.dataset.label)
-
-    $('.time-zone-button').removeClass('button').addClass('button-alternative')
-    $(event.target).removeClass('button-alternative').addClass('button')
-
-    this.resetTimeZoneUI()
-  }
-
-  // triggered on cancel click from the timezone picker
-  cancelSelect(event) {
-    event.preventDefault()
-    this.resetTimeZoneUI()
   }
 
   initPluginInstance() {
@@ -151,40 +90,8 @@ export default class extends Controller {
       this.element.classList.add('date-input--inline')
     }
 
-    // Init time zone select
-    if (this.includeTimeValue && this.hasTimeZoneSelectWrapperTarget) {
-      this.timeZoneSelect = this.timeZoneSelectWrapperTarget.querySelector('select.select2')
-
-      $(this.timeZoneSelect).select2({
-        width: 'style',
-      })
-
-      $(this.timeZoneSelect).on('change.select2', (event) => {
-        const currentTimeZoneField = this.currentTimeZoneWrapperTarget.querySelector('span')
-        const { value } = event.target
-
-        $(this.timeZoneFieldTarget).val(value)
-        $(currentTimeZoneField).text(value)
-
-        const selectedOptionTimeZoneButton = $('.selected-option-time-zone-button')
-
-        $('.time-zone-button').removeClass('button').addClass('button-alternative')
-
-        if (this.defaultTimeZonesValue.includes(value)) {
-          selectedOptionTimeZoneButton.addClass('hidden').attr('hidden', true)
-          $(`a[data-value="${value}"`).removeClass('button-alternative').addClass('button')
-        } else {
-          // deselect any selected button
-          selectedOptionTimeZoneButton.text(value)
-          selectedOptionTimeZoneButton.attr('data-value', value).removeAttr('hidden')
-          selectedOptionTimeZoneButton.removeClass(['hidden', 'button-alternative']).addClass('button')
-        }
-
-        this.resetTimeZoneUI()
-      })
-    }
   }
-
+    
   teardownPluginInstance() {
     if (this.plugin === undefined) {
       return
@@ -197,23 +104,10 @@ export default class extends Controller {
     // revert to original markup, remove any event listeners
     this.plugin.remove()
 
-    if (this.includeTimeValue) {
-      $(this.timeZoneSelect).select2('destroy')
-    }
   }
 
   showCalendar() {
     this.dispatch('show-calendar')
-  }
-
-  currentTimeZone() {
-    return (
-      (this.hasTimeZoneSelectWrapperTarget &&
-        $(this.timeZoneSelectWrapperTarget).is(':visible') &&
-        this.timeZoneSelectTarget.value) ||
-      (this.hasTimeZoneFieldTarget && this.timeZoneFieldTarget.value) ||
-      this.currentTimeZoneValue
-    )
   }
 
 }

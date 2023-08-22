@@ -11,7 +11,7 @@ class Hammerstone::Refine::Inline::StoredFiltersController < ApplicationControll
 
   def find
     @stored_filter = Hammerstone::Refine::StoredFilter.find_by(id: params[:id], filter_type: @refine_filter.type)
-    redirect_to_stable_id @stored_filter.refine_filter.to_stable_id
+    handle_filter_update @stored_filter.refine_filter.to_stable_id
   end
 
   def new
@@ -29,7 +29,7 @@ class Hammerstone::Refine::Inline::StoredFiltersController < ApplicationControll
     )
 
     if @stored_filter.save
-      redirect_to_stable_id @stored_filter.refine_filter.to_stable_id
+      handle_filter_update @stored_filter.refine_filter.to_stable_id
     else
       render :new, status: :unprocessable_entity
     end
@@ -56,14 +56,24 @@ class Hammerstone::Refine::Inline::StoredFiltersController < ApplicationControll
     params.require(:hammerstone_refine_stored_filter).permit(:name)
   end
 
-  def redirect_to_stable_id stable_id
+  # either directly redirect or emit a `filter-submit-success` event
+  def handle_filter_update stable_id
     # update_stable_id in url
     uri = URI(request.referrer)
     new_query_ar = URI.decode_www_form(String(uri.query))
     new_query_ar.reject! { |(k, _v)| k == "stable_id" }
     new_query_ar << ["stable_id", stable_id]
     uri.query = URI.encode_www_form(new_query_ar)
-    
-    redirect_to uri.to_s
+
+    respond_to do |format|
+      format.turbo_stream do
+        @refine_stable_id = stable_id
+        @url_for_redirect = uri
+        @refine_client_id = criterion_params[:client_id]
+        @refine_filter = @stored_filter.refine_filter
+        render :find
+      end
+      format.html {redirect_to uri.to_s }
+    end
   end
 end

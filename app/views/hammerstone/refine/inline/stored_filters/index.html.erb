@@ -10,12 +10,16 @@
           model: @criterion,
           url: find_hammerstone_refine_inline_stored_filters_path,
           method: :post,
-          class: "refine--stored-filter-search-form") do |form| %>
+          class: "refine--stored-filter-search-form",
+          data: {
+            turbo_frame: "_top",
+            controller: "refine--submit-form"
+          }) do |form| %>
         <!-- Saved filter selector -->
           <%= form.hidden_field :stable_id %>
           <%= form.hidden_field :client_id %>
-          <%= form.hidden_field :id, filter.id %>
-          <a href="#" class="refine--stored-filter-list-item" onClick="this.form.submit()">
+          <%= hidden_field_tag :id, filter.id %>
+          <a href="#" class="refine--stored-filter-list-item" data-action="refine--submit-form#submit">
             <%= filter.name %>
           </a>
         <% end %>

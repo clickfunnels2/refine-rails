@@ -5,12 +5,12 @@
     "refine--has-many-groups" => groups.many?
 %>
 
-<div class="refine--filter-wrapper">
+<%= tag.div class: "refine--filter-wrapper", id: "refine-inline-filter-#{@refine_client_id}" do %>
   <div class="refine--filter-row">
     <%= render "hammerstone/refine/inline/filters/save_button" %>
   </div>
 
-  <%= tag.div class: main_row_class, id: "refine-inline-filter-#{@refine_client_id}" do %>
+  <%= tag.div class: main_row_class do %>
     <% if @refine_filter.blueprint.empty? %>
       <%= render "hammerstone/refine/inline/filters/add_first_condition_button", position: 0, btn_class: "
       refine--add-first-condition-btn" %>
@@ -33,7 +33,8 @@
       </div>
     <% end %>
   <% end %>
-</div>
+<% end %>
+
 
 
 

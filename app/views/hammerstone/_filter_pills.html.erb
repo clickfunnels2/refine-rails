@@ -19,7 +19,7 @@
           <% @refine_filter.human_readable_criterions.each_with_index do |condition, index| %>
 
             <% if ["or", "and"].include?(condition) %>
-              <span class="refine-filter-condition-pill-and"><%= condition %></span>
+              <span class="refine-filter-condition-pill-and"><%=  t(".pill_and.#{condition}") %></span>
             <% else %>
               <% data_action = "click->refine--filter-pills#delete" %>
               <div class="refine-filter-condition-pill">

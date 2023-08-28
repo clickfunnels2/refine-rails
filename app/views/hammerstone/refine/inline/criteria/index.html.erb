@@ -11,6 +11,9 @@
     src: hammerstone_refine_inline_stored_filters_path(@criterion.to_params),
     frame_class: "refine--stored-filter-list-popup" do
   %>
-    <%= link_to "Saved Filters", "#", class: "refine--stored-filters-link", data: {action: "click->refine--popup#show"} %>
+    <%= link_to "#", class: "refine--stored-filters-link", data: {action: "click->refine--popup#show"} do %>
+      <div class="material-icons-outlined refine--list-icon">save</div>
+      <%= t('.saved_filters') %>
+    <% end %>
   <% end %>
 <% end %>

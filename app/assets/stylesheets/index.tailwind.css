@@ -909,7 +909,8 @@ input.refine--apply-button {
 
 .refine--stored-filters-link {
   color: black;
-  display: block;
+  display: flex;
+  align-items: center;
   padding: 3px 5px;
   color: #111;
   border-radius: 6px;
@@ -921,13 +922,24 @@ input.refine--apply-button {
     text-decoration: none;
   }
   &:before {
-    content: "V";
+    content: "chevron_right";
+    font-family: "Material Icons";
     font-size: 14px;
     position: absolute;
     right: 0;
+    top: 50%;
     transform: translateY(-50%);
-    rotate: 270deg;
   }
+}
+
+.refine--save-filter-link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  padding: 3px 0;
+  border: 1px solid transparent;
+  border-radius: 6px;
 }
 
 input.refine--save-filter-input {
@@ -939,4 +951,18 @@ input.refine--save-filter-input {
     border: none;
     box-shadow: none;
   }
+}
+
+.refine--condition-list .refine--list-icon,
+.refine--stored-filters-link .refine--list-icon {
+  width: 16px;
+  text-align: center;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.material-icons-outlined.refine--icon-sm,
+.material-icons.refine--icon-sm,
+.icon.refine--icon-sm {
+  font-size: 14px;
 }

@@ -22,11 +22,15 @@
         <%= stored_filter_fields.label :name, "#{t('.save_filter_label')}" %>
 
         <%# TODO replace with content-editable that writes to hidden input %>
-        <%= stored_filter_fields.text_field :name,
-          class: "refine--save-filter-input",
-          placeholder: t('.save_filter_placeholder'),
-          autofocus: true
-         %>
+        <div class="refine--save-filter-input-wrapper">
+          <div class="refine--tooltip"><%= sanitize t('.tooltip') %></div>
+
+          <%= stored_filter_fields.text_field :name,
+            class: "refine--save-filter-input",
+            placeholder: t('.save_filter_placeholder'),
+            autofocus: true
+           %>
+        </div>
       <% end %>
   <% end %>
 <% end %>

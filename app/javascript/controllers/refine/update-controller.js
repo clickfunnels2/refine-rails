@@ -1,6 +1,5 @@
 import ServerRefreshController from './server-refresh-controller'
 import { debounce } from 'lodash'
-import flatpickr from 'flatpickr'
 
 export default class extends ServerRefreshController {
   static values = {

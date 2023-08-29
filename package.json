@@ -1,6 +1,6 @@
 {
   "name": "@hammerstone/refine-stimulus",
-  "version": "2.6.11",
+  "version": "2.6.15",
   "description": "Refine is a flexible query builder for your apps. It lets your users filter down to exactly what they're looking for. Completely configured on the backend.",
   "browserslist": [
     "defaults",
@@ -67,10 +67,11 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.1.0",
     "@rails/request.js": "^0.0.6",
-    "flatpickr": "^4.6.13",
+    "daterangepicker": "^3.1.0",
+    "jquery": "^3.5.1",
     "jquery-events-to-dom-events": "^1.1.0",
-    "moment": "2.29.1",
-    "lodash": "^4.0.8"
+    "lodash": "^4.0.8",
+    "moment": "^2.29.4"
   },
   "peerDependencies": {}
 }

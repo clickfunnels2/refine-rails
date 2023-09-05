@@ -1,3 +1,5 @@
+### 2.7.0
+  * Styling and bugfixes for inline UI
 ### 2.6.11
   * Further improves localization support by having calendars support spanish and fixing hardcoded strings.
   * Fixes an issue where if clause options dont exist, the filter form would behave erratically

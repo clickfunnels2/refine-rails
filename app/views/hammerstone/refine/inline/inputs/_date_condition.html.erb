@@ -1,44 +1,7 @@
-<% if ["exct", "gt", "lt"].include? criterion.input.clause %>
-  <div class="refine--date-condition-days-container">
-    <%= input_fields.label :days, "Number of days", class: "sr-only" %>
-    <%= input_fields.text_field :days,
-      class: "refine--date-condition-days-input",
-      placeholder: <%= t(".date_number_of_placeholder") %>
-    %>
-  </div>
-  <div class="refine--date-condition-days-text">
-    <span><%= t(".days") %></span>
-  </div>
-  <div class="refine--date-condition-days-modifier-container">
-    <%= input_fields.collection_select :modifier,
-      Hammerstone::Refine::Inline::Criteria::Input::MODIFIERS,
-      :first,
-      :last,
-      {},
-      class: "refine--date-condition-days-modifier-select"
-    %>
-  </div>
+<% if criterion.input.clause.in? ["exct", "gt", "lt"] %>
+  <%= render "hammerstone/refine/inline/inputs/date_condition_days", input_fields: input_fields, criterion: criterion %>
+<% elsif criterion.input.clause == "btwn" %>
+  <%= render "hammerstone/refine/inline/inputs/date_condition_range", input_fields: input_fields, criterion: criterion %>
 <% else %>
-  <% container_class = criterion.input.clause == "btwn" ?
-    "refine--date-condition-first-date-container-btwn" :
-    "refine--date-condition-first-date-container" %>
-  <%= tag.div class: container_class do %>
-    <%= render "hammerstone/refine/inline/inputs/date_picker",
-      input_fields: input_fields,
-      attribute: :date1,
-      value: criterion.input.date1,
-      label: "First Date"      
-    %>
-  <% end %>
-  <% if criterion.input.clause == "btwn" %>
-    <span class="refine--date-condition-and">and</span>
-    <div class="refine--date-condition-second-date-container">
-      <%= render "hammerstone/refine/inline/inputs/date_picker",
-        input_fields: input_fields,
-        attribute: :date2,
-        value: criterion.input.date2,
-        label: "Second Date"
-      %>
-    </div>
-  <% end %>
+  <%= render "hammerstone/refine/inline/inputs/date_condition_single", input_fields: input_fields, criterion: criterion %>
 <% end %>

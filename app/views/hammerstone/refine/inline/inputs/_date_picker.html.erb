@@ -5,12 +5,12 @@
   data-refine--date-date-format-value="<%=  I18n.t("hammerstone.date.formats.moment") %>"
   data-refine--date-datetime-format-value="<%= I18n.t("hammerstone.time.formats.moment") %>"
 >
-  <%= input_fields.label attribute, label %>
   <input
-    class="refine-date-picker-input"
+    class="refine--input"
     type="text"
     value="<%= value&.to_date && I18n.l(value&.to_date, format: I18n.t("hammerstone.date.formats.ruby"))  %>"
     data-refine--date-target="field"
+    placeholder="<%= label %>"
   />
   <%= input_fields.hidden_field attribute,
     value: value&.to_date&.strftime('%Y-%m-%d'),

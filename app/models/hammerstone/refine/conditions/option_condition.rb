@@ -42,6 +42,24 @@ module Hammerstone::Refine::Conditions
       end
     end
 
+    def human_readable_value(input)
+      current_clause = get_clause_by_id(input[:clause])
+      display_values = input[:selected]&.map {|option_id| get_options.call.find{|option| option[:id] == option_id}[:display]}.to_a
+      case input[:clause]
+      when *[CLAUSE_EQUALS, CLAUSE_DOESNT_EQUAL]
+        display_values.first
+      when *[CLAUSE_IN, CLAUSE_NOT_IN]
+        if display_values.length >= 3
+          display_values = display_values.take(2) + ["..."]
+        end
+        display_values.join(", ")
+      when *[CLAUSE_SET, CLAUSE_NOT_SET]
+        ""
+      else
+        raise "#{input[:clause]} #{I18n.t("#{I18N_PREFIX}not_supported")}"
+      end
+    end
+
     def boot
       @nil_option_id = nil
       @options = nil

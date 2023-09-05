@@ -1,11 +1,21 @@
+<%
+  is_range = ['btwn', 'nbtwn'].include? input_fields.object.clause
+  value1_placeholder = criterion.condition.display.downcase
+  value1_placeholder += " (#{t('.min')})" if is_range
+  value2_placeholder = "#{criterion.condition.display.downcase} (#{t('.max')})"
+%>
+
 <%= tag.div class: ('btwn' ? 'refine--numeric-condition-container' : 'refine-numeric-condition-container-btwn') do %>
 
-  <%= input_fields.text_field :value1, class: "refine--numeric-condition-input" %>
+  <%= input_fields.text_field :value1,
+    class: "refine--input refine--numeric-input",
+    placeholder: value1_placeholder
+  %>
 
-  <% if ['btwn', 'nbtwn'].include? input_fields.object.clause %>
-    <span class="refine--numeric-condition-and"><%= t(".and") %></span>
+  <% if is_range %>
+    <div class="refine--numeric-condition-and"><%= t(".and") %></div>
     <div class="refine--numeric-condition-second-container">
-      <%= input_fields.text_field :value2, class: "refine--numeric-condition-second-input" %>
+      <%= input_fields.text_field :value2, class: "refine--input refine--numeric-input", placeholder: value2_placeholder %>
     </div>
   <% end %>
 <% end %>

@@ -97,13 +97,21 @@ class Hammerstone::Refine::Inline::Criterion
     result
   end
 
-  def human_readable
-    condition.human_readable(to_blueprint_node[:input])
+  def human_readable_value
+    condition.human_readable_value(to_blueprint_node[:input])
+  end
+
+  def condition_display
+    condition&.display
+  end
+
+  def clause_display
+    condition&.clause_display(input&.clause)
   end
 
   def options
-    if condition.respond_to? :options
-      condition.options.map {|option_hash| Hammerstone::Refine::Inline::Criteria::Option.new(**option_hash)}
+    if condition.respond_to? :get_options
+      condition.get_options.call.map {|option_hash| Hammerstone::Refine::Inline::Criteria::Option.new(**option_hash)}
     end
   end
 
@@ -117,7 +125,8 @@ class Hammerstone::Refine::Inline::Criterion
     return if input.count_refinement.attributes.present?
     errors.clear
     begin
-      condition&.apply(input_attributes, refine_filter.table, refine_filter.initial_query || refine_filter.fallback_initial_condition)
+      query_for_validate = refine_filter.initial_query || refine_filter.model.all
+      condition&.apply(input_attributes, refine_filter.table, query_for_validate)
     rescue Hammerstone::Refine::Conditions::Errors::ConditionClauseError => e
       e.errors.each do |error|
         errors.add(:base, error.full_message)

@@ -8,11 +8,13 @@ export default class extends Controller {
     src: String
   }
 
-  show(_event) {
+  show(event) {
+    event.preventDefault()
     this.frameTarget.src = this.srcValue;
   }
 
-  hide(_event) {
+  hide(event) {
+    event.preventDefault()
     this.frameTarget.innerHTML = "";
   }
 }

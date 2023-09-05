@@ -1,28 +1,28 @@
-<%= turbo_frame_tag dom_id(@criterion, :load) do %>
-  <%= content_tag :div, class: "refine--stored-filter-search-container" do %>
-    <%= form_with(
-        model: @criterion,
-        url: find_hammerstone_refine_inline_stored_filters_path,
-        method: :post,
-        class: "refine--stored-filter-search-form") do |form| %>
-      <!-- Saved filter selector -->
-        <%= form.hidden_field :stable_id %>
-        <%= form.hidden_field :client_id %>
-        <%= tag.div class: 'refine--stored-filter-search-selector-container' do %>
-          <select name="id">
-            <option disabled selected value>&mdash;  <%= t("hammerstone.stored_filters.select_saved_filter") %> &mdash;</option>
-            <% @stored_filters.each do |filter| %>
-              <option value="<%= filter.id %>">
-                <%= filter.name %>
-              </option>
-            <% end %>
-          </select>
-        <% end %>
-        <button class="refine--inline-btn" data-action="click->refine--popup#hide" type="button">
-          <%= t('global.buttons.cancel') %>
-        </button>
-
-        <%= form.submit t('global.buttons.choose_filter'), type: "submit", class: "refine--inline-btn" %>
-      <% end %>
+<%= turbo_frame_tag dom_id(@criterion, :load), class: "refine--stored-filter-list-popup" do %>
+  <div class="refine--stored-filter-list">
+    <% if @stored_filters.empty? %>
+      <a><%= t('.no_stored_filters') %></a>
     <% end %>
-<% end%>
+
+
+    <% @stored_filters.each do |filter| %>
+      <%= form_with(
+          model: @criterion,
+          url: find_hammerstone_refine_inline_stored_filters_path,
+          method: :post,
+          class: "refine--stored-filter-search-form",
+          data: {
+            turbo_frame: "_top",
+            controller: "refine--submit-form"
+          }) do |form| %>
+        <!-- Saved filter selector -->
+          <%= form.hidden_field :stable_id %>
+          <%= form.hidden_field :client_id %>
+          <%= hidden_field_tag :id, filter.id %>
+          <a href="#" class="refine--stored-filter-list-item" data-action="refine--submit-form#submit">
+            <%= filter.name %>
+          </a>
+        <% end %>
+    <% end %>
+  </div>
+<% end %>

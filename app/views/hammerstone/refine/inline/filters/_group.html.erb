@@ -1,7 +1,13 @@
-<div class="refine--inline-group">
-  <% group.each do |criterion| %>
-    <%= render "hammerstone/refine/inline/filters/criterion", criterion: criterion %>
-  <% end %>
-
-  <%= render "hammerstone/refine/inline/filters/and_button", position: group.last.position + 1 %>
+<div class="refine--group">
+  <div class="refine--group-conditions-wrapper">
+    <div class="refine--group-conditions">
+      <% group.each.with_index do |criterion, i| %>
+        <% unless i == 0 %>
+          <div class="refine--condition-join"><%= t(".and") %></div>
+        <% end %>
+        <%= render "hammerstone/refine/inline/filters/criterion", criterion: criterion %>
+      <% end %>
+    </div>
+    <%= render "hammerstone/refine/inline/filters/and_button", position: group.last.position + 1 %>
+  </div>
 </div>

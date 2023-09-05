@@ -103,6 +103,31 @@ module Hammerstone::Refine::Conditions
       end
     end
 
+    def human_readable_value(input)
+      current_clause = get_clause_by_id(input[:clause])
+
+      case input[:clause]
+      when *[CLAUSE_EQUALS, CLAUSE_DOESNT_EQUAL, CLAUSE_LESS_THAN_OR_EQUAL, CLAUSE_GREATER_THAN_OR_EQUAL]
+        formatted_date1 = I18n.l(input[:date1].to_date, format: :dmy)
+        formatted_date1
+      when *[CLAUSE_BETWEEN, CLAUSE_NOT_BETWEEN]
+        formatted_date1 = I18n.l(input[:date1].to_date, format: :dmy)
+        formatted_date2 = I18n.l(input[:date2].to_date, format: :dmy)
+        and_i18n = I18n.t("#{I18N_PREFIX}and")
+        "#{formatted_date1} #{and_i18n} #{formatted_date2}"
+      when *[CLAUSE_GREATER_THAN, CLAUSE_LESS_THAN, CLAUSE_EXACTLY]
+        days_i18n = I18n.t("#{I18N_PREFIX}and")
+        ago_i18n = I18n.t("#{I18N_PREFIX}days")
+        from_now_i18n = I18n.t("#{I18N_PREFIX}ago")
+        "#{input[:days]} #{days_i18n} #{input[:modifier] == 'ago' ? ago_i18n : from_now_i18n}"
+      when *[CLAUSE_SET, CLAUSE_NOT_SET]
+        ""
+      else
+        not_supported_i18n = I18n.t("#{I18N_PREFIX}not_supported")
+        raise "#{input[:clause]} #{not_supported_i18n}"
+      end
+    end
+
     def attribute_is_date
       attribute_is(ATTRIBUTE_TYPE_DATE)
       self

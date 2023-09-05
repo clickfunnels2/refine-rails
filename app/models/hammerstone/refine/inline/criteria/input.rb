@@ -2,8 +2,8 @@ class Hammerstone::Refine::Inline::Criteria::Input
   include ActiveModel::Model
 
   MODIFIERS = {
-    ago: "Ago",
-    form_now: "From now"
+    ago: "days ago",
+    from_now: "days from now"
   }.freeze
 
   attr_accessor :clause,

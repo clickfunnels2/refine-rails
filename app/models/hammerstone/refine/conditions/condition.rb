@@ -266,6 +266,10 @@ module Hammerstone::Refine::Conditions
       value
     end
 
+    def clause_display(clause_id)
+      get_clause_by_id(clause_id)&.display
+    end
+
     private
 
     def arel_attribute(table)

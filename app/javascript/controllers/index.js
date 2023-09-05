@@ -10,6 +10,7 @@ import SearchFilterController from './refine/search-filter-controller'
 import ServerRefreshController from './refine/server-refresh-controller'
 import StateController from './refine/state-controller'
 import StoredFilterController from './refine/stored-filter-controller'
+import SubmitForm from './refine/submit-form-controller'
 import ToggleController from './refine/toggle-controller'
 import UpdateController from './refine/update-controller'
 import DateController from './refine/date-controller'
@@ -25,6 +26,7 @@ export const controllerDefinitions = [
   [ServerRefreshController, 'refine/server-refresh-controller.js'],
   [StateController, 'refine/state-controller.js'],
   [StoredFilterController, 'refine/stored-filter-controller.js'],
+  [SubmitForm, 'refine/submit-form-controller.js'],
   [ToggleController, 'refine/toggle-controller.js'],
   [UpdateController, 'refine/update-controller.js'],
   [DateController, 'refine/date-controller.js']
@@ -48,6 +50,7 @@ export {
   ServerRefreshController,
   StateController,
   StoredFilterController,
+  SubmitForm,
   ToggleController,
   UpdateController,
   DateController

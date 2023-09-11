@@ -1,7 +1,6 @@
-# DEPRECATED
-# AFAIK this is only used by the tests
 module Hammerstone::Refine::Blueprints
   class Blueprint
+    # DSL-based model for building filter blueprints
     attr_reader :blueprint
 
     def initialize

@@ -384,6 +384,9 @@ application.load(refineControllers)
 If you need even more customization you can override the views with `rails generate refine:views` will extract the views
 
 5. Add custom datepicker if desired and scope stored filters. 
+
+## Development
+See [development doc](/docs/development.md).
  
 ## Releasing New Versions
 

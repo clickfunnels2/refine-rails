@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  refine_rails_db:
+    image: mysql:latest
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: refine-rails_test
+      MYSQL_ALLOW_EMPTY_PASSWORD: true

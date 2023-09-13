@@ -14,6 +14,7 @@
   />
   <%= input_fields.hidden_field attribute,
     value: value&.to_date&.strftime('%Y-%m-%d'),
-    data: { refine__date_target: "hiddenField" }
+    data: { refine__date_target: "hiddenField" },
+    form: form_id
   %>
 </div>

@@ -12,6 +12,11 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
   # Show the form to add a new criteria
   def new
     @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params.merge(refine_filter: @refine_filter))
+    respond_to do |format|
+      # render a turbo_stream so that we can render inputs and forms in separate areas of the page
+      # in case we're nested inside a form
+      format.turbo_stream
+    end
   end
 
   # Create a new criterion
@@ -31,10 +36,9 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
     if @error_messages.none?
       handle_filter_update(@refine_filter.to_stable_id)
     else
-      render turbo_stream: turbo_stream.update(
-        @criterion,
-        self.class.render("new", assigns: {criterion: @criterion, refine_filter: @refine_filter, error_messages: @error_messages})
-      )
+      respond_to do |format|
+        formt.turbo_stream { render :new }
+      end
     end
   end
 

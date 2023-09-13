@@ -1,15 +1,15 @@
-<%= form.hidden_field :stable_id %>
-<%= form.hidden_field :client_id %>
-<%= form.hidden_field :condition_id %>
-<%= form.hidden_field :conjunction%>
-<%= form.hidden_field :position %>
+<%= form.hidden_field :stable_id, form: form_id %>
+<%= form.hidden_field :client_id, form: form_id %>
+<%= form.hidden_field :condition_id, form: form_id %>
+<%= form.hidden_field :conjunction, form: form_id %>
+<%= form.hidden_field :position, form: form_id %>
 
 <%= form.fields :input_attributes, model: @criterion.input do |input_fields| %>
 
 
   <%# Input Value %>
   <% unless ['st', 'nst'].include? @criterion.input.clause %>
-    <%= render @criterion.input_partial, criterion: @criterion, form: form, input_fields: input_fields %>
+    <%= render @criterion.input_partial, criterion: @criterion, form: form, input_fields: input_fields, form_id: form_id %>
     <div class="refine--separator"></div>
   <% end %>
 
@@ -24,12 +24,12 @@
           :display,
           {},
           class: "refine--clause-select",
-          data: {action: "change->refine--condition-form#refresh"}
+          data: {action: "change->refine--criterion-form#refresh"}
         %>
       </div>
 
       <% unless ['st', 'nst'].include? @criterion.input.count_refinement.clause %>
-        <%= render "hammerstone/refine/inline/inputs/numeric_condition", input_fields: count_fields %>
+        <%= render "hammerstone/refine/inline/inputs/numeric_condition", input_fields: count_fields, form_id: form_id %>
       <% end %>
     <% end %>
 
@@ -46,9 +46,9 @@
       :display,
       {},
       class: "refine--select refine--clause-select",
-      data: {action: "change->refine--condition-form#refresh"}
+      data: {action: "change->refine--criterion-form#refresh"}
     %>
-    <%= form.submit t('global.buttons.apply'), class: "refine--apply-button" %>
+    <%= form.button t('global.buttons.apply'), class: "refine--apply-button", data: {action: "refine--criterion-form#submit"} %>
   </div>
 
 

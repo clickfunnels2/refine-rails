@@ -1,9 +1,15 @@
 import { Controller } from "@hotwired/stimulus"
+import { FetchRequest } from '@rails/request.js'
 
+/*
+  This controller handles criteria forms
+  (hammerstone/refine/inline/criteria/new|edit)
+*/
 export default class extends Controller {
   static values = {
     url: String,
-    turboFrame: String
+    turboFrame: String,
+    method: { type: String, default: "POST" }
   }
 
   refresh(_event) {
@@ -19,4 +25,7 @@ export default class extends Controller {
     // navigate the modal to refresh the form
     window.Turbo.visit(url.toString(), {frame: this.turboFrameValue})
   }
+
+
+
 }

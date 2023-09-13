@@ -2,6 +2,7 @@
   <%= form.label :condition_id, criterion.condition.display, class: "sr-only" %>
   <%= input_fields.text_field :value,
     class: "refine--input refine--text-input #{"has-error" if criterion.errors.any?}",
-    placeholder: criterion.condition.display.downcase
+    placeholder: criterion.condition.display.downcase,
+    form: form_id
   %>
 </div>

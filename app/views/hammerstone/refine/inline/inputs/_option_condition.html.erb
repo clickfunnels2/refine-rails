@@ -5,7 +5,8 @@
     :display,
     {},
     class: "refine--select refine--option-select",
-    multiple: criterion.multiple?
+    multiple: criterion.multiple?,
+    form: form_id
   %>
   <% if criterion.condition.meta[:postfix] %>
     <span class="refine-option--condition-postfix"><%= meta[:postfix] %></span>

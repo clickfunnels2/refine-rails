@@ -3,7 +3,8 @@
     input_fields: input_fields,
     attribute: :date1,
     value: criterion.input.date1,
-    label: "#{criterion.condition.display.downcase} (#{t('.min')})"
+    label: "#{criterion.condition.display.downcase} (#{t('.min')})",
+    form_id: form_id
   %>
 
   <div class="refine--date-condition-and"><%= t(".and") %></div>
@@ -13,7 +14,8 @@
       input_fields: input_fields,
       attribute: :date2,
       value: criterion.input.date2,
-      label: "#{criterion.condition.display.downcase} (#{t('.max')})"
+      label: "#{criterion.condition.display.downcase} (#{t('.max')})",
+      form_id: form_id
     %>
   </div>
 <% end %>

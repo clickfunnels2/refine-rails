@@ -893,7 +893,7 @@ input.refine--text-condition-input:focus {
     margin: 5px 0;
 }
 
-input.refine--apply-button {
+button.refine--apply-button {
   padding: 4px 6px;
   cursor: pointer;
   border: 1px solid #ddd;

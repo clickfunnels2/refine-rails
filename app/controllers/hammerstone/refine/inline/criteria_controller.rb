@@ -37,7 +37,7 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
       handle_filter_update(@refine_filter.to_stable_id)
     else
       respond_to do |format|
-        formt.turbo_stream { render :new }
+        format.turbo_stream { render :new }
       end
     end
   end

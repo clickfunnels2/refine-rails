@@ -1,6 +1,6 @@
-<% form_id = dom_id(@criterion, form) %>
+<% form_id = dom_id(@criterion, :form) %>
 
-<%= turbo_stream.replace dom_id(@criterion) do %>
+<%= turbo_stream.update dom_id(@criterion) do %>
   <%= turbo_frame_tag @criterion do %>
     <%= fields model: @criterion,
       class: "refine--criterion-form",
@@ -17,7 +17,7 @@
 <% end %>
 
 <%= turbo_stream.append_all "body" do %>
-  <%= form_with @criterion, url: hammerstone_refine_inline_criteria_path,
+  <%= form_with url: hammerstone_refine_inline_criteria_path,
       method: :post, id: form_id, data: {turbo_frame: "_top"} %>
 <% end %>
 

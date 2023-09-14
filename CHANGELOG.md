@@ -1,3 +1,5 @@
+### 2.7.1
+  * Inline UI now supports embedding inside forms on the page
 ### 2.7.0
   * Styling and bugfixes for inline UI
 ### 2.6.11

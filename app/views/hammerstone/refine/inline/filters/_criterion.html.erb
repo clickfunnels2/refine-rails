@@ -8,7 +8,7 @@
     <div class="refine--condition-pill">
       <%= link_to criterion.condition_display, edit_hammerstone_refine_inline_criterion_path(criterion.position, criterion.to_params), class: "refine--condition-pill-name", data: {turbo_stream: true} %>
       <div class="refine--remove-condition"></div>
-      <%= button_to hammerstone_refine_inline_criterion_path(criterion.position, criterion.to_params), class: "refine--remove-condition", method: :delete, form_class: "refine--remove-condition-button-form" do %>
+      <%= link_to hammerstone_refine_inline_criterion_path(criterion.position, criterion.to_params), class: "refine--remove-condition", data: {method: :delete, turbo_stream: true} do %>
       <% end %>
       <div class="refine--condition-value-wrapper">
          <div class="refine--condition-value-clause"><%= criterion.clause_display %></div>

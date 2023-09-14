@@ -524,6 +524,7 @@
 
 .refine--condition-pill-name {
   padding: 4px 8px;
+  display: block;
 }
 
 .refine--remove-condition {
@@ -595,7 +596,7 @@
 }
 
 
-.refine--criterion-form {
+.refine--criterion-fields {
     width: 100%;
     padding: 0.5rem 0;
 }

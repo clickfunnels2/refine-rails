@@ -50,6 +50,11 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
       .detect { |c| c.position.to_s == params[:id] }
 
     @criterion.attributes = criterion_params
+    respond_to do |format|
+      # render a turbo_stream so that we can render inputs and forms in separate areas of the page
+      # in case we're nested inside a form
+      format.turbo_stream
+    end
   end
 
   # update an exsiting criterion
@@ -63,10 +68,9 @@ class Hammerstone::Refine::Inline::CriteriaController < ApplicationController
     if @error_messages.none?
         handle_filter_update(@refine_filter.to_stable_id)
     else
-      render turbo_stream: turbo_stream.update(
-        @criterion,
-        self.class.render("edit", assigns: {criterion: @criterion, refine_filter: @refine_filter, error_messages: @error_messages})
-      )
+      respond_to do |format|
+        format.turbo_stream { render :edit }
+      end
     end
   end
 

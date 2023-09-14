@@ -2,17 +2,19 @@
 
 <%= turbo_stream.update dom_id(@criterion) do %>
   <%= turbo_frame_tag @criterion do %>
-    <%= fields model: @criterion,
-      class: "refine--criterion-form",
-      data: {
-        controller: "refine--criterion-form",
-        refine__criterion_form_url_value: new_hammerstone_refine_inline_criterion_url(
-          @criterion.to_params),
-        refine__criterion_form_turbo_frame_value: dom_id(@criterion),
-      } do |form|
-    %>
-      <%= render "form_fields", form: form, conjunction: @conjunction, position: @position, form_id: form_id %>
-    <% end %>
+    <div class="refine--criterion-fields">
+      <%= fields model: @criterion,
+        class: "refine--criterion-form",
+        data: {
+          controller: "refine--criterion-form",
+          refine__criterion_form_url_value: new_hammerstone_refine_inline_criterion_url(
+            @criterion.to_params),
+          refine__criterion_form_turbo_frame_value: dom_id(@criterion),
+        } do |form|
+      %>
+        <%= render "form_fields", form: form, conjunction: @conjunction, position: @position, form_id: form_id %>
+      <% end %>
+    </div>
   <% end %>
 <% end %>
 

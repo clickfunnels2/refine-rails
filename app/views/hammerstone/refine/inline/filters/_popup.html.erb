@@ -2,9 +2,9 @@
   Generic partial for placing a button that will load popup content via hotwire.
   Required params:
     - frame_id (the DOM ID of the turbo frame)
-    - src (the URL to load popup content from)
 
   Optional class:
+    - src (the URL to load popup content from)
     - container_class (class attribute of the wrapper div. Defaults to "refine--inline-popup-container")
     - frame_class (class attribute of the turbo frame. Defaults to "refine--inline-popup")
 
@@ -14,9 +14,9 @@
 %>
 
 <%
+  src ||= ""
   container_class ||= "refine--inline-popup-container"
   frame_class ||= "refine--inline-popup"
-
 %>
 
 <%= tag.div class: container_class, data: {controller: "refine--popup", refine__popup_src_value: src } do %>

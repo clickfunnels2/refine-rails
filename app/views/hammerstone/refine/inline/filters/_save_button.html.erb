@@ -7,7 +7,7 @@
 
 <%= turbo_frame_tag dom_id(criterion, :save) do %>
   <%= link_to new_hammerstone_refine_inline_stored_filter_path(criterion.to_params),
-    class: "refine--save-filter-link" do %>
+    class: "refine--save-filter-link", data: {turbo_stream: true} do %>
       <span class="material-icons-outlined refine--icon-sm">save</span>
       <span class="refine--save-filter-link-label"><%= t('.save_filter') %></span>
   <% end %>

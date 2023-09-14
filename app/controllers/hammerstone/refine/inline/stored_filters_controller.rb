@@ -17,6 +17,9 @@ class Hammerstone::Refine::Inline::StoredFiltersController < ApplicationControll
   def new
     @criterion = Hammerstone::Refine::Inline::Criterion.new(criterion_params)
     @stored_filter = Hammerstone::Refine::StoredFilter.new(filter_type: @refine_filter.type)
+    respond_to do |format|
+      format.turbo_stream
+    end
   end
 
   def create
@@ -31,7 +34,9 @@ class Hammerstone::Refine::Inline::StoredFiltersController < ApplicationControll
     if @stored_filter.save
       handle_filter_update @stored_filter.refine_filter.to_stable_id
     else
-      render :new, status: :unprocessable_entity
+      respond_to do |format|
+        format.turbo_stream { render :new }
+      end
     end
   end
 

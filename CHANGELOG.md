@@ -1,3 +1,5 @@
+### 2.7.2
+  * Fix for inline criteria forms in iframes
 ### 2.7.1
   * Inline UI now supports embedding inside forms on the page
 ### 2.7.0

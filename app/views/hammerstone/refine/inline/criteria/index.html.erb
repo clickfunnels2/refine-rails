@@ -2,7 +2,7 @@
   <div class="refine--condition-list">
     <% @conditions.each do |condition| %>
       <%= link_to condition.display, new_hammerstone_refine_inline_criterion_url(
-          @criterion.to_params.deep_merge(hammerstone_refine_inline_criterion: {condition_id: condition.id})), class: "refine--condition-list-item", data: {turbo_stream: true, method: "get"} %>
+          @criterion.to_params.deep_merge(hammerstone_refine_inline_criterion: {condition_id: condition.id})), class: "refine--condition-list-item", data: {controller: "refine--turbo-stream-link", action: "refine--turbo-stream-link#get"} %>
     <% end %>
   </div>
   <div class="refine--separator"></div>

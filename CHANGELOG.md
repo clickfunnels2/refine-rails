@@ -1,3 +1,5 @@
+### 2.7.3
+  * add turbo-stream-link stimulus controller for iframe support
 ### 2.7.2
   * Fix for inline criteria forms in iframes
 ### 2.7.1

@@ -12,6 +12,7 @@ import StateController from './refine/state-controller'
 import StoredFilterController from './refine/stored-filter-controller'
 import SubmitForm from './refine/submit-form-controller'
 import ToggleController from './refine/toggle-controller'
+import TurboStreamFormController from './refine/turbo-stream-form-controller'
 import TurboStreamLinkController from './refine/turbo-stream-link-controller'
 import UpdateController from './refine/update-controller'
 import DateController from './refine/date-controller'
@@ -29,6 +30,7 @@ export const controllerDefinitions = [
   [StoredFilterController, 'refine/stored-filter-controller.js'],
   [SubmitForm, 'refine/submit-form-controller.js'],
   [ToggleController, 'refine/toggle-controller.js'],
+  [TurboStreamFormController, 'refine/turbo-stream-form-controller.js'],
   [TurboStreamLinkController, 'refine/turbo-stream-link-controller.js'],
   [UpdateController, 'refine/update-controller.js'],
   [DateController, 'refine/date-controller.js']
@@ -54,6 +56,7 @@ export {
   StoredFilterController,
   SubmitForm,
   ToggleController,
+  TurboStreamFormController,
   TurboStreamLinkController,
   UpdateController,
   DateController

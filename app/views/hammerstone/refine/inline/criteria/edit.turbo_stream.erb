@@ -21,6 +21,6 @@
   <%= form_with url: hammerstone_refine_inline_criterion_path(@criterion.position),
       method: :put,
       id: form_id,
-      data: {turbo_frame: "_top"}
+      data: {controller: "refine--turbo-stream-form", action: "submit->refine--turbo-stream-form#submit"}
    %>
 <% end %>

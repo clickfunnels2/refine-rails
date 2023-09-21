@@ -10,10 +10,11 @@ import { FetchRequest } from '@rails/request.js'
   seeing issues using that attribute inside iframes
 */
 export default class extends Controller {
-  async get(event) {
+  async visit(event) {
+    console.log("visiting", this.element.dataset)
     event.preventDefault()
     const request = new FetchRequest(
-      "GET",
+      (this.element.dataset.turboMethod || "GET"),
       this.element.href,
       {
         responseKind: "turbo-stream",

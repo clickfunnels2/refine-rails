@@ -15,7 +15,7 @@ Let's take a look at how we would build this custom condition:
 The very first thing you need to do is create a new class that extends the base `Condition` class provided to you by the package. This will give you several helpful methods right off the bat. In this case, we want our view to be an `OptionCondition`, so we'll extend from `OptionCondition` specifically. We'll call our custom condition `EventTypeOptionCondition`.
 
 ```ruby
-class EventTypeOptionCondition < Hammerstone::Refine::Conditions::OptionCondition
+class EventTypeOptionCondition < Refine::Conditions::OptionCondition
   def apply_condition(input, table, _inverse_clause)
     # TODO: Implement `apply_condition` 
   end 
@@ -28,7 +28,7 @@ Most of the time, you will be applying your logic against an attribute on a mode
 Another common use case is to have "clauses" for your condition. Clauses are phrases like "is less than", "is greater than", "contains", "does not contain", etc. Most conditions have clauses. To that end, we also provide a `HasClauses` module to make that simpler.
 
 ```ruby
-class EventTypeOptionCondition < Hammerstone::Refine::Conditions::OptionCondition
+class EventTypeOptionCondition < Refine::Conditions::OptionCondition
   def apply_condition(input, table, _inverse_clause)
     # TODO: Implement `apply_condition` 
   end 
@@ -39,7 +39,7 @@ class EventTypeOptionCondition < Hammerstone::Refine::Conditions::OptionConditio
 
 To keep the example simple, we'll let the user choose between "Is" and "Is Not" for their clauses. You can optionally not include clauses because this custom condition subclasses from `OptionCondition`, which has clauses. 
 ```ruby
-class EventTypeOptionCondition < Hammerstone::Refine::Conditions::OptionCondition
+class EventTypeOptionCondition < Refine::Conditions::OptionCondition
   def apply_condition(input, table, _inverse_clause)
     # TODO: Implement `apply_condition`
   end
@@ -56,7 +56,7 @@ class EventTypeOptionCondition < Hammerstone::Refine::Conditions::OptionConditio
 Because we're allowing them to filter by attribute and type, we'll need to allow the developer to pass in the type they want to hold constant. We'll add methods for that. 
 
 ```ruby
-class EventTypeOptionCondition < Hammerstone::Refine::Conditions::OptionCondition
+class EventTypeOptionCondition < Refine::Conditions::OptionCondition
   def apply_condition(input, table, _inverse_clause)
     # TODO: Implement `apply_condition`
   end
@@ -81,7 +81,7 @@ class EventTypeOptionCondition < Hammerstone::Refine::Conditions::OptionConditio
 To ensure that you things are configured correctly, you can add validations to your class. Remember, it's just a Ruby class! Let's validate that the `type` we set is a valid type.
 
 ```ruby
-class EventTypeOptionCondition < Hammerstone::Refine::Conditions::OptionCondition 
+class EventTypeOptionCondition < Refine::Conditions::OptionCondition 
   attr_reader :type
   validate :valid_type
 
@@ -108,7 +108,7 @@ The `input` variable will contain everything that the user has chosen. Because w
 In this example we have three methods: `apply_condition` (required), `type_node` (helper), and `group` (helper). Each method is commented with a description below. 
 
 ```ruby
-class EventTypeOptionCondition < Hammerstone::Refine::Conditions::OptionCondition 
+class EventTypeOptionCondition < Refine::Conditions::OptionCondition 
   attr_reader :type
   validate :valid_type
 
@@ -135,7 +135,7 @@ end
 This leaves us with the final class: 
 
 ```ruby
-class Conditions::EventTypeOptionCondition < Hammerstone::Refine::Conditions::OptionCondition
+class Conditions::EventTypeOptionCondition < Refine::Conditions::OptionCondition
   attr_reader :type
   validate :valid_type
 

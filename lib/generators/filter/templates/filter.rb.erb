@@ -1,6 +1,6 @@
-class <%= class_name.pluralize %>Filter < Hammerstone::Refine::Filter
-  include Hammerstone::Refine::Conditions
-  @@default_stabilizer = Hammerstone::Refine::Stabilizers::UrlEncodedStabilizer
+class <%= class_name.pluralize %>Filter < Refine::Filter
+  include Refine::Conditions
+  @@default_stabilizer = Refine::Stabilizers::UrlEncodedStabilizer
 
   def initial_query
     <%= class_name %>.all

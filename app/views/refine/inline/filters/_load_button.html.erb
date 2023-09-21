@@ -1,0 +1,15 @@
+<% 
+  criterion = Refine::Inline::Criterion.new(
+    stable_id: @refine_filter.to_stable_id,
+    client_id: @refine_client_id,
+  )
+%>
+
+<%= render "refine/inline/filters/popup",
+  frame_id: dom_id(criterion, :load),
+  src: refine_inline_stored_filters_path(criterion.to_params) do
+%>
+  <button class="refine--inline-btn" type="button" data-action="click->refine--popup#show">
+    <%= t(".load_filter") %>
+  </button>
+<% end %>

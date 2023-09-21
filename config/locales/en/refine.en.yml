@@ -1,5 +1,5 @@
 en:
-  hammerstone:
+  refine:
     date:
       formats:
         ruby: "%m/%d/%y"
@@ -177,7 +177,6 @@ en:
         is_set: "is set"
         is_not_set: "is not set"
 
-    refine:
       inline:
         filters:
           add_first_condition_button:

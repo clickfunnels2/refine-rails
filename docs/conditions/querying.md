@@ -5,7 +5,7 @@ It may be obvious, but it's worth stating: the end goal of this package is to ge
 
 The Condition's `apply` method is where this finally happens.
 
-The most fundamental concept that underpins the entire Hammerstone Filter Builder is that <em>each condition is responsible for binding itself to the query.</em>
+The most fundamental concept that underpins the entire Refine Filter Builder is that <em>each condition is responsible for binding itself to the query.</em>
 
 That means that we can let the TextCondition concern itself only with text. The TextCondition can worry about things like finding records where 
 - an attribute starts with `[foo]`

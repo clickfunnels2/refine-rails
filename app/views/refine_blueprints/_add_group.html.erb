@@ -1,0 +1,24 @@
+<% 
+  is_disabled = @refine_filter_builder.refine_filter.criteria_limit_reached?
+  criteria_limit = @refine_filter_builder.refine_filter.criteria_limit
+%>
+
+<%= tag.div(
+  class: "refine-add-container",
+  data: {controller: 'refine--add'}) do %>
+
+  <%= tag.div(
+    class: class_names(
+      "refine-add-group" => true,
+      "refine-add-disabled" => is_disabled
+    ),
+    data: {action: ("click->refine--add#group" unless is_disabled)},
+    title: (t("refine.inline.filters.criteria_limit", criteria_limit: criteria_limit) if is_disabled)
+  ) do %>
+    <% if @refine_filter_query.grouped_criteria.any? %>
+      <%= t(".add_or") %>
+    <% else %>
+      <%= t(".create_filter") %>
+    <% end %>
+  <% end %>
+<% end %>

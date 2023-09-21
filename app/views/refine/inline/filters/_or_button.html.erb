@@ -1,0 +1,26 @@
+<% 
+  criterion = Refine::Inline::Criterion.new(
+    stable_id: @refine_filter.to_stable_id,
+    refine_filter: @refine_filter,
+    client_id: @refine_client_id,
+    conjunction: "or",
+    position: position
+  )
+%>
+
+<% if @refine_filter.criteria_limit_reached? %>
+  <button disabled class="refine--add-group-button" type="button" title="<%= t(".criteria_limit", criteria_limit: @refine_filter.criteria_limit) %>">
+    <span class="icon material-icons-outlined refine--icon-sm">add</span>
+    <span class="refine--add-group-button-label"><%= t(".group") %></span>
+  </button>
+<% else %>
+  <%= render "refine/inline/filters/popup",
+    frame_id: dom_id(criterion),
+    src: refine_inline_criteria_path(criterion.to_params) do
+  %>
+    <button class="refine--add-group-button" type="button" data-action="click->refine--popup#show">
+      <span class="icon material-icons-outlined refine--icon-sm">add</span>
+      <span class="refine--add-group-button-label"><%= t(".group") %></span>
+    </button>
+  <% end %>
+<% end %>

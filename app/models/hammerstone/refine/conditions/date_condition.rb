@@ -7,7 +7,7 @@ module Hammerstone::Refine::Conditions
 
     cattr_accessor :default_user_timezone, default: "UTC", instance_accessor: false
     cattr_accessor :default_database_timezone, default: "UTC", instance_accessor: false
-    attr_reader :date1, :date2, :days
+    attr_reader :date1, :date2, :days, :show_human_readable_timezone
 
     CLAUSE_EQUALS = Clauses::EQUALS
     CLAUSE_DOESNT_EQUAL = Clauses::DOESNT_EQUAL
@@ -78,23 +78,32 @@ module Hammerstone::Refine::Conditions
       "date-condition"
     end
 
+    # Returns the string representation of the timezone localized if you don't already have a Time object to work with
+    def timezone_abbr
+      if @show_human_readable_timezone
+        " (#{I18n.l(Time.now.in_time_zone(@user_timezone), format: :z)})"
+      else
+        ""
+      end
+    end
+
     def human_readable(input)
       current_clause = get_clause_by_id(input[:clause])
 
       case input[:clause]
       when *[CLAUSE_EQUALS, CLAUSE_DOESNT_EQUAL, CLAUSE_LESS_THAN_OR_EQUAL, CLAUSE_GREATER_THAN_OR_EQUAL]
         formatted_date1 = I18n.l(input[:date1].to_date, format: :dmy)
-        "#{display} #{current_clause.display} #{formatted_date1}"
+        "#{display} #{current_clause.display} #{formatted_date1}#{timezone_abbr}"
       when *[CLAUSE_BETWEEN, CLAUSE_NOT_BETWEEN]
         formatted_date1 = I18n.l(input[:date1].to_date, format: :dmy)
         formatted_date2 = I18n.l(input[:date2].to_date, format: :dmy)
         and_i18n = I18n.t("#{I18N_PREFIX}and")
-        "#{display} #{current_clause.display} #{formatted_date1} #{and_i18n} #{formatted_date2}"
+        "#{display} #{current_clause.display} #{formatted_date1} #{and_i18n} #{formatted_date2}#{timezone_abbr}"
       when *[CLAUSE_GREATER_THAN, CLAUSE_LESS_THAN, CLAUSE_EXACTLY]
-        days_i18n = I18n.t("#{I18N_PREFIX}and")
-        ago_i18n = I18n.t("#{I18N_PREFIX}days")
-        from_now_i18n = I18n.t("#{I18N_PREFIX}ago")
-        "#{display} #{current_clause.display} #{input[:days]} #{days_i18n} #{input[:modifier] == 'ago' ? ago_i18n : from_now_i18n}"
+        days_i18n = I18n.t("#{I18N_PREFIX}days")
+        ago_i18n = I18n.t("#{I18N_PREFIX}ago")
+        from_now_i18n = I18n.t("#{I18N_PREFIX}from_now")
+        "#{display} #{current_clause.display} #{input[:days]} #{days_i18n} #{input[:modifier] == 'ago' ? ago_i18n : from_now_i18n}#{timezone_abbr}"
       when *[CLAUSE_SET, CLAUSE_NOT_SET]
         "#{display} #{current_clause.display}"
       else
@@ -109,17 +118,17 @@ module Hammerstone::Refine::Conditions
       case input[:clause]
       when *[CLAUSE_EQUALS, CLAUSE_DOESNT_EQUAL, CLAUSE_LESS_THAN_OR_EQUAL, CLAUSE_GREATER_THAN_OR_EQUAL]
         formatted_date1 = I18n.l(input[:date1].to_date, format: :dmy)
-        formatted_date1
+        "#{formatted_date1}#{timezone_abbr}"
       when *[CLAUSE_BETWEEN, CLAUSE_NOT_BETWEEN]
         formatted_date1 = I18n.l(input[:date1].to_date, format: :dmy)
         formatted_date2 = I18n.l(input[:date2].to_date, format: :dmy)
         and_i18n = I18n.t("#{I18N_PREFIX}and")
-        "#{formatted_date1} #{and_i18n} #{formatted_date2}"
+        "#{formatted_date1} #{and_i18n} #{formatted_date2}#{timezone_abbr}"
       when *[CLAUSE_GREATER_THAN, CLAUSE_LESS_THAN, CLAUSE_EXACTLY]
         days_i18n = I18n.t("#{I18N_PREFIX}and")
         ago_i18n = I18n.t("#{I18N_PREFIX}days")
         from_now_i18n = I18n.t("#{I18N_PREFIX}ago")
-        "#{input[:days]} #{days_i18n} #{input[:modifier] == 'ago' ? ago_i18n : from_now_i18n}"
+        "#{input[:days]} #{days_i18n} #{input[:modifier] == 'ago' ? ago_i18n : from_now_i18n}#{timezone_abbr}"
       when *[CLAUSE_SET, CLAUSE_NOT_SET]
         ""
       else
@@ -144,6 +153,11 @@ module Hammerstone::Refine::Conditions
 
     def attribute_is(type)
       @attribute_type = type
+      self
+    end
+
+    def with_human_readable_timezone(show)
+      @show_human_readable_timezone = show
       self
     end
 

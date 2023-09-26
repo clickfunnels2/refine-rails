@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { useClickOutside } from 'stimulus-use'
 
 // simple controller to hide/show the filter modal
 export default class extends Controller {
@@ -8,13 +9,21 @@ export default class extends Controller {
     src: String
   }
 
+  connect() {
+    useClickOutside(this)
+  }
+
   show(event) {
     event.preventDefault()
     this.frameTarget.src = this.srcValue;
   }
 
   hide(event) {
-    event.preventDefault()
+    event?.preventDefault()
     this.frameTarget.innerHTML = "";
+  }
+
+  clickOutside(event) {
+    this.hide(event)
   }
 }

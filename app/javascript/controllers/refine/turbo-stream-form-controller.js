@@ -10,7 +10,6 @@ import { FetchRequest } from '@rails/request.js'
 */
 export default class extends Controller {
   async submit(event) {
-    console.log("turbo form submit")
     event.preventDefault()
     const request = new FetchRequest(
       (this.element.method || "POST"),

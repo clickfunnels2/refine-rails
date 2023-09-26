@@ -1,3 +1,5 @@
+### 2.7.5
+  * Allows user to add timezones to human_readable outputs for DateConditions. 
 ### 2.7.4
   * more fixes for inline interface in iframes
 ### 2.7.3

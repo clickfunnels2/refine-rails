@@ -11,7 +11,6 @@ import { FetchRequest } from '@rails/request.js'
 */
 export default class extends Controller {
   async visit(event) {
-    console.log("visiting", this.element.dataset)
     event.preventDefault()
     const request = new FetchRequest(
       (this.element.dataset.turboMethod || "GET"),

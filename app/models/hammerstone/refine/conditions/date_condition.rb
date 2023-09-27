@@ -81,7 +81,7 @@ module Hammerstone::Refine::Conditions
     # Returns the string representation of the timezone localized if you don't already have a Time object to work with
     def timezone_abbr
       if @show_human_readable_timezone
-        " (#{I18n.l(Time.now.in_time_zone(@user_timezone), format: :z)})"
+        " (#{I18n.l(Time.now.in_time_zone(user_timezone), format: :z)})"
       else
         ""
       end

@@ -79,12 +79,35 @@ module Hammerstone::Refine::Conditions
     end
 
     # Returns the string representation of the timezone localized if you don't already have a Time object to work with
+    # NOTE: It is possible for a timezone to not have an acceptable abbreviation. In those cases the Time library outputs unhelpful shortened offsets.
+    # EG: "International Date Line West" outputs "-12"
+    # So parse the string to see if it's one of these shortened forms and if it is, restructure to a fully formed GMT offset EG "GMT-12:00"
     def timezone_abbr
       if @show_human_readable_timezone
-        " (#{I18n.l(Time.now.in_time_zone(user_timezone), format: :z)})"
+        tz_string = " (#{I18n.l(Time.now.in_time_zone(user_timezone), format: :z)})"
+        match = tz_string =~ /^ \([-+]?\d+\)$/
+        if !((tz_string =~ /^ \([-+]?\d+\)$/).nil?)
+          tz_string = get_standard_tz_offset(tz_string)
+        end
+        tz_string
       else
         ""
       end
+    end
+
+    # We should probably consider using tzinfo or some other library for this in the future
+    def get_standard_tz_offset(offset_string)
+      stripped = offset_string.strip
+      matches = stripped.match /^\s*\(([+-]?)(\d{1,4})\)\s*$/
+      unless matches.length > 1
+        return offset_string
+      end
+
+      sign = matches[1]
+      digits = matches[2].ljust(4, '0') 
+      gmt_offset = " (GMT#{sign}#{digits[0..1]}:#{digits[2..3]})"
+
+      gmt_offset
     end
 
     def human_readable(input)

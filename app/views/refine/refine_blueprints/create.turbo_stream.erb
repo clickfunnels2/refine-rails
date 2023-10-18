@@ -18,5 +18,5 @@
     </script>
   <% end %>
 <% else %>
-  <%= turbo_stream.replace(dom_id(@refine_filter_builder, "query"), partial: "refine_blueprints/query") %>
+  <%= turbo_stream.replace(dom_id(@refine_filter_builder, "query"), partial: "refine/refine_blueprints/query") %>
 <% end %>

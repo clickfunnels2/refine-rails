@@ -8,6 +8,6 @@
       value="<%= input[:value] %>"
       data-action="input->refine--update#updateBlueprint keydown->refine--update#cancelEnter"
     />
-    <%= render partial: 'refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
+    <%= render partial: 'refine/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
   </div>
 <% end %>

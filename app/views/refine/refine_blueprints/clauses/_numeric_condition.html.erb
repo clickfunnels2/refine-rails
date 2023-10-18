@@ -13,7 +13,7 @@
         data-action="input->refine--update#value blur->refine--update#refreshFromServer"
         data-input-id="<%= defined?(input_id) && input_id %>"
       />
-      <%= render partial: 'refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
+      <%= render partial: 'refine/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
     </div>
 
     <% if ['btwn', 'nbtwn'].include? input[:clause] %>
@@ -29,7 +29,7 @@
           data-action="input->refine--update#value blur->refine--update#refreshFromServer"
           data-input-id="<%= defined?(input_id) && input_id %>"
         />
-        <%= render partial: 'refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
+        <%= render partial: 'refine/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
       </div>
     <% end %>
 <% end %>

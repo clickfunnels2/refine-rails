@@ -3,16 +3,16 @@
   refine__state_conditions_value: @refine_filter_query.available_conditions_attributes.to_json,
   refine__state_blueprint_value: @refine_filter_query.blueprint.to_json,
   refine__state_class_name_value: @refine_filter_query.configuration[:class_name],
-  refine__state_refresh_url_value: refine_blueprint_path,
+  refine__state_refresh_url_value: refine_refine_blueprint_path,
   refine__state_client_id_value: @refine_filter_builder.client_id,
   refine__state_default_condition_id_value: @refine_filter_query.filter.default_condition_id,
-  refine__state_validate_blueprint_url_value: validate_refine_blueprint_path } do %>
+  refine__state_validate_blueprint_url_value: validate_refine_refine_blueprint_path } do %>
   <%= content_tag :div, class: "refine-query-content-container" do %>
     <div
       class="refine-query-loading-container <%= "hidden" unless action_name == "create" %>"
       id="refine-loader"
       data-refine--state-target="loading">
-      <p class="refine-query-loading-text"><%= t(".loading") %></p>
+      <p class="refine-query-loading-text"><%= t("refine.refine_blueprints.query.loading") %></p>
     </div>
 
     <%= tag.div id: dom_id(@refine_filter_builder, "groups") do %>
@@ -20,7 +20,7 @@
         <% if index > 0 %>
           <p class="refine-query-or"><%= t(".query_or") %></p>
         <% end %>
-        <%= render partial: 'refine_blueprints/group', locals: {
+        <%= render partial: 'refine/refine_blueprints/group', locals: {
           criteria: criteria,
           group_id: index }
         %>
@@ -28,7 +28,7 @@
 
     <% end %>
 
-    <%= render 'refine_blueprints/add_group' %>
+    <%= render 'refine/refine_blueprints/add_group' %>
   <% end %>
 <% end %>
 

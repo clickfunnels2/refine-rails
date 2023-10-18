@@ -1,5 +1,5 @@
 <%= turbo_stream.replace "stored_filters",
-  partial: "refine_blueprints/stored_filters" %>
+  partial: "refine/refine_blueprints/stored_filters" %>
 
 <%= turbo_stream.replace dom_id(@refine_filter_builder, :query),
-  partial: "refine_blueprints/query" %>
+  partial: "refine/refine_blueprints/query" %>

@@ -7,18 +7,18 @@
 
   <!-- Select Condition -->
   <div class="refine-criterion-condition-container">
-    <%= render partial: 'refine_blueprints/condition_select', locals: {
+    <%= render partial: 'refine/refine_blueprints/condition_select', locals: {
       selected_condition_id: criterion.condition_id } %>
   </div>
 
   <!-- Select Clause -->
   <div class="refine-criterion-clause-container">
-    <%= render partial: 'refine_blueprints/clause_select', locals: {
+    <%= render partial: 'refine/refine_blueprints/clause_select', locals: {
         meta: criterion.meta, selected_clause: criterion.input[:clause]} %>
   </div>
 
   <!-- Render correct type of condition -->
-  <%= render partial: "refine_blueprints/clauses/#{criterion.component}", locals: {
+  <%= render partial: "refine/refine_blueprints/clauses/#{criterion.component}", locals: {
     criterion: criterion,
     condition: criterion.condition, input: criterion.input, criterion_id: criterion_id, meta: criterion.meta, meta_clause: criterion.selected_clause_meta, input_id: nil } %>
 
@@ -26,16 +26,16 @@
   <% criterion.refinements.each do |refinement|%>
 
     <div class="refine-criterion-refinement-container">
-      <%= render partial: 'refine_blueprints/clause_select', locals: {
+      <%= render partial: 'refine/refine_blueprints/clause_select', locals: {
         meta: refinement[:meta], input_id: "input, #{refinement[:id]}", selected_clause: criterion.input.dig(:input, refinement[:id].to_sym, :clause) || {} } %>
     </div>
 
-    <%= render partial: "refine_blueprints/clauses/#{refinement[:component].underscore}", locals: {
+    <%= render partial: "refine/refine_blueprints/clauses/#{refinement[:component].underscore}", locals: {
       condition: refinement, input: criterion.input[refinement[:id].to_sym] || {}, criterion_id: criterion_id, meta: refinement[:meta], input_id: "input, #{refinement[:id]}", meta_clause: criterion.meta_for_refinement_clause(refinement), criterion: criterion} %>
   <% end %>
   <!-- End Refinements -->
 
 <% end %>
 
-<%= render 'refine_blueprints/delete_criterion', criterion_id: criterion_id %>
+<%= render 'refine/refine_blueprints/delete_criterion', criterion_id: criterion_id %>
 

@@ -22,7 +22,7 @@
           class="refine-stored-filter-input"
           value="<%= @stored_filter.name %>"
         />
-        <%= link_to t('global.buttons.back'), stored_filters_refine_blueprint_path(@refine_filter_builder.to_params), class: "refine-stored-filter-search-button-cancel"%>
+        <%= link_to t('global.buttons.back'), stored_filters_refine_refine_blueprint_path(@refine_filter_builder.to_params), class: "refine-stored-filter-search-button-cancel"%>
         <%= button_tag t('global.buttons.save'), type: "submit", class: "refine-stored-filter-button-submit" %>
       <% end %>
     <% end %>

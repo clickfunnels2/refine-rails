@@ -40,8 +40,8 @@ describe Refine::Filter do
     it "missing condition raises exception" do
       filter = create_filter(invalid_condition_blueprint)
 
-      assert_raises Hammerstone::Refine::InvalidFilterError do
-        Hammerstone::Refine::Filters::Query.new(filter)
+      assert_raises Refine::InvalidFilterError do
+        Refine::Filters::Query.new(filter)
       end
     end
   end

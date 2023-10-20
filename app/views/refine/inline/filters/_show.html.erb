@@ -15,11 +15,11 @@
       <%= render "refine/inline/filters/add_first_condition_button", position: 0, btn_class: "
       refine--add-first-condition-btn" %>
     <% else %>
-      <div class="refine--filter-label"><%= t('.filter') %>:</div>
+      <div class="refine--filter-label"><%= t('refine.inline.filters.filter') %>:</div>
       <div class="refine--groups-wrapper">
         <% groups.each.with_index do |group, i| %>
           <% unless i == 0 %>
-            <div class="refine--group-join"><%= t(".or") %></div>
+            <div class="refine--group-join"><%= t("refine.inline.filters.or") %></div>
           <% end %>
 
           <%= render "refine/inline/filters/group", group: group %>

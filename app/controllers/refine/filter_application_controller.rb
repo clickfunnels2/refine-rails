@@ -1,4 +1,4 @@
-module FilterApplicationController 
+module Refine::FilterApplicationController 
 	# Optional module to get started quickly.You can send in the current controller's instance variable if you'd like to update the collection here
   # The current scope can be used to modify the query
 

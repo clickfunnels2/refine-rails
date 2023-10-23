@@ -19,12 +19,6 @@ class Refine::Filters::Criterion
 
   def initialize(**attrs)
     super
-    puts "Initializing Criterion"
-    puts attrs[:input]
-    puts attrs[:position]
-    puts attrs[:type]
-    puts attrs[:word]
-    puts attrs[:uid]
     initialize_condition!
   end
 
@@ -78,7 +72,6 @@ class Refine::Filters::Criterion
   private
 
   def initialize_condition!
-    puts "Looking for #{condition_id}"
     @condition = query
       .available_conditions
       .find { |condition| condition.id == condition_id }
@@ -87,9 +80,7 @@ class Refine::Filters::Criterion
     if @condition
       @condition.set_filter(filter)
       filter.translate_display(@condition)
-    else
-      puts "condition is nil"
-      puts @condition
+    elsif type != "conjunction"
       raise Refine::InvalidFilterError
     end
   end

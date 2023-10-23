@@ -1,0 +1,62 @@
+<%= form.hidden_field :stable_id, form: form_id %>
+<%= form.hidden_field :client_id, form: form_id %>
+<%= form.hidden_field :condition_id, form: form_id %>
+<%= form.hidden_field :conjunction, form: form_id %>
+<%= form.hidden_field :position, form: form_id %>
+
+<%= form.fields :input_attributes, model: @criterion.input do |input_fields| %>
+
+
+  <%# Input Value %>
+  <% unless ['st', 'nst'].include? @criterion.input.clause %>
+    <%= render @criterion.input_partial, criterion: @criterion, form: form, input_fields: input_fields, form_id: form_id %>
+    <div class="refine--separator"></div>
+  <% end %>
+
+  <%# Count Refinement  %>
+  <% if @criterion.condition.has_count_refinement? %>
+    <label style="color: black;"><%= @criterion.condition.get_count_refinement_condition.display %></label>
+    <%= input_fields.fields :count_refinement_attributes, model: @criterion.input.count_refinement do |count_fields| %>
+      <div class="refine--criterion-clause-container">
+        <%= count_fields.collection_select :clause,
+          @criterion.condition.get_count_refinement_condition.clauses,
+          :id,
+          :display,
+          {},
+          class: "refine--clause-select",
+          data: {action: "change->refine--criterion-form#refresh"}
+        %>
+      </div>
+
+      <% unless ['st', 'nst'].include? @criterion.input.count_refinement.clause %>
+        <%= render "refine/inline/inputs/numeric_condition", input_fields: count_fields, form_id: form_id %>
+      <% end %>
+    <% end %>
+
+  <% end %>
+
+
+
+  <%# Clause Select %>
+  <div class="refine--criterion-clause-container">
+    <%= input_fields.label :clause, t('.rule') %>
+    <%= input_fields.collection_select :clause,
+      @criterion.condition.clauses,
+      :id,
+      :display,
+      {},
+      class: "refine--select refine--clause-select",
+      data: {action: "change->refine--criterion-form#refresh"},
+      form: form_id
+    %>
+    <%= form.button t('global.buttons.apply'), class: "refine--apply-button", data: {action: "refine--criterion-form#submit"}, type: "submit", form: form_id %>
+  </div>
+
+
+<% end %>
+
+<% @error_messages&.each do |msg| %>
+  <p class="refine-criterion-error">
+    <%= msg %>
+  </p>
+<% end %>

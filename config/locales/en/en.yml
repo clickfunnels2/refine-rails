@@ -11,7 +11,7 @@ en:
       back: Back
       save: Save
       save_filter: Save this filter
-  hammerstone:
+  refine:
     refine_blueprints:
       add_group:
         create_filter: "Create a Filter"

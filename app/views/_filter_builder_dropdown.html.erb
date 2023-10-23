@@ -1,0 +1,63 @@
+<%
+  unless defined? stored_filters
+    stored_filters = false
+  end
+%>
+  <div
+  data-controller="refine--search-filter"
+   data-refine--search-filter-search-frame-id-value="index_search"
+   data-refine--search-filter-submit-url-value="<%= refine_blueprint_path %>"
+   data-action="filter-submit-success@document->refine--search-filter#loadResults"
+  >
+
+  <%= tag.div class: "refine-filter-builder-dropdown-container", data: {
+    controller: "refine--toggle"
+  } do %>
+    <button
+      class="refine-filter-condition-toggle-button"
+      data-action="refine--toggle#toggle"
+      type="button"
+    >
+      <%= t('global.buttons.filter') %>
+    </button>
+    <div
+      hidden
+      data-refine--toggle-target="content"
+      data-reveal
+      data-transition
+      data-transition-enter="transition ease-out duration-100"
+      data-transition-enter-start="transform opacity-0 scale-95"
+      data-transition-enter-end="transform opacity-100 scale-100"
+      data-transition-leave="transition ease-in duration-75"
+      data-transition-leave-start="transform opacity-100 scale-100"
+      data-transition-leave-end="transform opacity-0 scale-95"
+      data-controller="filter-link"
+
+      class="refine-filter-builder-dropdown-search-box"
+      style="min-width: 50vw; max-height: 66vh; overflow: auto;"
+    >
+      <%= turbo_frame_tag :refine_filter_modal, loading: :lazy,
+        src: new_refine_refine_blueprint_path(refine_filters_builder: {stable_id: @stable_id, filter_class: @refine_filter.class.name}, stored_filters: stored_filters.presence) do %>
+
+      <% end %>
+      <div class="refine-filter-builder-dropdown-button-container">
+        <button
+          class="refine-filter-builder-dropdown-cancel-button"
+          data-action="click->refine--toggle#toggle"
+          type="button"
+        >
+          <%= t('global.buttons.cancel') %>
+        </button>
+        <button
+          class="refine-filter-builder-dropdown-apply-button"
+          data-action="click->refine--search-filter#search"
+          data-filter-link-target="link"
+          type="button"
+        >
+          <%= t('global.buttons.apply') %>
+        </button>
+      </div>
+    </div>
+  <% end %>
+
+</div>

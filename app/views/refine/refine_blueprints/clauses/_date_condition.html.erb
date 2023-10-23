@@ -1,0 +1,80 @@
+<% condition_id = condition.try(:id) || condition[:id] %>
+<%# If the condition is not a refinements, it comes from the criterion form object, if it is
+  a refinement it's still a hash %>
+
+<% if ['st', 'nst'].include? input[:clause] %>
+  <!-- render nothing -->
+<% elsif ['exct', 'gt', 'lt'].include? input[:clause] %>
+  <div class="refine-date-condition-days-container">
+    <label for="<%= condition_id %>" class="sr-only"><%= t("refine.refine_blueprints.clauses.date_condition.number_of") %></label>
+    <input
+      class="refine-date-condition-days-input"
+      type="text"
+      value="<%= input[:days] %>"
+      placeholder="<%= t("refine.refine_blueprints.clauses.date_condition.date_number_of_placeholder") %>"
+      data-input-key="days"
+      data-action="input->refine--update#value blur->refine--update#refreshFromServer"
+      data-input-id='<%= input_id if defined? input_id %>'
+    />
+  </div>
+  <div class="refine-date-condition-days-text">
+    <span><%= t("refine.refine_blueprints.clauses.date_condition.days") %></span>
+  </div>
+  <div class="refine-date-condition-days-modifier-container">
+    <select
+      class="refine-date-condition-days-modifier-select"
+      name="modifer"
+      <% if input[:modifier].blank? %>
+      data-controller="refine--defaults"
+      data-refine--defaults-input-value="{ &quot;modifier&quot;: &quot;ago&quot; }"
+      data-refine--defaults-criterion-id-value="<%= criterion_id %>"
+      data-refine--defaults-input-key-value="<%= input_key_value if defined? input_key_value %>"
+      <% end %>
+      data-input-id='<%= input_id if defined? input_id %>'
+      data-input-key="modifier"
+      data-action="change->refine--update#value"
+    >
+      <option
+        <% if input[:modifier] == 'ago' %>selected<% end %>
+        value="ago"
+      >
+        <%= t("refine.refine_blueprints.clauses.date_condition.ago") %>
+      </option>
+      <option
+        <% if input[:modifier] == 'from_now' %>selected<% end %>
+        value="from_now"
+      >
+        <%= t("refine.refine_blueprints.clauses.date_condition.from_now") %>
+      </option>
+    </select>
+    <%= render partial: 'refine/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
+  </div>
+<% else %>
+  <div
+    class="<%= (input[:clause] == 'btwn' || input[:clause] == 'nbtwn') ? 'refine-date-condition-first-date-container-btwn' : 'refine-date-condition-first-date-container' %>"
+  >
+    <%= render partial: "refine/refine_blueprints/clauses/date_picker", locals: {
+      criterion: criterion,
+      label: t("refine.refine_blueprints.clauses.date_condition.first_date"),
+      condition_id: condition_id,
+      date: input[:date1],
+      input_key: 'date1',
+      input_id: defined?(input_id) && input_id,
+    } %>
+    <%= render partial: 'refine/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
+  </div>
+  <% if (input[:clause] == 'btwn' || input[:clause] == 'nbtwn') %>
+    <span class="refine-date-condition-and"><%= t(".and") %></span>
+    <div class="refine-date-condition-second-date-container">
+      <%= render partial: "refine/refine_blueprints/clauses/date_picker", locals: {
+        criterion: criterion,
+        label: t("refine.refine_blueprints.clauses.date_condition.second_date"),
+        condition_id: condition_id,
+        date: input[:date2],
+        input_key: 'date2',
+        input_id: defined?(input_id) && input_id,
+      } %>
+    </div>
+  <% end %>
+<% end %>
+

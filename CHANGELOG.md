@@ -1,3 +1,7 @@
+
+### 2.8.0
+  * Removes the Hammerstone naming convention from codebase
+  * Changes default StoredFilter table name to be "refine_stored_filters"
 ### 2.7.5
   * Allows user to add timezones to human_readable outputs for DateConditions. 
 ### 2.7.4

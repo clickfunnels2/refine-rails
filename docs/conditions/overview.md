@@ -9,7 +9,7 @@ Imagine you wanted build a filter for Employee records that let your users filte
 
 We can build this hypothetical filter pretty easily:  
 ```ruby
-class EmployeeFilter < Hammerstone::Refine::Filter
+class EmployeeFilter < Refine::Filter
   def table
     Employee.arel_table
   end
@@ -45,7 +45,7 @@ For your convenience, we provide a number of common conditions out of the box:
 
 Every Filter class must implement a `conditions` method which returns the array of available conditions. You are welcome to build that array in any way you want, but usually it makes sense to just return an array, as in our example above. 
 
-Each condition in the array must extend the  `Hammerstone::Refine::Conditions` class.
+Each condition in the array must extend the  `Refine::Conditions` class.
 
 ### IDs
 

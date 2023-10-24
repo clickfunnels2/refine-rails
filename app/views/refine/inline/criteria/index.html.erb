@@ -1,8 +1,27 @@
+<%
+  # a hash mapping Category => [array, of, conditions], sorted by category
+  categorized_conditions = @conditions
+    .group_by {|c| c.meta[:category].presence}
+    .sort_by(&:first)
+    .to_h
+
+  # an array of uncategorized conditions
+  uncategorized_conditions = categorized_conditions.delete(nil)
+%>
+
 <%= turbo_frame_tag @criterion do %>
   <div class="refine--condition-list">
-    <% @conditions.each do |condition| %>
+    <% uncategorized_conditions.each do |condition| %>
       <%= link_to condition.display, new_refine_inline_criterion_url(
           @criterion.to_params.deep_merge(refine_inline_criterion: {condition_id: condition.id})), class: "refine--condition-list-item", data: {controller: "refine--turbo-stream-link", action: "refine--turbo-stream-link#visit"} %>
+    <% end %>
+
+    <%  categorized_conditions.each do |(category, conditions)| %>
+      <b><%= category %></b>
+      <% conditions.each do |condition| %>
+        <%= link_to condition.display, new_refine_inline_criterion_url(
+          @criterion.to_params.deep_merge(refine_inline_criterion: {condition_id: condition.id})), class: "refine--condition-list-item", data: {controller: "refine--turbo-stream-link", action: "refine--turbo-stream-link#visit"} %>
+      <% end %>
     <% end %>
   </div>
   <div class="refine--separator"></div>

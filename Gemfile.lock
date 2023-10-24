@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    refine-rails (2.7.4)
+    refine-rails (2.7.8)
       rails (>= 6.0)
 
 GEM
@@ -102,14 +102,14 @@ GEM
     minitest-ci (3.4.0)
       minitest (>= 5.0.6)
     mysql2 (0.5.4)
-    net-imap (0.3.7)
+    net-imap (0.4.1)
       date
       net-protocol
     net-pop (0.1.2)
       net-protocol
     net-protocol (0.2.1)
       timeout
-    net-smtp (0.3.3)
+    net-smtp (0.4.0)
       net-protocol
     nio4r (2.5.9)
     nokogiri (1.13.8)
@@ -186,7 +186,7 @@ GEM
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    zeitwerk (2.6.11)
+    zeitwerk (2.6.12)
 
 PLATFORMS
   ruby

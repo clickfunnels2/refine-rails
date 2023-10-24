@@ -36,6 +36,14 @@ describe Hammerstone::Refine::Filter do
         filter.get_query!
       end
     end
+
+    it "missing condition raises exception" do
+      filter = create_filter(invalid_condition_blueprint)
+
+      assert_raises Hammerstone::Refine::InvalidFilterError do
+        Hammerstone::Refine::Filters::Query.new(filter)
+      end
+    end
   end
 
   describe "basic filters with ands" do
@@ -330,6 +338,18 @@ describe Hammerstone::Refine::Filter do
       input: {
         clause: "eq",
         value: "aaron"
+      }
+    }]
+  end
+
+  def invalid_condition_blueprint
+    [{
+      depth: 0,
+      type: "criterion",
+      condition_id: "invalid_condition",
+      input: {
+        clause: "eq",
+        value: "invalid"
       }
     }]
   end

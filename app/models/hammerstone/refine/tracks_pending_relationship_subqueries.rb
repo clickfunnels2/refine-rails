@@ -163,7 +163,13 @@ module Hammerstone::Refine
             # Otherwise we are joining nodes, which requires an AND statement (ORs are immediately commited)
             # query can be a `Arel::Nodes::In` class (See HMMT test for example)
             # The group() in front of query is required for nested relationship attributes.
-            query = group(query).and(group(parent_table[linking_key.to_s].in(inner_query)))
+            if use_multiple_databases
+              array_of_ids = current_model.connection.exec_query(inner_query.to_sql).rows.flatten
+              query = group(query).and(group(parent_table[linking_key.to_s].in(array_of_ids)))
+            else
+              query = group(query).and(group(parent_table[linking_key.to_s].in(inner_query)))
+            end
+            # query = group(query).and(group(parent_table[linking_key.to_s].in(inner_query)))
           end
         else
           # No existing query, top level of stack 

@@ -80,6 +80,8 @@ class Hammerstone::Refine::Filters::Criterion
     if @condition
       @condition.set_filter(filter)
       filter.translate_display(@condition)
+    else
+      raise Hammerstone::Refine::InvalidFilterError
     end
   end
 end

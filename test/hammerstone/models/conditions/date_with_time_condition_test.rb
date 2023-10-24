@@ -230,6 +230,74 @@ module Hammerstone::Refine::Conditions
           filter.translate_display(condition)
           assert_equal "Date Test is set", condition.human_readable(data)
         end
+
+        it "correctly outputs human readable text for 'is between' clause" do
+          condition = DateWithTimeCondition.new("date_test")
+          data = {clause: DateCondition::CLAUSE_BETWEEN, date1: "2019-05-15", date2: "2019-06-15" }
+          filter = apply_condition_and_return_filter(condition, data)
+          filter.translate_display(condition)
+          assert_equal "Date Test is between 05/15/19 and 06/15/19", condition.human_readable(data)
+        end
+      end
+
+      describe "with timezone set to true" do
+        describe "With a standard Time Zone that outputs an abbreviation" do
+          before do
+            DateWithTimeCondition.default_user_timezone = "Hawaii" # Hawaii is a static timezone that does not change (No daylight savings)
+          end
+
+          it "correctly outputs human readable text for 'is set' clause without timezone since it's not applicable" do
+            condition = DateWithTimeCondition.new("date_test").with_human_readable_timezone(true)
+            data = {clause: DateCondition::CLAUSE_SET}
+            filter = apply_condition_and_return_filter(condition, data)
+            filter.translate_display(condition)
+            assert_equal "Date Test is set", condition.human_readable(data)
+          end
+
+          it "correctly outputs human readable text for 'CLAUSE_BETWEEN' clause with timezone" do
+            condition = DateWithTimeCondition.new("date_test").with_human_readable_timezone(true)
+            data = {clause: DateCondition::CLAUSE_BETWEEN, date1: "2019-05-15", date2: "2019-06-15" }
+            filter = apply_condition_and_return_filter(condition, data)
+            filter.translate_display(condition)
+            assert_equal "Date Test is between 05/15/19 and 06/15/19 (HST)", condition.human_readable(data)
+          end
+
+          it "correctly outputs human readable text for 'CLAUSE_LESS_THAN_OR_EQUAL' clause with timezone" do
+            condition = DateWithTimeCondition.new("date_test").with_human_readable_timezone(true)
+            data = {clause: DateCondition::CLAUSE_LESS_THAN_OR_EQUAL, date1: "2019-05-15" }
+            filter = apply_condition_and_return_filter(condition, data)
+            filter.translate_display(condition)
+            assert_equal "Date Test is on or before 05/15/19 (HST)", condition.human_readable(data)
+          end
+
+          it "correctly outputs human readable text for 'CLAUSE_GREATER_THAN' clause with timezone" do
+            condition = DateWithTimeCondition.new("date_test").with_human_readable_timezone(true)
+            data = {clause: DateCondition::CLAUSE_GREATER_THAN, days: 5 }
+            filter = apply_condition_and_return_filter(condition, data)
+            filter.translate_display(condition)
+            assert_equal "Date Test is more than 5 days from now (HST)", condition.human_readable(data)
+          end
+        end
+
+        describe "Nonstandard time zone abbreviation" do
+          it "correctly outputs human readable text for 'CLAUSE_BETWEEN' clause with International Date Line West timezone" do
+            DateWithTimeCondition.default_user_timezone = "International Date Line West"
+            condition = DateWithTimeCondition.new("date_test").with_human_readable_timezone(true)
+            data = {clause: DateCondition::CLAUSE_BETWEEN, date1: "2019-05-15", date2: "2019-06-15" }
+            filter = apply_condition_and_return_filter(condition, data)
+            filter.translate_display(condition)
+            assert_equal "Date Test is between 05/15/19 and 06/15/19 (GMT-12:00)", condition.human_readable(data)
+          end
+
+          it "correctly outputs human readable text for 'CLAUSE_BETWEEN' clause with  timezone" do
+            DateWithTimeCondition.default_user_timezone = "Kathmandu"
+            condition = DateWithTimeCondition.new("date_test").with_human_readable_timezone(true)
+            data = {clause: DateCondition::CLAUSE_BETWEEN, date1: "2019-05-15", date2: "2019-06-15" }
+            filter = apply_condition_and_return_filter(condition, data)
+            filter.translate_display(condition)
+            assert_equal "Date Test is between 05/15/19 and 06/15/19 (GMT+05:45)", condition.human_readable(data)
+          end
+        end
       end
     end
   end

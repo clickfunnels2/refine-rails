@@ -1,4 +1,7 @@
 en:
+  time:
+    formats:
+      z: "%Z"
   date:
     order:
     - :year
@@ -9,6 +12,7 @@ en:
       long: "%B %d, %Y"
       short: "%b %d"
       dmy: "%m/%d/%y"
+      z: "%Z"
       stamp: "%Y%m%d" # YYYYMMDD
       # formats shared with datetimes
       month_and_year: "%B %Y" # results like: June 2018

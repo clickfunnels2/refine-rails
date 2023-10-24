@@ -1,7 +1,7 @@
 require "refine/rails/version"
 require "refine/rails/engine"
-require_relative "../../app/models/hammerstone/refine/stabilizers/database_stabilizer"
-require_relative "../../app/models/hammerstone/refine/stabilizers/url_encoded_stabilizer"
+require_relative "../../app/models/refine/stabilizers/database_stabilizer"
+require_relative "../../app/models/refine/stabilizers/url_encoded_stabilizer"
 
 module Refine
   module Rails
@@ -19,8 +19,8 @@ module Refine
       stored_filter_scope: ->(scope) { scope },
       custom_stored_filter_attributes: -> {{}},
       stabilizer_classes: {
-        db: Hammerstone::Refine::Stabilizers::DatabaseStabilizer,
-        url: Hammerstone::Refine::Stabilizers::UrlEncodedStabilizer
+        db: Refine::Stabilizers::DatabaseStabilizer,
+        url: Refine::Stabilizers::UrlEncodedStabilizer
       },
       date_lte_uses_eod: false,
       date_gte_uses_bod: false,

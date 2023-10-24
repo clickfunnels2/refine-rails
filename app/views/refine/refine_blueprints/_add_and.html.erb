@@ -1,0 +1,25 @@
+<% 
+  is_disabled = @refine_filter_builder.refine_filter.criteria_limit_reached?
+  criteria_limit = @refine_filter_builder.refine_filter.criteria_limit
+%>
+
+<%= tag.div(
+  class: "refine-add-container",
+  data: {
+    controller: 'refine--add',
+    refine__add_previous_criterion_id_value: (criteria.last.position unless is_disabled)
+  }) do %>
+
+  <%= tag.div(
+    class: class_names(
+      "refine-add-and" => true,
+      "refine-add-disabled" => is_disabled
+    ),
+    style: "transition: all .15s ease",
+    data: {action: ("click->refine--add#criterion" unless is_disabled)},
+    title: (t("refine.inline.filters.criteria_limit", criteria_limit: criteria_limit) if is_disabled)
+
+  ) do %>
+    <span class="refine-add-button-text"><%= t("refine.refine_blueprints.add_and.add_and") %></span><i class="refine-add-icon fal fa-plus"></i>
+  <% end %>
+<% end %>

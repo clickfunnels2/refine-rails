@@ -3,7 +3,7 @@ import { FetchRequest } from '@rails/request.js'
 
 /*
   This controller handles criteria forms
-  (hammerstone/refine/inline/criteria/new|edit)
+  (refine/inline/criteria/new|edit)
 */
 export default class extends Controller {
   static values = {

@@ -1,7 +1,7 @@
 
 # Creating a Filter
 
-Creating your first filter is as simple as creating a new class that extends `Hammerstone::Refine::Filter`. When you do that, you'll notice that there are three methods that need to be implemented: `initial_query`, `table`, and `conditions`.
+Creating your first filter is as simple as creating a new class that extends `Refine::Filter`. When you do that, you'll notice that there are three methods that need to be implemented: `initial_query`, `table`, and `conditions`.
 
 Typically you can put these in a top-level folder called `Filters`.
 
@@ -22,7 +22,7 @@ db/
 This is what your class would look like before we implement those methods: 
 
 ```ruby 
-class EmployeesFilter < Hammerstone::Refine::Filter
+class EmployeesFilter < Refine::Filter
   
   def table
     # TODO
@@ -98,8 +98,8 @@ You can adjust the criteria limit for all filters in your application by setting
 # config/initializers/refine_rails.rb
 
 # limit all filters to 7 criteria
-Hammerstone::Refine::Filter.criteria_limit = 7
+Refine::Filter.criteria_limit = 7
 
 # remove the criteria limit for all filters
-Hammerstone::Refine::Filter.criteria_limit = nil
+Refine::Filter.criteria_limit = nil
 ```

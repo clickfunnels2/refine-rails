@@ -47,12 +47,12 @@ filter.get_query
 ```
 
 ## Switching stabilizers
-If you'd like **some** of your filters to be saved to you `hammerstone_refine_stored_filters` table, you can "translate" from a URLEncoded id to a Database id. You may want to only save filters once the entire model has pass validation for example. Here is what that would look like: 
+If you'd like **some** of your filters to be saved to you `refine_stored_filters` table, you can "translate" from a URLEncoded id to a Database id. You may want to only save filters once the entire model has pass validation for example. Here is what that would look like: 
 
 ```ruby
   def save_filter_and_return_id(id:, initial_query: nil)
     # How to use (in controller) -> filter_id = save_filter_and_return_id(id: params[:stable_id], initial_query: scope)
-    # This method returns a primary key of the filter in your hammerstone_refine_stored_filters table which you can then add to your model
+    # This method returns a primary key of the filter in your refine_stored_filters table which you can then add to your model
     filter = Stabilizers::UrlEncodedStabilizer.new.from_stable_id(id: id, initial_query: initial_query)
     Stabilizers::DatabaseStabilizer.new.to_stable_id(filter: filter)
   end

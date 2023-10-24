@@ -5,7 +5,7 @@
         "User Input": {
             "children": {
                 "The Blueprint": "/input/blueprint",
-                "Hammerstone Frontends": "/input/frontends",
+                "Refine Frontends": "/input/frontends",
                 "Custom Frontends": "/input/custom"
             }
         }

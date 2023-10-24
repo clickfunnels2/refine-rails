@@ -30,9 +30,9 @@ export default class extends ServerRefreshController {
       this.state.validateBlueprintUrlValue,
       {
         query: {
-          "hammerstone_refine_filters_builder[filter_class]": this.state.filterName,
-          "hammerstone_refine_filters_builder[blueprint_json]": JSON.stringify(this.state.blueprint),
-          "hammerstone_refine_filters_builder[client_id]": this.state.clientIdValue
+          "refine_filters_builder[filter_class]": this.state.filterName,
+          "refine_filters_builder[blueprint_json]": JSON.stringify(this.state.blueprint),
+          "refine_filters_builder[client_id]": this.state.clientIdValue
         }
       }
     )

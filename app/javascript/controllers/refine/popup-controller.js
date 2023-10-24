@@ -11,6 +11,12 @@ export default class extends Controller {
 
   connect() {
     useClickOutside(this)
+    this.boundHandleKeyUp = this.handleKeyUp.bind(this)
+    document.addEventListener("keyup", this.boundHandleKeyUp)
+  }
+
+  disconnect() {
+    document.removeEventListener("keyup", this.boundHandleKeyUp)
   }
 
   show(event) {
@@ -25,5 +31,11 @@ export default class extends Controller {
 
   clickOutside(event) {
     this.hide(event)
+  }
+
+  handleKeyUp(event) {
+    if (event.key === "Escape" || event.key === "Esc") {
+      this.hide(event)
+    }
   }
 }

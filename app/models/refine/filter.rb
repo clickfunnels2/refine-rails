@@ -231,8 +231,7 @@ module Refine
 
     def conditions_to_array
       return nil unless conditions
-      # Set filter object on condition and return to_array
-      conditions.map { |condition| instantiate_condition(condition) }.map(&:to_array)
+      instantiated_conditions.map(&:to_array)
     end
 
     def instantiate_condition(condition)
@@ -241,8 +240,9 @@ module Refine
       condition
     end
 
+    # Set filter object on condition and sort alphabetically
     def instantiated_conditions
-      conditions.map { |c| instantiate_condition(c.dup) }
+      conditions.map { |c| instantiate_condition(c.dup) }.sort_by(&:display)
     end
 
     def translate_display(condition)

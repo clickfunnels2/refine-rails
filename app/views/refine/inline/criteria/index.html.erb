@@ -2,7 +2,7 @@
   # a hash mapping Category => [array, of, conditions], sorted by category
   categorized_conditions = @conditions
     .group_by {|c| c.meta[:category].presence}
-    .sort_by(&:first)
+    .sort_by {|(category, _conditions)| category.to_s }
     .to_h
 
   # an array of uncategorized conditions

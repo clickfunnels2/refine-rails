@@ -894,6 +894,11 @@ input.refine--text-condition-input:focus {
     margin: 5px 0;
 }
 
+.refine--separator-m0 {
+    height: 1px;
+    background-color: #eee;
+}
+
 button.refine--apply-button {
   padding: 4px 6px;
   cursor: pointer;
@@ -1002,7 +1007,8 @@ input.refine--save-filter-input {
 .refine--search-box {
   position: relative;
   padding: 10px;
-  margin-left: -4px;
+  margin-left: -6px;
+  margin-right: 6px;
 }
 
 input.refine--search-trigger[type="text"] {

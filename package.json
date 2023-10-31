@@ -71,7 +71,8 @@
     "jquery": "^3.5.1",
     "jquery-events-to-dom-events": "^1.1.0",
     "lodash": "^4.0.8",
-    "moment": "^2.29.4"
+    "moment": "^2.29.4",
+    "stimulus-use": "^0.52.0"
   },
   "peerDependencies": {}
 }

@@ -231,7 +231,8 @@ module Refine
 
     def conditions_to_array
       return nil unless conditions
-      instantiated_conditions.map(&:to_array)
+      # Set filter object on condition and return to_array
+      conditions.map { |condition| instantiate_condition(condition) }.map(&:to_array)
     end
 
     def instantiate_condition(condition)

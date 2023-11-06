@@ -894,6 +894,11 @@ input.refine--text-condition-input:focus {
     margin: 5px 0;
 }
 
+.refine--separator-m0 {
+    height: 1px;
+    background-color: #eee;
+}
+
 button.refine--apply-button {
   padding: 4px 6px;
   cursor: pointer;
@@ -998,3 +1003,33 @@ input.refine--save-filter-input {
 .icon.refine--icon-sm {
   font-size: 14px;
 }
+
+.refine--search-box {
+  position: relative;
+  padding: 10px;
+  margin-left: -6px;
+  margin-right: 6px;
+}
+
+input.refine--search-trigger[type="text"] {
+  width: 100%;
+  font-size: 14px;
+  display: block;
+  padding: 5px 5px 5px 25px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  outline: 0;
+  line-height: 1.15;
+}
+
+.material-icons.refine--icon-search {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  font-size: 16px;
+  color: #999;
+  transform: translateY(-50%);
+  line-height: 18px;
+}
+
+

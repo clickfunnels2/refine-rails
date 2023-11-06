@@ -1,6 +1,7 @@
 import { identifierForContextKey } from "@hotwired/stimulus-webpack-helpers"
 
 import AddController from './refine/add-controller'
+import InlineConditionsController from './refine/inline-conditions-controller'
 import CriterionFormController from './refine/criterion-form-controller'
 import DefaultsController from './refine/defaults-controller'
 import DeleteController from './refine/delete-controller'
@@ -19,6 +20,7 @@ import DateController from './refine/date-controller'
 
 export const controllerDefinitions = [
   [AddController, 'refine/add-controller.js'],
+  [InlineConditionsController, './refine/inline-conditions-controller.js'],
   [CriterionFormController, 'refine/criterion-form-controller.js'],
   [DefaultsController, 'refine/defaults-controller.js'],
   [DeleteController, 'refine/delete-controller.js'],
@@ -45,6 +47,7 @@ export const controllerDefinitions = [
 
 export {
   AddController,
+  InlineConditionsController,
   CriterionFormController,
   DefaultsController,
   DeleteController,

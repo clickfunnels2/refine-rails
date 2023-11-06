@@ -2,12 +2,12 @@
   <div class="refine-group-container">
     <% criteria&.each_with_index do |criterion, index| %>
       <div class="refine-group-criterion-container">
-        <%= render "refine/refine_blueprints/criterion", criterion: criterion %>
+        <%= render "refine/blueprints/criterion", criterion: criterion %>
       </div>
       <% if criteria.count > 1 && index < criteria.count - 1 %>
         <p class="refine-group-and"><%= t("refine.refine_blueprints.add_and.add_and") %></p>
       <% end %>
     <% end %>
-    <%= render 'refine/refine_blueprints/add_and', criteria: criteria %>
+    <%= render 'refine/blueprints/add_and', criteria: criteria %>
   </div>
 <% end %>

@@ -2,7 +2,7 @@
   <%= input_fields.collection_select :selected,
     criterion.options,
     :id,
-    :display,
+    ->(o) {o.display.truncate(64)},
     {},
     class: "refine--select refine--option-select",
     multiple: criterion.multiple?,

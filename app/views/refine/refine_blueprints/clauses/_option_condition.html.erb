@@ -21,7 +21,7 @@
           value="<%= option[:id] %>"
           <% if selected.find { |id|  id == option[:id] } %>selected<% end %>
         >
-          <%= option[:display] %>
+          <%= option[:display].truncate(64) %>
         </option>
       <% end %>
 

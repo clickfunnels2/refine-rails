@@ -13,7 +13,7 @@
       <div class="refine--condition-value-wrapper">
          <div class="refine--condition-value-clause"><%= criterion.clause_display %></div>
          <div class="refine--condition-value-self">
-            <div><%= criterion.human_readable_value %></div>
+            <div><%= criterion.human_readable_value.truncate(64) %></div>
          </div>
       </div>
     </div>

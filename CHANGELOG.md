@@ -1,3 +1,5 @@
+### 2.8.2
+  * Truncate long value names to fix a display issue
 ### 2.8.1
   * Improvements to condition list UI in inline query builder
 ### 2.8.0

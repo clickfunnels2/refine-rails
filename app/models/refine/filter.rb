@@ -243,7 +243,9 @@ module Refine
 
     # Set filter object on condition and sort alphabetically
     def instantiated_conditions
-      conditions.map { |c| instantiate_condition(c.dup) }.sort_by(&:display)
+      conditions
+        .map { |c| instantiate_condition(c.dup) }
+        .sort_by { |c| c.display.to_s.downcase }
     end
 
     def translate_display(condition)

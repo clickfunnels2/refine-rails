@@ -1,3 +1,5 @@
+### 2.8.3
+  * Inline filters condition list sorting ignores case
 ### 2.8.2
   * Truncate long value names to fix a display issue
 ### 2.8.1

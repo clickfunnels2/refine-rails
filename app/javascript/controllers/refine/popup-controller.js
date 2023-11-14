@@ -6,7 +6,8 @@ export default class extends Controller {
   static targets = ["frame"]
 
   static values = {
-    src: String
+    src: String,
+    isOpen: {type: Boolean, default: false}
   }
 
   connect() {
@@ -22,11 +23,15 @@ export default class extends Controller {
   show(event) {
     event.preventDefault()
     this.frameTarget.src = this.srcValue;
+    this.isOpenValue = true
   }
 
   hide(event) {
-    event?.preventDefault()
-    this.frameTarget.innerHTML = "";
+    if (this.isOpenValue) {
+      event?.preventDefault()
+      this.frameTarget.innerHTML = "";
+      this.isOpenValue = false
+    }
   }
 
   clickOutside(event) {

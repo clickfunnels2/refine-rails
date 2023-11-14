@@ -17,9 +17,10 @@
   src ||= ""
   container_class ||= "refine--inline-popup-container"
   frame_class ||= "refine--inline-popup"
+  is_open ||= false
 %>
 
-<%= tag.div class: container_class, data: {controller: "refine--popup", refine__popup_src_value: src } do %>
+<%= tag.div class: container_class, data: {controller: "refine--popup", refine__popup_src_value: src, refine__is_open_value: is_open } do %>
     <%= yield %>
   <%= turbo_frame_tag frame_id, class: frame_class, data: {refine__popup_target: "frame"} %>
 <% end %>

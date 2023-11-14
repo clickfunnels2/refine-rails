@@ -1,3 +1,5 @@
+### 2.8.4
+  * clickOutside handler on inline popups no longer block click events when the popup is closed
 ### 2.8.3
   * Inline filters condition list sorting ignores case
 ### 2.8.2

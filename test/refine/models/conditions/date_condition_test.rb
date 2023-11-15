@@ -167,6 +167,24 @@ module Refine::Conditions
 
           assert_equal "Date To Test equals 05/15/19", condition.human_readable(data)
         end
+
+        it "correctly outputs human readable text for 'between' clause using remap" do
+          data = {clause: DateCondition::CLAUSE_BETWEEN, date1: "2019-05-15", date2: "2020-05-15"}
+          condition = DateCondition.new("date_to_test").remap_clause_displays({eq: "between"})
+          filter = apply_condition_and_return_filter(condition, data)
+          filter.translate_display(condition)
+
+          assert_equal "Date To Test is between 05/15/19 and 05/15/20", condition.human_readable(data)
+        end
+
+        it "correctly outputs human readable text for 'between' when dates are the same clause using remap" do
+          data = {clause: DateCondition::CLAUSE_BETWEEN, date1: "2019-05-15", date2: "2019-05-15"}
+          condition = DateCondition.new("date_to_test").remap_clause_displays({eq: "equals"})
+          filter = apply_condition_and_return_filter(condition, data)
+          filter.translate_display(condition)
+
+          assert_equal "Date To Test equals 05/15/19", condition.human_readable(data)
+        end
       end
     end
   end

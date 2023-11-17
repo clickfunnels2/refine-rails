@@ -23,6 +23,18 @@ module Refine::Conditions
         filter = apply_condition_and_return_filter(condition, data)
         assert_equal(["date1 is not a real date"], filter.errors.full_messages)
       end
+
+      it "throws an error for a between clause when date 1 is later than date 2" do
+        data = {clause: DateCondition::CLAUSE_BETWEEN, date1: "2019-06-15",  date2: "2019-05-15"}
+        filter = apply_condition_and_return_filter(condition, data)
+        assert_equal(["Start date must be an earlier date than end date"], filter.errors.full_messages)
+      end
+
+      it "throws an error for a not between clause when date 1 is later than date 2" do
+        data = {clause: DateCondition::CLAUSE_NOT_BETWEEN, date1: "2019-06-15",  date2: "2019-05-15"}
+        filter = apply_condition_and_return_filter(condition, data)
+        assert_equal(["Start date must be an earlier date than end date"], filter.errors.full_messages)
+      end
     end
 
     describe "clause application" do

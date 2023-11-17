@@ -121,7 +121,12 @@ module Refine::Conditions
         formatted_date1 = I18n.l(input[:date1].to_date, format: :dmy)
         formatted_date2 = I18n.l(input[:date2].to_date, format: :dmy)
         and_i18n = I18n.t("#{I18N_PREFIX}and")
-        "#{display} #{current_clause.display} #{formatted_date1} #{and_i18n} #{formatted_date2}#{timezone_abbr}"
+
+        if formatted_date1 == formatted_date2
+          "#{display} #{get_clause_by_id(CLAUSE_EQUALS).display} #{formatted_date1}#{timezone_abbr}"
+        else
+          "#{display} #{current_clause.display} #{formatted_date1} #{and_i18n} #{formatted_date2}#{timezone_abbr}"
+        end
       when *[CLAUSE_GREATER_THAN, CLAUSE_LESS_THAN, CLAUSE_EXACTLY]
         days_i18n = I18n.t("#{I18N_PREFIX}days")
         ago_i18n = I18n.t("#{I18N_PREFIX}ago")
@@ -146,7 +151,12 @@ module Refine::Conditions
         formatted_date1 = I18n.l(input[:date1].to_date, format: :dmy)
         formatted_date2 = I18n.l(input[:date2].to_date, format: :dmy)
         and_i18n = I18n.t("#{I18N_PREFIX}and")
-        "#{formatted_date1} #{and_i18n} #{formatted_date2}#{timezone_abbr}"
+        
+        if formatted_date1 == formatted_date2
+          "#{formatted_date1}#{timezone_abbr}"
+        else
+          "#{formatted_date1} #{and_i18n} #{formatted_date2}#{timezone_abbr}"
+        end
       when *[CLAUSE_GREATER_THAN, CLAUSE_LESS_THAN, CLAUSE_EXACTLY]
         days_i18n = I18n.t("#{I18N_PREFIX}and")
         ago_i18n = I18n.t("#{I18N_PREFIX}days")

@@ -3,7 +3,7 @@ module Refine::Conditions
     include ActiveModel::Validations
     include HasClauses
 
-    validate :date1_must_be_real, :date2_must_be_real
+    validate :date1_must_be_real, :date2_must_be_real, :date1_must_be_less_than_date2
 
     cattr_accessor :default_user_timezone, default: "UTC", instance_accessor: false
     cattr_accessor :default_database_timezone, default: "UTC", instance_accessor: false
@@ -48,6 +48,16 @@ module Refine::Conditions
       rescue ArgumentError
         errors.add(:base, I18n.t("#{I18N_PREFIX}date2_error"))
         false
+      end
+    end
+
+    def date1_must_be_less_than_date2
+      return true unless date1 && date2
+      if Date.strptime(date1, "%Y-%m-%d") > Date.strptime(date2, "%Y-%m-%d")
+        errors.add(:base, I18n.t("#{I18N_PREFIX}date1_greater_date2_error"))
+        false
+      else
+        true
       end
     end
 

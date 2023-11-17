@@ -108,6 +108,7 @@ en:
       date_condition:
         date1_error: date1 is not a real date
         date2_error: date2 is not a real date
+        date1_greater_date2_error: Start date must be an earlier date than end date
         timezone_error: "%{zone} timezone does not exist in ActiveSupport::TimeZone"
         and: and
         days: days

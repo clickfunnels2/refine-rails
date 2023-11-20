@@ -1,3 +1,7 @@
+### 2.8.5
+  * DateCondition now has a validation to ensue a between range date1 is not greater than date2
+  * DateCondition human_readable now returns the same messaging as EQUALS or DOESNT_EQUAL when BETWEEN or NOT_BETWEEN respectively when the two dates input are the same date
+  * Removed the redundant refine_refine_ from the routes for refine_blueprints. It is now simply refine_blueprints
 ### 2.8.4
   * clickOutside handler on inline popups no longer block click events when the popup is closed
 ### 2.8.3

@@ -64,7 +64,7 @@
     <%= render partial: 'refine/blueprints/criterion_errors', locals: { criterion: criterion } %>
   </div>
   <% if (input[:clause] == 'btwn' || input[:clause] == 'nbtwn') %>
-    <span class="refine-date-condition-and"><%= t(".and") %></span>
+    <span class="refine-date-condition-and"><%= t("refine.refine_blueprints.clauses.date_condition.and") %></span>
     <div class="refine-date-condition-second-date-container">
       <%= render partial: "refine/blueprints/clauses/date_picker", locals: {
         criterion: criterion,

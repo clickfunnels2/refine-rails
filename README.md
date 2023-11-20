@@ -129,7 +129,7 @@ event.detail includes the following properties
 storedFilterId: the primary key of the associated record in the hammerstone_refine_stored_filters_table
 
 ## Forcing validations
-To force validations, make a POST request to /hammerstone/refine_blueprints with the following JSON payload:
+To force validations, make a POST request to /refine/blueprints with the following JSON payload:
 - filter: the ruby class name of the filter
 - blueprint: a JSON-stringifed version of the user-input blueprint
 - id_suffix: the string appended to DOM-ids used to uniquely identify this filter
@@ -139,7 +139,7 @@ The server will respond with a JSON payload that either includes the URL-encoded
 Example:
 
 ```js
-const response = await fetch('/hammerstone/refine_blueprints', {
+const response = await fetch('/refine/blueprints', {
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',

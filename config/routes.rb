@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   namespace :refine do
-    resource :refine_blueprint, only: [:show, :new, :create] do
+    resource :blueprint, only: [:show, :new, :create] do
       get "stored_filters", on: :collection
       get "validate", on: :collection
     end

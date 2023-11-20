@@ -1,5 +1,5 @@
 module Refine
-  class RefineBlueprintsController < ApplicationController
+  class BlueprintsController < ApplicationController
     layout false
     before_action :set_builder
     before_action :set_filter

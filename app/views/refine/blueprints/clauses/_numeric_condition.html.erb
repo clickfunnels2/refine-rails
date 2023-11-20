@@ -13,12 +13,12 @@
         data-action="input->refine--update#value blur->refine--update#refreshFromServer"
         data-input-id="<%= defined?(input_id) && input_id %>"
       />
-      <%= render partial: 'refine/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
+      <%= render partial: 'refine/blueprints/criterion_errors', locals: { criterion: criterion } %>
     </div>
 
     <% if ['btwn', 'nbtwn'].include? input[:clause] %>
       <!-- Add second input for value2 if clause is between or not between -->
-      <span class="refine-numeric-condition-and"><%= t(".and") %></span>
+      <span class="refine-numeric-condition-and"><%= t("refine.refine_blueprints.clauses.numeric_condition.and") %></span>
       <div class="refine-numeric-condition-second-container">
         <input
           class="refine-numeric-condition-second-input"
@@ -29,7 +29,7 @@
           data-action="input->refine--update#value blur->refine--update#refreshFromServer"
           data-input-id="<%= defined?(input_id) && input_id %>"
         />
-        <%= render partial: 'refine/refine_blueprints/criterion_errors', locals: { criterion: criterion } %>
+        <%= render partial: 'refine/blueprints/criterion_errors', locals: { criterion: criterion } %>
       </div>
     <% end %>
 <% end %>

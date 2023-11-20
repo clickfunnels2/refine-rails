@@ -41,7 +41,7 @@
   <div class="refine--criterion-clause-container">
     <%= input_fields.label :clause, t('.rule') %>
     <%= input_fields.collection_select :clause,
-      @criterion.condition.clauses,
+      @criterion.condition.meta[:clauses],
       :id,
       :display,
       {},

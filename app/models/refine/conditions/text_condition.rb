@@ -87,47 +87,47 @@ module Refine::Conditions
       when CLAUSE_DOESNT_CONTAIN    then apply_clause_doesnt_contain(value, table)
       when CLAUSE_SET               then apply_clause_set(value, table)
       when CLAUSE_NOT_SET           then apply_clause_not_set(value, table)
-      end
+      end.then { table.grouping _1 if _1 }
     end
 
     def apply_clause_equals(value, table)
-      table.grouping(arel_attribute(table).eq(value))
+      arel_attribute(table).eq(value)
     end
 
     def apply_clause_doesnt_equal(value, table)
-      table.grouping(arel_attribute(table).not_eq(value).or(arel_attribute(table).eq(nil)))
+      arel_attribute(table).not_eq(value).or(arel_attribute(table).eq(nil))
     end
 
     def apply_clause_starts_with(value, table)
-      table.grouping(arel_attribute(table).matches("#{value}%"))
+      arel_attribute(table).matches("#{value}%")
     end
 
     def apply_clause_ends_with(value, table)
-      table.grouping(arel_attribute(table).matches("%#{value}"))
+      arel_attribute(table).matches("%#{value}")
     end
 
     def apply_clause_contains(value, table)
-      table.grouping(arel_attribute(table).matches("%#{value}%"))
+      arel_attribute(table).matches("%#{value}%")
     end
 
     def apply_clause_doesnt_contain(value, table)
-      table.grouping(arel_attribute(table).does_not_match("%#{value}%").or(arel_attribute(table).eq(nil)))
+      arel_attribute(table).does_not_match("%#{value}%").or(arel_attribute(table).eq(nil))
     end
 
     def apply_clause_set(_, table)
-      table.grouping(arel_attribute(table).not_eq_all([nil, ""]))
+      arel_attribute(table).not_eq_all([nil, ""])
     end
 
     def apply_clause_not_set(_, table)
-      table.grouping(arel_attribute(table).eq_any([nil, ""]))
+      arel_attribute(table).eq_any([nil, ""])
     end
 
     def apply_clause_doesnt_start_with(value, table)
-      table.grouping(arel_attribute(table).does_not_match("#{value}%"))
+      arel_attribute(table).does_not_match("#{value}%")
     end
 
     def apply_clause_doesnt_end_with(value, table)
-      table.grouping(arel_attribute(table).does_not_match("%#{value}"))
+      arel_attribute(table).does_not_match("%#{value}")
     end
   end
 end

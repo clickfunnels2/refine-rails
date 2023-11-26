@@ -77,57 +77,17 @@ module Refine::Conditions
       attribute, value = arel_attribute(table), input[:value]
 
       case clause
-      when CLAUSE_EQUALS            then apply_clause_equals(attribute, value)
-      when CLAUSE_DOESNT_EQUAL      then apply_clause_doesnt_equal(attribute, value)
-      when CLAUSE_STARTS_WITH       then apply_clause_starts_with(attribute, value)
-      when CLAUSE_ENDS_WITH         then apply_clause_ends_with(attribute, value)
-      when CLAUSE_DOESNT_START_WITH then apply_clause_doesnt_start_with(attribute, value)
-      when CLAUSE_DOESNT_END_WITH   then apply_clause_doesnt_end_with(attribute, value)
-      when CLAUSE_CONTAINS          then apply_clause_contains(attribute, value)
-      when CLAUSE_DOESNT_CONTAIN    then apply_clause_doesnt_contain(attribute, value)
-      when CLAUSE_SET               then apply_clause_set(attribute, value)
-      when CLAUSE_NOT_SET           then apply_clause_not_set(attribute, value)
+      when CLAUSE_EQUALS            then attribute.eq(value)
+      when CLAUSE_DOESNT_EQUAL      then attribute.not_eq(value).or(attribute.eq(nil))
+      when CLAUSE_STARTS_WITH       then attribute.matches("#{value}%")
+      when CLAUSE_ENDS_WITH         then attribute.matches("%#{value}")
+      when CLAUSE_DOESNT_START_WITH then attribute.does_not_match("#{value}%")
+      when CLAUSE_DOESNT_END_WITH   then attribute.does_not_match("%#{value}")
+      when CLAUSE_CONTAINS          then attribute.matches("%#{value}%")
+      when CLAUSE_DOESNT_CONTAIN    then attribute.does_not_match("%#{value}%").or(attribute.eq(nil))
+      when CLAUSE_SET               then attribute.not_eq_all([nil, ""])
+      when CLAUSE_NOT_SET           then attribute.eq_any([nil, ""])
       end.then { table.grouping _1 if _1 }
-    end
-
-    def apply_clause_equals(attribute, value)
-      attribute.eq(value)
-    end
-
-    def apply_clause_doesnt_equal(attribute, value)
-      attribute.not_eq(value).or(attribute.eq(nil))
-    end
-
-    def apply_clause_starts_with(attribute, value)
-      attribute.matches("#{value}%")
-    end
-
-    def apply_clause_ends_with(attribute, value)
-      attribute.matches("%#{value}")
-    end
-
-    def apply_clause_contains(attribute, value)
-      attribute.matches("%#{value}%")
-    end
-
-    def apply_clause_doesnt_contain(attribute, value)
-      attribute.does_not_match("%#{value}%").or(attribute.eq(nil))
-    end
-
-    def apply_clause_set(attribute, _)
-      attribute.not_eq_all([nil, ""])
-    end
-
-    def apply_clause_not_set(attribute, _)
-      attribute.eq_any([nil, ""])
-    end
-
-    def apply_clause_doesnt_start_with(attribute, value)
-      attribute.does_not_match("#{value}%")
-    end
-
-    def apply_clause_doesnt_end_with(attribute, value)
-      attribute.does_not_match("%#{value}")
     end
   end
 end

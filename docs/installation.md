@@ -30,7 +30,7 @@ import "@hammerstone/refine-stimulus/app/assets/stylesheets/index.css";
 
 ```html
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<link rel="stylesheet" href="https://unpkg.com/@icon/themify-icons/themify-icons.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
 ```
 
 6. Add jquery (necessary for our custom select elements)

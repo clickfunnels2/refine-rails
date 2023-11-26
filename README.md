@@ -23,10 +23,10 @@ Instead of importing the plain `index.css`, include the raw tailwind file in you
 ```
 
 ### Errors
-You may have to restart your server if you encounter the error: 
+You may have to restart your server if you encounter the error:
 ```
  NameError (uninitialized constant ApplicationController::Hammerstone
-web    | 
+web    |
 web    |   include Hammerstone::FilterApplicationController
 ```
 
@@ -34,7 +34,7 @@ web    |   include Hammerstone::FilterApplicationController
 ### Define your own apply_filter_method
 If you prefer, you can remove it and define your own `apply_filter`.
 
-This is a helper method you can inspect in `Hammerstone::FilterApplicationController`. You probably *do not* want to use this method but want to implement your own. It will return `@refine_filter` which is generated from the stable_id. The `stable_id` comes in from the params when the form is submitted or the URL is directly changed. 
+This is a helper method you can inspect in `Hammerstone::FilterApplicationController`. You probably *do not* want to use this method but want to implement your own. It will return `@refine_filter` which is generated from the stable_id. The `stable_id` comes in from the params when the form is submitted or the URL is directly changed.
 
 **SIDE NOTE for Pagy/Jumpstart**
 ```
@@ -55,7 +55,7 @@ import RevealController from 'stimulus-reveal'
 application.register('reveal', RevealController)
 ```
 
-~13. If the gems tailwind styles are being purged with JIT you can add the gem to `tmp/gems` and add this to your tailwing config.~ 
+~13. If the gems tailwind styles are being purged with JIT you can add the gem to `tmp/gems` and add this to your tailwing config.~
 
 ``` tailwind.config.js
   './tmp/gems/*/app/views/**/*.html.erb',
@@ -64,9 +64,9 @@ application.register('reveal', RevealController)
   './tmp/gems/*/app/javascript/**/*.js',
 ```
 
-~Run the following rake task:~ 
+~Run the following rake task:~
 ```
-task :add_temp_gems do 
+task :add_temp_gems do
   target = `bundle show refine-rails`.chomp
   if target.present?
     puts "Linking refine-rails to '#{target}'."
@@ -75,16 +75,17 @@ task :add_temp_gems do
 end
 ```
 
-Don't forget to restart the server! 
+Don't forget to restart the server!
 
-14. Add external styles - currently themify icons (can be overriden - the trash can icon is located in `_criterion.html.erb`) and `daterangepicker`
-A quick way to load them is in the `head` section. Also available as an npm package. 
+14. Add external styles - currently Material Icons (can be overriden - the trash can icon is located in `_criterion.html.erb`) and `daterangepicker`.
 
-```
+A quick way to load them is in the `head` section. Also available as an npm package.
+
+```html
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<link rel="stylesheet" href="https://unpkg.com/@icon/themify-icons/themify-icons.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
 ```
- 
+
 
 ## How it works
 
@@ -313,7 +314,7 @@ From this repo's directory:
 We are using `yalc` for local package development.
 
 ```bash
-# Add yalc if you don't have it 
+# Add yalc if you don't have it
 # From this repo (refine-rails)
 yarn global add yalc
 
@@ -331,9 +332,9 @@ From the directory of the project including this package:
 yalc link @hammerstone/refine-stimulus
 ```
 
-When you make local updates to the package: 
+When you make local updates to the package:
 
-```bash 
+```bash
 # From this repo (refine-rails)
 yarn build
 yalc push
@@ -351,10 +352,10 @@ Running `yarn` again from your project's directory will revert back to the publi
 Pushing @hammerstone/refine-stimulus@2.4.2 in /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/berry-refine-demo-clean
 Package @hammerstone/refine-stimulus@2.4.2 linked ==> /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/berry-refine-demo-clean/node_modules/@hammerstone/refine-stimulus
 ```
-4. Restart server 
+4. Restart server
 
 ## Bullet Train Installation
-Add ruby gem 
+Add ruby gem
 ```
 source "https://yourAPIKey@gem.fury.io/hammerstonedev" do
   gem "refine-rails"
@@ -374,20 +375,20 @@ import { controllerDefinitions as refineControllers } from "@hammerstone/refine-
 application.load(refineControllers)
 ```
 
-## Readme Installation Goals (what we're working towards - does not work yet) 
+## Readme Installation Goals (what we're working towards - does not work yet)
 
-1. Run the generator  
+1. Run the generator
 `rails generate refine:install`
 
-2. Define your filters, subclassing from `Hammerstone::Refine::Filter` 
+2. Define your filters, subclassing from `Hammerstone::Refine::Filter`
 
 3. Call `apply_filter` in your controller (or even better, instantiate the filter in your controller `@contacts = ContactFilter.new(blueprint, initial_query` -> might not be possible, how can we do this with validations?)
 
-4. If you want to customize the views you can override our stylesheet with you own. 
+4. If you want to customize the views you can override our stylesheet with you own.
 If you need even more customization you can override the views with `rails generate refine:views` will extract the views
 
-5. Add custom datepicker if desired and scope stored filters. 
- 
+5. Add custom datepicker if desired and scope stored filters.
+
 ## Releasing New Versions
 
 - Every release should update the gem and NPM package so version numbers stay in sync.

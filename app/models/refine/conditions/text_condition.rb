@@ -77,35 +77,16 @@ module Refine::Conditions
       value = input[:value]
 
       case clause
-      when CLAUSE_EQUALS
-        apply_clause_equals(value, table)
-
-      when CLAUSE_DOESNT_EQUAL
-        apply_clause_doesnt_equal(value, table)
-
-      when CLAUSE_STARTS_WITH
-        apply_clause_starts_with(value, table)
-
-      when CLAUSE_ENDS_WITH
-        apply_clause_ends_with(value, table)
-
-      when CLAUSE_DOESNT_START_WITH
-        apply_clause_doesnt_start_with(value, table)
-
-      when CLAUSE_DOESNT_END_WITH
-        apply_clause_doesnt_end_with(value, table)
-
-      when CLAUSE_CONTAINS
-        apply_clause_contains(value, table)
-
-      when CLAUSE_DOESNT_CONTAIN
-        apply_clause_doesnt_contain(value, table)
-
-      when CLAUSE_SET
-        apply_clause_set(value, table)
-
-      when CLAUSE_NOT_SET
-        apply_clause_not_set(value, table)
+      when CLAUSE_EQUALS            then apply_clause_equals(value, table)
+      when CLAUSE_DOESNT_EQUAL      then apply_clause_doesnt_equal(value, table)
+      when CLAUSE_STARTS_WITH       then apply_clause_starts_with(value, table)
+      when CLAUSE_ENDS_WITH         then apply_clause_ends_with(value, table)
+      when CLAUSE_DOESNT_START_WITH then apply_clause_doesnt_start_with(value, table)
+      when CLAUSE_DOESNT_END_WITH   then apply_clause_doesnt_end_with(value, table)
+      when CLAUSE_CONTAINS          then apply_clause_contains(value, table)
+      when CLAUSE_DOESNT_CONTAIN    then apply_clause_doesnt_contain(value, table)
+      when CLAUSE_SET               then apply_clause_set(value, table)
+      when CLAUSE_NOT_SET           then apply_clause_not_set(value, table)
       end
     end
 

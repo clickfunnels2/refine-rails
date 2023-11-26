@@ -74,60 +74,60 @@ module Refine::Conditions
     end
 
     def apply_condition(input, table, _inverse_clause)
-      value = input[:value]
+      attribute, value = arel_attribute(table), input[:value]
 
       case clause
-      when CLAUSE_EQUALS            then apply_clause_equals(value, table)
-      when CLAUSE_DOESNT_EQUAL      then apply_clause_doesnt_equal(value, table)
-      when CLAUSE_STARTS_WITH       then apply_clause_starts_with(value, table)
-      when CLAUSE_ENDS_WITH         then apply_clause_ends_with(value, table)
-      when CLAUSE_DOESNT_START_WITH then apply_clause_doesnt_start_with(value, table)
-      when CLAUSE_DOESNT_END_WITH   then apply_clause_doesnt_end_with(value, table)
-      when CLAUSE_CONTAINS          then apply_clause_contains(value, table)
-      when CLAUSE_DOESNT_CONTAIN    then apply_clause_doesnt_contain(value, table)
-      when CLAUSE_SET               then apply_clause_set(value, table)
-      when CLAUSE_NOT_SET           then apply_clause_not_set(value, table)
+      when CLAUSE_EQUALS            then apply_clause_equals(attribute, value)
+      when CLAUSE_DOESNT_EQUAL      then apply_clause_doesnt_equal(attribute, value)
+      when CLAUSE_STARTS_WITH       then apply_clause_starts_with(attribute, value)
+      when CLAUSE_ENDS_WITH         then apply_clause_ends_with(attribute, value)
+      when CLAUSE_DOESNT_START_WITH then apply_clause_doesnt_start_with(attribute, value)
+      when CLAUSE_DOESNT_END_WITH   then apply_clause_doesnt_end_with(attribute, value)
+      when CLAUSE_CONTAINS          then apply_clause_contains(attribute, value)
+      when CLAUSE_DOESNT_CONTAIN    then apply_clause_doesnt_contain(attribute, value)
+      when CLAUSE_SET               then apply_clause_set(attribute, value)
+      when CLAUSE_NOT_SET           then apply_clause_not_set(attribute, value)
       end.then { table.grouping _1 if _1 }
     end
 
-    def apply_clause_equals(value, table)
-      arel_attribute(table).eq(value)
+    def apply_clause_equals(attribute, value)
+      attribute.eq(value)
     end
 
-    def apply_clause_doesnt_equal(value, table)
-      arel_attribute(table).not_eq(value).or(arel_attribute(table).eq(nil))
+    def apply_clause_doesnt_equal(attribute, value)
+      attribute.not_eq(value).or(attribute.eq(nil))
     end
 
-    def apply_clause_starts_with(value, table)
-      arel_attribute(table).matches("#{value}%")
+    def apply_clause_starts_with(attribute, value)
+      attribute.matches("#{value}%")
     end
 
-    def apply_clause_ends_with(value, table)
-      arel_attribute(table).matches("%#{value}")
+    def apply_clause_ends_with(attribute, value)
+      attribute.matches("%#{value}")
     end
 
-    def apply_clause_contains(value, table)
-      arel_attribute(table).matches("%#{value}%")
+    def apply_clause_contains(attribute, value)
+      attribute.matches("%#{value}%")
     end
 
-    def apply_clause_doesnt_contain(value, table)
-      arel_attribute(table).does_not_match("%#{value}%").or(arel_attribute(table).eq(nil))
+    def apply_clause_doesnt_contain(attribute, value)
+      attribute.does_not_match("%#{value}%").or(attribute.eq(nil))
     end
 
-    def apply_clause_set(_, table)
-      arel_attribute(table).not_eq_all([nil, ""])
+    def apply_clause_set(attribute, _)
+      attribute.not_eq_all([nil, ""])
     end
 
-    def apply_clause_not_set(_, table)
-      arel_attribute(table).eq_any([nil, ""])
+    def apply_clause_not_set(attribute, _)
+      attribute.eq_any([nil, ""])
     end
 
-    def apply_clause_doesnt_start_with(value, table)
-      arel_attribute(table).does_not_match("#{value}%")
+    def apply_clause_doesnt_start_with(attribute, value)
+      attribute.does_not_match("#{value}%")
     end
 
-    def apply_clause_doesnt_end_with(value, table)
-      arel_attribute(table).does_not_match("%#{value}")
+    def apply_clause_doesnt_end_with(attribute, value)
+      attribute.does_not_match("%#{value}")
     end
   end
 end

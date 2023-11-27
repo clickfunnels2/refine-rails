@@ -351,11 +351,23 @@ module Refine::Conditions
 
         # TODO: Allow for custom clauses
         if @attribute_type == ATTRIBUTE_TYPE_DATE
-          apply_standardized_values(attribute)
+          apply_standardized_values_with_date(attribute)
         else
           apply_standardized_values_with_time(attribute)
         end
       end.then { table.grouping _1 if _1 }
+    end
+
+    def apply_standardized_values_with_date(attribute)
+      case clause
+      when CLAUSE_EQUALS                then attribute.eq(date1)
+      when CLAUSE_DOESNT_EQUAL          then attribute.not_eq(date1).or(attribute.eq(nil))
+      when CLAUSE_LESS_THAN             then attribute.lt(date1)
+      when CLAUSE_GREATER_THAN          then attribute.gt(date1)
+      when CLAUSE_GREATER_THAN_OR_EQUAL then attribute.gteq(date1)
+      when CLAUSE_LESS_THAN_OR_EQUAL    then attribute.lteq(date1)
+      when CLAUSE_BETWEEN               then attribute.between(date1..date2)
+      end
     end
 
     def apply_standardized_values_with_time(attribute)
@@ -369,18 +381,6 @@ module Refine::Conditions
       when CLAUSE_GREATER_THAN          then attribute.gt(comparison_time(date1))
       when CLAUSE_GREATER_THAN_OR_EQUAL then attribute.gteq(gteq_comparison_time(date1))
       when CLAUSE_LESS_THAN_OR_EQUAL    then attribute.lteq(lteq_comparison_time(date1))
-      end
-    end
-
-    def apply_standardized_values(attribute)
-      case clause
-      when CLAUSE_EQUALS                then attribute.eq(date1)
-      when CLAUSE_DOESNT_EQUAL          then attribute.not_eq(date1).or(attribute.eq(nil))
-      when CLAUSE_LESS_THAN             then attribute.lt(date1)
-      when CLAUSE_GREATER_THAN          then attribute.gt(date1)
-      when CLAUSE_GREATER_THAN_OR_EQUAL then attribute.gteq(date1)
-      when CLAUSE_LESS_THAN_OR_EQUAL    then attribute.lteq(date1)
-      when CLAUSE_BETWEEN               then attribute.between(date1..date2)
       end
     end
 

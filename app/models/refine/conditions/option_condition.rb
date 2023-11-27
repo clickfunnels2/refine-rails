@@ -181,28 +181,28 @@ module Refine::Conditions
       when CLAUSE_DOESNT_EQUAL then apply_clause_doesnt_equal(value, table)
       when CLAUSE_IN           then apply_clause_in(value, table)
       when CLAUSE_NOT_IN       then apply_clause_not_in(value, table)
-      end
+      end.then { table.grouping _1 if _1 }
     end
 
     def apply_nil_query(value, table)
-      table.grouping(table[:"#{attribute}"].eq(nil))
+      table[:"#{attribute}"].eq(nil)
     end
 
     def apply_not_nil_query(value, table)
-      table.grouping(table[:"#{attribute}"].not_eq(nil))
+      table[:"#{attribute}"].not_eq(nil)
     end
 
     def apply_equals(value, table)
-      table.grouping(table[:"#{attribute}"].eq(value))
+      table[:"#{attribute}"].eq(value)
     end
 
     def apply_clause_in(value, table)
       normalized_values = values_for_application(value)
 
       if nil_option_selected?(value)
-        table.grouping(table[:"#{attribute}"].in(normalized_values).or(table[:"#{attribute}"].eq(nil)))
+        table[:"#{attribute}"].in(normalized_values).or(table[:"#{attribute}"].eq(nil))
       else
-        table.grouping(table[:"#{attribute}"].in(normalized_values))
+        table[:"#{attribute}"].in(normalized_values)
       end
     end
 
@@ -210,11 +210,11 @@ module Refine::Conditions
       normalized_values = values_for_application(value)
       # Must check for only nil option selected here
       if nil_option_selected?(value) && value.one?
-        table.grouping(table[:"#{attribute}"].not_eq(nil))
+        table[:"#{attribute}"].not_eq(nil)
       elsif nil_option_selected?(value)
-        table.grouping(table[:"#{attribute}"].not_in(normalized_values).or(table[:"#{attribute}"].not_eq(nil)))
+        table[:"#{attribute}"].not_in(normalized_values).or(table[:"#{attribute}"].not_eq(nil))
       else
-        table.grouping(table[:"#{attribute}"].not_in(normalized_values).or(table[:"#{attribute}"].eq(nil)))
+        table[:"#{attribute}"].not_in(normalized_values).or(table[:"#{attribute}"].eq(nil))
       end
     end
 
@@ -235,15 +235,15 @@ module Refine::Conditions
     end
 
     def apply_not_equals(value, table)
-      table.grouping(table[:"#{attribute}"].not_eq(value).or(table[:"#{attribute}"].eq(nil)))
+      table[:"#{attribute}"].not_eq(value).or(table[:"#{attribute}"].eq(nil))
     end
 
     def apply_clause_set(table)
-      table.grouping(table[:"#{attribute}"].not_eq_any([nil, ""]))
+      table[:"#{attribute}"].not_eq_any([nil, ""])
     end
 
     def apply_clause_not_set(table)
-      table.grouping(table[:"#{attribute}"].eq_any([nil, ""]))
+      table[:"#{attribute}"].eq_any([nil, ""])
     end
   end
 end

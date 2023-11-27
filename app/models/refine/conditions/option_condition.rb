@@ -144,6 +144,31 @@ module Refine::Conditions
       ]
     end
 
+    def with_options(developer_configured_options)
+      @options = developer_configured_options
+      self
+    end
+
+    def with_nil_option(id)
+      @nil_option_id = id
+      self
+    end
+
+    def nil_option_selected?(value)
+      # Return false if no nil option id
+      return false unless nil_option_id
+      value&.include? nil_option_id
+    end
+
+    def values_for_application(ids, single = false)
+      # Get developer configured options with nil_option_id removed and select only elements from requested ids
+      # Extract values from either _value key or id key. _value can be a callable
+      values = get_options.call.delete_if { |el| el[:id] == nil_option_id }
+        .select { |value| ids.include? value[:id] }
+        .map! { |value| (value.has_key? :_value) ? call_proc_if_callable(value[:_value]) : value[:id] }
+      single ? values[0] : values
+    end
+
     def apply_condition(input, table, inverse_clause)
       value = input[:selected]
       # TODO: Triggers on "through" relationship. Other relationships?
@@ -168,31 +193,6 @@ module Refine::Conditions
       when CLAUSE_NOT_IN
         apply_clause_not_in(value, table)
       end
-    end
-
-    def with_options(developer_configured_options)
-      @options = developer_configured_options
-      self
-    end
-
-    def with_nil_option(id)
-      @nil_option_id = id
-      self
-    end
-
-    def nil_option_selected?(value)
-      # Return false if no nil option id
-      return false unless nil_option_id
-      value&.include? nil_option_id
-    end
-
-    def values_for_application(ids, single = false)
-      # Get developer configured options with nil_option_id removed and select only elements from requested ids
-      # Extract values from either _value key or id key. _value can be a callable
-      values = get_options.call.delete_if { |el| el[:id] == nil_option_id }
-        .select { |value| ids.include? value[:id] }
-        .map! { |value| (value.has_key? :_value) ? call_proc_if_callable(value[:_value]) : value[:id] }
-      single ? values[0] : values
     end
 
     def apply_nil_query(value, table)

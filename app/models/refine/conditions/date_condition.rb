@@ -274,22 +274,6 @@ module Refine::Conditions
       @clause = standardize_clause(input)
     end
 
-    def apply_condition(input, table, _inverse_clause)
-      case clause
-      when CLAUSE_SET then apply_clause_set(table)
-      when CLAUSE_NOT_SET then apply_clause_not_set(table)
-      else
-        modify_date_and_clause!(input) if is_relative_clause?
-
-        # TODO: Allow for custom clauses
-        if @attribute_type == ATTRIBUTE_TYPE_DATE
-          apply_standardized_values(table)
-        else
-          apply_standardized_values_with_time(table)
-        end
-      end.then { table.grouping _1 if _1 }
-    end
-
     def comparison_date(input)
       modified_days = days.to_i
       modifier = input[:modifier]
@@ -354,6 +338,22 @@ module Refine::Conditions
       offset = database_local.utc_offset
       utc_comparison_time = database_local.in_time_zone("UTC")
       utc_comparison_time + offset
+    end
+
+    def apply_condition(input, table, _inverse_clause)
+      case clause
+      when CLAUSE_SET then apply_clause_set(table)
+      when CLAUSE_NOT_SET then apply_clause_not_set(table)
+      else
+        modify_date_and_clause!(input) if is_relative_clause?
+
+        # TODO: Allow for custom clauses
+        if @attribute_type == ATTRIBUTE_TYPE_DATE
+          apply_standardized_values(table)
+        else
+          apply_standardized_values_with_time(table)
+        end
+      end.then { table.grouping _1 if _1 }
     end
 
     def apply_standardized_values_with_time(table)

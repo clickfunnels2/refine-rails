@@ -170,7 +170,7 @@ module Refine::Conditions
     end
 
     def apply_condition(input, table, inverse_clause)
-      attribute, value = table[attribute.to_sym], input[:selected]
+      attribute, value = arel_attribute(table), input[:selected]
       # TODO: Triggers on "through" relationship. Other relationships?
       @clause = CLAUSE_IN if inverse_clause
 

@@ -175,23 +175,12 @@ module Refine::Conditions
       @clause = CLAUSE_IN if inverse_clause
 
       case clause
-      when CLAUSE_SET
-        apply_clause_set(table)
-
-      when CLAUSE_NOT_SET
-        apply_clause_not_set(table)
-
-      when CLAUSE_EQUALS
-        apply_clause_equals(value, table)
-
-      when CLAUSE_DOESNT_EQUAL
-        apply_clause_doesnt_equal(value, table)
-
-      when CLAUSE_IN
-        apply_clause_in(value, table)
-
-      when CLAUSE_NOT_IN
-        apply_clause_not_in(value, table)
+      when CLAUSE_SET          then apply_clause_set(table)
+      when CLAUSE_NOT_SET      then apply_clause_not_set(table)
+      when CLAUSE_EQUALS       then apply_clause_equals(value, table)
+      when CLAUSE_DOESNT_EQUAL then apply_clause_doesnt_equal(value, table)
+      when CLAUSE_IN           then apply_clause_in(value, table)
+      when CLAUSE_NOT_IN       then apply_clause_not_in(value, table)
       end
     end
 

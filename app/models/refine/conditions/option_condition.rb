@@ -183,7 +183,7 @@ module Refine::Conditions
       when CLAUSE_NOT_SET      then attribute.eq_any([nil, ""])
       when CLAUSE_EQUALS       then attribute.eq(value.first)
       when CLAUSE_DOESNT_EQUAL then attribute.not_eq(value.first)
-      when CLAUSE_IN           then apply_clause_in(attribute, value)
+      when CLAUSE_IN           then value.without(nil).then { attribute.in(_1) unless _1.empty? }
       when CLAUSE_NOT_IN       then apply_clause_not_in(attribute, value)
       end
     end
@@ -191,14 +191,7 @@ module Refine::Conditions
     def null_node(attribute, value)
       case clause
       when CLAUSE_DOESNT_EQUAL then (attribute.eq(nil) unless value.include?(nil))
-      end
-    end
-
-    def apply_clause_in(attribute, value)
-      if value.include?(nil)
-        attribute.in(value.without(nil)).or(attribute.eq(nil))
-      else
-        attribute.in(value)
+      when CLAUSE_IN then (attribute.eq(nil) if value.include?(nil))
       end
     end
 

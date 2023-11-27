@@ -367,20 +367,8 @@ module Refine::Conditions
       when CLAUSE_NOT_BETWEEN           then attribute.not_between(start_of_day(date1)..end_of_day(date2))
       when CLAUSE_LESS_THAN             then attribute.lt(comparison_time(date1))
       when CLAUSE_GREATER_THAN          then attribute.gt(comparison_time(date1))
-      when CLAUSE_GREATER_THAN_OR_EQUAL
-        if Refine::Rails.configuration.date_gte_uses_bod
-          datetime = start_of_day(date1)
-        else
-          datetime = comparison_time(date1)
-        end
-        attribute.gteq(datetime)
-      when CLAUSE_LESS_THAN_OR_EQUAL
-        if Refine::Rails.configuration.date_lte_uses_eod
-          datetime = end_of_day(date1)
-        else
-          datetime = comparison_time(date1)
-        end
-        attribute.lteq(datetime)
+      when CLAUSE_GREATER_THAN_OR_EQUAL then attribute.gteq(gteq_comparison_time(date1))
+      when CLAUSE_LESS_THAN_OR_EQUAL    then attribute.lteq(lteq_comparison_time(date1))
       end
     end
 
@@ -394,6 +382,14 @@ module Refine::Conditions
       when CLAUSE_LESS_THAN_OR_EQUAL    then attribute.lteq(date1)
       when CLAUSE_BETWEEN               then attribute.between(date1..date2)
       end
+    end
+
+    def gteq_comparison_time(value)
+      Refine::Rails.configuration.date_gte_uses_bod ? start_of_day(value) : comparison_time(value)
+    end
+
+    def lteq_comparison_time(value)
+      Refine::Rails.configuration.date_lte_uses_eod ? end_of_day(value) : comparison_time(value)
     end
   end
 end

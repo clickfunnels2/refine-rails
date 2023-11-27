@@ -154,12 +154,6 @@ module Refine::Conditions
       self
     end
 
-    def nil_option_selected?(value)
-      # Return false if no nil option id
-      return false unless nil_option_id
-      value&.include? nil_option_id
-    end
-
     def values_for_application(ids)
       # Get developer configured options with nil_option_id removed and select only elements from requested ids
       # Extract values from either _value key or id key. _value can be a callable
@@ -172,7 +166,7 @@ module Refine::Conditions
       attribute, value = arel_attribute(table), input[:selected]
 
       values = []
-      values << nil if nil_option_selected?(value)
+      values << nil if nil_option_id && value&.include?(nil_option_id)
       values.concat values_for_application(value)
 
       # TODO: Triggers on "through" relationship. Other relationships?

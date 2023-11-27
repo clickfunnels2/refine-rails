@@ -184,18 +184,6 @@ module Refine::Conditions
       end.then { table.grouping _1 if _1 }
     end
 
-    def apply_nil_query(attribute, value)
-      attribute.eq(nil)
-    end
-
-    def apply_not_nil_query(attribute, value)
-      attribute.not_eq(nil)
-    end
-
-    def apply_equals(attribute, value)
-      attribute.eq(value)
-    end
-
     def apply_clause_in(attribute, value)
       normalized_values = values_for_application(value)
 
@@ -220,22 +208,18 @@ module Refine::Conditions
 
     def apply_clause_equals(attribute, value)
       if nil_option_selected?(value)
-        apply_nil_query(attribute, value)
+        attribute.eq(nil)
       else
-        apply_equals(attribute, values_for_application(value, true))
+        attribute.eq(values_for_application(value, true))
       end
     end
 
     def apply_clause_doesnt_equal(attribute, value)
       if nil_option_selected?(value)
-        apply_not_nil_query(attribute, value)
+        attribute.not_eq(nil)
       else
-        apply_not_equals(attribute, values_for_application(value, true))
+        attribute.not_eq(values_for_application(value, true)).or(attribute.eq(nil))
       end
-    end
-
-    def apply_not_equals(attribute, value)
-      attribute.not_eq(value).or(attribute.eq(nil))
     end
   end
 end

@@ -197,13 +197,12 @@ module Refine::Conditions
     end
 
     def apply_clause_not_in(attribute, value)
-      if value.all?(nil)
-        attribute.not_eq(nil)
-      elsif value.include?(nil)
-        attribute.not_in(value.without(nil)).or(attribute.not_eq(nil))
-      else
-        attribute.not_in(value).or(attribute.eq(nil))
-      end
+      null, value = value.partition(&:nil?)
+
+      nodes = []
+      nodes << attribute.not_in(value) unless value.empty?
+      nodes << (null.include?(nil) ? attribute.not_eq(nil) : attribute.eq(nil))
+      nodes.reduce(:or)
     end
 
     def apply_clause_doesnt_equal(attribute, value)

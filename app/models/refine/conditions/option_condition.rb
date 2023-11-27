@@ -177,65 +177,65 @@ module Refine::Conditions
       case clause
       when CLAUSE_SET          then attribute.not_eq_any([nil, ""])
       when CLAUSE_NOT_SET      then attribute.eq_any([nil, ""])
-      when CLAUSE_EQUALS       then apply_clause_equals(value, table)
-      when CLAUSE_DOESNT_EQUAL then apply_clause_doesnt_equal(value, table)
-      when CLAUSE_IN           then apply_clause_in(value, table)
-      when CLAUSE_NOT_IN       then apply_clause_not_in(value, table)
+      when CLAUSE_EQUALS       then apply_clause_equals(attribute, value)
+      when CLAUSE_DOESNT_EQUAL then apply_clause_doesnt_equal(attribute, value)
+      when CLAUSE_IN           then apply_clause_in(attribute, value)
+      when CLAUSE_NOT_IN       then apply_clause_not_in(attribute, value)
       end.then { table.grouping _1 if _1 }
     end
 
-    def apply_nil_query(value, table)
-      table[:"#{attribute}"].eq(nil)
+    def apply_nil_query(attribute, value)
+      attribute.eq(nil)
     end
 
-    def apply_not_nil_query(value, table)
-      table[:"#{attribute}"].not_eq(nil)
+    def apply_not_nil_query(attribute, value)
+      attribute.not_eq(nil)
     end
 
-    def apply_equals(value, table)
-      table[:"#{attribute}"].eq(value)
+    def apply_equals(attribute, value)
+      attribute.eq(value)
     end
 
-    def apply_clause_in(value, table)
+    def apply_clause_in(attribute, value)
       normalized_values = values_for_application(value)
 
       if nil_option_selected?(value)
-        table[:"#{attribute}"].in(normalized_values).or(table[:"#{attribute}"].eq(nil))
+        attribute.in(normalized_values).or(attribute.eq(nil))
       else
-        table[:"#{attribute}"].in(normalized_values)
+        attribute.in(normalized_values)
       end
     end
 
-    def apply_clause_not_in(value, table)
+    def apply_clause_not_in(attribute, value)
       normalized_values = values_for_application(value)
       # Must check for only nil option selected here
       if nil_option_selected?(value) && value.one?
-        table[:"#{attribute}"].not_eq(nil)
+        attribute.not_eq(nil)
       elsif nil_option_selected?(value)
-        table[:"#{attribute}"].not_in(normalized_values).or(table[:"#{attribute}"].not_eq(nil))
+        attribute.not_in(normalized_values).or(attribute.not_eq(nil))
       else
-        table[:"#{attribute}"].not_in(normalized_values).or(table[:"#{attribute}"].eq(nil))
+        attribute.not_in(normalized_values).or(attribute.eq(nil))
       end
     end
 
-    def apply_clause_equals(value, table)
+    def apply_clause_equals(attribute, value)
       if nil_option_selected?(value)
-        apply_nil_query(value, table)
+        apply_nil_query(attribute, value)
       else
-        apply_equals(values_for_application(value, true), table)
+        apply_equals(attribute, values_for_application(value, true))
       end
     end
 
-    def apply_clause_doesnt_equal(value, table)
+    def apply_clause_doesnt_equal(attribute, value)
       if nil_option_selected?(value)
-        apply_not_nil_query(value, table)
+        apply_not_nil_query(attribute, value)
       else
-        apply_not_equals(values_for_application(value, true), table)
+        apply_not_equals(attribute, values_for_application(value, true))
       end
     end
 
-    def apply_not_equals(value, table)
-      table[:"#{attribute}"].not_eq(value).or(table[:"#{attribute}"].eq(nil))
+    def apply_not_equals(attribute, value)
+      attribute.not_eq(value).or(attribute.eq(nil))
     end
   end
 end

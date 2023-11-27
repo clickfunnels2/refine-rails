@@ -341,9 +341,11 @@ module Refine::Conditions
     end
 
     def apply_condition(input, table, _inverse_clause)
+      attribute = arel_attribute(table)
+
       case clause
-      when CLAUSE_SET then apply_clause_set(table)
-      when CLAUSE_NOT_SET then apply_clause_not_set(table)
+      when CLAUSE_SET     then attribute.not_eq(nil)
+      when CLAUSE_NOT_SET then attribute.eq(nil)
       else
         modify_date_and_clause!(input) if is_relative_clause?
 
@@ -434,14 +436,6 @@ module Refine::Conditions
 
     def apply_clause_less_than_or_equal(value, table)
       table[:"#{attribute}"].lteq(value)
-    end
-
-    def apply_clause_set(table)
-      table[:"#{attribute}"].not_eq(nil)
-    end
-
-    def apply_clause_not_set(table)
-      table[:"#{attribute}"].eq(nil)
     end
   end
 end

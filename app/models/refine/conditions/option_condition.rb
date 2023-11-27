@@ -170,13 +170,13 @@ module Refine::Conditions
     end
 
     def apply_condition(input, table, inverse_clause)
-      value = input[:selected]
+      attribute, value = table[attribute.to_sym], input[:selected]
       # TODO: Triggers on "through" relationship. Other relationships?
       @clause = CLAUSE_IN if inverse_clause
 
       case clause
-      when CLAUSE_SET          then apply_clause_set(table)
-      when CLAUSE_NOT_SET      then apply_clause_not_set(table)
+      when CLAUSE_SET          then attribute.not_eq_any([nil, ""])
+      when CLAUSE_NOT_SET      then attribute.eq_any([nil, ""])
       when CLAUSE_EQUALS       then apply_clause_equals(value, table)
       when CLAUSE_DOESNT_EQUAL then apply_clause_doesnt_equal(value, table)
       when CLAUSE_IN           then apply_clause_in(value, table)
@@ -236,14 +236,6 @@ module Refine::Conditions
 
     def apply_not_equals(value, table)
       table[:"#{attribute}"].not_eq(value).or(table[:"#{attribute}"].eq(nil))
-    end
-
-    def apply_clause_set(table)
-      table[:"#{attribute}"].not_eq_any([nil, ""])
-    end
-
-    def apply_clause_not_set(table)
-      table[:"#{attribute}"].eq_any([nil, ""])
     end
   end
 end

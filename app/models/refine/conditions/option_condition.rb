@@ -160,13 +160,12 @@ module Refine::Conditions
       value&.include? nil_option_id
     end
 
-    def values_for_application(ids, single = false)
+    def values_for_application(ids)
       # Get developer configured options with nil_option_id removed and select only elements from requested ids
       # Extract values from either _value key or id key. _value can be a callable
-      values = get_options.call.delete_if { |el| el[:id] == nil_option_id }
+      get_options.call.delete_if { |el| el[:id] == nil_option_id }
         .select { |value| ids.include? value[:id] }
         .map! { |value| (value.has_key? :_value) ? call_proc_if_callable(value[:_value]) : value[:id] }
-      single ? values[0] : values
     end
 
     def apply_condition(input, table, inverse_clause)

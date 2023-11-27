@@ -114,7 +114,7 @@ module Refine::Conditions
       end
 
       sign = matches[1]
-      digits = matches[2].ljust(4, '0') 
+      digits = matches[2].ljust(4, '0')
       gmt_offset = " (GMT#{sign}#{digits[0..1]}:#{digits[2..3]})"
 
       gmt_offset
@@ -161,7 +161,7 @@ module Refine::Conditions
         formatted_date1 = I18n.l(input[:date1].to_date, format: :dmy)
         formatted_date2 = I18n.l(input[:date2].to_date, format: :dmy)
         and_i18n = I18n.t("#{I18N_PREFIX}and")
-        
+
         if formatted_date1 == formatted_date2
           "#{formatted_date1}#{timezone_abbr}"
         else
@@ -393,31 +393,17 @@ module Refine::Conditions
         end
         apply_clause_less_than_or_equal(datetime, table)
       end
-
     end
 
     def apply_standardized_values(table)
       case clause
-      when CLAUSE_EQUALS
-        apply_clause_equals(date1, table)
-
-      when CLAUSE_DOESNT_EQUAL
-        apply_clause_doesnt_equal(date1, table)
-
-      when CLAUSE_LESS_THAN
-        apply_clause_less_than(date1, table)
-
-      when CLAUSE_GREATER_THAN
-        apply_clause_greater_than(date1, table)
-
-      when CLAUSE_GREATER_THAN_OR_EQUAL
-        apply_clause_greater_than_or_equal(date1, table)
-
-      when CLAUSE_LESS_THAN_OR_EQUAL
-        apply_clause_less_than_or_equal(date1, table)
-
-      when CLAUSE_BETWEEN
-        apply_clause_between(table, date1, date2)
+      when CLAUSE_EQUALS                then apply_clause_equals(date1, table)
+      when CLAUSE_DOESNT_EQUAL          then apply_clause_doesnt_equal(date1, table)
+      when CLAUSE_LESS_THAN             then apply_clause_less_than(date1, table)
+      when CLAUSE_GREATER_THAN          then apply_clause_greater_than(date1, table)
+      when CLAUSE_GREATER_THAN_OR_EQUAL then apply_clause_greater_than_or_equal(date1, table)
+      when CLAUSE_LESS_THAN_OR_EQUAL    then apply_clause_less_than_or_equal(date1, table)
+      when CLAUSE_BETWEEN               then apply_clause_between(table, date1, date2)
       end
     end
 

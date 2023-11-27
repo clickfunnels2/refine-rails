@@ -172,7 +172,7 @@ module Refine::Conditions
       # TODO: Triggers on "through" relationship. Other relationships?
       @clause = CLAUSE_IN if inverse_clause
 
-      if node = [value_node(attribute, values)].compact.reduce(:or)
+      if node = [value_node(attribute, values), null_node(attribute, values)].compact.reduce(:or)
         table.grouping node
       end
     end
@@ -182,9 +182,15 @@ module Refine::Conditions
       when CLAUSE_SET          then attribute.not_eq_any([nil, ""])
       when CLAUSE_NOT_SET      then attribute.eq_any([nil, ""])
       when CLAUSE_EQUALS       then attribute.eq(value.first)
-      when CLAUSE_DOESNT_EQUAL then apply_clause_doesnt_equal(attribute, value)
+      when CLAUSE_DOESNT_EQUAL then attribute.not_eq(value.first)
       when CLAUSE_IN           then apply_clause_in(attribute, value)
       when CLAUSE_NOT_IN       then apply_clause_not_in(attribute, value)
+      end
+    end
+
+    def null_node(attribute, value)
+      case clause
+      when CLAUSE_DOESNT_EQUAL then (attribute.eq(nil) unless value.include?(nil))
       end
     end
 
@@ -203,14 +209,6 @@ module Refine::Conditions
       nodes << attribute.not_in(value) unless value.empty?
       nodes << (null.include?(nil) ? attribute.not_eq(nil) : attribute.eq(nil))
       nodes.reduce(:or)
-    end
-
-    def apply_clause_doesnt_equal(attribute, value)
-      if value.include?(nil)
-        attribute.not_eq(nil)
-      else
-        attribute.not_eq(value.first).or(attribute.eq(nil))
-      end
     end
   end
 end

@@ -171,10 +171,15 @@ module Refine::Conditions
 
     def apply_condition(input, table, inverse_clause)
       attribute, value = arel_attribute(table), input[:selected]
+
+      values = []
+      values << nil if nil_option_selected?(value)
+      values.concat values_for_application(value)
+
       # TODO: Triggers on "through" relationship. Other relationships?
       @clause = CLAUSE_IN if inverse_clause
 
-      if node = [value_node(attribute, value)].compact.reduce(:or)
+      if node = [value_node(attribute, values)].compact.reduce(:or)
         table.grouping node
       end
     end
@@ -191,40 +196,36 @@ module Refine::Conditions
     end
 
     def apply_clause_in(attribute, value)
-      normalized_values = values_for_application(value)
-
-      if nil_option_selected?(value)
-        attribute.in(normalized_values).or(attribute.eq(nil))
+      if value.include?(nil)
+        attribute.in(value.without(nil)).or(attribute.eq(nil))
       else
-        attribute.in(normalized_values)
+        attribute.in(value)
       end
     end
 
     def apply_clause_not_in(attribute, value)
-      normalized_values = values_for_application(value)
-      # Must check for only nil option selected here
-      if nil_option_selected?(value) && value.one?
+      if value.all?(nil)
         attribute.not_eq(nil)
-      elsif nil_option_selected?(value)
-        attribute.not_in(normalized_values).or(attribute.not_eq(nil))
+      elsif value.include?(nil)
+        attribute.not_in(value.without(nil)).or(attribute.not_eq(nil))
       else
-        attribute.not_in(normalized_values).or(attribute.eq(nil))
+        attribute.not_in(value).or(attribute.eq(nil))
       end
     end
 
     def apply_clause_equals(attribute, value)
-      if nil_option_selected?(value)
+      if value.include?(nil)
         attribute.eq(nil)
       else
-        attribute.eq(values_for_application(value, true))
+        attribute.eq(value.first)
       end
     end
 
     def apply_clause_doesnt_equal(attribute, value)
-      if nil_option_selected?(value)
+      if value.include?(nil)
         attribute.not_eq(nil)
       else
-        attribute.not_eq(values_for_application(value, true)).or(attribute.eq(nil))
+        attribute.not_eq(value.first).or(attribute.eq(nil))
       end
     end
   end

@@ -351,91 +351,91 @@ module Refine::Conditions
 
         # TODO: Allow for custom clauses
         if @attribute_type == ATTRIBUTE_TYPE_DATE
-          apply_standardized_values(table)
+          apply_standardized_values(attribute)
         else
-          apply_standardized_values_with_time(table)
+          apply_standardized_values_with_time(attribute)
         end
       end.then { table.grouping _1 if _1 }
     end
 
-    def apply_standardized_values_with_time(table)
+    def apply_standardized_values_with_time(attribute)
       case clause
       # At this point, `between` and `equal` are functionally the
       # same, i.e. they are querying between two _times_.
       when CLAUSE_EQUALS
-        apply_clause_between(table, start_of_day(date1), end_of_day(date1))
+        apply_clause_between(attribute, start_of_day(date1), end_of_day(date1))
       when CLAUSE_BETWEEN
-        apply_clause_between(table, start_of_day(date1), end_of_day(date2))
+        apply_clause_between(attribute, start_of_day(date1), end_of_day(date2))
 
       when CLAUSE_DOESNT_EQUAL
-        apply_clause_not_between(table, start_of_day(date1), end_of_day(date1))
+        apply_clause_not_between(attribute, start_of_day(date1), end_of_day(date1))
       when CLAUSE_NOT_BETWEEN
-        apply_clause_not_between(table, start_of_day(date1), end_of_day(date2))
+        apply_clause_not_between(attribute, start_of_day(date1), end_of_day(date2))
 
 
       when CLAUSE_LESS_THAN
-        apply_clause_less_than(comparison_time(date1), table)
+        apply_clause_less_than(comparison_time(date1), attribute)
       when CLAUSE_GREATER_THAN
-        apply_clause_greater_than(comparison_time(date1), table)
+        apply_clause_greater_than(comparison_time(date1), attribute)
       when CLAUSE_GREATER_THAN_OR_EQUAL
         if Refine::Rails.configuration.date_gte_uses_bod
           datetime = start_of_day(date1)
         else
           datetime = comparison_time(date1)
         end
-        apply_clause_greater_than_or_equal(datetime, table)
+        apply_clause_greater_than_or_equal(datetime, attribute)
       when CLAUSE_LESS_THAN_OR_EQUAL
         if Refine::Rails.configuration.date_lte_uses_eod
           datetime = end_of_day(date1)
         else
           datetime = comparison_time(date1)
         end
-        apply_clause_less_than_or_equal(datetime, table)
+        apply_clause_less_than_or_equal(datetime, attribute)
       end
     end
 
-    def apply_standardized_values(table)
+    def apply_standardized_values(attribute)
       case clause
-      when CLAUSE_EQUALS                then apply_clause_equals(date1, table)
-      when CLAUSE_DOESNT_EQUAL          then apply_clause_doesnt_equal(date1, table)
-      when CLAUSE_LESS_THAN             then apply_clause_less_than(date1, table)
-      when CLAUSE_GREATER_THAN          then apply_clause_greater_than(date1, table)
-      when CLAUSE_GREATER_THAN_OR_EQUAL then apply_clause_greater_than_or_equal(date1, table)
-      when CLAUSE_LESS_THAN_OR_EQUAL    then apply_clause_less_than_or_equal(date1, table)
-      when CLAUSE_BETWEEN               then apply_clause_between(table, date1, date2)
+      when CLAUSE_EQUALS                then apply_clause_equals(date1, attribute)
+      when CLAUSE_DOESNT_EQUAL          then apply_clause_doesnt_equal(date1, attribute)
+      when CLAUSE_LESS_THAN             then apply_clause_less_than(date1, attribute)
+      when CLAUSE_GREATER_THAN          then apply_clause_greater_than(date1, attribute)
+      when CLAUSE_GREATER_THAN_OR_EQUAL then apply_clause_greater_than_or_equal(date1, attribute)
+      when CLAUSE_LESS_THAN_OR_EQUAL    then apply_clause_less_than_or_equal(date1, attribute)
+      when CLAUSE_BETWEEN               then apply_clause_between(attribute, date1, date2)
       end
     end
 
-    def apply_clause_between(table, first_date, second_date)
-      table[:"#{attribute}"].between(first_date..second_date)
+    def apply_clause_between(attribute, first_date, second_date)
+      attribute.between(first_date..second_date)
     end
 
-    def apply_clause_not_between(table, first_date, second_date)
-      table[:"#{attribute}"].not_between(first_date..second_date)
+    def apply_clause_not_between(attribute, first_date, second_date)
+      attribute.not_between(first_date..second_date)
     end
 
-    def apply_clause_equals(value, table)
-      table[:"#{attribute}"].eq(value)
+    def apply_clause_equals(value, attribute)
+      attribute.eq(value)
     end
 
-    def apply_clause_doesnt_equal(value, table)
-      table[:"#{attribute}"].not_eq(value).or(table[:"#{attribute}"].eq(nil))
+    def apply_clause_doesnt_equal(value, attribute)
+      attribute.not_eq(value).or(attribute.eq(nil))
     end
 
-    def apply_clause_greater_than(value, table)
-      table[:"#{attribute}"].gt(value)
+    def apply_clause_greater_than(value, attribute)
+      attribute.gt(value)
     end
 
-    def apply_clause_greater_than_or_equal(value, table)
-      table[:"#{attribute}"].gteq(value)
+    def apply_clause_greater_than_or_equal(value, attribute)
+      attribute.gteq(value)
     end
 
-    def apply_clause_less_than(value, table)
-      table[:"#{attribute}"].lt(value)
+    def apply_clause_less_than(value, attribute)
+      attribute.lt(value)
     end
 
-    def apply_clause_less_than_or_equal(value, table)
-      table[:"#{attribute}"].lteq(value)
+    def apply_clause_less_than_or_equal(value, attribute)
+      attribute.lteq(value)
     end
   end
 end

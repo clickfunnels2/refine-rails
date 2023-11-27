@@ -184,7 +184,7 @@ module Refine::Conditions
       when CLAUSE_EQUALS       then attribute.eq(value.first)
       when CLAUSE_DOESNT_EQUAL then attribute.not_eq(value.first)
       when CLAUSE_IN           then value.without(nil).then { attribute.in(_1) unless _1.empty? }
-      when CLAUSE_NOT_IN       then apply_clause_not_in(attribute, value)
+      when CLAUSE_NOT_IN       then value.without(nil).then { attribute.not_in(_1) unless _1.empty? }
       end
     end
 
@@ -192,16 +192,8 @@ module Refine::Conditions
       case clause
       when CLAUSE_DOESNT_EQUAL then (attribute.eq(nil) unless value.include?(nil))
       when CLAUSE_IN then (attribute.eq(nil) if value.include?(nil))
+      when CLAUSE_NOT_IN then (value.include?(nil) ? attribute.not_eq(nil) : attribute.eq(nil))
       end
-    end
-
-    def apply_clause_not_in(attribute, value)
-      null, value = value.partition(&:nil?)
-
-      nodes = []
-      nodes << attribute.not_in(value) unless value.empty?
-      nodes << (null.include?(nil) ? attribute.not_eq(nil) : attribute.eq(nil))
-      nodes.reduce(:or)
     end
   end
 end

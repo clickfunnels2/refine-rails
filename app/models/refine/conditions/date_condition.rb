@@ -275,22 +275,19 @@ module Refine::Conditions
     end
 
     def apply_condition(input, table, _inverse_clause)
-      if clause == CLAUSE_SET
-        return apply_clause_set(table)
-      end
-
-      if clause == CLAUSE_NOT_SET
-        return apply_clause_not_set(table)
-      end
-
-      modify_date_and_clause!(input) if is_relative_clause?
-
-      # TODO: Allow for custom clauses
-      if @attribute_type == ATTRIBUTE_TYPE_DATE
-        apply_standardized_values(table)
+      case clause
+      when CLAUSE_SET then apply_clause_set(table)
+      when CLAUSE_NOT_SET then apply_clause_not_set(table)
       else
-        apply_standardized_values_with_time(table)
-      end
+        modify_date_and_clause!(input) if is_relative_clause?
+
+        # TODO: Allow for custom clauses
+        if @attribute_type == ATTRIBUTE_TYPE_DATE
+          apply_standardized_values(table)
+        else
+          apply_standardized_values_with_time(table)
+        end
+      end.then { table.grouping _1 if _1 }
     end
 
     def comparison_date(input)
@@ -408,43 +405,43 @@ module Refine::Conditions
     end
 
     def apply_clause_between(table, first_date, second_date)
-      table.grouping(table[:"#{attribute}"].between(first_date..second_date))
+      table[:"#{attribute}"].between(first_date..second_date)
     end
 
     def apply_clause_not_between(table, first_date, second_date)
-      table.grouping(table[:"#{attribute}"].not_between(first_date..second_date))
+      table[:"#{attribute}"].not_between(first_date..second_date)
     end
 
     def apply_clause_equals(value, table)
-      table.grouping(table[:"#{attribute}"].eq(value))
+      table[:"#{attribute}"].eq(value)
     end
 
     def apply_clause_doesnt_equal(value, table)
-      table.grouping(table[:"#{attribute}"].not_eq(value).or(table[:"#{attribute}"].eq(nil)))
+      table[:"#{attribute}"].not_eq(value).or(table[:"#{attribute}"].eq(nil))
     end
 
     def apply_clause_greater_than(value, table)
-      table.grouping(table[:"#{attribute}"].gt(value))
+      table[:"#{attribute}"].gt(value)
     end
 
     def apply_clause_greater_than_or_equal(value, table)
-      table.grouping(table[:"#{attribute}"].gteq(value))
+      table[:"#{attribute}"].gteq(value)
     end
 
     def apply_clause_less_than(value, table)
-      table.grouping(table[:"#{attribute}"].lt(value))
+      table[:"#{attribute}"].lt(value)
     end
 
     def apply_clause_less_than_or_equal(value, table)
-      table.grouping(table[:"#{attribute}"].lteq(value))
+      table[:"#{attribute}"].lteq(value)
     end
 
     def apply_clause_set(table)
-      table.grouping(table[:"#{attribute}"].not_eq(nil))
+      table[:"#{attribute}"].not_eq(nil)
     end
 
     def apply_clause_not_set(table)
-      table.grouping(table[:"#{attribute}"].eq(nil))
+      table[:"#{attribute}"].eq(nil)
     end
   end
 end

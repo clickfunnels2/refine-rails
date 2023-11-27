@@ -150,7 +150,7 @@ module Refine::Conditions
       it "works with null condition only" do
         data = {clause: OptionCondition::CLAUSE_IN, selected: ["null"]}
         expected_sql = <<~SQL.squish
-          SELECT "o".* FROM "o" WHERE (1=0 OR "o"."option_test" IS NULL)
+          SELECT "o".* FROM "o" WHERE ("o"."option_test" IS NULL)
         SQL
         assert_equal convert(expected_sql), apply_condition_on_test_filter(condition_under_test, data).to_sql
       end

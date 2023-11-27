@@ -360,20 +360,13 @@ module Refine::Conditions
 
     def apply_standardized_values_with_time(attribute)
       case clause
-      # At this point, `between` and `equal` are functionally the
-      # same, i.e. they are querying between two _times_.
-      when CLAUSE_EQUALS
-        attribute.between(start_of_day(date1)..end_of_day(date1))
-      when CLAUSE_BETWEEN
-        attribute.between(start_of_day(date1)..end_of_day(date2))
-      when CLAUSE_DOESNT_EQUAL
-        attribute.not_between(start_of_day(date1)..end_of_day(date1))
-      when CLAUSE_NOT_BETWEEN
-        attribute.not_between(start_of_day(date1)..end_of_day(date2))
-      when CLAUSE_LESS_THAN
-        attribute.lt(comparison_time(date1))
-      when CLAUSE_GREATER_THAN
-        attribute.gt(comparison_time(date1))
+      # Here `between` & `equal` are functionally the same, as they're querying between two _times_.
+      when CLAUSE_EQUALS                then attribute.between(start_of_day(date1)..end_of_day(date1))
+      when CLAUSE_DOESNT_EQUAL          then attribute.not_between(start_of_day(date1)..end_of_day(date1))
+      when CLAUSE_BETWEEN               then attribute.between(start_of_day(date1)..end_of_day(date2))
+      when CLAUSE_NOT_BETWEEN           then attribute.not_between(start_of_day(date1)..end_of_day(date2))
+      when CLAUSE_LESS_THAN             then attribute.lt(comparison_time(date1))
+      when CLAUSE_GREATER_THAN          then attribute.gt(comparison_time(date1))
       when CLAUSE_GREATER_THAN_OR_EQUAL
         if Refine::Rails.configuration.date_gte_uses_bod
           datetime = start_of_day(date1)

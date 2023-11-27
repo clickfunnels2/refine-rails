@@ -107,43 +107,6 @@ module Refine::Conditions
       !@floats
     end
 
-    # TODO Refactor to remove input here
-    def apply_condition(input, table, _inverse_clause)
-      # TODO check for custom clause
-
-      case clause
-      when CLAUSE_EQUALS
-        apply_clause_equals(table, value1)
-
-      when CLAUSE_DOESNT_EQUAL
-        apply_clause_doesnt_equal(table, value1)
-
-      when CLAUSE_GREATER_THAN
-        apply_clause_greater_than(table, value1)
-
-      when CLAUSE_GREATER_THAN_OR_EQUAL
-        apply_clause_greater_than_or_equal(table, value1)
-
-      when CLAUSE_LESS_THAN
-        apply_clause_less_than(table, value1)
-
-      when CLAUSE_LESS_THAN_OR_EQUAL
-        apply_clause_less_than_or_equal(table, value1)
-
-      when CLAUSE_BETWEEN
-        apply_clause_between(table, value1, value2)
-
-      when CLAUSE_NOT_BETWEEN
-        apply_clause_not_between(table, value1, value2)
-
-      when CLAUSE_SET
-        apply_clause_set(table)
-
-      when CLAUSE_NOT_SET
-        apply_clause_not_set(table)
-      end
-    end
-
     def input_could_include_zero?(input)
       clause = input[:clause]
       value1 = input[:value1].to_i
@@ -181,44 +144,23 @@ module Refine::Conditions
       end
     end
 
-    def apply_clause_equals(table, value)
-      table.grouping(arel_attribute(table).eq(value))
-    end
+    # TODO Refactor to remove input here
+    def apply_condition(input, table, _inverse_clause)
+      # TODO check for custom clause
+      attribute = arel_attribute(table)
 
-    def apply_clause_doesnt_equal(table, value)
-      table.grouping(arel_attribute(table).not_eq(value).or(arel_attribute(table).eq(nil)))
-    end
-
-    def apply_clause_greater_than(table, value)
-      table.grouping(arel_attribute(table).gt(value))
-    end
-
-    def apply_clause_greater_than_or_equal(table, value)
-      table.grouping(arel_attribute(table).gteq(value))
-    end
-
-    def apply_clause_less_than(table, value)
-      table.grouping(arel_attribute(table).lt(value))
-    end
-
-    def apply_clause_less_than_or_equal(table, value)
-      table.grouping(arel_attribute(table).lteq(value))
-    end
-
-    def apply_clause_between(table, value1, value2)
-      table.grouping(arel_attribute(table).between(value1..value2))
-    end
-
-    def apply_clause_not_between(table, value1, value2)
-      table.grouping(arel_attribute(table).not_between(value1..value2))
-    end
-
-    def apply_clause_set(table)
-      table.grouping(arel_attribute(table).not_eq(nil))
-    end
-
-    def apply_clause_not_set(table)
-      table.grouping(arel_attribute(table).eq(nil))
+      case clause
+      when CLAUSE_EQUALS                then attribute.eq(value1)
+      when CLAUSE_DOESNT_EQUAL          then attribute.not_eq(value1).or(attribute.eq(nil))
+      when CLAUSE_GREATER_THAN          then attribute.gt(value1)
+      when CLAUSE_GREATER_THAN_OR_EQUAL then attribute.gteq(value1)
+      when CLAUSE_LESS_THAN             then attribute.lt(value1)
+      when CLAUSE_LESS_THAN_OR_EQUAL    then attribute.lteq(value1)
+      when CLAUSE_BETWEEN               then attribute.between(value1..value2)
+      when CLAUSE_NOT_BETWEEN           then attribute.not_between(value1..value2)
+      when CLAUSE_SET                   then attribute.not_eq(nil)
+      when CLAUSE_NOT_SET               then attribute.eq(nil)
+      end.then { table.grouping _1 if _1 }
     end
   end
 end

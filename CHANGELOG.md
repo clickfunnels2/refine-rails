@@ -1,3 +1,5 @@
+### 2.9.0
+  * Migrated gem to RubyGems.org for hosting and future updates
 ### 2.8.6
   * Inline filters now display the user-configured list of clauses instead of all possible clauses
 ### 2.8.5

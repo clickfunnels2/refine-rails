@@ -162,9 +162,13 @@ module Refine::Conditions
       # Placeholder for conditions that do not need this method
     end
 
+    def approved_clauses
+      get_clauses.call
+    end
+
     def clause_in_approved_list?
       # Is the requested clause in the approved list configured by developer?
-      unless get_clauses.call.map(&:id).include? clause
+      unless approved_clauses.map(&:id).include? clause
         errors.add(:base, I18n.t("#{I18N_PREFIX}clause_not_found", clause: clause))
       end
     end

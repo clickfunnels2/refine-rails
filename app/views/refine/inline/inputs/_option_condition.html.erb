@@ -1,13 +1,26 @@
+<%
+  if criterion.multiple?
+    collection_builder_method = :collection_check_boxes
+    input_method = :check_box
+  else
+    collection_builder_method = :collection_radio_buttons
+    input_method = :radio_button
+  end
+%>
+
 <div class="refine-option--condition-container">
-  <%= input_fields.collection_select :selected,
+  <% input_fields.send(:collection_builder_method) :selected,
     criterion.options,
     :id,
     ->(o) {o.display.truncate(64)},
-    {},
-    class: "refine--select refine--option-select",
-    multiple: criterion.multiple?,
-    form: form_id
+    form: form_id do |b|
   %>
+    <% b.label do %>
+      <%= b.send(:input_method, form: form_id) %>
+      <%= b.text %>
+    <% end %>
+  <% end %>
+
   <% if criterion.condition.meta[:postfix] %>
     <span class="refine-option--condition-postfix"><%= meta[:postfix] %></span>
   <% end %>

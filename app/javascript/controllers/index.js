@@ -1,7 +1,6 @@
 import { identifierForContextKey } from "@hotwired/stimulus-webpack-helpers"
 
 import AddController from './refine/add-controller'
-import InlineConditionsController from './refine/inline-conditions-controller'
 import CriterionFormController from './refine/criterion-form-controller'
 import DefaultsController from './refine/defaults-controller'
 import DeleteController from './refine/delete-controller'
@@ -15,12 +14,12 @@ import SubmitForm from './refine/submit-form-controller'
 import ToggleController from './refine/toggle-controller'
 import TurboStreamFormController from './refine/turbo-stream-form-controller'
 import TurboStreamLinkController from './refine/turbo-stream-link-controller'
+import TypeaheadListController from './refine/typeahead-list-controller'
 import UpdateController from './refine/update-controller'
 import DateController from './refine/date-controller'
 
 export const controllerDefinitions = [
   [AddController, 'refine/add-controller.js'],
-  [InlineConditionsController, './refine/inline-conditions-controller.js'],
   [CriterionFormController, 'refine/criterion-form-controller.js'],
   [DefaultsController, 'refine/defaults-controller.js'],
   [DeleteController, 'refine/delete-controller.js'],
@@ -34,6 +33,7 @@ export const controllerDefinitions = [
   [ToggleController, 'refine/toggle-controller.js'],
   [TurboStreamFormController, 'refine/turbo-stream-form-controller.js'],
   [TurboStreamLinkController, 'refine/turbo-stream-link-controller.js'],
+  [TypeaheadListController, './refine/typeahead-list-controller.js'],
   [UpdateController, 'refine/update-controller.js'],
   [DateController, 'refine/date-controller.js']
 ].map(function(d) {
@@ -47,7 +47,6 @@ export const controllerDefinitions = [
 
 export {
   AddController,
-  InlineConditionsController,
   CriterionFormController,
   DefaultsController,
   DeleteController,
@@ -61,6 +60,7 @@ export {
   ToggleController,
   TurboStreamFormController,
   TurboStreamLinkController,
+  TypeaheadListController,
   UpdateController,
   DateController
 }

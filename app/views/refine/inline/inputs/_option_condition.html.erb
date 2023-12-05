@@ -1,26 +1,14 @@
-<%
-  if criterion.multiple?
-    collection_builder_method = :collection_check_boxes
-    input_method = :check_box
-  else
-    collection_builder_method = :collection_radio_buttons
-    input_method = :radio_button
-  end
-%>
-
 <div class="refine-option--condition-container">
-  <% input_fields.send(:collection_builder_method) :selected,
-    criterion.options,
-    :id,
-    ->(o) {o.display.truncate(64)},
-    form: form_id do |b|
-  %>
-    <% b.label do %>
-      <%= b.send(:input_method, form: form_id) %>
-      <%= b.text %>
-    <% end %>
+  <% criterion.options.each do |option| %>
+    <label class="refine--option-label">
+      <% if criterion.multiple? %>
+        <%= check_box_tag input_fields.field_name("selected", multiple: true), option.id, criterion.input.selected.include?(option.id), class: "refine--option-input", form: form_id %>
+      <% else %>
+        <%= input_fields.radio_button :selected, option.id, class: "refine--option-input", form: form_id %>
+      <% end %>
+      <span class="refine--option-text"><%= option.display.truncate(64) %></span>
+    </label>
   <% end %>
-
   <% if criterion.condition.meta[:postfix] %>
     <span class="refine-option--condition-postfix"><%= meta[:postfix] %></span>
   <% end %>

@@ -1,13 +1,23 @@
-<div class="refine-option--condition-container">
+<div class="refine-option--condition-container" data-controller="refine--typeahead-list">
+  <div class="refine--search-box">
+    <span class="material-icons refine--icon-search">search</span>
+    <input class="refine--search-trigger" data-search-target="filterProperties" placeholder="<%= t('.type_to_search') %>..." type="text" data-action="refine--typeahead-list#filter">
+  </div>
+
   <% criterion.options.each do |option| %>
-    <label class="refine--option-label">
+    <%= tag.label class: "refine--option-label",
+      data: {
+        refine__typeahead_list_target: "listItem",
+        list_item_value: option.display
+      } do
+    %>
       <% if criterion.multiple? %>
-        <%= check_box_tag input_fields.field_name("selected", multiple: true), option.id, criterion.input.selected.include?(option.id), class: "refine--option-input", form: form_id %>
+        <%= check_box_tag input_fields.field_name("selected", multiple: true), option.id, criterion.input.selected.to_a.include?(option.id), class: "refine--option-input", form: form_id %>
       <% else %>
-        <%= input_fields.radio_button :selected, option.id, class: "refine--option-input", form: form_id %>
+        <%= radio_button_tag input_fields.field_name("selected"), option.id, (criterion.input.selected == [option.id]), class: "refine--option-input", form: form_id %>
       <% end %>
       <span class="refine--option-text"><%= option.display.truncate(64) %></span>
-    </label>
+    <% end %>
   <% end %>
   <% if criterion.condition.meta[:postfix] %>
     <span class="refine-option--condition-postfix"><%= meta[:postfix] %></span>

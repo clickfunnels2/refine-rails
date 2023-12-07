@@ -1,19 +1,19 @@
 <% form_id = dom_id(@criterion, :form) %>
 
 <%= turbo_stream.update dom_id(@criterion) do %>
-  <div class="refine--criterion-fields">
-    <%= fields model: @criterion,
-      data: {
-        controller: "refine--criterion-form",
-        refine__criterion_form_url_value: edit_refine_inline_criterion_url(
-          @criterion.position, @criterion.to_params
-        ),
-        refine__criterion_form_turbo_frame_value: dom_id(@criterion)
-      } do |form|
-    %>
+  <%= tag.div class: "refine--criterion-fields",
+    data: {
+      controller: "refine--criterion-form",
+      refine__criterion_form_url_value: edit_refine_inline_criterion_url(
+        @criterion.position, @criterion.to_params
+      ),
+      refine__criterion_form_form_id_value: form_id
+    } do
+  %>
+    <%= fields model: @criterion do |form| %>
       <%= render "form_fields", form: form, form_id: form_id %>
     <% end %>
-  </div>
+  <% end %>
 <% end %>
 
 

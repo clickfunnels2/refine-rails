@@ -35,7 +35,11 @@ module Refine::Conditions
 
     FLIPPABLE = [NOT_IN, DOESNT_EQUAL].freeze
 
-    @values = constants.to_h { [_1.downcase, const_get(_1)] }
+    @values = constants.to_h { [_1.downcase, const_get(_1).freeze] }
     singleton_class.delegate :fetch, to: :@values
+
+    @values.each do |name, value|
+      define_singleton_method(name) { value }
+    end
   end
 end

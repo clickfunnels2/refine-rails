@@ -19,14 +19,14 @@ module Refine::Conditions
       current_clause = get_clause_by_id(input[:clause])
       display_values = input[:selected]&.map {|option_id| get_options.call.find{|option| option[:id] == option_id}[:display]}.to_a
       case input[:clause]
-      when Clauses::EQUALS, Clauses::DOESNT_EQUAL
+      when Clauses.equals, Clauses.doesnt_equal
         "#{display} #{current_clause.display} #{display_values.first}"
-      when Clauses::IN, Clauses::NOT_IN
+      when Clauses.in, Clauses.not_in
         if display_values.length >= 3
           display_values = display_values.take(2) + ["..."]
         end
         "#{display} #{current_clause.display}: #{display_values.join(", ")}"
-      when Clauses::SET, Clauses::NOT_SET
+      when Clauses.set, Clauses.not_set
         "#{display} #{current_clause.display}"
       else
         raise "#{input[:clause]} #{I18n.t("#{I18N_PREFIX}not_supported")}"
@@ -37,14 +37,14 @@ module Refine::Conditions
       current_clause = get_clause_by_id(input[:clause])
       display_values = input[:selected]&.map {|option_id| get_options.call.find{|option| option[:id] == option_id}[:display]}.to_a
       case input[:clause]
-      when Clauses::EQUALS, Clauses::DOESNT_EQUAL
+      when Clauses.equals, Clauses.doesnt_equal
         display_values.first
-      when Clauses::IN, Clauses::NOT_IN
+      when Clauses.in, Clauses.not_in
         if display_values.length >= 3
           display_values = display_values.take(2) + ["..."]
         end
         display_values.join(", ")
-      when Clauses::SET, Clauses::NOT_SET
+      when Clauses.set, Clauses.not_set
         ""
       else
         raise "#{input[:clause]} #{I18n.t("#{I18N_PREFIX}not_supported")}"
@@ -113,50 +113,50 @@ module Refine::Conditions
 
     def clauses
       [
-        Clause.new(Clauses::EQUALS, I18n.t("#{I18N_PREFIX}is"))
+        Clause.new(Clauses.equals, I18n.t("#{I18N_PREFIX}is"))
           .requires_inputs(["selected"])
           .with_meta({multiple: false}),
 
-        Clause.new(Clauses::DOESNT_EQUAL, I18n.t("#{I18N_PREFIX}is_not"))
+        Clause.new(Clauses.doesnt_equal, I18n.t("#{I18N_PREFIX}is_not"))
           .requires_inputs(["selected"])
           .with_meta({multiple: false}),
 
-        Clause.new(Clauses::IN, I18n.t("#{I18N_PREFIX}is_one_of"))
+        Clause.new(Clauses.in, I18n.t("#{I18N_PREFIX}is_one_of"))
           .requires_inputs(["selected"])
           .with_meta({multiple: true}),
 
-        Clause.new(Clauses::NOT_IN, I18n.t("#{I18N_PREFIX}is_not_one_of"))
+        Clause.new(Clauses.not_in, I18n.t("#{I18N_PREFIX}is_not_one_of"))
           .requires_inputs(["selected"])
           .with_meta({multiple: true}),
 
-        Clause.new(Clauses::SET, I18n.t("#{I18N_PREFIX}is_set")),
+        Clause.new(Clauses.set, I18n.t("#{I18N_PREFIX}is_set")),
 
-        Clause.new(Clauses::NOT_SET, I18n.t("#{I18N_PREFIX}is_not_set"))
+        Clause.new(Clauses.not_set, I18n.t("#{I18N_PREFIX}is_not_set"))
       ]
     end
 
     def apply_condition(input, table, inverse_clause)
       value = input[:selected]
       # TODO: Triggers on "through" relationship. Other relationships?
-      @clause = Clauses::IN if inverse_clause
+      @clause = Clauses.in if inverse_clause
 
       case clause
-      when Clauses::SET
+      when Clauses.set
         apply_clause_set(table)
 
-      when Clauses::NOT_SET
+      when Clauses.not_set
         apply_clause_not_set(table)
 
-      when Clauses::EQUALS
+      when Clauses.equals
         apply_clause_equals(value, table)
 
-      when Clauses::DOESNT_EQUAL
+      when Clauses.doesnt_equal
         apply_clause_doesnt_equal(value, table)
 
-      when Clauses::IN
+      when Clauses.in
         apply_clause_in(value, table)
 
-      when Clauses::NOT_IN
+      when Clauses.not_in
         apply_clause_not_in(value, table)
       end
     end

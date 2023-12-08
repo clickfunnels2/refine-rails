@@ -49,25 +49,25 @@ module Refine::Conditions
 
     def clauses
       [
-        Clause.new(Clauses::TRUE, I18n.t("#{I18N_PREFIX}is_true")),
-        Clause.new(Clauses::FALSE, I18n.t("#{I18N_PREFIX}is_false")),
-        Clause.new(Clauses::SET, I18n.t("#{I18N_PREFIX}is_set")),
-        Clause.new(Clauses::NOT_SET, I18n.t("#{I18N_PREFIX}is_not_set")),
+        Clause.new(Clauses.true, I18n.t("#{I18N_PREFIX}is_true")),
+        Clause.new(Clauses.false, I18n.t("#{I18N_PREFIX}is_false")),
+        Clause.new(Clauses.set, I18n.t("#{I18N_PREFIX}is_set")),
+        Clause.new(Clauses.not_set, I18n.t("#{I18N_PREFIX}is_not_set")),
       ]
     end
 
     def apply_condition(_input, table, _inverse_clause)
       case clause
-      when Clauses::SET
+      when Clauses.set
         apply_clause_set(table)
 
-      when Clauses::NOT_SET
+      when Clauses.not_set
         apply_clause_not_set(table)
 
-      when Clauses::TRUE
+      when Clauses.true
         apply_clause_true(table)
 
-      when Clauses::FALSE
+      when Clauses.false
         apply_clause_false(table)
       end
 

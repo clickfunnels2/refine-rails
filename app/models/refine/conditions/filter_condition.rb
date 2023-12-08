@@ -82,8 +82,8 @@ module Refine::Conditions
 
     def clauses
       [
-        Clause.new(Clauses::IN, I18n.t("#{I18N_PREFIX}in")),
-        Clause.new(Clauses::NOT_IN, I18n.t("#{I18N_PREFIX}not_in"))
+        Clause.new(Clauses.in, I18n.t("#{I18N_PREFIX}in")),
+        Clause.new(Clauses.not_in, I18n.t("#{I18N_PREFIX}not_in"))
       ]
     end
   end

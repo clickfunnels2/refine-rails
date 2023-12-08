@@ -33,11 +33,11 @@ module Refine::Conditions
     def human_readable(input)
       current_clause = get_clause_by_id(input[:clause])
       case input[:clause]
-      when Clauses::EQUALS, Clauses::DOESNT_EQUAL, Clauses::GREATER_THAN, Clauses::GREATER_THAN_OR_EQUAL, Clauses::LESS_THAN, Clauses::LESS_THAN_OR_EQUAL
+      when Clauses.equals, Clauses.doesnt_equal, Clauses.greater_than, Clauses.greater_than_or_equal, Clauses.less_than, Clauses.less_than_or_equal
         "#{display} #{current_clause.display} #{input[:value1]}"
-      when Clauses::BETWEEN, Clauses::NOT_BETWEEN
+      when Clauses.between, Clauses.not_between
         "#{display} #{current_clause.display} #{input[:value1]} #{I18n.t("#{I18N_PREFIX}and")} #{input[:value2]}"
-      when Clauses::SET, Clauses::NOT_SET
+      when Clauses.set, Clauses.not_set
         "#{display} #{current_clause.display}"
       else
         raise "#{input[:clause]} #{I18n.t("#{I18N_PREFIX}not_supported")}"
@@ -47,11 +47,11 @@ module Refine::Conditions
     def human_readable_value(input)
       current_clause = get_clause_by_id(input[:clause])
       case input[:clause]
-      when Clauses::EQUALS, Clauses::DOESNT_EQUAL, Clauses::GREATER_THAN, Clauses::GREATER_THAN_OR_EQUAL, Clauses::LESS_THAN, Clauses::LESS_THAN_OR_EQUAL
+      when Clauses.equals, Clauses.doesnt_equal, Clauses.greater_than, Clauses.greater_than_or_equal, Clauses.less_than, Clauses.less_than_or_equal
         input[:value1]
-      when Clauses::BETWEEN, Clauses::NOT_BETWEEN
+      when Clauses.between, Clauses.not_between
         "#{input[:value1]} #{I18n.t("#{I18N_PREFIX}and")} #{input[:value2]}"
-      when Clauses::SET, Clauses::NOT_SET
+      when Clauses.set, Clauses.not_set
         ""
       else
         raise "#{input[:clause]} #{I18n.t("#{I18N_PREFIX}not_supported")}"
@@ -62,25 +62,25 @@ module Refine::Conditions
 
     def clauses
       [
-        Clause.new(Clauses::EQUALS, I18n.t("#{I18N_PREFIX}is")).requires_inputs(["value1"]),
+        Clause.new(Clauses.equals, I18n.t("#{I18N_PREFIX}is")).requires_inputs(["value1"]),
 
-        Clause.new(Clauses::DOESNT_EQUAL, I18n.t("#{I18N_PREFIX}is_not")).requires_inputs(["value1"]),
+        Clause.new(Clauses.doesnt_equal, I18n.t("#{I18N_PREFIX}is_not")).requires_inputs(["value1"]),
 
-        Clause.new(Clauses::GREATER_THAN, I18n.t("#{I18N_PREFIX}is_gt")).requires_inputs(["value1"]),
+        Clause.new(Clauses.greater_than, I18n.t("#{I18N_PREFIX}is_gt")).requires_inputs(["value1"]),
 
-        Clause.new(Clauses::GREATER_THAN_OR_EQUAL, I18n.t("#{I18N_PREFIX}is_gtteq")).requires_inputs(["value1"]),
+        Clause.new(Clauses.greater_than_or_equal, I18n.t("#{I18N_PREFIX}is_gtteq")).requires_inputs(["value1"]),
 
-        Clause.new(Clauses::LESS_THAN, I18n.t("#{I18N_PREFIX}is_lt")).requires_inputs(["value1"]),
+        Clause.new(Clauses.less_than, I18n.t("#{I18N_PREFIX}is_lt")).requires_inputs(["value1"]),
 
-        Clause.new(Clauses::LESS_THAN_OR_EQUAL, I18n.t("#{I18N_PREFIX}is_lteq")).requires_inputs(["value1"]),
+        Clause.new(Clauses.less_than_or_equal, I18n.t("#{I18N_PREFIX}is_lteq")).requires_inputs(["value1"]),
 
-        Clause.new(Clauses::BETWEEN, I18n.t("#{I18N_PREFIX}is_between")).requires_inputs(["value1", "value2"]),
+        Clause.new(Clauses.between, I18n.t("#{I18N_PREFIX}is_between")).requires_inputs(["value1", "value2"]),
 
-        Clause.new(Clauses::NOT_BETWEEN, I18n.t("#{I18N_PREFIX}is_not_between")).requires_inputs(["value1", "value2"]),
+        Clause.new(Clauses.not_between, I18n.t("#{I18N_PREFIX}is_not_between")).requires_inputs(["value1", "value2"]),
 
-        Clause.new(Clauses::SET, I18n.t("#{I18N_PREFIX}is_set")),
+        Clause.new(Clauses.set, I18n.t("#{I18N_PREFIX}is_set")),
 
-        Clause.new(Clauses::NOT_SET, I18n.t("#{I18N_PREFIX}is_not_set")),
+        Clause.new(Clauses.not_set, I18n.t("#{I18N_PREFIX}is_not_set")),
       ]
     end
 
@@ -98,34 +98,34 @@ module Refine::Conditions
       # TODO check for custom clause
 
       case clause
-      when Clauses::EQUALS
+      when Clauses.equals
         apply_clause_equals(table, value1)
 
-      when Clauses::DOESNT_EQUAL
+      when Clauses.doesnt_equal
         apply_clause_doesnt_equal(table, value1)
 
-      when Clauses::GREATER_THAN
+      when Clauses.greater_than
         apply_clause_greater_than(table, value1)
 
-      when Clauses::GREATER_THAN_OR_EQUAL
+      when Clauses.greater_than_or_equal
         apply_clause_greater_than_or_equal(table, value1)
 
-      when Clauses::LESS_THAN
+      when Clauses.less_than
         apply_clause_less_than(table, value1)
 
-      when Clauses::LESS_THAN_OR_EQUAL
+      when Clauses.less_than_or_equal
         apply_clause_less_than_or_equal(table, value1)
 
-      when Clauses::BETWEEN
+      when Clauses.between
         apply_clause_between(table, value1, value2)
 
-      when Clauses::NOT_BETWEEN
+      when Clauses.not_between
         apply_clause_not_between(table, value1, value2)
 
-      when Clauses::SET
+      when Clauses.set
         apply_clause_set(table)
 
-      when Clauses::NOT_SET
+      when Clauses.not_set
         apply_clause_not_set(table)
       end
     end
@@ -135,34 +135,34 @@ module Refine::Conditions
       value1 = input[:value1].to_i
       value2 = input[:value2].to_i
       case clause
-      when Clauses::EQUALS
+      when Clauses.equals
         return value1 == 0
 
-      when Clauses::DOESNT_EQUAL
+      when Clauses.doesnt_equal
         return value1 != 0
 
-      when Clauses::LESS_THAN_OR_EQUAL
+      when Clauses.less_than_or_equal
         return value1 >= 0
 
-      when Clauses::LESS_THAN
+      when Clauses.less_than
         return value1 > 0
 
-      when Clauses::GREATER_THAN
+      when Clauses.greater_than
         return value1 < 0
 
-      when Clauses::GREATER_THAN_OR_EQUAL
+      when Clauses.greater_than_or_equal
         return value1 <= 0
 
-      when Clauses::BETWEEN
+      when Clauses.between
         return value1 <= 0 && value2 >= 0
 
-      when Clauses::NOT_BETWEEN
+      when Clauses.not_between
         return (value1 > 0 && value2 > 0) || (value1 < 0 && value2 < 0)
 
-      when Clauses::SET
+      when Clauses.set
         return false
 
-      when Clauses::NOT_SET
+      when Clauses.not_set
         return false
       end
     end

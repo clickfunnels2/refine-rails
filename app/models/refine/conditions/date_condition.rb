@@ -36,7 +36,7 @@ module Refine::Conditions
     end
 
     def date1_must_be_less_than_date2
-      return true unless [Clauses::BETWEEN, Clauses::NOT_BETWEEN].include?(@clause) && date1 && date2
+      return true unless [Clauses.between, Clauses.not_between].include?(@clause) && date1 && date2
       if Date.strptime(date1, "%Y-%m-%d") > Date.strptime(date2, "%Y-%m-%d")
         errors.add(:base, I18n.t("#{I18N_PREFIX}date1_greater_date2_error"))
         false
@@ -108,25 +108,25 @@ module Refine::Conditions
       current_clause = get_clause_by_id(input[:clause])
 
       case input[:clause]
-      when Clauses::EQUALS, Clauses::DOESNT_EQUAL, Clauses::LESS_THAN_OR_EQUAL, Clauses::GREATER_THAN_OR_EQUAL
+      when Clauses.equals, Clauses.doesnt_equal, Clauses.less_than_or_equal, Clauses.greater_than_or_equal
         formatted_date1 = I18n.l(input[:date1].to_date, format: :dmy)
         "#{display} #{current_clause.display} #{formatted_date1}#{timezone_abbr}"
-      when Clauses::BETWEEN, Clauses::NOT_BETWEEN
+      when Clauses.between, Clauses.not_between
         formatted_date1 = I18n.l(input[:date1].to_date, format: :dmy)
         formatted_date2 = I18n.l(input[:date2].to_date, format: :dmy)
         and_i18n = I18n.t("#{I18N_PREFIX}and")
 
         if formatted_date1 == formatted_date2
-          "#{display} #{get_clause_by_id(Clauses::EQUALS).display} #{formatted_date1}#{timezone_abbr}"
+          "#{display} #{get_clause_by_id(Clauses.equals).display} #{formatted_date1}#{timezone_abbr}"
         else
           "#{display} #{current_clause.display} #{formatted_date1} #{and_i18n} #{formatted_date2}#{timezone_abbr}"
         end
-      when Clauses::GREATER_THAN, Clauses::LESS_THAN, Clauses::EXACTLY
+      when Clauses.greater_than, Clauses.less_than, Clauses.exactly
         days_i18n = I18n.t("#{I18N_PREFIX}days")
         ago_i18n = I18n.t("#{I18N_PREFIX}ago")
         from_now_i18n = I18n.t("#{I18N_PREFIX}from_now")
         "#{display} #{current_clause.display} #{input[:days]} #{days_i18n} #{input[:modifier] == 'ago' ? ago_i18n : from_now_i18n}#{timezone_abbr}"
-      when Clauses::SET, Clauses::NOT_SET
+      when Clauses.set, Clauses.not_set
         "#{display} #{current_clause.display}"
       else
         not_supported_i18n = I18n.t("#{I18N_PREFIX}not_supported")
@@ -138,10 +138,10 @@ module Refine::Conditions
       current_clause = get_clause_by_id(input[:clause])
 
       case input[:clause]
-      when Clauses::EQUALS, Clauses::DOESNT_EQUAL, Clauses::LESS_THAN_OR_EQUAL, Clauses::GREATER_THAN_OR_EQUAL
+      when Clauses.equals, Clauses.doesnt_equal, Clauses.less_than_or_equal, Clauses.greater_than_or_equal
         formatted_date1 = I18n.l(input[:date1].to_date, format: :dmy)
         "#{formatted_date1}#{timezone_abbr}"
-      when Clauses::BETWEEN, Clauses::NOT_BETWEEN
+      when Clauses.between, Clauses.not_between
         formatted_date1 = I18n.l(input[:date1].to_date, format: :dmy)
         formatted_date2 = I18n.l(input[:date2].to_date, format: :dmy)
         and_i18n = I18n.t("#{I18N_PREFIX}and")
@@ -151,12 +151,12 @@ module Refine::Conditions
         else
           "#{formatted_date1} #{and_i18n} #{formatted_date2}#{timezone_abbr}"
         end
-      when Clauses::GREATER_THAN, Clauses::LESS_THAN, Clauses::EXACTLY
+      when Clauses.greater_than, Clauses.less_than, Clauses.exactly
         days_i18n = I18n.t("#{I18N_PREFIX}and")
         ago_i18n = I18n.t("#{I18N_PREFIX}days")
         from_now_i18n = I18n.t("#{I18N_PREFIX}ago")
         "#{input[:days]} #{days_i18n} #{input[:modifier] == 'ago' ? ago_i18n : from_now_i18n}#{timezone_abbr}"
-      when Clauses::SET, Clauses::NOT_SET
+      when Clauses.set, Clauses.not_set
         ""
       else
         not_supported_i18n = I18n.t("#{I18N_PREFIX}not_supported")
@@ -212,41 +212,41 @@ module Refine::Conditions
 
     def clauses
       [
-        Clause.new(Clauses::EQUALS, I18n.t("#{I18N_PREFIX}is_on"))
+        Clause.new(Clauses.equals, I18n.t("#{I18N_PREFIX}is_on"))
           .requires_inputs("date1"),
 
-        Clause.new(Clauses::DOESNT_EQUAL, I18n.t("#{I18N_PREFIX}not_on"))
+        Clause.new(Clauses.doesnt_equal, I18n.t("#{I18N_PREFIX}not_on"))
           .requires_inputs("date1"),
 
-        Clause.new(Clauses::LESS_THAN_OR_EQUAL, I18n.t("#{I18N_PREFIX}is_on_or_before"))
+        Clause.new(Clauses.less_than_or_equal, I18n.t("#{I18N_PREFIX}is_on_or_before"))
           .requires_inputs("date1"),
 
-        Clause.new(Clauses::GREATER_THAN_OR_EQUAL, I18n.t("#{I18N_PREFIX}is_on_or_after"))
+        Clause.new(Clauses.greater_than_or_equal, I18n.t("#{I18N_PREFIX}is_on_or_after"))
           .requires_inputs("date1"),
 
-        Clause.new(Clauses::BETWEEN, I18n.t("#{I18N_PREFIX}is_between"))
+        Clause.new(Clauses.between, I18n.t("#{I18N_PREFIX}is_between"))
           .requires_inputs(["date1", "date2"]),
 
-        Clause.new(Clauses::NOT_BETWEEN, I18n.t("#{I18N_PREFIX}is_not_between"))
+        Clause.new(Clauses.not_between, I18n.t("#{I18N_PREFIX}is_not_between"))
           .requires_inputs(["date1", "date2"]),
 
-        Clause.new(Clauses::GREATER_THAN, I18n.t("#{I18N_PREFIX}is_more_than"))
+        Clause.new(Clauses.greater_than, I18n.t("#{I18N_PREFIX}is_more_than"))
           .requires_inputs(["days", "modifier"]),
 
-        Clause.new(Clauses::EXACTLY, I18n.t("#{I18N_PREFIX}is"))
+        Clause.new(Clauses.exactly, I18n.t("#{I18N_PREFIX}is"))
           .requires_inputs(["days", "modifier"]),
 
-        Clause.new(Clauses::LESS_THAN, I18n.t("#{I18N_PREFIX}is_less_than"))
+        Clause.new(Clauses.less_than, I18n.t("#{I18N_PREFIX}is_less_than"))
           .requires_inputs(["days", "modifier"]),
 
-        Clause.new(Clauses::SET, I18n.t("#{I18N_PREFIX}is_set")),
+        Clause.new(Clauses.set, I18n.t("#{I18N_PREFIX}is_set")),
 
-        Clause.new(Clauses::NOT_SET, I18n.t("#{I18N_PREFIX}is_not_set")),
+        Clause.new(Clauses.not_set, I18n.t("#{I18N_PREFIX}is_not_set")),
       ]
     end
 
     def relative_clauses
-      [Clauses::GREATER_THAN, Clauses::LESS_THAN, Clauses::EXACTLY]
+      [Clauses.greater_than, Clauses.less_than, Clauses.exactly]
     end
 
     def is_relative_clause?
@@ -259,11 +259,11 @@ module Refine::Conditions
     end
 
     def apply_condition(input, table, _inverse_clause)
-      if clause == Clauses::SET
+      if clause == Clauses.set
         return apply_clause_set(table)
       end
 
-      if clause == Clauses::NOT_SET
+      if clause == Clauses.not_set
         return apply_clause_not_set(table)
       end
 
@@ -293,12 +293,12 @@ module Refine::Conditions
     def standardize_clause(input)
       modifier = input[:modifier]
       case clause
-      when Clauses::GREATER_THAN
-        modifier == "ago" ? Clauses::LESS_THAN : Clauses::GREATER_THAN
-      when Clauses::LESS_THAN
-        modifier == "ago" ? Clauses::GREATER_THAN : Clauses::LESS_THAN
-      when Clauses::EXACTLY
-        Clauses::EQUALS
+      when Clauses.greater_than
+        modifier == "ago" ? Clauses.less_than : Clauses.greater_than
+      when Clauses.less_than
+        modifier == "ago" ? Clauses.greater_than : Clauses.less_than
+      when Clauses.exactly
+        Clauses.equals
       end
     end
 
@@ -347,29 +347,29 @@ module Refine::Conditions
       case clause
       # At this point, `between` and `equal` are functionally the
       # same, i.e. they are querying between two _times_.
-      when Clauses::EQUALS
+      when Clauses.equals
         apply_clause_between(table, start_of_day(date1), end_of_day(date1))
-      when Clauses::BETWEEN
+      when Clauses.between
         apply_clause_between(table, start_of_day(date1), end_of_day(date2))
 
-      when Clauses::DOESNT_EQUAL
+      when Clauses.doesnt_equal
         apply_clause_not_between(table, start_of_day(date1), end_of_day(date1))
-      when Clauses::NOT_BETWEEN
+      when Clauses.not_between
         apply_clause_not_between(table, start_of_day(date1), end_of_day(date2))
 
 
-      when Clauses::LESS_THAN
+      when Clauses.less_than
         apply_clause_less_than(comparison_time(date1), table)
-      when Clauses::GREATER_THAN
+      when Clauses.greater_than
         apply_clause_greater_than(comparison_time(date1), table)
-      when Clauses::GREATER_THAN_OR_EQUAL
+      when Clauses.greater_than_or_equal
         if Refine::Rails.configuration.date_gte_uses_bod
           datetime = start_of_day(date1)
         else
           datetime = comparison_time(date1)
         end
         apply_clause_greater_than_or_equal(datetime, table)
-      when Clauses::LESS_THAN_OR_EQUAL
+      when Clauses.less_than_or_equal
         if Refine::Rails.configuration.date_lte_uses_eod
           datetime = end_of_day(date1)
         else
@@ -382,25 +382,25 @@ module Refine::Conditions
 
     def apply_standardized_values(table)
       case clause
-      when Clauses::EQUALS
+      when Clauses.equals
         apply_clause_equals(date1, table)
 
-      when Clauses::DOESNT_EQUAL
+      when Clauses.doesnt_equal
         apply_clause_doesnt_equal(date1, table)
 
-      when Clauses::LESS_THAN
+      when Clauses.less_than
         apply_clause_less_than(date1, table)
 
-      when Clauses::GREATER_THAN
+      when Clauses.greater_than
         apply_clause_greater_than(date1, table)
 
-      when Clauses::GREATER_THAN_OR_EQUAL
+      when Clauses.greater_than_or_equal
         apply_clause_greater_than_or_equal(date1, table)
 
-      when Clauses::LESS_THAN_OR_EQUAL
+      when Clauses.less_than_or_equal
         apply_clause_less_than_or_equal(date1, table)
 
-      when Clauses::BETWEEN
+      when Clauses.between
         apply_clause_between(table, date1, date2)
       end
     end

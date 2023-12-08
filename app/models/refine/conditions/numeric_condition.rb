@@ -15,20 +15,6 @@ module Refine::Conditions
 
     attr_reader :value1, :value2
 
-    CLAUSE_EQUALS = Clauses::EQUALS
-    CLAUSE_DOESNT_EQUAL = Clauses::DOESNT_EQUAL
-
-    CLAUSE_LESS_THAN_OR_EQUAL = Clauses::LESS_THAN_OR_EQUAL
-    CLAUSE_LESS_THAN = Clauses::LESS_THAN
-    CLAUSE_GREATER_THAN = Clauses::GREATER_THAN
-    CLAUSE_GREATER_THAN_OR_EQUAL = Clauses::GREATER_THAN_OR_EQUAL
-
-    CLAUSE_BETWEEN = Clauses::BETWEEN
-    CLAUSE_NOT_BETWEEN = Clauses::NOT_BETWEEN
-
-    CLAUSE_SET = Clauses::SET
-    CLAUSE_NOT_SET = Clauses::NOT_SET
-
     I18N_PREFIX = "refine.refine_blueprints.numeric_condition."
 
     def boot
@@ -47,11 +33,11 @@ module Refine::Conditions
     def human_readable(input)
       current_clause = get_clause_by_id(input[:clause])
       case input[:clause]
-      when *[CLAUSE_EQUALS, CLAUSE_DOESNT_EQUAL, CLAUSE_GREATER_THAN, CLAUSE_GREATER_THAN_OR_EQUAL, CLAUSE_LESS_THAN, CLAUSE_LESS_THAN_OR_EQUAL]
+      when Clauses::EQUALS, Clauses::DOESNT_EQUAL, Clauses::GREATER_THAN, Clauses::GREATER_THAN_OR_EQUAL, Clauses::LESS_THAN, Clauses::LESS_THAN_OR_EQUAL
         "#{display} #{current_clause.display} #{input[:value1]}"
-      when *[CLAUSE_BETWEEN, CLAUSE_NOT_BETWEEN]
+      when Clauses::BETWEEN, Clauses::NOT_BETWEEN
         "#{display} #{current_clause.display} #{input[:value1]} #{I18n.t("#{I18N_PREFIX}and")} #{input[:value2]}"
-      when *[CLAUSE_SET, CLAUSE_NOT_SET]
+      when Clauses::SET, Clauses::NOT_SET
         "#{display} #{current_clause.display}"
       else
         raise "#{input[:clause]} #{I18n.t("#{I18N_PREFIX}not_supported")}"
@@ -61,11 +47,11 @@ module Refine::Conditions
     def human_readable_value(input)
       current_clause = get_clause_by_id(input[:clause])
       case input[:clause]
-      when *[CLAUSE_EQUALS, CLAUSE_DOESNT_EQUAL, CLAUSE_GREATER_THAN, CLAUSE_GREATER_THAN_OR_EQUAL, CLAUSE_LESS_THAN, CLAUSE_LESS_THAN_OR_EQUAL]
+      when Clauses::EQUALS, Clauses::DOESNT_EQUAL, Clauses::GREATER_THAN, Clauses::GREATER_THAN_OR_EQUAL, Clauses::LESS_THAN, Clauses::LESS_THAN_OR_EQUAL
         input[:value1]
-      when *[CLAUSE_BETWEEN, CLAUSE_NOT_BETWEEN]
+      when Clauses::BETWEEN, Clauses::NOT_BETWEEN
         "#{input[:value1]} #{I18n.t("#{I18N_PREFIX}and")} #{input[:value2]}"
-      when *[CLAUSE_SET, CLAUSE_NOT_SET]
+      when Clauses::SET, Clauses::NOT_SET
         ""
       else
         raise "#{input[:clause]} #{I18n.t("#{I18N_PREFIX}not_supported")}"
@@ -76,25 +62,25 @@ module Refine::Conditions
 
     def clauses
       [
-        Clause.new(CLAUSE_EQUALS, I18n.t("#{I18N_PREFIX}is")).requires_inputs(["value1"]),
+        Clause.new(Clauses::EQUALS, I18n.t("#{I18N_PREFIX}is")).requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_DOESNT_EQUAL, I18n.t("#{I18N_PREFIX}is_not")).requires_inputs(["value1"]),
+        Clause.new(Clauses::DOESNT_EQUAL, I18n.t("#{I18N_PREFIX}is_not")).requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_GREATER_THAN, I18n.t("#{I18N_PREFIX}is_gt")).requires_inputs(["value1"]),
+        Clause.new(Clauses::GREATER_THAN, I18n.t("#{I18N_PREFIX}is_gt")).requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_GREATER_THAN_OR_EQUAL, I18n.t("#{I18N_PREFIX}is_gtteq")).requires_inputs(["value1"]),
+        Clause.new(Clauses::GREATER_THAN_OR_EQUAL, I18n.t("#{I18N_PREFIX}is_gtteq")).requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_LESS_THAN, I18n.t("#{I18N_PREFIX}is_lt")).requires_inputs(["value1"]),
+        Clause.new(Clauses::LESS_THAN, I18n.t("#{I18N_PREFIX}is_lt")).requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_LESS_THAN_OR_EQUAL, I18n.t("#{I18N_PREFIX}is_lteq")).requires_inputs(["value1"]),
+        Clause.new(Clauses::LESS_THAN_OR_EQUAL, I18n.t("#{I18N_PREFIX}is_lteq")).requires_inputs(["value1"]),
 
-        Clause.new(CLAUSE_BETWEEN, I18n.t("#{I18N_PREFIX}is_between")).requires_inputs(["value1", "value2"]),
+        Clause.new(Clauses::BETWEEN, I18n.t("#{I18N_PREFIX}is_between")).requires_inputs(["value1", "value2"]),
 
-        Clause.new(CLAUSE_NOT_BETWEEN, I18n.t("#{I18N_PREFIX}is_not_between")).requires_inputs(["value1", "value2"]),
+        Clause.new(Clauses::NOT_BETWEEN, I18n.t("#{I18N_PREFIX}is_not_between")).requires_inputs(["value1", "value2"]),
 
-        Clause.new(CLAUSE_SET, I18n.t("#{I18N_PREFIX}is_set")),
+        Clause.new(Clauses::SET, I18n.t("#{I18N_PREFIX}is_set")),
 
-        Clause.new(CLAUSE_NOT_SET, I18n.t("#{I18N_PREFIX}is_not_set")),
+        Clause.new(Clauses::NOT_SET, I18n.t("#{I18N_PREFIX}is_not_set")),
       ]
     end
 
@@ -112,34 +98,34 @@ module Refine::Conditions
       # TODO check for custom clause
 
       case clause
-      when CLAUSE_EQUALS
+      when Clauses::EQUALS
         apply_clause_equals(table, value1)
 
-      when CLAUSE_DOESNT_EQUAL
+      when Clauses::DOESNT_EQUAL
         apply_clause_doesnt_equal(table, value1)
 
-      when CLAUSE_GREATER_THAN
+      when Clauses::GREATER_THAN
         apply_clause_greater_than(table, value1)
 
-      when CLAUSE_GREATER_THAN_OR_EQUAL
+      when Clauses::GREATER_THAN_OR_EQUAL
         apply_clause_greater_than_or_equal(table, value1)
 
-      when CLAUSE_LESS_THAN
+      when Clauses::LESS_THAN
         apply_clause_less_than(table, value1)
 
-      when CLAUSE_LESS_THAN_OR_EQUAL
+      when Clauses::LESS_THAN_OR_EQUAL
         apply_clause_less_than_or_equal(table, value1)
 
-      when CLAUSE_BETWEEN
+      when Clauses::BETWEEN
         apply_clause_between(table, value1, value2)
 
-      when CLAUSE_NOT_BETWEEN
+      when Clauses::NOT_BETWEEN
         apply_clause_not_between(table, value1, value2)
 
-      when CLAUSE_SET
+      when Clauses::SET
         apply_clause_set(table)
 
-      when CLAUSE_NOT_SET
+      when Clauses::NOT_SET
         apply_clause_not_set(table)
       end
     end
@@ -149,34 +135,34 @@ module Refine::Conditions
       value1 = input[:value1].to_i
       value2 = input[:value2].to_i
       case clause
-      when CLAUSE_EQUALS
+      when Clauses::EQUALS
         return value1 == 0
 
-      when CLAUSE_DOESNT_EQUAL
+      when Clauses::DOESNT_EQUAL
         return value1 != 0
 
-      when CLAUSE_LESS_THAN_OR_EQUAL
+      when Clauses::LESS_THAN_OR_EQUAL
         return value1 >= 0
 
-      when CLAUSE_LESS_THAN
+      when Clauses::LESS_THAN
         return value1 > 0
 
-      when CLAUSE_GREATER_THAN
+      when Clauses::GREATER_THAN
         return value1 < 0
 
-      when CLAUSE_GREATER_THAN_OR_EQUAL
+      when Clauses::GREATER_THAN_OR_EQUAL
         return value1 <= 0
 
-      when CLAUSE_BETWEEN
+      when Clauses::BETWEEN
         return value1 <= 0 && value2 >= 0
 
-      when CLAUSE_NOT_BETWEEN
+      when Clauses::NOT_BETWEEN
         return (value1 > 0 && value2 > 0) || (value1 < 0 && value2 < 0)
 
-      when CLAUSE_SET
+      when Clauses::SET
         return false
 
-      when CLAUSE_NOT_SET
+      when Clauses::NOT_SET
         return false
       end
     end

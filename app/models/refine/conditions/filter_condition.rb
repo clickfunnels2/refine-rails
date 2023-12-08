@@ -6,9 +6,6 @@ module Refine::Conditions
 
     attr_reader :options
 
-    CLAUSE_IN = Clauses::IN
-    CLAUSE_NOT_IN = Clauses::NOT_IN
-
     I18N_PREFIX = "refine.refine_blueprints.filter_condition."
 
     def component
@@ -85,8 +82,8 @@ module Refine::Conditions
 
     def clauses
       [
-        Clause.new(CLAUSE_IN, I18n.t("#{I18N_PREFIX}in")),
-        Clause.new(CLAUSE_NOT_IN, I18n.t("#{I18N_PREFIX}not_in"))
+        Clause.new(Clauses::IN, I18n.t("#{I18N_PREFIX}in")),
+        Clause.new(Clauses::NOT_IN, I18n.t("#{I18N_PREFIX}not_in"))
       ]
     end
   end

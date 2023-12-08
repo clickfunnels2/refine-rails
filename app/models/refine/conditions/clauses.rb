@@ -34,5 +34,8 @@ module Refine::Conditions
     DOESNT_END_WITH = "dew"
 
     FLIPPABLE = [NOT_IN, DOESNT_EQUAL].freeze
+
+    @values = constants.to_h { [_1.downcase, const_get(_1)] }
+    singleton_class.delegate :fetch, to: :@values
   end
 end

@@ -9,15 +9,6 @@ module Refine::Conditions
 
     attr_reader :selected, :nil_option_id, :options
 
-    CLAUSE_EQUALS = Clauses::EQUALS
-    CLAUSE_DOESNT_EQUAL = Clauses::DOESNT_EQUAL
-
-    CLAUSE_IN = Clauses::IN
-    CLAUSE_NOT_IN = Clauses::NOT_IN
-
-    CLAUSE_SET = Clauses::SET
-    CLAUSE_NOT_SET = Clauses::NOT_SET
-
     I18N_PREFIX = "refine.refine_blueprints.option_condition."
 
     def component
@@ -28,14 +19,14 @@ module Refine::Conditions
       current_clause = get_clause_by_id(input[:clause])
       display_values = input[:selected]&.map {|option_id| get_options.call.find{|option| option[:id] == option_id}[:display]}.to_a
       case input[:clause]
-      when *[CLAUSE_EQUALS, CLAUSE_DOESNT_EQUAL]
+      when Clauses::EQUALS, Clauses::DOESNT_EQUAL
         "#{display} #{current_clause.display} #{display_values.first}"
-      when *[CLAUSE_IN, CLAUSE_NOT_IN]
+      when Clauses::IN, Clauses::NOT_IN
         if display_values.length >= 3
           display_values = display_values.take(2) + ["..."]
         end
         "#{display} #{current_clause.display}: #{display_values.join(", ")}"
-      when *[CLAUSE_SET, CLAUSE_NOT_SET]
+      when Clauses::SET, Clauses::NOT_SET
         "#{display} #{current_clause.display}"
       else
         raise "#{input[:clause]} #{I18n.t("#{I18N_PREFIX}not_supported")}"
@@ -46,14 +37,14 @@ module Refine::Conditions
       current_clause = get_clause_by_id(input[:clause])
       display_values = input[:selected]&.map {|option_id| get_options.call.find{|option| option[:id] == option_id}[:display]}.to_a
       case input[:clause]
-      when *[CLAUSE_EQUALS, CLAUSE_DOESNT_EQUAL]
+      when Clauses::EQUALS, Clauses::DOESNT_EQUAL
         display_values.first
-      when *[CLAUSE_IN, CLAUSE_NOT_IN]
+      when Clauses::IN, Clauses::NOT_IN
         if display_values.length >= 3
           display_values = display_values.take(2) + ["..."]
         end
         display_values.join(", ")
-      when *[CLAUSE_SET, CLAUSE_NOT_SET]
+      when Clauses::SET, Clauses::NOT_SET
         ""
       else
         raise "#{input[:clause]} #{I18n.t("#{I18N_PREFIX}not_supported")}"
@@ -122,50 +113,50 @@ module Refine::Conditions
 
     def clauses
       [
-        Clause.new(CLAUSE_EQUALS, I18n.t("#{I18N_PREFIX}is"))
+        Clause.new(Clauses::EQUALS, I18n.t("#{I18N_PREFIX}is"))
           .requires_inputs(["selected"])
           .with_meta({multiple: false}),
 
-        Clause.new(CLAUSE_DOESNT_EQUAL, I18n.t("#{I18N_PREFIX}is_not"))
+        Clause.new(Clauses::DOESNT_EQUAL, I18n.t("#{I18N_PREFIX}is_not"))
           .requires_inputs(["selected"])
           .with_meta({multiple: false}),
 
-        Clause.new(CLAUSE_IN, I18n.t("#{I18N_PREFIX}is_one_of"))
+        Clause.new(Clauses::IN, I18n.t("#{I18N_PREFIX}is_one_of"))
           .requires_inputs(["selected"])
           .with_meta({multiple: true}),
 
-        Clause.new(CLAUSE_NOT_IN, I18n.t("#{I18N_PREFIX}is_not_one_of"))
+        Clause.new(Clauses::NOT_IN, I18n.t("#{I18N_PREFIX}is_not_one_of"))
           .requires_inputs(["selected"])
           .with_meta({multiple: true}),
 
-        Clause.new(CLAUSE_SET, I18n.t("#{I18N_PREFIX}is_set")),
+        Clause.new(Clauses::SET, I18n.t("#{I18N_PREFIX}is_set")),
 
-        Clause.new(CLAUSE_NOT_SET, I18n.t("#{I18N_PREFIX}is_not_set"))
+        Clause.new(Clauses::NOT_SET, I18n.t("#{I18N_PREFIX}is_not_set"))
       ]
     end
 
     def apply_condition(input, table, inverse_clause)
       value = input[:selected]
       # TODO: Triggers on "through" relationship. Other relationships?
-      @clause = CLAUSE_IN if inverse_clause
+      @clause = Clauses::IN if inverse_clause
 
       case clause
-      when CLAUSE_SET
+      when Clauses::SET
         apply_clause_set(table)
 
-      when CLAUSE_NOT_SET
+      when Clauses::NOT_SET
         apply_clause_not_set(table)
 
-      when CLAUSE_EQUALS
+      when Clauses::EQUALS
         apply_clause_equals(value, table)
 
-      when CLAUSE_DOESNT_EQUAL
+      when Clauses::DOESNT_EQUAL
         apply_clause_doesnt_equal(value, table)
 
-      when CLAUSE_IN
+      when Clauses::IN
         apply_clause_in(value, table)
 
-      when CLAUSE_NOT_IN
+      when Clauses::NOT_IN
         apply_clause_not_in(value, table)
       end
     end

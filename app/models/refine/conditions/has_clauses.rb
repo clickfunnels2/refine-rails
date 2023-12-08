@@ -39,26 +39,30 @@ module Refine::Conditions
       self
     end
 
-    def only_clauses(specific_clauses)
+    def only_clauses(*clauses)
       # Remove all clauses
       clauses.map(&:id).each {|clause_id| update_show_clauses(clause_id, false) }
       # Add specific clauses by id, not by fully qualified clause
-      specific_clauses.each {|clause| update_show_clauses(clause, true) }
+      clauses.flatten.each {|clause| update_show_clauses(clause, true) }
       self
     end
 
-    def with_clauses(clauses_to_include)
-      clauses_to_include.each {|clause| update_show_clauses(clause, true) }
+    def without_presence_clauses
+      without_clauses(:set, :not_set)
+    end
+
+    def with_clauses(*clauses)
+      clauses.flatten.each {|clause| update_show_clauses(clause, true) }
       self
     end
 
-    def without_clauses(clauses_to_exclude)
-      clauses_to_exclude.each {|clause| update_show_clauses(clause, false) }
+    def without_clauses(*clauses)
+      clauses.flatten.each {|clause| update_show_clauses(clause, false) }
       self
     end
 
     def update_show_clauses(clause, value)
-      @show_clauses.merge!({"#{clause}": value})
+      @show_clauses.merge!({"#{Clauses.fetch(clause)}": value})
     end
 
     def ensure_clauses

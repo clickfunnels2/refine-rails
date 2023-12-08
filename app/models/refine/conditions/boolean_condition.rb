@@ -2,11 +2,6 @@ module Refine::Conditions
   class BooleanCondition < Condition
     include HasClauses
 
-    CLAUSE_TRUE = Clauses::TRUE
-    CLAUSE_FALSE = Clauses::FALSE
-    CLAUSE_SET = Clauses::SET # non null
-    CLAUSE_NOT_SET = Clauses::NOT_SET # null
-
     I18N_PREFIX = "refine.refine_blueprints.boolean_condition."
 
     def component
@@ -28,10 +23,7 @@ module Refine::Conditions
     end
 
     def hide_unknowns
-      without_clauses([
-        CLAUSE_SET,
-        CLAUSE_NOT_SET,
-      ])
+      without_presence_clauses
       self
     end
 
@@ -51,34 +43,31 @@ module Refine::Conditions
     end
 
     def show_unknowns
-      with_clauses([
-        CLAUSE_SET,
-        CLAUSE_NOT_SET
-      ])
+      with_clauses(:set, :not_set)
       self
     end
 
     def clauses
       [
-        Clause.new(CLAUSE_TRUE, I18n.t("#{I18N_PREFIX}is_true")),
-        Clause.new(CLAUSE_FALSE, I18n.t("#{I18N_PREFIX}is_false")),
-        Clause.new(CLAUSE_SET, I18n.t("#{I18N_PREFIX}is_set")),
-        Clause.new(CLAUSE_NOT_SET, I18n.t("#{I18N_PREFIX}is_not_set")),
+        Clause.new(Clauses::TRUE, I18n.t("#{I18N_PREFIX}is_true")),
+        Clause.new(Clauses::FALSE, I18n.t("#{I18N_PREFIX}is_false")),
+        Clause.new(Clauses::SET, I18n.t("#{I18N_PREFIX}is_set")),
+        Clause.new(Clauses::NOT_SET, I18n.t("#{I18N_PREFIX}is_not_set")),
       ]
     end
 
     def apply_condition(_input, table, _inverse_clause)
       case clause
-      when CLAUSE_SET
+      when Clauses::SET
         apply_clause_set(table)
 
-      when CLAUSE_NOT_SET
+      when Clauses::NOT_SET
         apply_clause_not_set(table)
 
-      when CLAUSE_TRUE
+      when Clauses::TRUE
         apply_clause_true(table)
 
-      when CLAUSE_FALSE
+      when Clauses::FALSE
         apply_clause_false(table)
       end
 

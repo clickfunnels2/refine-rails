@@ -22,7 +22,7 @@ module Refine::Filter::Internationalized
     t("#{field}.options").map { {id: _1.to_s, display: _2} }
   end
 
-  def t(key, **)
-    I18n.t("#{i18n_scope}.fields.#{key}", **)
+  def t(key, **options)
+    I18n.t("#{i18n_scope}.fields.#{key}", **options)
   end
 end

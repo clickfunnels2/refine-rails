@@ -68,45 +68,20 @@ module Refine::Conditions
     end
 
     def apply_condition(_input, table, _inverse_clause)
+      attribute = arel_attribute(table)
+
       case clause
-      when CLAUSE_SET
-        apply_clause_set(table)
+      when CLAUSE_SET     then attribute.not_eq(nil)
+      when CLAUSE_NOT_SET then attribute.eq(nil)
+      when CLAUSE_TRUE    then apply_boolean_with_nulls attribute, value: true
+      when CLAUSE_FALSE   then apply_boolean_with_nulls attribute, value: false
+      end.then { table.grouping _1 if _1 }
+    end
 
-      when CLAUSE_NOT_SET
-        apply_clause_not_set(table)
-
-      when CLAUSE_TRUE
-        apply_clause_true(table)
-
-      when CLAUSE_FALSE
-        apply_clause_false(table)
+    def apply_boolean_with_nulls(attribute, value:)
+      attribute.eq(value).then do |node|
+        @nulls_are == value ? node.or(attribute.eq(nil)) : node
       end
-
-      # Apply a custom clause
-    end
-
-    def apply_clause_set(table)
-      table.grouping(table[:"#{attribute}"].not_eq(nil))
-    end
-
-    def apply_clause_not_set(table)
-      table.grouping(table[:"#{attribute}"].eq(nil))
-    end
-
-    def apply_clause_true(table)
-      apply_clause_bool(table, true)
-    end
-
-    def apply_clause_bool(table, bool)
-      if @nulls_are == bool
-        table.grouping(table[:"#{attribute}"].eq(bool).or(table[:"#{attribute}"].eq(nil)))
-      else
-        table.grouping(table[:"#{attribute}"].eq(bool))
-      end
-    end
-
-    def apply_clause_false(table)
-      apply_clause_bool(table, false)
     end
   end
 end

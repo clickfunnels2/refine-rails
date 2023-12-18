@@ -52,7 +52,7 @@ module Refine::Conditions
     end
 
     def date1_must_be_less_than_date2
-      return true unless date1 && date2
+      return true unless [CLAUSE_BETWEEN, CLAUSE_NOT_BETWEEN].include?(@clause) && date1 && date2
       if Date.strptime(date1, "%Y-%m-%d") > Date.strptime(date2, "%Y-%m-%d")
         errors.add(:base, I18n.t("#{I18N_PREFIX}date1_greater_date2_error"))
         false

@@ -399,15 +399,12 @@ If you need even more customization you can override the views with `rails gener
 ```sh
 bump patch #(or bump minor, major, etc)
 gem build
-fury push *.gem --as=hammerstonedev
+gem push *.gem
 rm *.gem
 ```
 
 ### Releasing the NPM Package
 
 1.  Publish the gem with a new version number
-2.  Copy the version number in package.json
-3.  run `yarn build`. This will prepare the different javascript outputs
-4.  run `yarn pack`. This will create a new`.tgz`file for the new version
-5.  run `yarn publish <tgz filename> --new-version <version number in package.json>`
-6.  remove the`*.tgz`file
+2.  run npm version <update_type> (patch | minor | major) OR directly update the version in package.json
+3.  run `npm publish`

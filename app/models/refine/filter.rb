@@ -4,9 +4,18 @@ module Refine
     include ActiveModel::Callbacks
     include TracksPendingRelationshipSubqueries
     include Stabilize
+    include Internationalized
     # This validation structure sents `initial_query` as the method to validate against
     define_model_callbacks :initialize, only: [:after]
     after_initialize :valid?
+
+    def self.model_name
+      name.sub(/(::)?Filter$/, "").singularize
+    end
+
+    def self.model
+      @model ||= model_name.constantize
+    end
 
     cattr_accessor :default_stabilizer, default: nil, instance_accessor: false
     cattr_accessor :criteria_limit, default: 5, instance_accessor: true
@@ -62,7 +71,7 @@ module Refine
 
     # e.g. ContactsFilter -> Contact
     def model
-      initial_query&.model || self.class.to_s.gsub(/Filter$/, "").singularize.constantize
+      initial_query&.model || self.class.model
     end
 
     def table

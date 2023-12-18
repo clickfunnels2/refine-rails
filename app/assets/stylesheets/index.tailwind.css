@@ -710,7 +710,6 @@
 /* _option_condition.html.erb */
 .refine--option-condition-container {
   /* keep it because the dropdown select uses it */
-  display: flex;
   width: 100%;
 }
 

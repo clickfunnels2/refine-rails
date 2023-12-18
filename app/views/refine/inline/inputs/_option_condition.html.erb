@@ -1,7 +1,7 @@
-<div class="refine-option--condition-container" data-controller="refine--typeahead-list">
+<div class="refine--option-condition-container" data-controller="refine--typeahead-list">
   <div class="refine--search-box">
     <span class="material-icons refine--icon-search">search</span>
-    <input class="refine--search-trigger" data-search-target="filterProperties" placeholder="<%= t('.type_to_search') %>..." type="text" data-action="refine--typeahead-list#filter">
+    <input class="refine--search-trigger" data-search-target="filterProperties" placeholder="<%= t('.type_to_search') %>..." type="text" data-action="refine--typeahead-list#filter" autofocus>
   </div>
 
   <% criterion.options.each do |option| %>

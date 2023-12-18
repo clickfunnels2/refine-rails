@@ -11,7 +11,7 @@ export default class extends Controller {
     // hide / show listItem links that match the query and note which
     // categories should be visible
     this.listItemTargets.forEach(listItemNode => {
-      const listItemName = listItemNode.data.listItemValue.toLowerCase()
+      const listItemName = listItemNode.dataset.listItemValue.toLowerCase()
       if (listItemName.includes(query)) {
         listItemNode.hidden = false
         visibleCategories.add(listItemNode.dataset.category)

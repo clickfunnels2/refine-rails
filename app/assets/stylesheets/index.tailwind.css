@@ -710,7 +710,6 @@
 /* _option_condition.html.erb */
 .refine--option-condition-container {
   /* keep it because the dropdown select uses it */
-  display: flex;
   width: 100%;
 }
 
@@ -722,21 +721,19 @@
   }
 }
 
-.refine--option-select {
-  width: 100%;
-}
-
-.refine--option-condition-select:focus {
-  border-color: rgba(99, 102, 241, 1);
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
-
-@media (min-width: 640px) {
-  .refine--option-condition-select {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
+.refine--option-label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  padding: 4px 5px;
+  &:hover {
+    background-color: #eee;
   }
+}
+
+.refine--option-input {
+  margin-right: 5px;
 }
 
 .refine--option-condition-postfix {

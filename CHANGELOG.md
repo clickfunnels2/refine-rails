@@ -1,3 +1,6 @@
+### 2.9.1
+  * Enhance inline option conditions
+  * Fix a bug where inline filters were not loading clause-appropriate forms
 ### 2.9.0
   * Migrated gem to RubyGems.org for hosting and future updates
 ### 2.8.6

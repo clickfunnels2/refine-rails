@@ -8,22 +8,23 @@ import { FetchRequest } from '@rails/request.js'
 export default class extends Controller {
   static values = {
     url: String,
-    turboFrame: String,
-    method: { type: String, default: "POST" }
+    formId: String
   }
 
-  refresh(_event) {
+  async refresh(_event) {
     // update the url with params from the form
-    const formData = new FormData(this.element)
-    const url = new URL(this.urlValue)
+    const formElement = document.getElementById(this.formIdValue)
+    const formData = new FormData(formElement)
 
-    for (const [name, value] of formData.entries()) {
-      console.log(name, value)
-      url.searchParams.set(name, value)
-    }
-
-    // navigate the modal to refresh the form
-    window.Turbo.visit(url.toString(), {frame: this.turboFrameValue})
+    const request = new FetchRequest(
+      "GET",
+      this.urlValue,
+      {
+        query: formData,
+        responseKind: "turbo-stream"
+      }
+    )
+    const response = await request.perform()
   }
 
 

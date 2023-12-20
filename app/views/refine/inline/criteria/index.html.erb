@@ -10,11 +10,11 @@
 %>
 
 <%= turbo_frame_tag @criterion do %>
-  <div data-controller="refine--inline-conditions">
+  <div data-controller="refine--typeahead-list">
 
     <div class="refine--search-box">
       <span class="material-icons refine--icon-search">search</span>
-      <input class="refine--search-trigger" data-search-target="filterProperties" placeholder="<%= t('.type_to_search') %>..." type="text" data-action="refine--inline-conditions#filterConditions">
+      <input class="refine--search-trigger" data-search-target="filterProperties" placeholder="<%= t('.type_to_search') %>..." type="text" data-action="refine--typeahead-list#filter" autofocus>
     </div>
 
     <div class="refine--separator-m0"></div>
@@ -27,13 +27,14 @@
           data: {
             controller: "refine--turbo-stream-link",
             action: "refine--turbo-stream-link#visit",
-            refine__inline_conditions_target: "condition"
+            refine__typeahead_list_target: "listItem",
+            list_item_value: condition.display
           }
         %>
       <% end %>
 
       <%  categorized_conditions.each do |(category, conditions)| %>
-        <b data-refine--inline-conditions-target="category"><%= category %></b>
+        <b data-refine--typeahead-list-target="category"><%= category %></b>
         <% conditions.each do |condition| %>
           <%= link_to condition.display,
             new_refine_inline_criterion_url(@criterion.to_params.deep_merge(refine_inline_criterion: {condition_id: condition.id})),
@@ -41,7 +42,7 @@
             data: {
               controller: "refine--turbo-stream-link",
               action: "refine--turbo-stream-link#visit",
-              refine__inline_conditions_target: "condition",
+              refine__typeahead_list_target: "listItem",
               category: category
             }
           %>

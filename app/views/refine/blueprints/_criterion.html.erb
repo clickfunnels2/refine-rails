@@ -27,7 +27,7 @@
 
     <div class="refine-criterion-refinement-container">
       <%= render partial: 'refine/blueprints/clause_select', locals: {
-        meta: refinement[:meta], input_id: "input, #{refinement[:id]}", selected_clause: criterion.input.dig(:input, refinement[:id].to_sym, :clause) || {} } %>
+        meta: refinement[:meta], input_id: "input, #{refinement[:id]}", selected_clause: criterion.input.dig(refinement[:id].to_sym, :clause) || {} } %>
     </div>
 
     <%= render partial: "refine/blueprints/clauses/#{refinement[:component].underscore}", locals: {

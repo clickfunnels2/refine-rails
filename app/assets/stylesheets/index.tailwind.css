@@ -224,7 +224,7 @@
   }
 
   .refine-criterion-refinement-container {
-    @apply w-full pt-3 sm:w-auto sm:flex-shrink-0 sm:mr-3;
+    @apply w-full sm:w-auto sm:flex-shrink-0;
   }
 
   /* _delete_criterion.html.erb */

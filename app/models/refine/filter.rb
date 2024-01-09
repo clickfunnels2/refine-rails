@@ -50,7 +50,6 @@ module Refine
       end
     end
 
-    # DEPRECATED use Refine::Filters::Criterion#human_readable instead
     def human_readable_criterions
       output = []
       if blueprint.present?
@@ -58,7 +57,13 @@ module Refine
           if criterion[:type] == "conjunction"
             output << criterion[:word]
           else
-            output << get_condition_for_criterion(criterion).human_readable(criterion[:input])
+            condition = get_condition_for_criterion(criterion)
+            text = condition.human_readable(criterion[:input])
+            if condition.has_date_refinement?
+              date_refinement_condition = condition.has_date_refinement?.call
+              text += date_refinement_condition.human_readable(criterion[:input][:date_refinement])
+            end
+            output << text
           end
         end
       end

@@ -601,6 +601,10 @@
     padding: 0.5rem 0;
 }
 
+.refine--refinement-input-container {
+  margin: 0.5rem 0;
+}
+
 
 /*  _date_condition.html.erb */
 .refine--date-condition-days-text {

@@ -2,7 +2,7 @@
   <%= render "refine/inline/inputs/date_picker",
     input_fields: input_fields,
     attribute: :date1,
-    value: criterion.input.date1,
+    value: input_fields.object.date1,
     label: "#{criterion.condition.display.downcase} (#{t('.min')})",
     form_id: form_id
   %>
@@ -13,7 +13,7 @@
     <%= render "refine/inline/inputs/date_picker",
       input_fields: input_fields,
       attribute: :date2,
-      value: criterion.input.date2,
+      value: input_fields.object.date2,
       label: "#{criterion.condition.display.downcase} (#{t('.max')})",
       form_id: form_id
     %>

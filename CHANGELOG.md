@@ -1,3 +1,5 @@
+### 2.9.2
+  * Refinements now work with dropdown UI
 ### 2.9.1
   * Enhance inline option conditions
   * Fix a bug where inline filters were not loading clause-appropriate forms

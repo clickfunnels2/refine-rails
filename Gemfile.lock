@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    refine-rails (2.9.1)
+    refine-rails (2.9.2)
       rails (>= 6.0)
 
 GEM
@@ -102,14 +102,14 @@ GEM
     minitest-ci (3.4.0)
       minitest (>= 5.0.6)
     mysql2 (0.5.4)
-    net-imap (0.4.8)
+    net-imap (0.4.9.1)
       date
       net-protocol
     net-pop (0.1.2)
       net-protocol
     net-protocol (0.2.2)
       timeout
-    net-smtp (0.4.0)
+    net-smtp (0.4.0.1)
       net-protocol
     nio4r (2.7.0)
     nokogiri (1.13.8)

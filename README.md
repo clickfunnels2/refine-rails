@@ -42,41 +42,6 @@ This is a helper method you can inspect in `Hammerstone::FilterApplicationContro
     @pagy, @contacts = pagy(@refine_filter.get_query)
 ```
 
-# TODO: Everything below this header was not covered in the installation guide. Not sure if it is deprecated
-
-12. Add the `reveal` controller to your application if using the `filter_builder_dropdown` partial
-
-`yarn add stimulus-reveal`
-
-```javascript
-//index.js
-import RevealController from 'stimulus-reveal'
-
-application.register('reveal', RevealController)
-```
-
-~13. If the gems tailwind styles are being purged with JIT you can add the gem to `tmp/gems` and add this to your tailwing config.~ 
-
-``` tailwind.config.js
-  './tmp/gems/*/app/views/**/*.html.erb',
-  './tmp/gems/*/app/helpers/**/*.rb',
-  './tmp/gems/*/app/assets/stylesheets/**/*.css',
-  './tmp/gems/*/app/javascript/**/*.js',
-```
-
-~Run the following rake task:~ 
-```
-task :add_temp_gems do 
-  target = `bundle show refine-rails`.chomp
-  if target.present?
-    puts "Linking refine-rails to '#{target}'."
-    `ln -s #{target} tmp/gems/refine-rails`
-  end
-end
-```
-
-Don't forget to restart the server! 
-
 14. Add external styles - currently themify icons (can be overriden - the trash can icon is located in `_criterion.html.erb`) and `daterangepicker`
 A quick way to load them is in the `head` section. Also available as an npm package. 
 

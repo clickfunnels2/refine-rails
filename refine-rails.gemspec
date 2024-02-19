@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.homepage    = "https://rubygems.org/gems/refine-rails"
   spec.summary     = "Visual query builder for Rails"
   spec.description = "Refine is a flexible query builder for your apps. It lets your users filter down to exactly what they're looking for. Completely configured on the backend."
-  spec.license     = "Nonstandard"
+  spec.license     = "MIT"
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/clickfunnels2/refine-rails"

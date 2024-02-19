@@ -5,33 +5,38 @@
   refine__update_criterion_id_value: criterion_id,
   position: criterion.position}) do %>
 
+  <div class="refine-criterion-line">
   <!-- Select Condition -->
-  <div class="refine-criterion-condition-container">
-    <%= render partial: 'refine/blueprints/condition_select', locals: {
-      selected_condition_id: criterion.condition_id } %>
-  </div>
+    <div class="refine-criterion-condition-container">
+      <%= render partial: 'refine/blueprints/condition_select', locals: {
+        selected_condition_id: criterion.condition_id } %>
+    </div>
 
-  <!-- Select Clause -->
-  <div class="refine-criterion-clause-container">
-    <%= render partial: 'refine/blueprints/clause_select', locals: {
-        meta: criterion.meta, selected_clause: criterion.input[:clause]} %>
-  </div>
+    <!-- Select Clause -->
+    <div class="refine-criterion-clause-container">
+      <%= render partial: 'refine/blueprints/clause_select', locals: {
+          meta: criterion.meta, selected_clause: criterion.input[:clause]} %>
+    </div>
 
-  <!-- Render correct type of condition -->
-  <%= render partial: "refine/blueprints/clauses/#{criterion.component}", locals: {
-    criterion: criterion,
-    condition: criterion.condition, input: criterion.input, criterion_id: criterion_id, meta: criterion.meta, meta_clause: criterion.selected_clause_meta, input_id: nil } %>
+    <!-- Render correct type of condition -->
+    <%= render partial: "refine/blueprints/clauses/#{criterion.component}", locals: {
+      criterion: criterion,
+      condition: criterion.condition, input: criterion.input, criterion_id: criterion_id, meta: criterion.meta, meta_clause: criterion.selected_clause_meta, input_id: nil } %>
+  </div>
 
   <!-- Refinements -->
   <% criterion.refinements.each do |refinement|%>
 
-    <div class="refine-criterion-refinement-container">
-      <%= render partial: 'refine/blueprints/clause_select', locals: {
-        meta: refinement[:meta], input_id: "input, #{refinement[:id]}", selected_clause: criterion.input.dig(refinement[:id].to_sym, :clause) || {} } %>
-    </div>
+    <div class="refine-criterion-refinement-line">
+      <i class="fa-thin fa-l"></i>
+      <div class="refine-criterion-refinement-container">
+        <%= render partial: 'refine/blueprints/clause_select', locals: {
+          meta: refinement[:meta], input_id: "input, #{refinement[:id]}", selected_clause: criterion.input.dig(refinement[:id].to_sym, :clause) || {} } %>
+      </div>
 
-    <%= render partial: "refine/blueprints/clauses/#{refinement[:component].underscore}", locals: {
-      condition: refinement, input: criterion.input[refinement[:id].to_sym] || {}, criterion_id: criterion_id, meta: refinement[:meta], input_id: "input, #{refinement[:id]}", meta_clause: criterion.meta_for_refinement_clause(refinement), criterion: criterion} %>
+      <%= render partial: "refine/blueprints/clauses/#{refinement[:component].underscore}", locals: {
+        condition: refinement, input: criterion.input[refinement[:id].to_sym] || {}, criterion_id: criterion_id, meta: refinement[:meta], input_id: "input, #{refinement[:id]}", meta_clause: criterion.meta_for_refinement_clause(refinement), criterion: criterion} %>
+    </div>
   <% end %>
   <!-- End Refinements -->
 

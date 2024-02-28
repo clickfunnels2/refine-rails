@@ -23,7 +23,6 @@ class Refine::Filters::Criterion
   end
 
   def validate!
-    return if (input&.has_key?(:count_refinement) || input&.has_key?(:date_refinement))
     errors.clear
     return true if type == "conjunction"
     begin
@@ -31,7 +30,7 @@ class Refine::Filters::Criterion
       condition&.apply(input, filter.table, query_for_validate)
     rescue Refine::Conditions::Errors::ConditionClauseError => e
       e.errors.each do |error|
-        errors.add(:base, error.full_message)
+        errors.add(:base, :invalid, message: error.full_message)
       end
     end
   end

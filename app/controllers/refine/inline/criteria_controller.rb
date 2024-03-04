@@ -123,7 +123,8 @@ class Refine::Inline::CriteriaController < ApplicationController
           :clause,
           :date1,
           :date2,
-          :days
+          :days,
+          :modifier
         ]
       ]
     )

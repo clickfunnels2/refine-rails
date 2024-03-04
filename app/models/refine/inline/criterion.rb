@@ -93,8 +93,7 @@ class Refine::Inline::Criterion
     result = attributes.slice(:condition_id, :input_attributes)
     result[:input] = result.delete(:input_attributes)
     if input_attrs = result[:input]
-      input_attrs[:count_refinement] = input_attrs.delete(:count_refinement_attributes)
-      input_attrs[:date_refinement] = input_attrs.delete(:date_refinement_attributes)
+      result[:input] = input_attrs
     end
     result
   end

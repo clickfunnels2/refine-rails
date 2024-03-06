@@ -19,15 +19,15 @@ Instead of importing the plain `index.css`, include the raw tailwind file in you
 
 ```css
 /* in application.css */
-@import '@hammerstone/refine-stimulus/app/assets/stylesheets/index.tailwind.css';
+@import '@clickfunnels/refine-stimulus/app/assets/stylesheets/index.tailwind.css';
 ```
 
 ### Errors
 You may have to restart your server if you encounter the error: 
 ```
- NameError (uninitialized constant ApplicationController::Hammerstone
+ NameError (uninitialized constant ApplicationController::Refine
 web    | 
-web    |   include Hammerstone::FilterApplicationController
+web    |   include Refine::FilterApplicationController
 ```
 
 ## Custom configuration
@@ -143,52 +143,6 @@ const response = await fetch(this.updateStableIdUrlValue, {
 
 If the filter is valid, the server responds 200 OK with the stable_id in the JSON response
 If the filter is not valid, the server responds 422 Unprocessable Entity with an errors array in the JSON response
-
-## Customizing the datepicker
-By default date filters use [flatpickr](https://flatpickr.js.org/getting-started/).  End users can specify an alternative datepicker in their application javascript.  Here's an example using the daterangepicker that ships with Bullet Train:
-
-```javascript
-import $ from 'jquery' // ensure jquery is loaded before daterangepicker
-import 'daterangepicker'
-import 'daterangepicker/daterangepicker.css'
-
-window.HammerstoneRefine ||= {}
-window.HammerstoneRefine.datePicker = {
-  connect: function() {
-    $(this.fieldTarget).daterangepicker({
-      singleDatePicker: true,
-      autoUpdateInput: false,
-      minDate: this.futureOnlyValue ? new Date() : false,
-      locale: {
-        cancelLabel: "Cancel",
-        applyLabel: "Apply",
-        format: 'MM/DD/YYYY',
-      },
-      parentEl: $(this.element),
-      drops: this.dropsValue ? this.dropsValue : 'down',
-    })
-
-    $(this.fieldTarget).on('apply.daterangepicker', (event, picker) => {
-      const format =
-      $(this.fieldTarget).val(picker.startDate.format('MM/DD/YYYY'))
-      $(this.hiddenFieldTarget).val(picker.startDate.format('YYYY-MM-DD'))
-      this.hiddenFieldTarget.dispatchEvent(new Event('change', {bubbles: true}))
-    })
-
-    this.plugin = $(this.fieldTarget).data('daterangepicker')
-  },
-  disconnect: function() {
-    if (this.plugin === undefined) {
-      return
-    }
-
-    $(this.fieldTarget).off('apply.daterangepicker')
-
-    // revert to original markup, remove any event listeners
-    this.plugin.remove()
-  }
-}
-````
 
 ## Customizing Available Stored Filters
 
@@ -313,17 +267,15 @@ Running `yarn` again from your project's directory will revert back to the publi
 
 ```
 @hammerstone/refine-stimulus@2.4.2 published in store.
-Pushing @hammerstone/refine-stimulus@2.4.2 in /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/berry-refine-demo-clean
-Package @hammerstone/refine-stimulus@2.4.2 linked ==> /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/berry-refine-demo-clean/node_modules/@hammerstone/refine-stimulus
+Pushing @hammerstone/refine-stimulus@2.4.2 in [path]
+Package @hammerstone/refine-stimulus@2.4.2 linked ==> [path]
 ```
 4. Restart server 
 
 ## Bullet Train Installation
 Add ruby gem 
 ```
-source "https://yourAPIKey@gem.fury.io/hammerstonedev" do
-  gem "refine-rails"
-end
+gem "refine-rails"
 ```
 
 Installing the JavaScript package:
@@ -335,7 +287,7 @@ $ yarn add @hammerstone/refine-stimulus
 In `app/javascript/controllers/index.js` add
 
 ```js
-import { controllerDefinitions as refineControllers } from "@hammerstone/refine-stimulus"
+import { controllerDefinitions as refineControllers } from "@clickfunnels/refine-stimulus"
 application.load(refineControllers)
 ```
 

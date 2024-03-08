@@ -6,16 +6,14 @@
 %>
 
 <%= tag.div class: "refine--filter-wrapper", id: "refine-inline-filter-#{@refine_client_id}" do %>
-  <div class="refine--filter-row">
-    <%= render "refine/inline/filters/save_button" %>
-  </div>
-
   <%= tag.div class: main_row_class do %>
     <% if @refine_filter.blueprint.empty? %>
       <%= render "refine/inline/filters/add_first_condition_button", position: 0, btn_class: "
       refine--add-first-condition-btn" %>
     <% else %>
-      <div class="refine--filter-label"><%= t('refine.inline.filters.filter') %>:</div>
+      <div class="refine--filter-label">
+        <%= t('refine.inline.filters.filter') %>: 
+      </div>
       <div class="refine--groups-wrapper">
         <% groups.each.with_index do |group, i| %>
           <% unless i == 0 %>
@@ -30,6 +28,9 @@
             <%= render "refine/inline/filters/or_button", position: @refine_filter.blueprint.length %>
           </div>
         </div>
+        <%= render "refine/inline/filters/save_button" %>
+        <span class="refine--filter-clear" data-action="click->clear-criteria#clear"><%= t('refine.inline.filters.clear') %></span>
+        
       </div>
     <% end %>
   <% end %>

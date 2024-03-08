@@ -1,6 +1,6 @@
 class Refine::Inline::CriteriaController < ApplicationController
   layout false
-  before_action :set_refine_filter
+  before_action :set_refine_filter, except: [:clear]
 
   # List available conditions for new criteria
   # Carries position and index forward
@@ -131,7 +131,7 @@ class Refine::Inline::CriteriaController < ApplicationController
   end
 
   # either directly redirect or emit a `filter-submit-success` event
-  def handle_filter_update stable_id
+  def handle_filter_update(stable_id)
     # update_stable_id in url
     uri = URI(request.referrer)
     new_query_ar = URI.decode_www_form(String(uri.query))

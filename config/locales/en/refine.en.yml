@@ -60,6 +60,7 @@ en:
         criteria_limit: "You can only create up to %{criteria_limit} filter conditions"
         save_filter: "Save Filter"
         or: "or"
+        clear: "clear"
       inputs:
         date_number_of_placeholder: "Number of"
         days: "days"

@@ -129,6 +129,7 @@ export default class extends Controller {
   }
 
   addCriterion(previousCriterionId) {
+    console.log("Add criteria")
     const { blueprint, conditions } = this
     const condition = ( conditions.find(c => c.id == this.defaultConditionIdValue) || conditions[0] )
     const { meta } = condition
@@ -216,5 +217,10 @@ export default class extends Controller {
       criterion[inputId] = { ...criterion[inputId], ...input }
     }
     blueprintUpdatedEvent(this.element, {blueprint: this.blueprint, formId: this.formIdValue})
+  }
+
+  clearCriteria() {
+    console.log("In clearCriteria")
+    blueprintUpdatedEvent(this.element, {blueprint: [], formId: this.formIdValue})
   }
 }

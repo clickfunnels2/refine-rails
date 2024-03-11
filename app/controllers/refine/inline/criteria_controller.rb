@@ -1,6 +1,6 @@
 class Refine::Inline::CriteriaController < ApplicationController
   layout false
-  before_action :set_refine_filter, except: [:clear]
+  before_action :set_refine_filter
 
   # List available conditions for new criteria
   # Carries position and index forward

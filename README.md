@@ -91,7 +91,7 @@ event.detail includes the following properties:
 
 #### filter-stored: This event is emitted when the filter has been saved to the database (i.e. the user clicked "Save Filter").
 event.detail includes the following properties
-storedFilterId: the primary key of the associated record in the hammerstone_refine_stored_filters_table
+storedFilterId: the primary key of the associated record in the refine_stored_filters_table
 
 ## Forcing validations
 To force validations, make a POST request to /refine/blueprints with the following JSON payload:
@@ -120,7 +120,7 @@ const response = await fetch('/refine/blueprints', {
 ```
 
 #### Fetching a stable_id from the server
-If you need to get a URL-encoded stable_id for a filter without relying on the filter-stabilized event, you can make a PUT request to /hammerstone/update_stable_id with the following JSON payload:
+If you need to get a URL-encoded stable_id for a filter without relying on the filter-stabilized event, you can make a PUT request to /refine/update_stable_id with the following JSON payload:
 - filter: the ruby class name of the filter
 - blueprint: JSON stringified version of the current blueprint
 
@@ -201,14 +201,14 @@ yarn build --watch # leave this running to automatically rebuild when you change
 2.  From your application's folder run:
 
 ```sh
-yarn link "@hammerstone/refine-stimulus"
+yarn link "@clickfunnels/refine-stimulus"
 ```
 
 3. Restart your asset build server (webpacker/esbuild/etc)
 
 When you're ready to switch back to the published npm package, run:
 ```sh
-yarn unlink "@hammerstone/refine-stimulus"
+yarn unlink "@clickfunnels/refine-stimulus"
 ```
 
 #### Troubleshooting yarn link
@@ -221,7 +221,7 @@ Note that theoretically, any changes you make to the javascript and css assets s
 5.  Run `bin/rails assets:clean` from your app's directory and restart servers
 
 If none of the above steps work, try tearing down the package link and setting it up again:
-1. Run `yarn link "@hammerstone-stimulus"` from your app's directory and shut down all servers.
+1. Run `yarn link "@clickfunnels-stimulus"` from your app's directory and shut down all servers.
 2. Run `yarn unlink` from the gem directory.
 3. Redo the steps listed in this section for setting up the linked package
 4. Start up your web and asset servers
@@ -247,7 +247,7 @@ From the directory of the project including this package:
 
 ```bash
 
-yalc link @hammerstone/refine-stimulus
+yalc link @clickfunnels/refine-stimulus
 ```
 
 When you make local updates to the package: 
@@ -266,9 +266,15 @@ Running `yarn` again from your project's directory will revert back to the publi
 3. in `refine-rails` repo follow all yalc steps below -> you should see this message if successful
 
 ```
+<<<<<<< HEAD
 @hammerstone/refine-stimulus@2.4.2 published in store.
 Pushing @hammerstone/refine-stimulus@2.4.2 in [path]
 Package @hammerstone/refine-stimulus@2.4.2 linked ==> [path]
+=======
+@clickfunnels/refine-stimulus@2.4.2 published in store.
+Pushing @clickfunnels/refine-stimulus@2.4.2 in /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/berry-refine-demo-clean
+Package @clickfunnels/refine-stimulus@2.4.2 linked ==> /Users/colleenschnettler/Documents/Documents/Developer/Hammerstone/berry-refine-demo-clean/node_modules/@clickfunnels/refine-stimulus
+>>>>>>> c30f86b (readme updates)
 ```
 4. Restart server 
 
@@ -281,7 +287,7 @@ gem "refine-rails"
 Installing the JavaScript package:
 
 ```bash
-$ yarn add @hammerstone/refine-stimulus
+$ yarn add @clickfunnels/refine-stimulus
 ```
 
 In `app/javascript/controllers/index.js` add

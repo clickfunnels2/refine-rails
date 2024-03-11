@@ -19,3 +19,5 @@
 app/assets/stylesheets/index.css
 *.sublime-project
 *.sublime-workspace
+.DS_Store
+*/.DS_Store

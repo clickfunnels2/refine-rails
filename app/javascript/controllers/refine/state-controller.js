@@ -217,4 +217,5 @@ export default class extends Controller {
     }
     blueprintUpdatedEvent(this.element, {blueprint: this.blueprint, formId: this.formIdValue})
   }
+
 }

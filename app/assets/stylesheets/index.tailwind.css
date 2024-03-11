@@ -428,6 +428,8 @@
   gap: 5px;
   position: relative;
   padding: 0 10px;
+  align-items: center;
+
   &:before , &:after {
     content: "";
     position: absolute;

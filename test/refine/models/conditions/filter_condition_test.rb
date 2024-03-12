@@ -26,7 +26,6 @@ module Refine::Conditions
       ENV['NAMESPACE_REFINE_STABILIZERS'] = "1"
       Refine::StoredFilter.destroy_all
       Refine::StoredFilter.create(name: "A filter of an awesome product", state: filter_state, id: 2,filter_type: "ProductsFilter")
-      puts "filter condition test"
 
       data = {clause: FilterCondition::CLAUSE_IN, selected: ["2"]}
       expected_sql = <<~SQL.squish

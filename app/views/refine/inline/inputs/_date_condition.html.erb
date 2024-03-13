@@ -2,6 +2,8 @@
   <%= render "refine/inline/inputs/date_condition_days", input_fields: input_fields, criterion: criterion, form_id: form_id %>
 <% elsif input_fields.object.clause.in? ["btwn", "nbtwn"] %>
   <%= render "refine/inline/inputs/date_condition_range", input_fields: input_fields, criterion: criterion, form_id: form_id %>
+<% elsif input_fields.object.clause.in? ['st', 'nst'] %>
+  <!-- render nothing -->
 <% else %>
   <%= render "refine/inline/inputs/date_condition_single", input_fields: input_fields, criterion: criterion, form_id: form_id %>
 <% end %>

@@ -719,6 +719,12 @@
   width: 100%;
 }
 
+.refine--option-list {
+  margin-top: 5px;
+  max-height: 180px;
+  overflow: auto;
+}
+
 @media (min-width: 640px) {
   .refine--option-condition-container {
     margin-right: 0.75rem;

@@ -1,3 +1,5 @@
+### 2.9.8
+  * Inline UI styling cleanup
 ### 2.9.2
   * Refinements now work with dropdown UI
 ### 2.9.1

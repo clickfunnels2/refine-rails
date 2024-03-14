@@ -1,6 +1,6 @@
 {
   "name": "@clickfunnels/refine-stimulus",
-  "version": "2.9.7",
+  "version": "2.9.8",
   "description": "Refine is a flexible query builder for your apps. It lets your users filter down to exactly what they're looking for. Completely configured on the backend.",
   "browserslist": [
     "defaults",

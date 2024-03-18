@@ -1,3 +1,5 @@
+### 2.9.9
+  * Inline UI - edge case cleanup for conditions with only st and nst clauses allowed
 ### 2.9.8
   * Inline UI styling cleanup
 ### 2.9.2

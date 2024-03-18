@@ -2,6 +2,7 @@
   condition = @criterion.condition
   date_refinement_condition = condition.has_date_refinement? && condition.get_date_refinement_condition
   count_refinement_condition = condition.has_count_refinement? && condition.get_count_refinement_condition
+  condition_clause = @criterion.input.clause || condition.approved_clauses.first.id
 
   last_clause_select = if count_refinement_condition
     :count
@@ -23,7 +24,7 @@
 
 
   <%# Input Value %>
-  <% unless ['st', 'nst'].include? @criterion.input.clause %>
+  <% unless ['st', 'nst'].include? condition_clause %>
     <%= render @criterion.input_partial, criterion: @criterion, form: form, input_fields: input_fields, form_id: form_id %>
     <% if last_clause_select == :criterion %>
       <div class="refine--separator"></div>
@@ -37,7 +38,7 @@
       @criterion.condition.approved_clauses,
       :id,
       :display,
-      {},
+      {selected: condition_clause},
       class: "refine--select refine--clause-select",
       data: {action: "change->refine--criterion-form#refresh"},
       form: form_id

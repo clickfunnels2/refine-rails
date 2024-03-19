@@ -18,6 +18,9 @@
 <%# The actual form tag is appended to the end of the body html.  Inputs are attached using the `form` attribute. This allows the query builder to be placed inside an outer form on the page. %>
 <%= turbo_stream.append_all "body" do %>
   <%= form_with url: refine_inline_criteria_path,
-      method: :post, id: form_id, data: {controller: "refine--turbo-stream-form", action: "submit->refine--turbo-stream-form#submit"} %>
+      method: :post,
+      id: form_id,
+      html: { autocomplete: "off" },
+      data: {controller: "refine--turbo-stream-form", action: "submit->refine--turbo-stream-form#submit"} %>
 <% end %>
 

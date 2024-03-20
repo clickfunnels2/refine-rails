@@ -21,6 +21,7 @@
   <%= form_with url: refine_inline_criterion_path(@criterion.position),
       method: :put,
       id: form_id,
+      html: { autocomplete: "off" },
       data: {controller: "refine--turbo-stream-form", action: "submit->refine--turbo-stream-form#submit"}
    %>
 <% end %>

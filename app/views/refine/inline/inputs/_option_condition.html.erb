@@ -4,8 +4,6 @@
     <input class="refine--search-trigger" data-search-target="filterProperties" placeholder="<%= t('.type_to_search') %>..." type="text" data-action="refine--typeahead-list#filter" autofocus>
   </div>
 
-  <div class="refine--separator-m0"></div>
-
   <div class="refine--option-list">
     <% criterion.options.each do |option| %>
       <%= tag.label class: "refine--option-label",

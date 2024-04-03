@@ -22,15 +22,6 @@
 
 <%= form.fields :input_attributes, model: @criterion.input do |input_fields| %>
 
-
-  <%# Input Value %>
-  <% unless ['st', 'nst'].include? condition_clause %>
-    <%= render @criterion.input_partial, criterion: @criterion, form: form, input_fields: input_fields, form_id: form_id %>
-    <% if last_clause_select == :criterion %>
-      <div class="refine--separator"></div>
-    <% end %>
-  <% end %>
-
   <%# Clause Select %>
   <div class="refine--criterion-clause-container">
     <%= input_fields.label :clause, t('.rule') %>
@@ -43,24 +34,26 @@
       data: {action: "change->refine--criterion-form#refresh"},
       form: form_id
     %>
-    <% if last_clause_select == :criterion %>
-      <%= form.button t('global.buttons.apply'), class: "refine--apply-button", type: "submit", form: form_id %>
-    <% end %>
   </div>
 
+
+  <%# Input Value %>
+  <% unless ['st', 'nst'].include? condition_clause %>
+    <div class="refine--separator"></div>
+    <%= render @criterion.input_partial, criterion: @criterion, form: form, input_fields: input_fields, form_id: form_id %>
+  <% end %>
+
+  <% if last_clause_select == :criterion %>
+    <div class="refine--separator"></div>
+    <%= form.button t('global.buttons.apply'), class: "refine--apply-button", type: "submit", form: form_id %>
+  <% end %>
+  
   <%# Date Refinement  %>
   <% if @criterion.condition.has_date_refinement? %>
     <div class="refine--separator"></div>
-    <label><%= date_refinement_condition.display %></label>
-    <%= input_fields.fields :date_refinement_attributes, model: @criterion.input.date_refinement do |date_fields| %>
-      <div class="refine--refinement-input-container">
-        <% unless ['st', 'nst'].include? @criterion.input.date_refinement.clause %>
-          <%= render "refine/inline/inputs/date_condition", criterion: @criterion, form: form, input_fields: date_fields, form_id: form_id %>
-        <% end %>
-
-      </div>
-
-      <div class="refine--criterion-clause-container">
+    <div class="refine--criterion-clause-container refine--date-refinement-clause-container">
+      <%= input_fields.label :clause, date_refinement_condition.display, class: "refine--block" %>
+      <%= input_fields.fields :date_refinement_attributes, model: @criterion.input.date_refinement do |date_fields| %>
         <%= date_fields.label :clause, t('.rule') %>
         <%= date_fields.collection_select :clause,
           date_refinement_condition.approved_clauses,
@@ -71,12 +64,16 @@
           data: {action: "change->refine--criterion-form#refresh"},
           form: form_id
         %>
-        <% if last_clause_select == :date %>
-          <%= form.button t('global.buttons.apply'), class: "refine--apply-button", type: "submit", form: form_id %>
+      </div>
+      <div class="refine--refinement-input-container">
+        <% unless ['st', 'nst'].include? @criterion.input.date_refinement.clause %>
+          <%= render "refine/inline/inputs/date_condition", criterion: @criterion, form: form, input_fields: date_fields, form_id: form_id %>
         <% end %>
       </div>
     <% end %>
-
+    <% if last_clause_select == :date %>
+      <%= form.button t('global.buttons.apply'), class: "refine--apply-button", type: "submit", form: form_id %>
+    <% end %>
   <% end %>
 
   <%# Count Refinement  %>

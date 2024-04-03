@@ -607,6 +607,9 @@
   margin: 0.5rem 0;
 }
 
+.refine--date-refinement-clause-container > .refine--block {
+  display: block;
+}
 
 /*  _date_condition.html.erb */
 .refine--date-condition-days-text {

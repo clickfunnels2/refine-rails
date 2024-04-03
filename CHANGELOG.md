@@ -1,3 +1,5 @@
+### 2.9.11
+  * Inline UI - Reordering elements in popup form to flow better
 ### 2.9.10
   * Inline UI - Improved inline-ui styling from feedback 
 ### 2.9.9

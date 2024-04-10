@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    refine-rails (2.9.11)
+    refine-rails (2.9.12)
       rails (>= 6.0)
 
 GEM
@@ -149,7 +149,7 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
-    rake (13.2.0)
+    rake (13.2.1)
     regexp_parser (2.6.0)
     rexml (3.2.5)
     rubocop (1.35.1)

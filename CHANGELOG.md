@@ -1,3 +1,5 @@
+### 2.9.12
+  * Inline UI - fixed bug with turbo-streams loading a stored filter
 ### 2.9.11
   * Inline UI - Reordering elements in popup form to flow better
 ### 2.9.10

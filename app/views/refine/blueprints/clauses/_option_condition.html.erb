@@ -19,6 +19,7 @@
       <% condition.meta[:options].each do |option| %>
         <option
           value="<%= option[:id] %>"
+          title="<%= option[:display] %>"
           <% if selected.find { |id|  id == option[:id] } %>selected<% end %>
         >
           <%= option[:display].truncate(64) %>

@@ -36,6 +36,7 @@
         <option
           value="<%= condition_option[:id] %>"
           <% if selected_condition_id == condition_option[:id] %>selected<% end %>
+          title="<%= condition_option[:display] %>"
         ><%= condition_option[:display] %></option>
       <% end %>
     </optgroup>
@@ -45,6 +46,7 @@
           <option
             value="<%= condition_option[:id] %>"
             <% if selected_condition_id == condition_option[:id] %>selected<% end %>
+            title="<%= condition_option[:display] %>"
           ><%= condition_option[:display] %></option>
         <% end %>
       </optgroup>

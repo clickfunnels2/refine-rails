@@ -17,7 +17,7 @@
         <% else %>
           <%= radio_button_tag input_fields.field_name("selected"), option.id, (criterion.input.selected == [option.id]), class: "refine--option-input", form: form_id %>
         <% end %>
-        <span class="refine--option-text"><%= option.display.truncate(64) %></span>
+        <span class="refine--option-text" title="<%= option.display %>"><%= option.display.truncate(64) %></span>
       <% end %>
     <% end %>
     <% if criterion.condition.meta[:postfix] %>

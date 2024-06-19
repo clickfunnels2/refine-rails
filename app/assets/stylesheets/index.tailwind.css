@@ -840,7 +840,8 @@ input.refine--text-condition-input:focus {
   padding: 5px;
   align-items: center;
   background-color: #fff;
-  &:hover {
+  &:not([disabled]):hover {
+    /* Add your hover styles here */
     color: #111;
     background-color: #f8f8f8;
   }

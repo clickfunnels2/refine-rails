@@ -840,7 +840,12 @@ input.refine--text-condition-input:focus {
   padding: 5px;
   align-items: center;
   background-color: #fff;
-  &:hover {
+  &:disabled {
+    color: #111;
+    background-color: #f8f8f8;
+    cursor: not-allowed;
+  }
+  &:not([disabled]):hover {
     color: #111;
     background-color: #f8f8f8;
   }

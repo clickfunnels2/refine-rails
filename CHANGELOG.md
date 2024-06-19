@@ -1,3 +1,7 @@
+### 2.9.14
+  * Inline UI - tweaking ui for condition limits to better tell user why they cannot add more.
+### 2.9.13
+  * OptionCondition selection now has a title attribute on each selection in case of overflow. Users can hover over the items to see the full text
 ### 2.9.12
   * Inline UI - fixed bug with turbo-streams loading a stored filter
 ### 2.9.11

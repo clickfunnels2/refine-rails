@@ -66,6 +66,10 @@ en:
         days: "days"
         and: "and"
 
+    blueprints:
+      condition_select:
+        recommended: "Recommended"
+
     refine_blueprints:
       add_and:
         add_and: "AND"
@@ -184,5 +188,8 @@ en:
         filters:
           add_first_condition_button:
             filter: "Filter"
+          criteria:
+            index:
+              recommended: "Recommended"
           load_button:
             load_filter: "Load Filter"

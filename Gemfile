@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 # Specify your gem's dependencies in refine-rails.gemspec.
 gemspec
 
-gem "mysql2"
+gem "mysql2", "~> 0.5.6"
 
 gem "sprockets-rails"
 gem "byebug"

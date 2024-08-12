@@ -312,5 +312,9 @@ module Refine
     def criteria_limit_set?
       criteria_limit.to_i.positive?
     end
+
+    def has_category_ordering?
+      respond_to?(:category_order) && category_order.is_a?(Array) && category_order.any?
+    end
   end
 end

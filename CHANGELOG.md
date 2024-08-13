@@ -1,3 +1,6 @@
+### 2.10.0
+  * New Feature - Recommended Conditions: allows prepending condition list with recommended conditions
+  * New Feature - Allow a filter to specify the order of categories with `def category_order`
 ### 2.9.14
   * Inline UI - tweaking ui for condition limits to better tell user why they cannot add more.
 ### 2.9.13

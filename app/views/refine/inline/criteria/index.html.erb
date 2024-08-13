@@ -2,8 +2,18 @@
   # a hash mapping Category => [array, of, conditions], sorted by category
   categorized_conditions = @conditions
     .group_by {|c| c.meta[:category].presence}
-    .sort_by {|(category, _conditions)| category.to_s.downcase }
+    .sort_by do |(category, _conditions)|
+      if @refine_filter.has_category_ordering?
+        @refine_filter.category_order.index(category) || Float::INFINITY
+      else
+        category.to_s.downcase
+      end
+    end
     .to_h
+
+  recommended_conditions = @conditions
+    .select { |c| c.meta[:recommended] }
+    .sort_by {|recommended| recommended.to_s.downcase }
 
   # an array of uncategorized conditions
   uncategorized_conditions = categorized_conditions.delete(nil)
@@ -31,17 +41,34 @@
     <div class="refine--separator-m0"></div>
 
     <div class="refine--condition-list">
-      <% uncategorized_conditions.each do |condition| %>
-        <%= link_to condition.display,
-          new_refine_inline_criterion_url(@criterion.to_params.deep_merge(refine_inline_criterion: {condition_id: condition.id})),
-          class: "refine--condition-list-item",
-          data: {
-            controller: "refine--turbo-stream-link",
-            action: "refine--turbo-stream-link#visit",
-            refine__typeahead_list_target: "listItem",
-            list_item_value: condition.display
-          }
-        %>
+      <% if uncategorized_conditions&.any? %>
+        <% uncategorized_conditions.each do |condition| %>
+          <%= link_to condition.display,
+            new_refine_inline_criterion_url(@criterion.to_params.deep_merge(refine_inline_criterion: {condition_id: condition.id})),
+            class: "refine--condition-list-item",
+            data: {
+              controller: "refine--turbo-stream-link",
+              action: "refine--turbo-stream-link#visit",
+              refine__typeahead_list_target: "listItem",
+              list_item_value: condition.display
+            }
+          %>
+          <% end %>
+      <% end %>
+
+      <% if recommended_conditions.any? %>
+        <b data-refine--typeahead-list-target="recommended"><%= t('.recommended') %></b>
+        <% recommended_conditions.each do |condition| %>
+          <%= link_to condition.display,
+            new_refine_inline_criterion_url(@criterion.to_params.deep_merge(refine_inline_criterion: {condition_id: condition.id})),
+            class: "refine--condition-list-item",
+            data: {
+              controller: "refine--turbo-stream-link",
+              action: "refine--turbo-stream-link#visit",
+              refine__typeahead_list_target: "listItem",
+            }
+          %>
+        <% end %>
       <% end %>
 
       <%  categorized_conditions.each do |(category, conditions)| %>

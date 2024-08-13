@@ -5,7 +5,10 @@
     conditions.filter { |c| c[:meta][:category] == category}
   end
 
-  categories = conditions.map { |c| c[:meta][:category] }.uniq.compact
+  # If an ordering has been defined for categories, use that, otherwise use the order in which they appear in the sorted conditions
+  categories = (@refine_filter.has_category_ordering?) ? @refine_filter.category_order : conditions.map { |c| c[:meta][:category] }.uniq.compact
+
+  recommended_conditions = conditions.select { |c| c[:meta][:recommended] }
 
   # Note that the stimulus controllers set default condition id for new conditions
   # so this is only for rare cases where it gets unset
@@ -40,6 +43,19 @@
         ><%= condition_option[:display] %></option>
       <% end %>
     </optgroup>
+
+    <% if recommended_conditions&.any? %>
+      <optgroup class="divider" label="<%= t(".recommended") %>">
+        <% recommended_conditions.each do |condition_option| %>
+          <option
+            value="<%= condition_option[:id] %>"
+            <% if selected_condition_id == condition_option[:id] %>selected<% end %>
+            title="<%= condition_option[:display] %>"
+          ><%= condition_option[:display] %></option>
+        <% end %>
+      </optgroup>
+    <% end %>
+
     <% categories.each do |category| %>
       <optgroup class="divider" label="<%= category %>">
         <% conditions_for_category.call(category).each do |condition_option| %>

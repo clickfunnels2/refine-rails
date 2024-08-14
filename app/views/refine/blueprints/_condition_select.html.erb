@@ -34,15 +34,17 @@
     name="conditions"
     class="refine-condition-select"
   >
-    <optgroup >
-      <% uncategorized_conditions.each do |condition_option| %>
-        <option
-          value="<%= condition_option[:id] %>"
-          <% if selected_condition_id == condition_option[:id] %>selected<% end %>
-          title="<%= condition_option[:display] %>"
-        ><%= condition_option[:display] %></option>
-      <% end %>
-    </optgroup>
+    <% if uncategorized_conditions&.any? %>
+      <optgroup >
+        <% uncategorized_conditions.each do |condition_option| %>
+          <option
+            value="<%= condition_option[:id] %>"
+            <% if selected_condition_id == condition_option[:id] %>selected<% end %>
+            title="<%= condition_option[:display] %>"
+          ><%= condition_option[:display] %></option>
+        <% end %>
+      </optgroup>
+    <% end %>      
 
     <% if recommended_conditions&.any? %>
       <optgroup class="divider" label="<%= t(".recommended") %>">

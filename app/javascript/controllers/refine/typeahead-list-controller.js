@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
 
-  static targets = ['listItem', 'category']
+  static targets = ['listItem', 'category', 'recommended']
 
   filter(event) {
     const query = event.currentTarget.value.toLowerCase()
@@ -20,7 +20,11 @@ export default class extends Controller {
       }
     })
 
-    // hide / show category headers that have
+    this.recommendedTargets.forEach(recommendedNode => {
+      (query !== '' && visibleCategories.size === 0) ? recommendedNode.hidden = true : recommendedNode.hidden = false
+    })
+
+    // hide / show category headers that have visible listItems
     this.categoryTargets.forEach(categoryNode => {
       const categoryName = categoryNode.innerHTML
       if (visibleCategories.has(categoryName)) {

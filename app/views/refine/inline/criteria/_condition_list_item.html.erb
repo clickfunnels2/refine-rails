@@ -1,0 +1,27 @@
+<% 
+  category ||= nil
+
+  data = {
+    controller: "refine--turbo-stream-link",
+    action: "refine--turbo-stream-link#visit",
+    refine__typeahead_list_target: "listItem",
+    list_item_value: condition.display,
+  } 
+  if category && category.present?
+    data[:category] = category
+  end
+%>
+<%= link_to(
+  new_refine_inline_criterion_url(@criterion.to_params.deep_merge(refine_inline_criterion: {condition_id: condition.id})),
+  {
+    class: "refine--condition-list-item",
+  }.merge(data: data)) do %>
+  <% if condition.has_icon? %>
+    <% if condition.icon_class.present? %>
+      <i class="<%= condition.icon_class %>"></i>
+    <% else %>
+      <%= render partial: condition.icon_template[:template_path], locals: condition.icon_template[:locals] %>
+    <% end %>
+  <% end %>
+  <%= condition.display %>
+<% end %>

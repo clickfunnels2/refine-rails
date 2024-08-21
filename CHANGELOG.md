@@ -1,3 +1,7 @@
+### 2.11.0
+  * New Feature - Allow icons to be used in condition dropdowns and give configurable control over rendering of the condition item. Note - this only impacts the Inline UI
+### 2.10.1
+  * Fix - addressed an issue where if no uncategorized conditions existed, an empty optgroup would appear
 ### 2.10.0
   * New Feature - Recommended Conditions: allows prepending condition list with recommended conditions
   * New Feature - Allow a filter to specify the order of categories with `def category_order`

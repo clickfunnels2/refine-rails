@@ -61,11 +61,21 @@
     <% categories.each do |category| %>
       <optgroup class="divider" label="<%= category %>">
         <% conditions_for_category.call(category).each do |condition_option| %>
+          <%= puts condition_option.inspect %>
           <option
             value="<%= condition_option[:id] %>"
             <% if selected_condition_id == condition_option[:id] %>selected<% end %>
             title="<%= condition_option[:display] %>"
-          ><%= condition_option[:display] %></option>
+          >
+            <% if condition_option[:icon_class] || condition_option[:icon_template] %>
+              <% if condition_option[:icon_class] %>
+                <i class="<%= condition_option[:icon_class] %>"></i>
+              <% else %>
+                TODO: Render template here
+              <% end %>
+            <% end %>
+            <%= condition_option[:display] %>
+          </option>
         <% end %>
       </optgroup>
     <% end %>

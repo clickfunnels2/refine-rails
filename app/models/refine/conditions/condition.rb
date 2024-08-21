@@ -10,6 +10,7 @@ module Refine::Conditions
     include HasMeta
     include UsesAttributes
     include HasRefinements
+    include HasIcon
 
     attr_reader :ensurances, :before_validations, :clause, :filter
     attr_accessor :display, :id, :is_refinement, :attribute

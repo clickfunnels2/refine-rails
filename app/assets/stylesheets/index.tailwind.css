@@ -382,25 +382,32 @@
 .refine--filter-wrapper {
   font-size: 14px;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   gap: 12px;
   margin-top: 12px;
 }
 
 .refine--filter-row {
   display: flex;
+  width: 100%;
+  gap: 10px;
+  row-gap: 15px;
+  align-items: center;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.refine--groups-wrapper {
+  flex-grow: 1;
+  display: flex;
   gap: 10px;
   row-gap: 15px;
   align-items: center;
   flex-wrap: wrap;
 }
 
-.refine--groups-wrapper {
-  display: flex;
-  gap: 10px;
-  row-gap: 15px;
-  align-items: center;
-  flex-wrap: wrap;
+.refine--filter-control-group {
+  text-wrap: nowrap;
 }
 
 .refine--group-join, .refine--condition-join {
@@ -429,6 +436,7 @@
   position: relative;
   padding: 0 10px;
   align-items: center;
+  flex-wrap: wrap;
 
   &:before , &:after {
     content: "";

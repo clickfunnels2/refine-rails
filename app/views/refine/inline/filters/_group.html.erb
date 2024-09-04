@@ -2,6 +2,6 @@
   <% unless i == 0 %>
     <div class="refine--condition-join"><%= t(".and") %></div>
   <% end %>
-  <%= render "refine/inline/filters/criterion", criterion: criterion %>
+  <%= render "refine/inline/filters/criterion", criterion: criterion, placement: i, size: group.length %>
 <% end %>
 <%= render "refine/inline/filters/and_button", position: group.last.position + 1 %>

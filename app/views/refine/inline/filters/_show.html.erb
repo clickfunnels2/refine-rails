@@ -17,15 +17,10 @@
           <% unless i == 0 %>
               <div class="refine--group-join"><%= t("refine.inline.filters.or") %></div>
             <% end %>
-          <div class="refine--group">
-            
-            <div class="refine--group-conditions-wrapper">
-              <%= render "refine/inline/filters/group", group: group %>
-            </div>
+            <%= render "refine/inline/filters/group", group: group %>
             <% if i == groups.length - 1 %>
               <%= render "refine/inline/filters/or_button", position: @refine_filter.blueprint.length %>
             <% end %>
-          </div>
         <% end %>
 
       </div>

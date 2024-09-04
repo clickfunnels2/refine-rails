@@ -492,11 +492,58 @@
   text-decoration: none;
 }
 
-.refine--condition-pill-wrapper-wrapper {
+.refine--condition-pill-wrapper {
   display: flex;
   align-items: center;
   gap: 5px;
   position: relative;
+}
+
+.refine--condition-pill-start {
+  padding: 0 0 0 10px;
+  &:before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: -2px;
+    bottom: -2px;
+    border: 2px solid #eee;
+    width: 3px;
+  }
+  &:hover {
+    &:before{
+      border-color: #aaa;
+    }
+  }
+  &:before {
+    border-radius: 6px 0 0 6px;
+    left: 0;
+    border-right: none;
+  }
+  
+}
+
+.refine--condition-pill-end {
+  padding: 0 10px 0 0;
+  &:after {
+    content: "";
+    position: absolute;
+    right: -10px;
+    top: -2px;
+    bottom: -2px;
+    border: 2px solid #eee;
+    width: 3px;
+  }
+  &:hover {
+    &:after {
+      border-color: #aaa;
+    }
+  }
+  &:after {
+    border-radius: 0 6px 6px 0;
+    right: 0;
+    border-left: none;
+  }
 }
 
 .refine--condition-pill {

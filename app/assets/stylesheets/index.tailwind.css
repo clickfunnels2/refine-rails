@@ -906,6 +906,10 @@ input.refine--text-condition-input:focus {
   }
 }
 
+.refine--add-group-button {
+  margin-left: 10px;
+}
+
 .refine--has-many-groups .refine--add-button-label {
   display: none;
 }

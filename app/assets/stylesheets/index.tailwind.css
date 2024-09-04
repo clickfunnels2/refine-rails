@@ -529,8 +529,8 @@
     content: "";
     position: absolute;
     right: -10px;
-    top: -2px;
-    bottom: -2px;
+    top: -6px;
+    bottom: -6px;
     border: 2px solid #eee;
     width: 3px;
   }
@@ -541,7 +541,6 @@
   }
   &:after {
     border-radius: 0 6px 6px 0;
-    right: 0;
     border-left: none;
   }
 }
@@ -876,14 +875,14 @@ input.refine--text-condition-input:focus {
 
 .refine--add-condition-button.refine--add-first-condition-button,
 .refine--add-condition-group-button.refine--add-first-condition-button {
-    border: 1px dotted #aaa;
-    padding-right: 8px;
-    line-height: 16px;
-    &:hover {
-      background-color: #fff;
-      border-style: solid;
-      color: #111;
-    }
+  border: 1px dotted #aaa;
+  padding-right: 8px;
+  line-height: 16px;
+  &:hover {
+    background-color: #fff;
+    border-style: solid;
+    color: #111;
+  }
 }
 
 .refine--add-condition-button, .refine--add-group-button {
@@ -895,6 +894,7 @@ input.refine--text-condition-input:focus {
   padding: 5px;
   align-items: center;
   background-color: #fff;
+  position: relative;
   &:disabled {
     color: #111;
     background-color: #f8f8f8;

@@ -1,10 +1,7 @@
 <%# Filter Pill partial %>
 <% 
-puts "CRITERION VARS: #{placement}, #{size}"
   pill_class = if placement == 0
     "refine--condition-pill-start"
-  elsif placement == size - 1
-    "refine--condition-pill-last"
   end
 %>
 

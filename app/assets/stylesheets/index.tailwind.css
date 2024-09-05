@@ -408,6 +408,7 @@
 
 .refine--filter-control-group {
   text-wrap: nowrap;
+  display: flex;
 }
 
 .refine--group-join, .refine--condition-join {
@@ -859,9 +860,6 @@ input.refine--text-condition-input:focus {
   text-decoration: none;
 }
 
-.refine--save-filter-link-label {
-  border-bottom: 1px dotted #111;
-}
 /*
   *********************************************
   Inline Final Styles
@@ -1014,16 +1012,19 @@ button.refine--apply-button {
   }
 }
 
-.refine--save-filter-link {
+.refine--save-filter-link, .refine--clear-filter-link {
   display: flex;
   align-items: center;
   gap: 5px;
   font-size: 14px;
-  padding: 3px 0;
+  padding: 3px 0 3px 10px;
   border: 1px solid transparent;
   border-radius: 6px;
 }
 
+.refine--save-filter-link-label, .refine--clear-filter-link-label {
+  border-bottom: 1px dotted #111;
+}
 .refine--save-filter-input-wrapper {
   display: flex;
   gap: 5px;

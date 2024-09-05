@@ -27,6 +27,7 @@
     <% end %>
    <% if @refine_filter.blueprint&.any? %>
       <div class="refine--filter-control-group">
+        <%= render "refine/inline/filters/clear_button" %>
         <%= render "refine/inline/filters/save_button" %>
       </div>
     <% end %> 

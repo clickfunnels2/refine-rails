@@ -1,7 +1,6 @@
 class Refine::Inline::CriteriaController < ApplicationController
   layout false
   before_action :set_refine_filter
-
   # List available conditions for new criteria
   # Carries position and index forward
   def index
@@ -88,7 +87,20 @@ class Refine::Inline::CriteriaController < ApplicationController
     handle_filter_update(@refine_filter.to_stable_id)
   end
 
+  def clear
+    puts "CLEARING filter"
+    puts @refine_filter.blueprint.inspect
+    @refine_filter.clear_blueprint!
+    puts @refine_filter.blueprint.inspect
+    @criterion = Refine::Inline::Criterion.new(criterion_params.merge(refine_filter: @refine_filter))
+    handle_filter_update()
+  end
+
   private
+
+  def set_blank_filter
+    @refine_filter = Refine::Rails.configuration.stabilizer_classes[:url].new
+  end
 
   def set_refine_filter
     @refine_filter ||= Refine::Rails.configuration.stabilizer_classes[:url]
@@ -131,12 +143,14 @@ class Refine::Inline::CriteriaController < ApplicationController
   end
 
   # either directly redirect or emit a `filter-submit-success` event
-  def handle_filter_update(stable_id)
+  def handle_filter_update(stable_id=nil)
     # update_stable_id in url
     uri = URI(request.referrer)
     new_query_ar = URI.decode_www_form(String(uri.query))
     new_query_ar.reject! { |(k, _v)| k == "stable_id" }
-    new_query_ar << ["stable_id", stable_id]
+    if stable_id
+      new_query_ar << ["stable_id", stable_id]
+    end
     uri.query = URI.encode_www_form(new_query_ar)
 
     respond_to do |format|
@@ -146,7 +160,9 @@ class Refine::Inline::CriteriaController < ApplicationController
         @refine_client_id = @criterion.client_id
         render :create
       end
-      format.html {redirect_to uri.to_s }
+      format.html do 
+        redirect_to uri.to_s 
+      end
     end
   end
 

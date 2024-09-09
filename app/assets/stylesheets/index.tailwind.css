@@ -500,67 +500,26 @@
   position: relative;
 }
 
-.refine--condition-pill-start {
-  padding: 0 0 0 10px;
-  &:before {
-    content: "";
-    position: absolute;
-    left: -10px;
-    top: -2px;
-    bottom: -2px;
-    border: 2px solid #eee;
-    width: 3px;
-  }
-  &:hover {
-    &:before{
-      border-color: #aaa;
-    }
-  }
-  &:before {
-    border-radius: 6px 0 0 6px;
-    left: 0;
-    border-right: none;
-  }
-  
-}
-
-.refine--condition-pill-end {
-  padding: 0 10px 0 0;
-  &:after {
-    content: "";
-    position: absolute;
-    right: -10px;
-    top: -6px;
-    bottom: -6px;
-    border: 2px solid #eee;
-    width: 3px;
-  }
-  &:hover {
-    &:after {
-      border-color: #aaa;
-    }
-  }
-  &:after {
-    border-radius: 0 6px 6px 0;
-    border-left: none;
-  }
-}
-
 .refine--condition-pill {
-  background-color: #fff;
-  border: 1px solid #bbb;
-  border-bottom-color: #999;
-  box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  background-color: #F2F4F7;
+  border: 1px solid #EBEBEB;
   border-radius: 6px;
   font-size: 14px;
   cursor: pointer;
   position: relative;
   white-space: nowrap;
+  padding: 4px 8px;
   &:hover {
-    border-color: #999;
+    border-color: #D1D5DB;
+    background-color: #E5E7EB;
     .refine--remove-condition {
       display: block;
     }
+  }
+  &:active {
+    border-color: #E5E7EB;
   }
   &:not(:hover){
     .refine--condition-value-wrapper {
@@ -579,31 +538,18 @@
   padding: 4px;
 }
 
-.refine--condition-pill-name {
-  padding: 4px 8px;
-  display: block;
-}
-
 .refine--remove-condition {
   display: none;
-  border: 2px solid #fff;
-  padding: 6px 4px;
+  color: #fff;
+  padding: 2px 4px 1px 4px;
   border-radius: 50%;
   position: absolute;
-  top: -8px;
-  right:-8px;
-  background-color: #aaa;
+  top: -10px;
+  right:-10px;
+  background-color: #ee3f3f;
   z-index: 999;
-  &:hover {
-    background-color: #ee3f3f;
-  }
-  &:before {
-    display: block;
-    content: "";
-    width: 6px;
-    height: 2px;
-    background-color: #fff;
-  }
+  line-height: 1;
+
 }
 &:hover {
   border-color: #999;
@@ -630,8 +576,18 @@
   animation-fill-mode: both;
 }
 
-.refine--condition-value-clause {
-  color: rgba(255,255,255,0.7);
+.refine--condition-value-clause, .refine--condition-value-self  {
+  padding-left: 4px;
+}
+
+.refine--condition-pill-name, .refine--condition-value-self  {
+  font-weight: 600;
+}
+
+.refine--condition-value-self {
+  max-width: 150px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 /* Form widgets */
@@ -889,18 +845,24 @@ input.refine--text-condition-input:focus {
   color: #767676;
   font-size: 14px;
   border-radius: 6px;
-  padding: 5px;
   align-items: center;
-  background-color: #fff;
+  background-color: #F2F4F7;
+  border: 1px solid #EBEBEB;
+  cursor: pointer;
   position: relative;
-  &:disabled {
-    color: #111;
-    background-color: #f8f8f8;
-    cursor: not-allowed;
+  white-space: nowrap;
+  padding: 4px 8px;
+  font-weight: 600;
+  &:hover {
+    border-color: #D1D5DB;
+    background-color: #E5E7EB;
   }
-  &:not([disabled]):hover {
-    color: #111;
-    background-color: #f8f8f8;
+  &:active {
+    border-color: #E5E7EB;
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }
 
@@ -1023,7 +985,9 @@ button.refine--apply-button {
 }
 
 .refine--save-filter-link-label, .refine--clear-filter-link-label {
-  border-bottom: 1px dotted #111;
+  &:hover {
+    border-bottom: 1px dotted #111;
+  }
 }
 .refine--save-filter-input-wrapper {
   display: flex;
@@ -1079,6 +1043,7 @@ input.refine--save-filter-input {
 .material-icons.refine--icon-sm,
 .icon.refine--icon-sm {
   font-size: 14px;
+  padding: 3px 0;
 }
 
 .refine--search-box {

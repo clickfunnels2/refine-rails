@@ -1,5 +1,5 @@
 ### 2.11.1
-  * Inline UI - Stretching toolbar to full width and floating save filter control container to the right
+  * Inline UI - Stretching toolbar to full width and floating save filter control container to the right, adds clear button
 ### 2.11.0
   * New Feature - Allow icons to be used in condition dropdowns and give configurable control over rendering of the condition item. Note - this only impacts the Inline UI
 ### 2.10.1

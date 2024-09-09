@@ -88,10 +88,7 @@ class Refine::Inline::CriteriaController < ApplicationController
   end
 
   def clear
-    puts "CLEARING filter"
-    puts @refine_filter.blueprint.inspect
     @refine_filter.clear_blueprint!
-    puts @refine_filter.blueprint.inspect
     @criterion = Refine::Inline::Criterion.new(criterion_params.merge(refine_filter: @refine_filter))
     handle_filter_update()
   end

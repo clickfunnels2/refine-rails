@@ -316,5 +316,9 @@ module Refine
     def has_category_ordering?
       respond_to?(:category_order) && category_order.is_a?(Array) && category_order.any?
     end
+
+    def clear_blueprint!
+      @blueprint = []
+    end
   end
 end

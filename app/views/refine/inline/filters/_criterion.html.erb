@@ -1,10 +1,15 @@
 <%# Filter Pill partial %>
+<% 
+  pill_class = if placement == 0
+    "refine--condition-pill-start"
+  end
+%>
 
 <%= render "refine/inline/filters/popup",
   frame_id: dom_id(criterion) do
 %>
 
-  <div class="refine--condition-pill-wrapper">
+  <div class="refine--condition-pill-wrapper <%= pill_class %>">
     <div class="refine--condition-pill">
       <%= link_to criterion.condition_display, edit_refine_inline_criterion_path(criterion.position, criterion.to_params), class: "refine--condition-pill-name", data: {controller: "refine--turbo-stream-link", action: "refine--turbo-stream-link#visit"} %>
       <div class="refine--remove-condition"></div>

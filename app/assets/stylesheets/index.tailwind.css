@@ -382,25 +382,33 @@
 .refine--filter-wrapper {
   font-size: 14px;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   gap: 12px;
   margin-top: 12px;
 }
 
 .refine--filter-row {
   display: flex;
+  width: 100%;
+  gap: 10px;
+  row-gap: 15px;
+  align-items: center;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.refine--groups-wrapper {
+  flex-grow: 1;
+  display: flex;
   gap: 10px;
   row-gap: 15px;
   align-items: center;
   flex-wrap: wrap;
 }
 
-.refine--groups-wrapper {
+.refine--filter-control-group {
+  text-wrap: nowrap;
   display: flex;
-  gap: 10px;
-  row-gap: 15px;
-  align-items: center;
-  flex-wrap: wrap;
 }
 
 .refine--group-join, .refine--condition-join {
@@ -429,6 +437,7 @@
   position: relative;
   padding: 0 10px;
   align-items: center;
+  flex-wrap: wrap;
 
   &:before , &:after {
     content: "";
@@ -484,11 +493,57 @@
   text-decoration: none;
 }
 
-.refine--condition-pill-wrapper-wrapper {
+.refine--condition-pill-wrapper {
   display: flex;
   align-items: center;
   gap: 5px;
   position: relative;
+}
+
+.refine--condition-pill-start {
+  padding: 0 0 0 10px;
+  &:before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: -2px;
+    bottom: -2px;
+    border: 2px solid #eee;
+    width: 3px;
+  }
+  &:hover {
+    &:before{
+      border-color: #aaa;
+    }
+  }
+  &:before {
+    border-radius: 6px 0 0 6px;
+    left: 0;
+    border-right: none;
+  }
+  
+}
+
+.refine--condition-pill-end {
+  padding: 0 10px 0 0;
+  &:after {
+    content: "";
+    position: absolute;
+    right: -10px;
+    top: -6px;
+    bottom: -6px;
+    border: 2px solid #eee;
+    width: 3px;
+  }
+  &:hover {
+    &:after {
+      border-color: #aaa;
+    }
+  }
+  &:after {
+    border-radius: 0 6px 6px 0;
+    border-left: none;
+  }
 }
 
 .refine--condition-pill {
@@ -805,9 +860,6 @@ input.refine--text-condition-input:focus {
   text-decoration: none;
 }
 
-.refine--save-filter-link-label {
-  border-bottom: 1px dotted #111;
-}
 /*
   *********************************************
   Inline Final Styles
@@ -821,14 +873,14 @@ input.refine--text-condition-input:focus {
 
 .refine--add-condition-button.refine--add-first-condition-button,
 .refine--add-condition-group-button.refine--add-first-condition-button {
-    border: 1px dotted #aaa;
-    padding-right: 8px;
-    line-height: 16px;
-    &:hover {
-      background-color: #fff;
-      border-style: solid;
-      color: #111;
-    }
+  border: 1px dotted #aaa;
+  padding-right: 8px;
+  line-height: 16px;
+  &:hover {
+    background-color: #fff;
+    border-style: solid;
+    color: #111;
+  }
 }
 
 .refine--add-condition-button, .refine--add-group-button {
@@ -840,6 +892,7 @@ input.refine--text-condition-input:focus {
   padding: 5px;
   align-items: center;
   background-color: #fff;
+  position: relative;
   &:disabled {
     color: #111;
     background-color: #f8f8f8;
@@ -849,6 +902,10 @@ input.refine--text-condition-input:focus {
     color: #111;
     background-color: #f8f8f8;
   }
+}
+
+.refine--add-group-button {
+  margin-left: 10px;
 }
 
 .refine--has-many-groups .refine--add-button-label {
@@ -955,16 +1012,19 @@ button.refine--apply-button {
   }
 }
 
-.refine--save-filter-link {
+.refine--save-filter-link, .refine--clear-filter-link {
   display: flex;
   align-items: center;
   gap: 5px;
   font-size: 14px;
-  padding: 3px 0;
+  padding: 3px 0 3px 10px;
   border: 1px solid transparent;
   border-radius: 6px;
 }
 
+.refine--save-filter-link-label, .refine--clear-filter-link-label {
+  border-bottom: 1px dotted #111;
+}
 .refine--save-filter-input-wrapper {
   display: flex;
   gap: 5px;

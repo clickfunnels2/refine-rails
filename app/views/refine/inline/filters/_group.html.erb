@@ -1,13 +1,7 @@
-<div class="refine--group">
-  <div class="refine--group-conditions-wrapper">
-    <div class="refine--group-conditions">
-      <% group.each.with_index do |criterion, i| %>
-        <% unless i == 0 %>
-          <div class="refine--condition-join"><%= t(".and") %></div>
-        <% end %>
-        <%= render "refine/inline/filters/criterion", criterion: criterion %>
-      <% end %>
-    </div>
-    <%= render "refine/inline/filters/and_button", position: group.last.position + 1 %>
-  </div>
-</div>
+<% group.each.with_index do |criterion, i| %>
+  <% unless i == 0 %>
+    <div class="refine--condition-join"><%= t(".and") %></div>
+  <% end %>
+  <%= render "refine/inline/filters/criterion", criterion: criterion, placement: i, size: group.length %>
+<% end %>
+<%= render "refine/inline/filters/and_button", position: group.last.position + 1 %>

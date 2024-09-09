@@ -1,0 +1,13 @@
+<% 
+  criterion = Refine::Inline::Criterion.new(
+    stable_id: @refine_filter.to_stable_id,
+    client_id: @refine_client_id,
+  )
+%>
+
+<%= link_to clear_refine_inline_criteria_path(criterion.to_params), method: :post,
+  class: "refine--clear-filter-link", data: {turbo_stream: true, turbo_method: :post} do %>
+    <span class="material-icons-outlined refine--icon-sm">clear</span>
+    <span class="refine--clear-filter-link-label"><%= t('refine.inline.filters.clear_filter') %></span>
+<% end %>
+

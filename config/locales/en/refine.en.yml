@@ -58,7 +58,8 @@ en:
         or_button: "+ Add OR Group"
         filter: "Filter"
         criteria_limit: "You can only create up to %{criteria_limit} filter conditions"
-        save_filter: "Save Filter"
+        save_filter: "Save"
+        clear_filter: "Clear"
         or: "or"
         clear: "clear"
       inputs:

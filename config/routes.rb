@@ -8,7 +8,9 @@ Rails.application.routes.draw do
       post "find", on: :collection
     end
     namespace :inline do
-      resources :criteria, except: [:show]
+      resources :criteria, except: [:show] do
+        post "clear", on: :collection
+      end
       resources :stored_filters, only: [:index, :new, :create] do
         post "find", on: :collection
       end

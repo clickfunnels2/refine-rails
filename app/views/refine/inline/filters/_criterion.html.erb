@@ -1,7 +1,8 @@
 <%# Filter Pill partial %>
 
 <%= render "refine/inline/filters/popup",
-  frame_id: dom_id(criterion) do
+  frame_id: dom_id(criterion),
+  src: edit_refine_inline_criterion_path(criterion.position, criterion.to_params) do
 %>
 
   <div class="refine--condition-pill-wrapper">
@@ -9,11 +10,13 @@
       <%= link_to refine_inline_criterion_path(criterion.position, criterion.to_params), class: "refine--remove-condition", data: {turbo_method: :delete, controller: "refine--turbo-stream-link", action: "refine--turbo-stream-link#visit"} do %>
         <span class="material-icons-outlined refine--icon-sm">clear</span>
       <% end %>
-      <%= link_to criterion.condition_display, edit_refine_inline_criterion_path(criterion.position, criterion.to_params), class: "refine--condition-pill-name", data: {controller: "refine--turbo-stream-link", action: "refine--turbo-stream-link#visit"} %>
-      <div class="refine--condition-value-clause"><%= criterion.clause_display %></div>
-      <div class="refine--condition-value-self" title="<%= criterion.human_readable_value %>">
-        <%= criterion.human_readable_value %>
-      </div>
+      <%= link_to edit_refine_inline_criterion_path(criterion.position, criterion.to_params), class:"refine--condition-pill-button", data: {controller: "refine--turbo-stream-link", action: "refine--turbo-stream-link#visit"} do %>
+        <div class="refine--condition-pill-name"><%= criterion.condition_display %></div>
+        <div class="refine--condition-value-clause"><%= criterion.clause_display %></div>
+        <div class="refine--condition-value-self" title="<%= criterion.human_readable_value %>">
+          <%= criterion.human_readable_value %>
+        </div>
+      <% end %>
     </div>
   </div>
 

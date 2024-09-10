@@ -1,6 +1,4 @@
 <% group.each.with_index do |criterion, i| %>
   <%= render "refine/inline/filters/criterion", criterion: criterion, placement: i, size: group.length %>
 <% end %>
-<% puts "GROUP COUNT: #{group_count}" %>
-<% puts "CONDITION COUNT: #{condition_count}" %>
 <%= render "refine/inline/filters/and_button", position: group.last.position + 1, show_label: (group_count < 2 && condition_count < 2) %>

@@ -408,7 +408,9 @@
 
 .refine--filter-control-group {
   text-wrap: nowrap;
+  flex-wrap: wrap;
   display: flex;
+  align-items: center;
 }
 
 .refine--group-join, .refine--condition-join {
@@ -528,6 +530,10 @@
   }
 }
 
+.refine--condition-pill-button {
+  display: flex;
+}
+
 .refine--filter-condition {
   display: flex;
   align-items: center;
@@ -541,14 +547,20 @@
 .refine--remove-condition {
   display: none;
   color: #fff;
-  padding: 2px 4px 1px 4px;
+  padding: 0px 2px 0px 2px;
   border-radius: 50%;
   position: absolute;
-  top: -10px;
-  right:-10px;
+  top: -8px;
+  right:-8px;
   background-color: #ee3f3f;
   z-index: 999;
   line-height: 1;
+  border: 1.5px solid #fff;
+  .material-icons-outlined.refine--icon-sm,
+  .material-icons.refine--icon-sm,
+  .icon.refine--icon-sm {
+    padding: 2px 0 ;
+  }
 
 }
 &:hover {
@@ -826,19 +838,6 @@ input.refine--text-condition-input:focus {
   color: #767676;
 }
 
-
-.refine--add-condition-button.refine--add-first-condition-button,
-.refine--add-condition-group-button.refine--add-first-condition-button {
-  border: 1px dotted #aaa;
-  padding-right: 8px;
-  line-height: 16px;
-  &:hover {
-    background-color: #fff;
-    border-style: solid;
-    color: #111;
-  }
-}
-
 .refine--add-condition-button, .refine--add-group-button {
   display: flex;
   gap: 5px;
@@ -866,8 +865,9 @@ input.refine--text-condition-input:focus {
   }
 }
 
-.refine--add-group-button {
-  margin-left: 10px;
+.refine--add-group-wrapper {
+  padding-left: 10px;
+  border-left: 1px solid #E5E7EB;
 }
 
 .refine--has-many-groups .refine--add-button-label {
@@ -1022,6 +1022,10 @@ input.refine--save-filter-input {
   padding: 4px 8px;
   font-size: 12px;
   z-index: 9999;
+}
+
+.refine--save-filter-form {
+  margin-left: 8px;
 }
 
 .refine--hotkey {

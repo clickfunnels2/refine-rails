@@ -10,8 +10,10 @@
 
 <% if @refine_filter.criteria_limit_reached? %>
   <button disabled class="refine--add-condition-button refine--group-last-item refine--condition-pill-end" type="button" title="<%= t(".criteria_limit", criteria_limit: @refine_filter.criteria_limit) %>">
+    <% if show_label %>
+      <span class="refine--add-button-label"><%= t("refine.inline.filters.and_button.condition") %></span>
+    <% end %>
     <span class="icon material-icons-outlined refine--icon-sm">add</span>
-    <span class="refine--add-button-label"><%= t("refine.inline.filters.and_button.condition") %></span>
   </button>
 <% else %>
   <%= render "refine/inline/filters/popup",
@@ -19,8 +21,10 @@
     src: refine_inline_criteria_path(criterion.to_params) do
   %>
     <button class="refine--add-condition-button refine--group-last-item refine--condition-pill-end" type="button" data-action="click->refine--popup#show">
+      <% if show_label %>
+        <span class="refine--add-button-label"><%= t("refine.inline.filters.and_button.condition") %></span>
+      <% end %>
       <span class="icon material-icons-outlined refine--icon-sm">add</span>
-      <span class="refine--add-button-label"><%= t("refine.inline.filters.and_button.condition") %></span>
     </button>
   <% end %>
 <% end %>

@@ -9,18 +9,20 @@
 %>
 
 <% if @refine_filter.criteria_limit_reached? %>
-  <button disabled class="refine--add-group-button" type="button" title="<%= t(".criteria_limit", criteria_limit: @refine_filter.criteria_limit) %>">
-    <span class="icon material-icons-outlined refine--icon-sm">add</span>
-    <span class="refine--add-group-button-label"><%= t(".group") %></span>
-  </button>
+  <div class="refine--add-group-wrapper">
+    <button disabled class="refine--add-group-button" type="button" title="<%= t(".criteria_limit", criteria_limit: @refine_filter.criteria_limit) %>">
+      <span class="refine--add-group-button-label"><%= t(".group") %></span>
+    </button>
+  </div>
 <% else %>
   <%= render "refine/inline/filters/popup",
     frame_id: dom_id(criterion),
     src: refine_inline_criteria_path(criterion.to_params) do
   %>
-    <button class="refine--add-group-button" type="button" data-action="click->refine--popup#show">
-      <span class="icon material-icons-outlined refine--icon-sm">add</span>
-      <span class="refine--add-group-button-label"><%= t(".group") %></span>
-    </button>
+    <div class="refine--add-group-wrapper">
+      <button class="refine--add-group-button" type="button" data-action="click->refine--popup#show">
+        <span class="refine--add-group-button-label"><%= t(".group") %></span>
+      </button>
+    </div>
   <% end %>
 <% end %>

@@ -1,3 +1,5 @@
+### 2.11.2
+  * Inline UI - facelift for the styling of the toolbar
 ### 2.11.1
   * Inline UI - Stretching toolbar to full width and floating save filter control container to the right, adds clear button
 ### 2.11.0

@@ -1,8 +1,7 @@
 <%# Filter Pill partial %>
 
 <%= render "refine/inline/filters/popup",
-  frame_id: dom_id(criterion),
-  src: edit_refine_inline_criterion_path(criterion.position, criterion.to_params) do
+  frame_id: dom_id(criterion) do
 %>
 
   <div class="refine--condition-pill-wrapper">

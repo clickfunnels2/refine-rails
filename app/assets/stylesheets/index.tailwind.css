@@ -398,7 +398,6 @@
 }
 
 .refine--groups-wrapper {
-  flex-grow: 1;
   display: flex;
   gap: 10px;
   row-gap: 15px;
@@ -423,6 +422,11 @@
   &:hover {
     background-color: #f8f8f8;
   }
+}
+
+.refine--group-join-stack {
+  width: 100%;
+  text-align: left;
 }
 
 .refine--group {

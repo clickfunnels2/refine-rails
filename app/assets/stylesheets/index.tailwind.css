@@ -405,11 +405,26 @@
   flex-wrap: wrap;
 }
 
+.refine--or-group {
+  display: flex;
+  gap: 10px;
+  row-gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .refine--filter-control-group {
   text-wrap: nowrap;
   flex-wrap: wrap;
   display: flex;
   align-items: center;
+}
+
+@media (max-width: 960px) {
+  .refine--filter-control-group {
+    justify-content: end;
+    width: 25%; 
+  }
 }
 
 .refine--group-join, .refine--condition-join {

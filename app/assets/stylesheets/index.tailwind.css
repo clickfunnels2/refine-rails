@@ -398,7 +398,14 @@
 }
 
 .refine--groups-wrapper {
-  flex-grow: 1;
+  display: flex;
+  gap: 10px;
+  row-gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.refine--or-group {
   display: flex;
   gap: 10px;
   row-gap: 15px;
@@ -413,6 +420,13 @@
   align-items: center;
 }
 
+@media (max-width: 960px) {
+  .refine--filter-control-group {
+    justify-content: end;
+    width: 25%; 
+  }
+}
+
 .refine--group-join, .refine--condition-join {
   position: relative;
   padding: 5px 0;
@@ -423,6 +437,11 @@
   &:hover {
     background-color: #f8f8f8;
   }
+}
+
+.refine--group-join-stack {
+  width: 100%;
+  text-align: left;
 }
 
 .refine--group {

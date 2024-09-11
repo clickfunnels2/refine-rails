@@ -1,3 +1,5 @@
+### 2.11.3
+  * Inline UI - configurable wrapping settings
 ### 2.11.2
   * Inline UI - facelift for the styling of the toolbar
 ### 2.11.1

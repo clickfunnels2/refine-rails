@@ -1,3 +1,5 @@
+### 2.11.4
+  * Inline UI - Fixing bug with popup edit modals so clicking outside properly closes them
 ### 2.11.3
   * Inline UI - configurable wrapping settings
 ### 2.11.2

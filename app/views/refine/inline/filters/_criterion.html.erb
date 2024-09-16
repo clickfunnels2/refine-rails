@@ -12,7 +12,7 @@
       <%= link_to edit_refine_inline_criterion_path(criterion.position, criterion.to_params), class:"refine--condition-pill-button", data: {controller: "refine--turbo-stream-link", action: "refine--turbo-stream-link#visit refine--popup#show"} do %>
         <div class="refine--condition-pill-name"><%= criterion.condition_display %></div>
         <div class="refine--condition-value-clause"><%= criterion.clause_display %></div>
-        <div class="refine--condition-value-self" title="<%= criterion.human_readable_value %>">
+        <div class="refine--condition-value-self" title="<%= criterion.human_readable_value %>" data-controller="tooltip" data-tooltip-content-value="<%= criterion.human_readable_value %>">
           <%= criterion.human_readable_value %>
         </div>
       <% end %>

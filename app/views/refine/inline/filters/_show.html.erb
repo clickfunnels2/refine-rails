@@ -15,15 +15,7 @@
     <% else %>
       <div class="refine--groups-wrapper">
         <% groups.each.with_index do |group, i| %>
-          <% unless i == 0 %>
-            <% if render_stack %>
-              <div class="refine--group-join-stack">
-            <% end %>
-              <div class="refine--group-join"><%= t("refine.inline.filters.or") %></div>
-            <% if render_stack %>
-              </div>
-            <% end %>
-          <% end %>
+          <%= render "refine/inline/filters/or_separator", group: group, group_position: i, render_stack: render_stack %>
           <%= render "refine/inline/filters/group", group: group, group_count: groups.count, condition_count: group.count, render_stack: render_stack %>
           <% if i == groups.length - 1 %>
             <%= render "refine/inline/filters/or_button", position: @refine_filter.blueprint.length %>

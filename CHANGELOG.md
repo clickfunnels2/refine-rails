@@ -1,3 +1,7 @@
+### 2.11.5
+  * New Feature - Adds the ability to delete OR groupings which merge them as AND conjunctions
+  * Inline UI - adds support for stimulus tooltip plugins
+  * Inline UI - tweaks to responsive behavior of the toolbar
 ### 2.11.4
   * Inline UI - Fixing bug with popup edit modals so clicking outside properly closes them
 ### 2.11.3

@@ -93,11 +93,16 @@ class Refine::Inline::CriteriaController < ApplicationController
     handle_filter_update()
   end
 
-  private
+  def merge_groups
+    @criterion = Refine::Inline::Criterion.new(criterion_params.merge(refine_filter: @refine_filter)) 
+    Refine::Filters::BlueprintEditor
+    .new(@refine_filter.blueprint)
+    .change_conjunction(criterion_params[:position].to_i - 1, "and")
 
-  def set_blank_filter
-    @refine_filter = Refine::Rails.configuration.stabilizer_classes[:url].new
+    handle_filter_update(@refine_filter.to_stable_id)
   end
+
+  private
 
   def set_refine_filter
     @refine_filter ||= Refine::Rails.configuration.stabilizer_classes[:url]

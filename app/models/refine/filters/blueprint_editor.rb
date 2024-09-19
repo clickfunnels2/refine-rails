@@ -59,6 +59,14 @@ class Refine::Filters::BlueprintEditor
     blueprint[index][:input] = input
   end
 
+  def change_conjunction(index, conjunction_word)
+    if conjunction_word == "and"
+      blueprint[index][:word] = "and"
+    elsif conjunction_word == "or"
+      blueprint[index][:word] = "or"
+    end
+  end
+
   def delete(index)
    # To support 'groups' there is some complicated logic for deleting criterion.
    #

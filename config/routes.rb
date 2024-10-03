@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     end
     namespace :inline do
       resources :criteria, except: [:show] do
+        get "index_advanced", on: :collection
         post "merge_groups", on: :collection
         post "clear", on: :collection
       end

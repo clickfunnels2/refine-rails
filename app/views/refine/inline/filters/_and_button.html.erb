@@ -6,6 +6,9 @@
     conjunction: "and",
     position: position
   )
+  use_modal ||= false
+  fill_modal ||= false
+  src = use_modal ? index_advanced_refine_inline_criteria_path(criterion.to_params.merge(fill_modal: fill_modal)) : refine_inline_criteria_path(criterion.to_params)
 %>
 
 <% if @refine_filter.criteria_limit_reached? %>
@@ -16,11 +19,13 @@
     <span class="icon material-icons-outlined refine--icon-sm">add</span>
   </button>
 <% else %>
-  <%= render "refine/inline/filters/popup",
+  <%= render "refine/inline/filters/modal_or_popup",
     frame_id: dom_id(criterion),
-    src: refine_inline_criteria_path(criterion.to_params) do
+    use_modal: use_modal,
+    fill_modal: fill_modal,
+    src: src do
   %>
-    <button class="refine--add-condition-button refine--group-last-item refine--condition-pill-end" type="button" data-action="click->refine--popup#show">
+    <button class="refine--add-condition-button refine--group-last-item refine--condition-pill-end" type="button" data-action="click->refine--popup#show click->refine--modal#open">
       <% if show_label %>
         <span class="refine--add-button-label"><%= t("refine.inline.filters.and_button.condition") %></span>
       <% end %>

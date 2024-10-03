@@ -3,6 +3,10 @@
 
   root_data = (defined?(data) && data) || {}
 
+  use_modal = defined?(use_modal) ? use_modal : false
+  fill_modal = defined?(fill_modal) ? fill_modal : false
+
+  hide_save = defined?(hide_save) ? hide_save : true
   render_stack = defined?(render_stack) ? render_stack : false
   main_row_class = class_names "refine--filter-row" => true,
     "refine--has-many-groups" => groups.many?
@@ -11,14 +15,14 @@
 <%= tag.div class: "refine--filter-wrapper", id: "refine-inline-filter-#{@refine_client_id}", data: root_data do %>
   <%= tag.div class: main_row_class do %>
     <% if @refine_filter.blueprint.empty? %>
-      <%= render "refine/inline/filters/add_first_condition_button", position: 0, btn_class: "refine--add-first-condition-btn" %>
+      <%= render "refine/inline/filters/add_first_condition_button", position: 0, btn_class: "refine--add-first-condition-btn", use_modal: use_modal, fill_modal: fill_modal %>
     <% else %>
       <div class="refine--groups-wrapper">
         <% groups.each.with_index do |group, i| %>
           <%= render "refine/inline/filters/or_separator", group: group, group_position: i, render_stack: render_stack %>
-          <%= render "refine/inline/filters/group", group: group, group_count: groups.count, condition_count: group.count, render_stack: render_stack %>
+          <%= render "refine/inline/filters/group", group: group, group_count: groups.count, condition_count: group.count, render_stack: render_stack, use_modal: use_modal, fill_modal: fill_modal %>
           <% if i == groups.length - 1 %>
-            <%= render "refine/inline/filters/or_button", position: @refine_filter.blueprint.length %>
+            <%= render "refine/inline/filters/or_button", position: @refine_filter.blueprint.length, use_modal: use_modal, fill_modal: fill_modal %>
           <% end %>
         <% end %>
 
@@ -27,7 +31,9 @@
    <% if @refine_filter.blueprint&.any? %>
       <div class="refine--filter-control-group">
         <%= render "refine/inline/filters/clear_button" %>
-        <%= render "refine/inline/filters/save_button" %>
+        <% unless hide_save %>
+          <%= render "refine/inline/filters/save_button" %>
+        <% end %>
       </div>
     <% end %> 
   <% end %>

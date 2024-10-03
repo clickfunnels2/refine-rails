@@ -6,13 +6,18 @@
     conjunction: "and",
     position: position
   )
+  use_modal ||= false
+  fill_modal ||= false
+  src = use_modal ? index_advanced_refine_inline_criteria_path(criterion.to_params.merge(fill_modal: fill_modal)) : refine_inline_criteria_path(criterion.to_params)
 %>
 
-<%= render "refine/inline/filters/popup",
-  frame_id: dom_id(criterion),
-  src: refine_inline_criteria_path(criterion.to_params) do
-%>
-  <button class="refine--add-condition-button refine--add-first-condition-button" href="#" data-action="click->refine--popup#show" type="button">
+ <%= render "refine/inline/filters/modal_or_popup",
+    frame_id: dom_id(criterion),
+    use_modal: use_modal,
+    fill_modal: fill_modal,
+    src: src do
+  %>
+  <button class="refine--add-condition-button refine--add-first-condition-button" href="#" data-action="click->refine--popup#show click->refine--modal#open" type="button">
     <span><%= t(".filter") %></span>
     <span class="icon material-icons-outlined refine--icon-sm">add</span>
   </button>

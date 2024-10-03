@@ -6,6 +6,9 @@
     conjunction: "or",
     position: position
   )
+  use_modal ||= false
+  fill_modal ||= false
+  src = use_modal ? index_advanced_refine_inline_criteria_path(criterion.to_params.merge(fill_modal: fill_modal)) : refine_inline_criteria_path(criterion.to_params)
 %>
 
 <% if @refine_filter.criteria_limit_reached? %>
@@ -15,12 +18,15 @@
     </button>
   </div>
 <% else %>
-  <%= render "refine/inline/filters/popup",
+  
+   <%= render "refine/inline/filters/modal_or_popup",
     frame_id: dom_id(criterion),
-    src: refine_inline_criteria_path(criterion.to_params) do
+    use_modal: use_modal,
+    fill_modal: fill_modal,
+    src: src do
   %>
     <div class="refine--add-group-wrapper">
-      <button class="refine--add-group-button" type="button" data-action="click->refine--popup#show">
+      <button class="refine--add-group-button" type="button" data-action="click->refine--popup#show click->refine--modal#open">
         <span class="refine--add-group-button-label"><%= t(".group") %></span>
       </button>
     </div>

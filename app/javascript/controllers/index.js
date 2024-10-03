@@ -6,6 +6,7 @@ import DefaultsController from './refine/defaults-controller'
 import DeleteController from './refine/delete-controller'
 import FilterPillsController from './refine/filter-pills-controller'
 import PopupController from './refine/popup-controller'
+import ModalController from './refine/modal-controller'
 import SearchFilterController from './refine/search-filter-controller'
 import ServerRefreshController from './refine/server-refresh-controller'
 import StateController from './refine/state-controller'
@@ -25,6 +26,7 @@ export const controllerDefinitions = [
   [DeleteController, 'refine/delete-controller.js'],
   [FilterPillsController, 'refine/filter-pills-controller.js'],
   [PopupController, 'refine/popup-controller.js'],
+  [ModalController, 'refine/modal-controller.js'],
   [SearchFilterController, 'refine/search-filter-controller.js'],
   [ServerRefreshController, 'refine/server-refresh-controller.js'],
   [StateController, 'refine/state-controller.js'],
@@ -52,6 +54,7 @@ export {
   DeleteController,
   FilterPillsController,
   PopupController,
+  ModalController,
   SearchFilterController,
   ServerRefreshController,
   StateController,

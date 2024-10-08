@@ -8,6 +8,14 @@ class Refine::Inline::CriteriaController < ApplicationController
     @conditions = @refine_filter.instantiated_conditions
   end
 
+  # List available conditions for new criteria in advanced view (IE: Modal)
+  # Carries position and index forward
+  def index_advanced
+    @criterion = Refine::Inline::Criterion.new(criterion_params.merge(refine_filter: @refine_filter))
+    @conditions = @refine_filter.instantiated_conditions
+    @fill_modal = params[:fill_modal]
+  end
+
   # Show the form to add a new criteria
   def new
     @criterion = Refine::Inline::Criterion.new(criterion_params.merge(refine_filter: @refine_filter))

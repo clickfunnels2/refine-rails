@@ -1,3 +1,5 @@
+### 2.11.7
+  * Bugfix - fixing an issue where params being passed for fill_modal wouldn't process correctly
 ### 2.11.6
   * WIP Feature - Adds initial framework to support a Shoelace modal component for condition selection.
 ### 2.11.5

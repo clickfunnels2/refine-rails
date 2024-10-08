@@ -13,7 +13,7 @@ class Refine::Inline::CriteriaController < ApplicationController
   def index_advanced
     @criterion = Refine::Inline::Criterion.new(criterion_params.merge(refine_filter: @refine_filter))
     @conditions = @refine_filter.instantiated_conditions
-    @fill_modal = params[:fill_modal]
+    @fill_modal = params[:fill_modal] && params[:fill_modal] == "true"
   end
 
   # Show the form to add a new criteria

@@ -1,3 +1,5 @@
+### 2.11.7
+  * WIP Feature - Adding designs for basic version of the advanced condition select modal
 ### 2.11.6
   * WIP Feature - Adds initial framework to support a Shoelace modal component for condition selection.
 ### 2.11.5

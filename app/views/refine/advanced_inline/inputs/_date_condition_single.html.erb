@@ -1,0 +1,9 @@
+<%= tag.div class: "refine--date-condition-first-date-container" do %>
+  <%= render "refine/inline/inputs/date_picker",
+    input_fields: input_fields,
+    attribute: :date1,
+    value: input_fields.object.date1,
+    label: criterion.condition.display.downcase,
+    form_id: form_id
+  %>
+<% end %>

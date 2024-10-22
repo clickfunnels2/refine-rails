@@ -1,0 +1,16 @@
+<% group_position ||= 0 %>
+
+<% unless group_position == 0 %>
+  <% if render_stack %>
+    <div class="refine--group-join-stack">
+  <% end %>
+  <div class="refine--group-join">
+    <%= t("refine.inline.filters.or") %>
+    <%= link_to merge_groups_refine_advanced_inline_criteria_path(group.first.to_params), class: "refine--remove-group", data: {turbo_method: :post, controller: "refine--turbo-stream-link", action: "refine--turbo-stream-link#visit"} do %>
+      <span class="material-icons-outlined refine--icon-sm">clear</span>
+    <% end %>
+  </div>
+  <% if render_stack %>
+    </div>
+  <% end %>
+<% end %>

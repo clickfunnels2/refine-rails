@@ -1,0 +1,121 @@
+<%
+  condition = @criterion.condition
+  date_refinement_condition = condition.has_date_refinement? && condition.get_date_refinement_condition
+  count_refinement_condition = condition.has_count_refinement? && condition.get_count_refinement_condition
+  condition_clause = @criterion.input.clause || condition.approved_clauses.first.id
+
+  last_clause_select = if count_refinement_condition
+    :count
+  elsif date_refinement_condition
+    :date
+  else
+    :criterion
+  end
+%>
+
+
+<%= form.hidden_field :stable_id, form: form_id %>
+<%= form.hidden_field :client_id, form: form_id %>
+<%= form.hidden_field :condition_id, form: form_id %>
+<%= form.hidden_field :conjunction, form: form_id %>
+<%= form.hidden_field :position, form: form_id %>
+
+<%= form.fields :input_attributes, model: @criterion.input do |input_fields| %>
+
+  <%# Clause Select %>
+  <div class="refine--criterion-clause-container">
+    <%= input_fields.label :clause, t('.rule') %>
+    <%= input_fields.collection_select :clause,
+      @criterion.condition.approved_clauses,
+      :id,
+      :display,
+      {selected: condition_clause},
+      class: "refine--select refine--clause-select",
+      data: {action: "change->refine--criterion-form#refresh"},
+      form: form_id
+    %>
+  </div>
+
+
+  <%# Input Value %>
+  <% unless ['st', 'nst'].include? condition_clause %>
+    <div class="refine--separator"></div>
+    <%= render @criterion.input_partial, criterion: @criterion, form: form, input_fields: input_fields, form_id: form_id %>
+  <% end %>
+
+  <% if last_clause_select == :criterion %>
+    <div class="refine--separator"></div>
+    <%= form.button t('global.buttons.apply'), class: "refine--apply-button", type: "submit", form: form_id %>
+  <% end %>
+  
+  <%# Date Refinement  %>
+  <% if @criterion.condition.has_date_refinement? %>
+    <div class="refine--separator"></div>
+    <div class="refine--criterion-clause-container refine--date-refinement-clause-container">
+      <%= input_fields.label :clause, date_refinement_condition.display, class: "refine--block" %>
+      <%= input_fields.fields :date_refinement_attributes, model: @criterion.input.date_refinement do |date_fields| %>
+        <%= date_fields.label :clause, t('.rule') %>
+        <%= date_fields.collection_select :clause,
+          date_refinement_condition.approved_clauses,
+          :id,
+          :display,
+          {},
+          class: "refine--select refine--clause-select",
+          data: {action: "change->refine--criterion-form#refresh"},
+          form: form_id
+        %>
+      </div>
+      <div class="refine--refinement-input-container">
+        <% unless ['st', 'nst'].include? @criterion.input.date_refinement.clause %>
+          <%= render "refine/advanced_inline/inputs/date_condition", criterion: @criterion, form: form, input_fields: date_fields, form_id: form_id %>
+        <% end %>
+      </div>
+    <% end %>
+    <% if last_clause_select == :date %>
+      <%= form.button t('global.buttons.apply'), class: "refine--apply-button", type: "submit", form: form_id %>
+    <% end %>
+  <% end %>
+
+  <%# Count Refinement  %>
+  <% if count_refinement_condition %>
+    <label><%= @criterion.condition.get_count_refinement_condition.display %></label>
+    <%= input_fields.fields :count_refinement_attributes, model: @criterion.input.count_refinement do |count_fields| %>
+      <div class="refine--criterion-clause-container">
+        <%= count_fields.collection_select :clause,
+          count_refinement_condition.approved_clauses,
+          :id,
+          :display,
+          {},
+          class: "refine--clause-select",
+          data: {action: "change->refine--criterion-form#refresh"}
+        %>
+      </div>
+
+      <% unless ['st', 'nst'].include? @criterion.input.count_refinement.clause %>
+        <%= render "refine/advanced_inline/inputs/numeric_condition", criterion: @criterion, form: form, input_fields: count_fields, form_id: form_id %>
+      <% end %>
+
+      <div class="refine--criterion-clause-container">
+        <%= count.label :clause, t('.rule') %>
+        <%= count.collection_select :clause,
+          @criterion.condition.approved_clauses,
+          :id,
+          :display,
+          {},
+          class: "refine--select refine--clause-select",
+          data: {action: "change->refine--criterion-form#refresh"},
+          form: form_id
+        %>
+        <% if last_clause_select == :count %>
+          <%= form.button t('global.buttons.apply'), class: "refine--apply-button", type: "submit", form: form_id %>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
+<% @error_messages&.each do |msg| %>
+  <p class="refine-criterion-error">
+    <%= msg %>
+  </p>
+<% end %>

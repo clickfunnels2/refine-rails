@@ -1,4 +1,4 @@
-class Refine::Inline::CriteriaController < ApplicationController
+class Refine::AdvancedInline::CriteriaController < ApplicationController
   layout false
   before_action :set_refine_filter
   # List available conditions for new criteria

@@ -1,3 +1,7 @@
+### 2.11.9
+  * WIP Feature - Advanced Condition Select: First pass that presents a shoelace modal component. Falls back to normal popup for clause and value selection
+  * Removes previous flags for show_modal, fill_modal, show_save, and stack since they are not preserved through the full flow. Instead users should rely on CSS to show/hide as needed
+  * Simplifies the icon implementation to only impact the advanced flow 
 ### 2.11.8
   * Bugfix - fixing an issue where params being passed for fill_modal wouldn't process correctly
 ### 2.11.6

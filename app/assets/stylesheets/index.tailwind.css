@@ -935,7 +935,8 @@ input.refine--text-condition-input:focus {
   /* TODO see if these are still needed */
   margin-top: 3px;
   width: 100vw;
-  padding: 0 0.5rem;
+  padding-left: .5rem;
+  padding-right: .5rem;
   max-width: max-content;
   max-height: 66vh;
   overflow: visible;
@@ -1188,16 +1189,21 @@ input.refine--search-trigger[type="text"] {
 
 .refine--advanced-condition-category-header {
   display: flex;
-  padding: 10px 0;
+  padding: 10px 0 16px 0;
+  font: 14px 600;
+  color: #1a202e; /* tailwind color cool-gray-900 */
 }
 
 .refine--advanced-condition-select-group {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
+  padding-bottom: 32px
 }
 
 .refine--condition-list-card {
+  font-size: 14px;
+  color: #27303f /* tailwind color cool-gray-800 */;
   display: flex;
   gap: 10px;
   align-items: center;
@@ -1205,10 +1211,21 @@ input.refine--search-trigger[type="text"] {
   border: 1px solid #e5e7eb;
   border-radius: 6px;
   background-color: #fff;
-  width: 210px;
+  width: 244px;
 }
 
 .refine--condition-list-icon-container {
+  display: flex;
   border-radius: 6px;  
-  padding: 10px;
+  min-width: 28px;
+  height: 28px;
+  justify-items: center;
+  align-items: center;
+  padding: 0;
+  text-align: center;
+}
+
+.refine--condition-list-icon-container i {
+  margin: 0 auto;
+  font-size: 16px;
 }

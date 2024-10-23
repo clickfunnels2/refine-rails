@@ -1,6 +1,6 @@
 <% form_id = dom_id(@criterion, :form) %>
 
-<%= turbo_stream.replace dom_id(@criterion) do %>
+<%= turbo_stream.update dom_id(@criterion) do %>
   <%= turbo_frame_tag dom_id(@criterion), class: "refine--inline-popup", data: {refine__popup_target: "frame"} do %>
       <%= tag.div class: "refine--criterion-fields",
         data: {

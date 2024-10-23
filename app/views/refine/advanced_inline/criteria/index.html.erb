@@ -63,7 +63,7 @@
           </div>
         <% end %>
 
-        <%  categorized_conditions.each do |(category, conditions)| %>
+        <% categorized_conditions.each do |(category, conditions)| %>
           <b data-refine--typeahead-list-target="category" class="refine--advanced-condition-category-header"><%= category %></b>
           <div class="refine--advanced-condition-select-group">
             <% conditions.each do |condition| %>

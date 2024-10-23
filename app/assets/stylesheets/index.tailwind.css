@@ -450,11 +450,6 @@
   }
 }
 
-.refine--group-join-stack {
-  width: 100%;
-  text-align: left;
-}
-
 .refine--group-join {
   &:hover {
     .refine--remove-group {

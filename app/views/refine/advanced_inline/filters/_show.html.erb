@@ -3,7 +3,6 @@
 
   root_data = (defined?(data) && data) || {}
 
-  render_stack = defined?(render_stack) ? render_stack : false
   main_row_class = class_names "refine--filter-row" => true,
     "refine--has-many-groups" => groups.many?
 %>
@@ -15,8 +14,8 @@
     <% else %>
       <div class="refine--groups-wrapper">
         <% groups.each.with_index do |group, i| %>
-          <%= render "refine/advanced_inline/filters/or_separator", group: group, group_position: i, render_stack: render_stack %>
-          <%= render "refine/advanced_inline/filters/group", group: group, group_count: groups.count, condition_count: group.count, render_stack: render_stack %>
+          <%= render "refine/advanced_inline/filters/or_separator", group: group, group_position: i %>
+          <%= render "refine/advanced_inline/filters/group", group: group, group_count: groups.count, condition_count: group.count %>
           <% if i == groups.length - 1 %>
             <%= render "refine/advanced_inline/filters/or_button", position: @refine_filter.blueprint.length %>
           <% end %>

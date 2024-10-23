@@ -1,0 +1,47 @@
+<% form_id = dom_id(@criterion, :save_form) %>
+
+<%= turbo_stream.update dom_id(@criterion, :save) do %>
+  <% if false && @stored_filter.errors.any? # TODO place in tooltip%>
+    <% @stored_filter.errors.full_messages.each do |message|%>
+      <p class="refine-stored-filter-error"><%= message %></p>
+    <% end %>
+  <% end %>
+
+  <%= tag.div class: "refine--save-filter-form" do %>
+
+    <%= fields model: @criterion do |criteria_fields| %>
+      <%= criteria_fields.hidden_field :client_id, form: form_id %>
+      <%= criteria_fields.hidden_field :stable_id, form: form_id %>
+    <% end %>
+
+    <%= fields model: @stored_filter do |stored_filter_fields| %>
+      <%= stored_filter_fields.label :name, "#{t('.save_filter_label')}" %>
+
+      <%# TODO replace with content-editable that writes to hidden input %>
+      <div class="refine--save-filter-input-wrapper">
+        <div class="refine--tooltip"><%= sanitize t('.tooltip') %></div>
+
+        <%= stored_filter_fields.text_field :name,
+          class: "refine--save-filter-input",
+          placeholder: t('.save_filter_placeholder'),
+          autofocus: true,
+          form: form_id
+         %>
+      </div>
+    <% end %>
+
+  <% end %>
+<% end %>
+
+
+<%# The actual form tag is appended to the end of the body html.  Inputs are attached using the `form` attribute. This allows the query builder to be placed inside an outer form on the page. %>
+<%= turbo_stream.append_all "body" do %>
+  <%= form_with(
+    url: refine_advanced_inline_stored_filters_path,
+    method: :post,
+    class: "refine--save-filter-form",
+    id: form_id,
+    data: {
+      turbo_frame: dom_id(@criterion, :save)
+    }) %>
+<% end %>

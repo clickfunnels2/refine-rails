@@ -16,12 +16,5 @@
   {
     class: "refine--condition-list-item",
   }.merge(data: data)) do %>
-  <% if condition.has_icon? %>
-    <% if condition.icon_class.present? %>
-      <i class="<%= condition.icon_class %>"></i>
-    <% else %>
-      <%= render partial: condition.icon_template[:template_path], locals: condition.icon_template[:locals] %>
-    <% end %>
-  <% end %>
   <%= condition.display %>
 <% end %>

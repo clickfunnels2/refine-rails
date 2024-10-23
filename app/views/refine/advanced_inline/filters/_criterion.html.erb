@@ -1,0 +1,22 @@
+<%# Filter Pill partial %>
+
+<%= render "refine/advanced_inline/filters/popup",
+  frame_id: dom_id(criterion) do
+%>
+
+  <div class="refine--condition-pill-wrapper">
+    <div class="refine--condition-pill">
+      <%= link_to refine_advanced_inline_criterion_path(criterion.position, criterion.to_params), class: "refine--remove-condition", data: {turbo_method: :delete, controller: "refine--turbo-stream-link", action: "refine--turbo-stream-link#visit"} do %>
+        <span class="material-icons-outlined refine--icon-sm">clear</span>
+      <% end %>
+      <%= link_to edit_refine_advanced_inline_criterion_path(criterion.position, criterion.to_params), class:"refine--condition-pill-button", data: {controller: "refine--turbo-stream-link", action: "refine--turbo-stream-link#visit refine--popup#show"} do %>
+        <div class="refine--condition-pill-name"><%= criterion.condition_display %></div>
+        <div class="refine--condition-value-clause"><%= criterion.clause_display %></div>
+        <div class="refine--condition-value-self" title="<%= criterion.human_readable_value %>" data-controller="tooltip" data-tooltip-content-value="<%= criterion.human_readable_value %>">
+          <%= criterion.human_readable_value %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+<% end %>

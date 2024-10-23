@@ -1,0 +1,19 @@
+<%= turbo_stream.append_all "body" do %>
+  <script>
+    (function() {
+      const event = new CustomEvent("filter-submit-success", {
+        bubbles: true,
+        detail: {
+          stableId: <%= @refine_stable_id.to_json.html_safe %>,
+          url: <%= @url_for_redirect.to_json.html_safe %>,
+          formId: <%= @refine_client_id.to_json.html_safe %>
+        }
+      })
+      document
+        .getElementById(<%= "refine-inline-filter-#{@refine_client_id}".to_json.html_safe %>)
+        .dispatchEvent(event)
+    })()
+  </script>
+<% end %>
+
+<%= turbo_stream.replace "refine-inline-filter-#{@refine_client_id}", partial: "refine/advanced_inline/filters/show", locals: {} %>

@@ -18,6 +18,7 @@ import TurboStreamLinkController from './refine/turbo-stream-link-controller'
 import TypeaheadListController from './refine/typeahead-list-controller'
 import UpdateController from './refine/update-controller'
 import DateController from './refine/date-controller'
+import TabGroupController from "./fields/shoelace/tab-group-controller"
 
 export const controllerDefinitions = [
   [AddController, 'refine/add-controller.js'],
@@ -37,7 +38,8 @@ export const controllerDefinitions = [
   [TurboStreamLinkController, 'refine/turbo-stream-link-controller.js'],
   [TypeaheadListController, './refine/typeahead-list-controller.js'],
   [UpdateController, 'refine/update-controller.js'],
-  [DateController, 'refine/date-controller.js']
+  [DateController, 'refine/date-controller.js'],
+  [TabGroupController, 'fields/shoelace/tab-group-controller.js']
 ].map(function(d) {
   const key = d[1]
   const controller = d[0]
@@ -65,5 +67,6 @@ export {
   TurboStreamLinkController,
   TypeaheadListController,
   UpdateController,
-  DateController
+  DateController,
+  TabGroupController
 }

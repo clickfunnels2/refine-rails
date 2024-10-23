@@ -29,6 +29,7 @@ export default class extends Controller {
   hide(event) {
     if (this.isOpenValue) {
       event?.preventDefault()
+      event?.stopPropagation()
       this.frameTarget.innerHTML = "";
       this.isOpenValue = false
     }

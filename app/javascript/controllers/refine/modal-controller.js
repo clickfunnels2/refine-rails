@@ -11,7 +11,6 @@ export default class extends Controller {
   }
 
   connect() {
-    console.log("Connecting modal controller")
     useClickOutside(this)
   }
 

@@ -194,3 +194,20 @@ en:
               recommended: "Recommended"
           load_button:
             load_filter: "Load Filter"
+
+      advanced_inline:
+        filters:
+          add_first_condition_button:
+            filter: "Filter"
+          criteria:
+            index:
+              recommended: "Recommended"
+            index_advanced:
+              title: "Select Filter"
+              saved_filters: "Saved Filters"
+              type_to_search: "Type to search"
+              recommended: "Recommended"
+              search_attributes: "Search Attributes"
+              filter_attributes_tab_name: "FILTER ATTRIBUTES"
+          load_button:
+            load_filter: "Load Filter"

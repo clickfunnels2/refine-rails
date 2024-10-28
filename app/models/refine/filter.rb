@@ -320,5 +320,6 @@ module Refine
     def clear_blueprint!
       @blueprint = []
     end
+
   end
 end

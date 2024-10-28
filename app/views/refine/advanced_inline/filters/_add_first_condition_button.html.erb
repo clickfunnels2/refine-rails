@@ -8,11 +8,11 @@
   )
 %>
 
- <%= render "refine/inline/filters/popup",
+ <%= render "refine/advanced_inline/filters/modal",
     frame_id: dom_id(criterion),
-    src: refine_inline_criteria_path(criterion.to_params) do
+    src: refine_advanced_inline_criteria_path(criterion.to_params) do
   %>
-  <button class="refine--add-condition-button refine--add-first-condition-button" href="#" data-action="click->refine--popup#show" type="button">
+  <button class="refine--add-condition-button refine--add-first-condition-button" href="#" data-action="click->refine--modal#open" type="button">
     <span><%= t(".filter") %></span>
     <span class="icon material-icons-outlined refine--icon-sm">add</span>
   </button>

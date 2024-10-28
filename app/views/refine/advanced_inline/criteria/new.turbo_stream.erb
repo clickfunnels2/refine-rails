@@ -1,0 +1,31 @@
+<% form_id = dom_id(@criterion, :form) %>
+
+<% puts "In New Turbo Stream" %>
+<%= turbo_stream.update dom_id(@criterion) do %>
+  <%= render "refine/advanced_inline/filters/popup",
+    frame_id: dom_id(@criterion), is_open: true do
+  %>
+    <%= tag.div class: "refine--inline-popup refine--criterion-fields",
+      data: {
+        controller: "refine--criterion-form",
+        refine__criterion_form_url_value: new_refine_advanced_inline_criterion_url(
+          @criterion.to_params),
+        refine__criterion_form_form_id_value: form_id
+      } do
+    %>
+      <%= fields model: @criterion do |form| %>
+        <%= render "form_fields", form: form, conjunction: @conjunction, position: @position, form_id: form_id %>
+      <% end %>
+    <% end %>
+    <% end %>
+<% end %>
+
+<%# The actual form tag is appended to the end of the body html.  Inputs are attached using the `form` attribute. This allows the query builder to be placed inside an outer form on the page. %>
+<%= turbo_stream.append_all "body" do %>
+  <%= form_with url: refine_advanced_inline_criteria_path,
+      method: :post,
+      id: form_id,
+      html: { autocomplete: "off" },
+      data: {controller: "refine--turbo-stream-form", action: "submit->refine--turbo-stream-form#submit"} %>
+<% end %>
+

@@ -16,11 +16,11 @@
     <span class="icon material-icons-outlined refine--icon-sm">add</span>
   </button>
 <% else %>
-  <%= render "refine/inline/filters/popup",
+  <%= render "refine/advanced_inline/filters/modal",
     frame_id: dom_id(criterion),
-    src: refine_inline_criteria_path(criterion.to_params) do
+    src: refine_advanced_inline_criteria_path(criterion.to_params) do
   %>
-    <button class="refine--add-condition-button refine--group-last-item refine--condition-pill-end" type="button" data-action="click->refine--popup#show">
+    <button class="refine--add-condition-button refine--group-last-item refine--condition-pill-end" type="button" data-action="click->refine--modal#open">
       <% if show_label %>
         <span class="refine--add-button-label"><%= t("refine.inline.filters.and_button.condition") %></span>
       <% end %>

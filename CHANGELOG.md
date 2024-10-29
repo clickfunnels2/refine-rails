@@ -1,3 +1,5 @@
+### 2.11.10
+  * WIP Feature - Advanced Condition Select: Adds the saved filters tab to select stored filters. Also tweaks some default styling
 ### 2.11.9
   * WIP Feature - Advanced Condition Select: First pass that presents a shoelace modal component. Falls back to normal popup for clause and value selection
   * Removes previous flags for show_modal, fill_modal, show_save, and stack since they are not preserved through the full flow. Instead users should rely on CSS to show/hide as needed

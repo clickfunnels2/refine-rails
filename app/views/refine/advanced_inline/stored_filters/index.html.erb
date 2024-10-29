@@ -1,4 +1,4 @@
-<%= turbo_frame_tag dom_id(@criterion, :load), class: "refine--stored-filter-list-popup" do %>
+<%= turbo_frame_tag dom_id(@criterion, :load), class: "refine--stored-filter-list-window" do %>
   <div class="refine--stored-filter-list">
     <% if @stored_filters.empty? %>
       <a><%= t('.no_stored_filters') %></a>
@@ -6,9 +6,10 @@
 
 
     <% @stored_filters.each do |filter| %>
+      <%= puts filter.inspect %>
       <%= form_with(
           model: @criterion,
-          url: find_refine_inline_stored_filters_path,
+          url: find_refine_advanced_inline_stored_filters_path,
           method: :post,
           class: "refine--stored-filter-search-form",
           data: {

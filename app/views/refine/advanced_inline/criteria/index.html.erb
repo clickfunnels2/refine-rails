@@ -44,6 +44,11 @@
         <i class="fa fa-filter"></i>
         <span class="pl-2"><%= t(".filter_attributes_tab_name") %></span>
       </sl-tab>
+
+      <sl-tab slot="nav" panel="saved_filters">
+        <i class="fa fa-floppy-disks"></i>
+        <span class="pl-2"><%= t(".filter_saved_filters_tab_name") %></span>
+      </sl-tab>
       
       <sl-tab-panel name="filter_attributes" class="refine--advanced-condition-select">
         <% if uncategorized_conditions&.any? %>
@@ -70,6 +75,14 @@
               <%= render partial: "condition_list_item_card", locals: {condition: condition, category: category } %> 
             <% end %>
           </div>
+        <% end %>
+      </sl-tab-panel>
+
+      <sl-tab-panel name="saved_filters" class="refine--advanced-condition-select">
+        <%= turbo_frame_tag dom_id(@criterion, :load), src: refine_advanced_inline_stored_filters_path(@criterion.to_params), loading: :lazy do %>
+          <div class="flex items-center justify-center p-9">
+            <%= sl_component(:spinner, class: "sl-spinner--medium") %>
+          </div> 
         <% end %>
       </sl-tab-panel>
     </sl-tab-group>

@@ -209,5 +209,6 @@ en:
               recommended: "Recommended"
               search_attributes: "Search Attributes"
               filter_attributes_tab_name: "FILTER ATTRIBUTES"
+              filter_saved_filters_tab_name: "SAVED FILTERS"
           load_button:
             load_filter: "Load Filter"

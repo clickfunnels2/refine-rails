@@ -1,3 +1,5 @@
+### 2.11.11
+  * WIP Feature - Advanced Condition Select: Adding stimulus controller for modal. Hides search bar if attributes tab is not active
 ### 2.11.10
   * WIP Feature - Advanced Condition Select: Adds the saved filters tab to select stored filters. Also tweaks some default styling
 ### 2.11.9

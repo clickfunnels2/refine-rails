@@ -21,7 +21,7 @@
 %>
 
 <%= turbo_frame_tag @criterion do %>
-  <sl-dialog open class="<%= dialog_class %>" no-header data-controller="refine--typeahead-list" >
+  <sl-dialog open class="<%= dialog_class %>" no-header data-controller="refine--typeahead-list refine--inline-advanced-modal" >
     
     <div class="dialog__header-actions refine--modal-header">
       <h2 part="title" class="dialog__title refine--header-title" id="title">
@@ -29,7 +29,7 @@
       </h2>
       <div part="header-actions" class="refine--modal-header-actions ">
         <slot name="header-actions"></slot>
-        <div class="refine--filter-condition-search" >
+        <div class="refine--filter-condition-search" data-refine--inline-advanced-modal-target="searchBarInput">
           <div class="absolute inset-y-0 left-0 pl-3 pr-2 flex items-center pointer-events-none" aria-hidden="true">
             <i class="text-coolGray-600 dark:text-coolGray-200 fa-regular fa-magnifying-glass" ></i>
           </div>
@@ -40,12 +40,12 @@
     </div>
     <sl-tab-group>
       
-      <sl-tab slot="nav" panel="filter_attributes">
+      <sl-tab slot="nav" panel="filter_attributes" data-action="click->refine--inline-advanced-modal#showSearchBar">
         <i class="fa fa-filter"></i>
         <span class="pl-2"><%= t(".filter_attributes_tab_name") %></span>
       </sl-tab>
 
-      <sl-tab slot="nav" panel="saved_filters">
+      <sl-tab slot="nav" panel="saved_filters" data-action="click->refine--inline-advanced-modal#hideSearchBar">
         <i class="fa fa-floppy-disks"></i>
         <span class="pl-2"><%= t(".filter_saved_filters_tab_name") %></span>
       </sl-tab>

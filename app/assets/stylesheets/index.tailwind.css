@@ -1181,9 +1181,12 @@ input.refine--search-trigger[type="text"] {
 }
 
 .refine--advanced-condition-select {
+  background-color: #f9fafb; /* tailwind color bg-gray-50 */
+}
+
+.refine--advanced-condition-select .tab-panel--active {
   padding-left: 24px;
   padding-right: 24px;
-  background-color: #f9fafb; /* tailwind color bg-gray-50 */
 }
 
 .refine--advanced-condition-category-header {

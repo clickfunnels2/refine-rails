@@ -20,7 +20,6 @@ import UpdateController from './refine/update-controller'
 import DateController from './refine/date-controller'
 import InlineAdvancedModalController from "./refine/inline-advanced-modal-controller"
 import TabGroupController from "./fields/shoelace/tab-group-controller"
-import InlineAdvancedModalController from "./refine/inline-advanced-modal-controller"
 
 export const controllerDefinitions = [
   [AddController, 'refine/add-controller.js'],

@@ -41,7 +41,7 @@ export const controllerDefinitions = [
   [TypeaheadListController, './refine/typeahead-list-controller.js'],
   [UpdateController, 'refine/update-controller.js'],
   [DateController, 'refine/date-controller.js'],
-  [inlineAdvancedModalController, 'refine/inline-advanced-modal-controller.js'],
+  [InlineAdvancedModalController, 'refine/inline-advanced-modal-controller.js'],
   [TabGroupController, 'fields/shoelace/tab-group-controller.js']
 ].map(function(d) {
   const key = d[1]

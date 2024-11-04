@@ -1128,7 +1128,7 @@ input.refine--search-trigger[type="text"] {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 6px 20px;
+  padding: 10px 20px 0 20px;;
 }
 
 .refine--header-title {
@@ -1181,14 +1181,17 @@ input.refine--search-trigger[type="text"] {
 }
 
 .refine--advanced-condition-select {
+  background-color: #f9fafb; /* tailwind color bg-gray-50 */
+}
+
+.refine--advanced-condition-select .tab-panel--active {
   padding-left: 24px;
   padding-right: 24px;
-  background-color: #f9fafb; /* tailwind color bg-gray-50 */
 }
 
 .refine--advanced-condition-category-header {
   display: flex;
-  padding: 10px 0 16px 0;
+  padding: 16px 0 12px 0;
   font-size: 14px;
   font-weight: 600;
   color: #1a202e; /* tailwind color cool-gray-900 */
@@ -1197,8 +1200,8 @@ input.refine--search-trigger[type="text"] {
 .refine--advanced-condition-select-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
-  padding-bottom: 32px
+  gap: 8px;
+  padding-bottom: 20px
 }
 
 .refine--condition-list-card {

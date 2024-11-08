@@ -18,7 +18,6 @@ export default class extends Controller {
   }
 
   open(event) {
-    console.log("Opening modal!!!", this.srcValue)
     event.preventDefault()
     this.frameTarget.src = this.srcValue;
     this.isOpenValue = true

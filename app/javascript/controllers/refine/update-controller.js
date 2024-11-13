@@ -55,6 +55,7 @@ export default class extends ServerRefreshController {
     const inputId = dataset.inputId
     inputKey = inputKey || dataset.inputKey || 'value'
     value = value || event.target.value
+    value = value.trim()
     state.updateInput(
       criterionIdValue,
       {

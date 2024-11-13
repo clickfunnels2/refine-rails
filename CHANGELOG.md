@@ -1,3 +1,5 @@
+### 2.11.12
+  * Trims inputs in old and new UIs for values to remove leading and trailing whitespace
 ### 2.11.11
   * WIP Feature - Advanced Condition Select: Adding stimulus controller for modal. Hides search bar if attributes tab is not active
 ### 2.11.10

@@ -18,6 +18,7 @@ class Refine::Inline::Criteria::Input
   :count_refinement,
   :date_refinement
 
+
   def attributes
     {
       clause: clause,
@@ -32,6 +33,11 @@ class Refine::Inline::Criteria::Input
       count_refinement: count_refinement_attributes.presence,
       date_refinement: date_refinement_attributes.presence
     }.compact
+  end
+
+  def attributes=(attrs = {})
+    super(attrs)
+    strip_values
   end
 
   def count_refinement
@@ -60,5 +66,12 @@ class Refine::Inline::Criteria::Input
 
   def selected=(value)
     @selected = Array.wrap(value)
+  end
+
+  def strip_values
+    [:value, :value1, :value2].each do |attr|
+      current_value = send(attr)
+      send("#{attr}=", current_value.strip) if current_value.present?
+    end
   end
 end

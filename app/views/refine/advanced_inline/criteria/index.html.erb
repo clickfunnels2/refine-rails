@@ -21,7 +21,7 @@
 %>
 
 <%= turbo_frame_tag @criterion do %>
-  <sl-dialog open class="<%= dialog_class %>" no-header data-controller="refine--typeahead-list refine--inline-advanced-modal" >
+  <sl-dialog open class="<%= dialog_class %> <%= "uncategorized" if categorized_conditions&.empty? %>" no-header data-controller="refine--typeahead-list refine--inline-advanced-modal" >
     
     <div class="dialog__header-actions refine--modal-header">
       <h2 part="title" class="dialog__title refine--header-title" id="title">
@@ -68,7 +68,7 @@
               <% end %>
             </div>
           <% end %>
-          <div class="refine--advanced-condition-picker">
+          <div class="refine--advanced-condition-picker <%= "lone" if categorized_conditions&.empty? %>">
             <% if uncategorized_conditions&.any? %>
               <div class="refine--advanced-condition-select-group">
                 <% uncategorized_conditions.each do |condition| %>

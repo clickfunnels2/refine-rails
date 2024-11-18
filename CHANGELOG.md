@@ -1,3 +1,6 @@
+### 2.12.0
+  * Feature Release - Advanced Condition Select: Fully releases a new option for condition selects built for more complex filters
+  * Fixes a bug with 2.11.12 where a is_one_of and is_not_one_of clause would break the old UI
 ### 2.11.12
   * Trims inputs in old and new UIs for values to remove leading and trailing whitespace
 ### 2.11.11

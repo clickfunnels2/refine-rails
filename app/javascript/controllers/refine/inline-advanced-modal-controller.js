@@ -19,10 +19,8 @@ export default class extends Controller {
   }
 
   handleIntersection(entries) {
-    console.log("handleIntersection", entries)
     entries.forEach(entry => {
       if(entry.isIntersecting) {
-        console.log("intersecting", entry.target.dataset.categoryListBlockValue)
         this.highlightCategory(entry.target.dataset.categoryListBlockValue)
       }
     })

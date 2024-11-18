@@ -1191,7 +1191,7 @@ input.refine--search-trigger[type="text"] {
 
 .refine--advanced-condition-category-header {
   display: flex;
-  padding: 16px 0 12px 0;
+  padding: 12px 0 12px 0;
   font-size: 14px;
   font-weight: 600;
   color: #1a202e; /* tailwind color cool-gray-900 */

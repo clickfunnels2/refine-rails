@@ -51,31 +51,51 @@
       </sl-tab>
       
       <sl-tab-panel name="filter_attributes" class="refine--advanced-condition-select">
-        <% if uncategorized_conditions&.any? %>
-          <div class="refine--advanced-condition-select-group">
-            <% uncategorized_conditions.each do |condition| %>
-              <%= render partial: "condition_list_item_card", locals: {condition: condition } %> 
+        <div class="refine--advanced-condition-content" >
+          <% if categorized_conditions&.any? %>
+            <div class="refine--advanced-category-picker">
+              <% categorized_conditions.each do |category, conditions| %>
+                <div class="refine--condition-list-item refine--condition-list-card" 
+                  data-action="click->refine--inline-advanced-modal#scrollToCategory"
+                  data-inline-advanced-modal-value="<%= category %>"
+                  data-refine--inline-advanced-modal-target="categoryShortcutItem"
+                >
+                  <div class="refine--condition-list-icon-container bg-gray-200" >
+                    <i class="refine--condition-list-card-icon <%= conditions.last.category_icon_class %>"></i>
+                  </div> 
+                  <%= category %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+          <div class="refine--advanced-condition-picker">
+            <% if uncategorized_conditions&.any? %>
+              <div class="refine--advanced-condition-select-group">
+                <% uncategorized_conditions.each do |condition| %>
+                  <%= render partial: "condition_list_item_card", locals: {condition: condition } %> 
+                <% end %>
+              </div>
             <% end %>
-          </div>
-        <% end %>
 
-        <% if recommended_conditions.any? %>
-          <b data-refine--typeahead-list-target="recommended" class="refine--advanced-condition-category-header"><%= t('.recommended') %></b>
-          <div class="refine--advanced-condition-select-group">
-            <% recommended_conditions.each do |condition| %>
-              <%= render partial: "condition_list_item_card", locals: {condition: condition } %> 
+            <% if recommended_conditions.any? %>
+              <b data-refine--typeahead-list-target="recommended" class="refine--advanced-condition-category-header"><%= t('.recommended') %></b>
+              <div class="refine--advanced-condition-select-group">
+                <% recommended_conditions.each do |condition| %>
+                  <%= render partial: "condition_list_item_card", locals: {condition: condition } %> 
+                <% end %>
+              </div>
             <% end %>
-          </div>
-        <% end %>
 
-        <% categorized_conditions.each do |(category, conditions)| %>
-          <b data-refine--typeahead-list-target="category" class="refine--advanced-condition-category-header"><%= category %></b>
-          <div class="refine--advanced-condition-select-group">
-            <% conditions.each do |condition| %>
-              <%= render partial: "condition_list_item_card", locals: {condition: condition, category: category } %> 
+            <% categorized_conditions.each do |(category, conditions)| %>
+              <b data-refine--typeahead-list-target="category" data-refine--inline-advanced-modal-target="categoryListItem" data-category-list-item-value="<%= category %>" class="refine--advanced-condition-category-header"><%= category %></b>
+              <div class="refine--advanced-condition-select-group" data-refine--inline-advanced-modal-target="categoryBlockItem"  data-category-list-block-value="<%= category %>">
+                <% conditions.each do |condition| %>
+                  <%= render partial: "condition_list_item_card", locals: {condition: condition, category: category } %> 
+                <% end %>
+              </div>
             <% end %>
           </div>
-        <% end %>
+        </div>
       </sl-tab-panel>
 
       <sl-tab-panel name="saved_filters" class="refine--advanced-condition-select">

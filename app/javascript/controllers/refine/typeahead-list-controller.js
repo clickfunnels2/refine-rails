@@ -6,6 +6,14 @@ export default class extends Controller {
 
   filter(event) {
     const query = event.currentTarget.value.toLowerCase()
+    this.handleFilter(query) 
+  }
+
+  clearSearch() {
+    this.handleFilter('')
+  }
+
+  handleFilter(query) {
     const visibleCategories = new Set()
 
     // hide / show listItem links that match the query and note which

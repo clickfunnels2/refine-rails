@@ -29,11 +29,11 @@
       </h2>
       <div part="header-actions" class="refine--modal-header-actions ">
         <slot name="header-actions"></slot>
-        <div class="refine--filter-condition-search" data-refine--inline-advanced-modal-target="searchBarInput">
+        <div class="refine--filter-condition-search" data-refine--inline-advanced-modal-target="searchBarInput" >
           <div class="absolute inset-y-0 left-0 pl-3 pr-2 flex items-center pointer-events-none" aria-hidden="true">
             <i class="text-coolGray-600 dark:text-coolGray-200 fa-regular fa-magnifying-glass" ></i>
           </div>
-          <input type="text" class="input input--search" placeholder="<%= t(".search_attributes") %>" data-search-target="filterProperties" data-action="refine--typeahead-list#filter" />
+          <input type="text" class="input input--search" placeholder="<%= t(".search_attributes") %>" data-search-target="filterProperties" data-action="refine--typeahead-list#filter refine--inline-advanced-modal#clearSelection" />
         </div>
         <sl-icon-button part="close-button" exportparts="base:close-button__base refine--modal-close" class="dialog__close" name="x-lg" library="system" label="Close" data-action="click->refine--modal#close"></sl-icon-button>
       </div>
@@ -56,7 +56,7 @@
             <div class="refine--advanced-category-picker">
               <% categorized_conditions.each do |category, conditions| %>
                 <div class="refine--condition-list-item refine--condition-list-card" 
-                  data-action="click->refine--inline-advanced-modal#scrollToCategory"
+                  data-action="click->refine--inline-advanced-modal#clearSearch click->refine--typeahead-list#clearSearch click->refine--inline-advanced-modal#scrollToCategory "
                   data-inline-advanced-modal-value="<%= category %>"
                   data-refine--inline-advanced-modal-target="categoryShortcutItem"
                 >
@@ -68,7 +68,7 @@
               <% end %>
             </div>
           <% end %>
-          <div class="refine--advanced-condition-picker <%= "lone" if categorized_conditions&.empty? %>">
+          <div data-refine--inline-advanced-modal-target="scrollContainer" class="refine--advanced-condition-picker <%= "lone" if categorized_conditions&.empty? %>">
             <% if uncategorized_conditions&.any? %>
               <div class="refine--advanced-condition-select-group">
                 <% uncategorized_conditions.each do |condition| %>
@@ -94,13 +94,14 @@
                 <% end %>
               </div>
             <% end %>
+            <div id="refine--picker-bottom-marker" data-refine--inline-advanced-modal-target="categoryBlockItem" data-category-list-block-value="bottom"></div>
           </div>
         </div>
       </sl-tab-panel>
 
       <sl-tab-panel name="saved_filters" class="refine--advanced-condition-select">
         <%= turbo_frame_tag dom_id(@criterion, :load), src: refine_advanced_inline_stored_filters_path(@criterion.to_params), loading: :lazy do %>
-          <div class="flex items-center justify-center p-9">
+          <div class="refine--saved-filters-panel">
             <%= sl_component(:spinner, class: "sl-spinner--medium") %>
           </div> 
         <% end %>

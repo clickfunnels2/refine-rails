@@ -93,18 +93,18 @@ export default class extends Controller {
   scrollToCategory(event) {
     const categoryName = event.target.dataset.inlineAdvancedModalValue
     const categoryElement = this.findCategoryElementByName(categoryName)
-    this.shouldHighlightCategories = false;
     if(categoryElement) {
+      this.shouldHighlightCategories = false;
       categoryElement.scrollIntoView({
         behavior: "smooth",
         block: "start",
         inline: "nearest"
       })
+      setTimeout(() => {
+        this.shouldHighlightCategories = true;
+        this.highlightCategory(categoryName, true);
+      }, 750);
     }
-    setTimeout(() => {
-      this.shouldHighlightCategories = true;
-      this.highlightCategory(categoryName, true);
-    }, 750);
   }
 
   debounceScrollHighlights() {

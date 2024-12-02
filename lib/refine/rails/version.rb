@@ -1,5 +1,5 @@
 module Refine
   module Rails
-    VERSION = "2.12.0"
+    VERSION = "2.12.1"
   end
 end

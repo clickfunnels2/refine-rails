@@ -19,6 +19,7 @@ module Refine
 
     cattr_accessor :default_stabilizer, default: nil, instance_accessor: false
     cattr_accessor :criteria_limit, default: 5, instance_accessor: true
+    cattr_accessor :recursive_count, default: 0, instance_accessor: true
 
     attr_reader :blueprint, :initial_query
 
@@ -90,6 +91,7 @@ module Refine
 
     def get_query
       raise "Initial query must exist" if initial_query.nil?
+      puts "END REFINE FILTER QUERY: #{@relation.to_sql}"
       if blueprint.present?
         @relation.where(group(make_sub_query(blueprint)))
       else

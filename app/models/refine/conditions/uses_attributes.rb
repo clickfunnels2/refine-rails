@@ -21,16 +21,33 @@ module Refine::Conditions
 
       # Get the Reflection object which defines the relationship between query and relation
       # First iteration pull relationship using base query which responds to model.
+      puts "in uses_attributes: apply_relationship_attribute query.respond_to? :model #{query.respond_to? :model}"
       instance = if query.respond_to? :model
+        puts "in uses_attributes: apply_relationship_attribute getting model reflect_on"
         query.model.reflect_on_association(relation.to_sym)
       else
         # When query is sent in as subquery (recursive) the query object is the model class pulled from the
         # previous instance value
+        puts "in uses_attributes: apply_relationship_attribute getting model query IS the model"
         query.reflect_on_association(relation.to_sym)
       end
 
+
       unless instance
         raise "Relationship does not exist for #{relation}."
+      end
+
+      if instance.through_reflection.present?
+        puts "instance has a through reflection"
+        through_reflection = instance.through_reflection
+
+        # Parent key (foreign key in the through table referencing the parent table)
+        parent_foreign_key = through_reflection.foreign_key
+        puts "Parent foreign key: #{parent_foreign_key}"
+
+        # Child key (foreign key in the through table referencing the child table)
+        child_foreign_key = instance.source_reflection.foreign_key
+        puts "Child foreign key: #{child_foreign_key}"
       end
 
       filter.set_pending_relationship(relation, instance)
@@ -40,6 +57,9 @@ module Refine::Conditions
         filter.allow_pending_relationship_to_collapse
       end
 
+      puts "uses_attributes: apply_relationship_attribute"
+      puts "instance: #{instance.inspect}"
+      puts "can_use_where_in_relationship_query? #{can_use_where_in_relationship_subquery?(instance)}"
       if can_use_where_in_relationship_subquery?(instance)
         create_pending_wherein_subquery(input: input, relation: relation, instance: instance, query: query)
       else
@@ -81,6 +101,7 @@ module Refine::Conditions
       # Primary/secondary keys keep track of how to link tables
       # If depth has been added (i.e. filter.pending_relationship_subquery_depth = [:btt_user, :btt_notes])
       # This will add the [:children] key to the pending_relationship_subqueries tracker under the parent key [:btt_user]
+
       filter.add_pending_relationship_subquery(subquery: subquery, primary_key: key_1(instance), secondary_key: key_2(instance))
 
       # Apply the condition. If a nested relationship, this apply is adding the children key (with values) to the pending_relationship_subqueries tracker
@@ -91,9 +112,11 @@ module Refine::Conditions
       # the linking keys in the tracker with the fully formed select query
       # Has not been tested more than one level deep
       if node.is_a? Arel::SelectManager
+
         filter.add_pending_relationship_subquery(subquery: node, primary_key: key_1(instance), secondary_key: key_2(instance))
       elsif node
         # This modifies subquery *in* the pending_relationship_subqueries tracker.
+
         subquery.where(node)
       end
     end
@@ -119,14 +142,37 @@ module Refine::Conditions
       # Ex: A country has many posts through hmtt_users.
       # Use AR to properly join the relation to the base query provided
       # Convert to AREL to use with nodes 
+      
       subquery_path = query.model.select(key_1(instance)).joins(relation.to_sym).arel
+
+      puts subquery_path.to_sql
       relation_table_being_queried = instance.klass.arel_table
 
       relation_class = instance.klass
       
-      node_to_apply = apply(input, relation_table_being_queried, relation_class, inverse_clause)
+      puts "applying"
+      puts "input: #{input.inspect}"
+      puts "relation_table_being_queried: #{relation_table_being_queried.inspect}"
+      puts "relation_class: #{relation_class.inspect}"
+      puts "inverse_clause: #{inverse_clause}"
+      puts "key1 #{key_1(instance)}"
+      puts "key2 #{key_2(instance)}"
+      if(instance.through_reflection.present?)
+        through_reflection = instance.through_reflection
+        parent_foreign_key = through_reflection.foreign_key
+        child_foreign_key = instance.source_reflection.foreign_key
+        relation_table_being_queried = through_reflection.klass.arel_table
+        relation_class = through_reflection.klass
+        puts "parent_foreign_key: #{parent_foreign_key}"
+        puts "child_foreign_key: #{child_foreign_key}"
+        subquery_path = through_reflection.klass.select(parent_foreign_key).arel
+        node_to_apply = apply(input, relation_table_being_queried, relation_class, inverse_clause, child_foreign_key)
+      else
+        node_to_apply = apply(input, relation_table_being_queried, relation_class, inverse_clause)
+      end
 
       complete_subquery = subquery_path.where(node_to_apply)
+      puts "complete_subquery: #{complete_subquery.to_sql}"
       subquery = filter.get_pending_relationship_subquery || complete_subquery
       filter.add_pending_relationship_subquery(subquery: subquery, primary_key: key_1(instance), secondary_key: nil, inverse_clause: inverse_clause)
     end

@@ -121,8 +121,9 @@ module Refine::Conditions
     # @param [Hash] input The user's input
     # @param [Arel::Table] table The arel_table the query is built on 
     # @param [ActiveRecord::Relation] initial_query The base query the query is built on 
+    # @param [string] through_attribute if this is a has_many :through relationship the child attribute to apply the where clause to
     # @return [Arel::Node] 
-    def apply(input, table, initial_query, inverse_clause=false)
+    def apply(input, table, initial_query, inverse_clause=false, through_attribute=nil)
       table ||= filter.table
       # Ensurance validations are checking the developer configured correctly
       run_ensurance_validations
@@ -145,12 +146,18 @@ module Refine::Conditions
         input.delete(:filter_refinement)
       end
 
+      puts "condition.rb: is_relationship_attribute? #{is_relationship_attribute?}"
+      puts "condition.rb: input: #{input.inspect}"
       if is_relationship_attribute?
         apply_relationship_attribute(input: input, query: initial_query)
         return
       end
       # No longer a relationship attribute, apply condition normally
-      nodes = apply_condition(input, table, inverse_clause)
+      puts "condition.rb: applying normal condition"
+      puts "condition.rb: input: #{input.inspect}"
+      puts "condition.rb: table: #{table.inspect}"
+      puts "condition.rb: inverse_clause: #{inverse_clause}"
+      nodes = apply_condition(input, table, inverse_clause, through_attribute)
       if !is_refinement && has_any_refinements?
         refined_node = apply_refinements(input)
         # Count refinement will return nil because it directly modified pending relationship subquery

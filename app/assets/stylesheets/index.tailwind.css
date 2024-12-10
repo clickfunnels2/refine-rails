@@ -1251,3 +1251,8 @@ input.refine--search-trigger[type="text"] {
   color: #111;
   text-decoration: none;
 }
+
+.refine--condition-list-card-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

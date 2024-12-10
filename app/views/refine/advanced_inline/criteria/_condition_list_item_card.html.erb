@@ -27,5 +27,12 @@
       <%= render partial: condition.icon_template[:template_path], locals: condition.icon_template[:locals] %>
     <% end %>
   <% end %>
-  <%= condition.display %>
+  <span class="refine--condition-list-card-text" 
+        data-controller="tooltip"
+        data-tooltip-content-value="<%= condition.display %>"
+        data-tooltip-min-char-count-value="50"
+        data-tooltip-other-options-value='{"delay": 500}'
+  >
+    <%= condition.display %>
+  </span>
 <% end %>

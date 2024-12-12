@@ -148,6 +148,7 @@ module Refine
         current_model = subquery[:instance]&.klass 
         parent_model = subquery[:instance]&.active_record
         use_multiple_databases = (inner_query.is_a? Arel::SelectManager) && use_multiple_databases?(current_model, parent_model)
+
         if query.present?
           # If query exists and is a Select Manager we are deeply nested and need to build the query
           # with a WHERE statement
@@ -177,7 +178,15 @@ module Refine
             array_of_ids = current_model.connection.exec_query(inner_query.to_sql).rows.flatten
             query = parent_table[linking_key.to_s].send(connecting_method, array_of_ids.uniq)
           else
+            puts "TOP LEVEL"
+            self.recursive_count += 1
+            puts "recursive count: #{self.recursive_count}"
+            puts "linking_key: #{linking_key}"
+            puts "connecting_method: #{connecting_method}"
+            puts "inner_query: #{inner_query.to_sql}"
             query = parent_table[linking_key.to_s].send(connecting_method, inner_query)
+            # puts inner_query.to_sql
+            puts query.to_sql
           end
         end
       end

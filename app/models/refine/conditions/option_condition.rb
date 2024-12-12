@@ -144,11 +144,13 @@ module Refine::Conditions
       ]
     end
 
-    def apply_condition(input, table, inverse_clause)
+    def apply_condition(input, table, inverse_clause, through_attribute=nil)
       value = input[:selected]
       # TODO: Triggers on "through" relationship. Other relationships?
       @clause = CLAUSE_IN if inverse_clause
-
+      puts "apply_condition: #{value.inspect} : #{table} : #{attribute} : through_attribute: #{through_attribute}"
+      self.attribute = through_attribute if through_attribute
+      puts "overridding attribute: #{attribute}"
       case clause
       when CLAUSE_SET
         apply_clause_set(table)
@@ -220,6 +222,7 @@ module Refine::Conditions
     def apply_clause_not_in(value, table)
       normalized_values = values_for_application(value)
       # Must check for only nil option selected here
+      puts "apply_clause_not_in value: #{value.inspect} : #{normalized_values.inspect} : #{table} : #{attribute}"
       if nil_option_selected?(value) && value.one?
         table.grouping(table[:"#{attribute}"].not_eq(nil))
       elsif nil_option_selected?(value)
@@ -256,5 +259,7 @@ module Refine::Conditions
     def apply_clause_not_set(table)
       table.grouping(table[:"#{attribute}"].eq_any([nil, ""]))
     end
+
+
   end
 end

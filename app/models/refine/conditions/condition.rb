@@ -10,6 +10,8 @@ module Refine::Conditions
     include HasMeta
     include UsesAttributes
     include HasRefinements
+    include HasThroughIdRelationship
+    include WithForcedIndex
     include HasIcon
 
     attr_reader :ensurances, :before_validations, :clause, :filter
@@ -122,7 +124,7 @@ module Refine::Conditions
     # @param [Arel::Table] table The arel_table the query is built on 
     # @param [ActiveRecord::Relation] initial_query The base query the query is built on 
     # @return [Arel::Node] 
-    def apply(input, table, initial_query, inverse_clause=false)
+    def apply(input, table, initial_query, inverse_clause=false, through_attribute=nil)
       table ||= filter.table
       # Ensurance validations are checking the developer configured correctly
       run_ensurance_validations
@@ -150,6 +152,7 @@ module Refine::Conditions
         return
       end
       # No longer a relationship attribute, apply condition normally
+      self.attribute = through_attribute if through_attribute
       nodes = apply_condition(input, table, inverse_clause)
       if !is_refinement && has_any_refinements?
         refined_node = apply_refinements(input)

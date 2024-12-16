@@ -30,19 +30,34 @@ module Refine::Conditions
       assert_equal convert(expected_sql), query.get_query.to_sql
     end
 
-    it "properly handles negative option conditions with and condition" do 
+    it "properly handles negative option conditions with through id set" do 
       # TODO 
-      query = create_filter(does_not_contain_option_condition)
+      query = create_filter_with_through_id(does_not_contain_option_condition)
       expected_sql = <<~SQL.squish
         SELECT
           `contacts`.*
         FROM
           `contacts`
         WHERE (`contacts`.`id` NOT IN (SELECT
-                `contacts`.`id` FROM `contacts`
-                INNER JOIN `contacts_applied_tags` ON `contacts_applied_tags`.`contact_id` = `contacts`.`id`
-                INNER JOIN `contacts_tags` ON `contacts_tags`.`id` = `contacts_applied_tags`.`tag_id`
-              WHERE (`contacts_tags`.`id` IN (1))))
+                `contacts_applied_tags`.`contact_id` FROM `contacts_applied_tags`
+              WHERE (`contacts_applied_tags`.`tag_id` IN (1))))
+
+      SQL
+      assert_equal convert(expected_sql), query.get_query.to_sql
+    end
+
+    it "properly handles negative option conditions with through id set and forced index" do 
+      # TODO 
+      query = create_filter_with_through_id_forced_index(does_not_contain_option_condition, "index_contacts_applied_tags_on_contact_id")
+      expected_sql = <<~SQL.squish
+        SELECT
+          `contacts`.*
+        FROM
+          `contacts`
+        WHERE (`contacts`.`id` NOT IN (SELECT
+                `contacts_applied_tags`.`contact_id` FROM `contacts_applied_tags`
+                FORCE INDEX(`index_contacts_applied_tags_on_contact_id`)
+              WHERE (`contacts_applied_tags`.`tag_id` IN (1))))
 
       SQL
       assert_equal convert(expected_sql), query.get_query.to_sql
@@ -61,6 +76,26 @@ module Refine::Conditions
         Contact.all,
         [
           OptionCondition.new("tags.id").with_options([{id: "1", display: "Option 1"}])
+        ],
+        Contact.arel_table)
+    end
+
+    def create_filter_with_through_id(blueprint)
+      # Contacts Filter
+      BlankTestFilter.new(blueprint,
+        Contact.all,
+        [
+          OptionCondition.new("tags.id").with_options([{id: "1", display: "Option 1"}]).with_through_id_relationship
+        ],
+        Contact.arel_table)
+    end
+
+    def create_filter_with_through_id_forced_index(blueprint, index)
+      # Contacts Filter
+      BlankTestFilter.new(blueprint,
+        Contact.all,
+        [
+          OptionCondition.new("tags.id").with_options([{id: "1", display: "Option 1"}]).with_through_id_relationship.with_forced_index(index)
         ],
         Contact.arel_table)
     end

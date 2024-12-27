@@ -123,9 +123,30 @@ module Refine::Conditions
       relation_table_being_queried = instance.klass.arel_table
 
       relation_class = instance.klass
-      
-      node_to_apply = apply(input, relation_table_being_queried, relation_class, inverse_clause)
 
+      if self.through_id_relationship
+        if instance.is_a? ActiveRecord::Reflection::ThroughReflection
+          through_reflection = instance.through_reflection
+          parent_foreign_key = through_reflection.foreign_key
+          child_foreign_key = instance.source_reflection.foreign_key
+          relation_table_being_queried = through_reflection.klass.arel_table
+          relation_class = through_reflection.klass
+          subquery_path = through_reflection.klass.select(parent_foreign_key).arel
+         
+          node_to_apply = apply(input, relation_table_being_queried, relation_class, inverse_clause, child_foreign_key)
+        else
+          raise "with_through_id must be used with a has_many :through relationship"
+        end
+      else
+        node_to_apply = apply(input, relation_table_being_queried, relation_class, inverse_clause)
+      end
+
+      if self.forced_index
+        mysql_from_segment = "`#{through_reflection.table_name}` FORCE INDEX(`#{self.forced_index}`)"
+        # Ensuring input is sanitized
+        subquery_path = subquery_path.from(Arel.sql(mysql_from_segment))
+      end
+      
       complete_subquery = subquery_path.where(node_to_apply)
       subquery = filter.get_pending_relationship_subquery || complete_subquery
       filter.add_pending_relationship_subquery(subquery: subquery, primary_key: key_1(instance), secondary_key: nil, inverse_clause: inverse_clause)

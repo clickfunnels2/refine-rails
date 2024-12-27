@@ -1,3 +1,8 @@
+### 2.13.0
+  * Feature Release - Adds ability to tell refine to handle join tables more efficiently
+  * Adds ability for user to force an index for a through relationship
+### 2.12.2
+  * Advanced Condition Select: Fixes card styling to truncate automatically
 ### 2.12.1
   * Category Picker - smooths out category picker and makes search mutually exclusive
 ### 2.12.0

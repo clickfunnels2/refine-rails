@@ -1,3 +1,5 @@
+### 2.13.1
+  * Patch for new through relationship efficiency to handle nested relations and scope procs correctly
 ### 2.13.0
   * Feature Release - Adds ability to tell refine to handle join tables more efficiently
   * Adds ability for user to force an index for a through relationship

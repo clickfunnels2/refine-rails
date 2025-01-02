@@ -10,8 +10,11 @@ module Refine::Conditions
       ApplicationRecord.connection.execute("CREATE TABLE contacts_applied_tags (id bigint primary key, contact_id bigint, tag_id bigint);")
       ApplicationRecord.connection.execute("CREATE TABLE contacts_tags (id bigint primary key);")
       ApplicationRecord.connection.execute("CREATE TABLE contacts_last_activities (id bigint primary key);")
+      ApplicationRecord.connection.execute("CREATE TABLE products (id bigint primary key);")
+      ApplicationRecord.connection.execute("CREATE TABLE orders (id bigint primary key, contact_id bigint, service_status varchar(255));")
+      ApplicationRecord.connection.execute("CREATE TABLE orders_line_items (id bigint primary key, order_id bigint, original_product_id bigint);")
       test.call
-      ApplicationRecord.connection.execute("DROP TABLE contacts, contacts_applied_tags, contacts_tags, contacts_last_activities;")
+      ApplicationRecord.connection.execute("DROP TABLE contacts, contacts_applied_tags, contacts_tags, contacts_last_activities, products, orders, orders_line_items;")
     end
 
     it "properly handles IS ONE OF option conditions" do 
@@ -96,11 +99,35 @@ module Refine::Conditions
       assert_equal convert(expected_sql), query.get_query.to_sql
     end
 
+    it "properly handles negative option conditions with through id set on a nested relationship" do 
+      # TODO 
+      query = create_nested_through_id(does_not_contain_option_condition_nested)
+      expected_sql = <<~SQL.squish
+        SELECT
+          `contacts`.*
+        FROM
+          `contacts`
+        WHERE (`contacts`.`id` NOT IN (SELECT `orders`.`contact_id` FROM `orders`
+          INNER JOIN `orders_line_items` ON `orders_line_items`.`order_id` = `orders`.`id` 
+          WHERE `orders`.`service_status` IN ('churned', 'canceled') 
+            AND (`orders_line_items`.`original_product_id` IN (2, 6505))))
+
+      SQL
+      assert_equal convert(expected_sql), query.get_query.to_sql
+    end
+
     def does_not_contain_option_condition
       Refine::Blueprints::Blueprint.new
         .criterion("tags.id",
           clause: OptionCondition::CLAUSE_NOT_IN,
           selected: ["1"])
+    end
+
+    def does_not_contain_option_condition_nested
+      Refine::Blueprints::Blueprint.new
+        .criterion("churned_products.id",
+          clause: OptionCondition::CLAUSE_NOT_IN,
+          selected: ["6505", "2"])
     end
 
     def contains_option_condition
@@ -148,11 +175,27 @@ module Refine::Conditions
       ],
       Contact.arel_table) 
     end
+
+    def create_nested_through_id(blueprint)
+      BlankTestFilter.new(blueprint,
+        Contact.all,
+        [
+          OptionCondition.new("churned_products.id").with_options([{id: "2", display: "Option 2"}, {id: "6505", display: "Option 6505"}]).with_through_id_relationship
+        ],
+        Contact.arel_table) 
+    end
   end
 
   class Contact < ActiveRecord::Base
     has_many :applied_tags, class_name: "Refine::Conditions::Contact::AppliedTag", dependent: :destroy
     has_many :tags, through: :applied_tags
+
+    has_many :orders
+    has_many :line_items, through: :orders
+    has_many :products, through: :line_items, source: :original_product
+    has_many :churned_line_items, -> { where(orders: {service_status: %w[churned canceled]}) }, through: :orders, source: :line_items
+    has_many :churned_products, through: :churned_line_items, source: :original_product
+
     has_one :last_activity, class_name: "Refine::Conditions::Contact::LastActivity", dependent: :destroy
   end
 
@@ -170,5 +213,24 @@ module Refine::Conditions
 
   class Contact::LastActivity < ActiveRecord::Base
     belongs_to :contact, touch: true, optional: true
+  end
+
+  class Order < ActiveRecord::Base
+    belongs_to :contact
+    has_many :line_items, class_name: "Refine::Conditions::Orders::LineItem", dependent: :destroy
+  end
+
+  class Product < ActiveRecord::Base
+  end
+
+  module Orders
+    def self.table_name_prefix
+      "orders_"
+    end
+  end
+
+  class Orders::LineItem < ActiveRecord::Base
+    belongs_to :order, class_name: "Refine::Conditions::Order"
+    belongs_to :original_product, class_name: "Refine::Conditions::Product"
   end
 end

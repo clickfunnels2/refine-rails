@@ -131,11 +131,24 @@ module Refine::Conditions
           child_foreign_key = instance.source_reflection.foreign_key
           relation_table_being_queried = through_reflection.klass.arel_table
           relation_class = through_reflection.klass
-          subquery_path = through_reflection.klass.select(parent_foreign_key).arel
+          if(through_reflection.chain.count > 1)
+            # We need to shortcut the outer inner joins but allow the others to go as normal
+            parent_foreign_key = through_reflection.chain.last.foreign_key
+            parent_through_reflection = through_reflection.chain.last
+            join_sym = through_reflection.source_reflection_name
+            subquery_path = parent_through_reflection.klass.select(parent_foreign_key).joins(join_sym)
+            if(through_reflection.scope && through_reflection.scope.is_a?(Proc))
+              subquery_path = subquery_path.instance_exec(&through_reflection.scope)
+            end
+            subquery_path = subquery_path.arel
+          else
+            # Does not need any inner joins
+            subquery_path = through_reflection.klass.select(parent_foreign_key).arel
+          end
          
           node_to_apply = apply(input, relation_table_being_queried, relation_class, inverse_clause, child_foreign_key)
         else
-          raise "with_through_id must be used with a has_many :through relationship"
+          raise Refine::Conditions::Errors::RelationshipError.new("with_through_id must be used with a has_many :through relationship")
         end
       else
         node_to_apply = apply(input, relation_table_being_queried, relation_class, inverse_clause)

@@ -1,3 +1,5 @@
+### 2.13.2
+  * Disable Turbo link prefetch for advanced inline UI
 ### 2.13.1
   * Patch for new through relationship efficiency to handle nested relations and scope procs correctly
 ### 2.13.0

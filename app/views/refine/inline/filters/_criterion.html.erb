@@ -5,7 +5,7 @@
 %>
 
   <div class="refine--condition-pill-wrapper">
-    <div class="refine--condition-pill">
+    <div class="refine--condition-pill" data-turbo-prefetch="false">
       <%= link_to refine_inline_criterion_path(criterion.position, criterion.to_params), class: "refine--remove-condition", data: {turbo_method: :delete, controller: "refine--turbo-stream-link", action: "refine--turbo-stream-link#visit"} do %>
         <span class="material-icons-outlined refine--icon-sm">clear</span>
       <% end %>

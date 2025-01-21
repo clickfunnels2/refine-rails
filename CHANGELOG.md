@@ -1,3 +1,5 @@
+### 2.13.3
+  * Patch for through relationship efficiency with associations with belongs_to
 ### 2.13.2
   * Disable Turbo link prefetch for advanced inline UI
 ### 2.13.1

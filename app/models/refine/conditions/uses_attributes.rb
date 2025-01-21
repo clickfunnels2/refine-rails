@@ -127,6 +127,9 @@ module Refine::Conditions
       if self.through_id_relationship
         if instance.is_a? ActiveRecord::Reflection::ThroughReflection
           through_reflection = instance.through_reflection
+          if(through_reflection.is_a?(ActiveRecord::Reflection::BelongsToReflection))
+            through_reflection = instance.source_reflection.through_reflection
+          end
           parent_foreign_key = through_reflection.foreign_key
           child_foreign_key = instance.source_reflection.foreign_key
           relation_table_being_queried = through_reflection.klass.arel_table

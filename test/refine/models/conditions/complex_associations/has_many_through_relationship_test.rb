@@ -1,7 +1,7 @@
 require "test_helper"
 require "support/refine/filter_test_helper"
 
-module Refine::Conditions
+module Refine::Conditions::ComplexAssociations
   describe "Has Many Through Test" do
     include FilterTestHelper
 
@@ -119,21 +119,21 @@ module Refine::Conditions
     def does_not_contain_option_condition
       Refine::Blueprints::Blueprint.new
         .criterion("tags.id",
-          clause: OptionCondition::CLAUSE_NOT_IN,
+          clause: Refine::Conditions::OptionCondition::CLAUSE_NOT_IN,
           selected: ["1"])
     end
 
     def does_not_contain_option_condition_nested
       Refine::Blueprints::Blueprint.new
         .criterion("churned_products.id",
-          clause: OptionCondition::CLAUSE_NOT_IN,
+          clause: Refine::Conditions::OptionCondition::CLAUSE_NOT_IN,
           selected: ["6505", "2"])
     end
 
     def contains_option_condition
       Refine::Blueprints::Blueprint.new
         .criterion("tags.id",
-          clause: OptionCondition::CLAUSE_IN,
+          clause: Refine::Conditions::OptionCondition::CLAUSE_IN,
           selected: ["1"])
     end
 
@@ -142,7 +142,7 @@ module Refine::Conditions
       BlankTestFilter.new(blueprint,
         Contact.all,
         [
-          OptionCondition.new("tags.id").with_options([{id: "1", display: "Option 1"}])
+          Refine::Conditions::OptionCondition.new("tags.id").with_options([{id: "1", display: "Option 1"}])
         ],
         Contact.arel_table)
     end
@@ -152,7 +152,7 @@ module Refine::Conditions
       BlankTestFilter.new(blueprint,
         Contact.all,
         [
-          OptionCondition.new("tags.id").with_options([{id: "1", display: "Option 1"}]).with_through_id_relationship
+          Refine::Conditions::OptionCondition.new("tags.id").with_options([{id: "1", display: "Option 1"}]).with_through_id_relationship
         ],
         Contact.arel_table)
     end
@@ -162,7 +162,7 @@ module Refine::Conditions
       BlankTestFilter.new(blueprint,
         Contact.all,
         [
-          OptionCondition.new("tags.id").with_options([{id: "1", display: "Option 1"}]).with_through_id_relationship.with_forced_index(index)
+          Refine::Conditions::OptionCondition.new("tags.id").with_options([{id: "1", display: "Option 1"}]).with_through_id_relationship.with_forced_index(index)
         ],
         Contact.arel_table)
     end
@@ -171,7 +171,7 @@ module Refine::Conditions
       BlankTestFilter.new(blueprint,
       Contact.all,
       [
-        OptionCondition.new("last_activity.last_activity_at").with_options([{id: "1", display: "Option 1"}]).with_through_id_relationship
+        Refine::Conditions::OptionCondition.new("last_activity.last_activity_at").with_options([{id: "1", display: "Option 1"}]).with_through_id_relationship
       ],
       Contact.arel_table) 
     end
@@ -180,14 +180,14 @@ module Refine::Conditions
       BlankTestFilter.new(blueprint,
         Contact.all,
         [
-          OptionCondition.new("churned_products.id").with_options([{id: "2", display: "Option 2"}, {id: "6505", display: "Option 6505"}]).with_through_id_relationship
+          Refine::Conditions::OptionCondition.new("churned_products.id").with_options([{id: "2", display: "Option 2"}, {id: "6505", display: "Option 6505"}]).with_through_id_relationship
         ],
         Contact.arel_table) 
     end
   end
 
   class Contact < ActiveRecord::Base
-    has_many :applied_tags, class_name: "Refine::Conditions::Contact::AppliedTag", dependent: :destroy
+    has_many :applied_tags, class_name: "Refine::Conditions::ComplexAssociations::Contact::AppliedTag", dependent: :destroy
     has_many :tags, through: :applied_tags
 
     has_many :orders
@@ -196,17 +196,17 @@ module Refine::Conditions
     has_many :churned_line_items, -> { where(orders: {service_status: %w[churned canceled]}) }, through: :orders, source: :line_items
     has_many :churned_products, through: :churned_line_items, source: :original_product
 
-    has_one :last_activity, class_name: "Refine::Conditions::Contact::LastActivity", dependent: :destroy
+    has_one :last_activity, class_name: "Refine::Conditions::ComplexAssociations::Contact::LastActivity", dependent: :destroy
   end
 
   class Contact::AppliedTag < ActiveRecord::Base
     belongs_to :contact, touch: true
-    belongs_to :tag, class_name: "Refine::Conditions::Contact::Tag"
+    belongs_to :tag, class_name: "Refine::Conditions::ComplexAssociations::Contact::Tag"
     self.table_name = "contacts_applied_tags"
   end
 
   class Contact::Tag < ActiveRecord::Base
-    has_many :applied_tags, class_name: "Refine::Conditions::Contact::AppliedTag", dependent: :destroy
+    has_many :applied_tags, class_name: "Refine::Conditions::ComplexAssociations::Contact::AppliedTag", dependent: :destroy
     has_many :contacts, through: :applied_tags
     self.table_name = "contacts_tags"
   end
@@ -217,7 +217,7 @@ module Refine::Conditions
 
   class Order < ActiveRecord::Base
     belongs_to :contact
-    has_many :line_items, class_name: "Refine::Conditions::Orders::LineItem", dependent: :destroy
+    has_many :line_items, class_name: "Refine::Conditions::ComplexAssociations::Orders::LineItem", dependent: :destroy
   end
 
   class Product < ActiveRecord::Base
@@ -230,7 +230,7 @@ module Refine::Conditions
   end
 
   class Orders::LineItem < ActiveRecord::Base
-    belongs_to :order, class_name: "Refine::Conditions::Order"
-    belongs_to :original_product, class_name: "Refine::Conditions::Product"
+    belongs_to :order, class_name: "Refine::Conditions::ComplexAssociations::Order"
+    belongs_to :original_product, class_name: "Refine::Conditions::ComplexAssociations::Product"
   end
 end

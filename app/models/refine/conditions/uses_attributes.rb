@@ -33,20 +33,53 @@ module Refine::Conditions
         raise "Relationship does not exist for #{relation}."
       end
 
-      filter.set_pending_relationship(relation, instance)
-      
-      # If the current condition is a refinement (filter refinement) set collapsible to true 
-      if is_refinement
-        filter.allow_pending_relationship_to_collapse
-      end
-
-      if can_use_where_in_relationship_subquery?(instance)
-        create_pending_wherein_subquery(input: input, relation: relation, instance: instance, query: query)
+      use_joins = true
+      if use_joins
+        puts "Need to use joins"
+        puts "Query: #{query.to_sql}"
+        puts "Input: #{input}"
+        puts "Relation: #{relation}"
+        puts "Instance: #{instance}"
+        if self.through_id_relationship
+          if instance.is_a? ActiveRecord::Reflection::ThroughReflection
+            through_reflection = instance.through_reflection
+            if(through_reflection.is_a?(ActiveRecord::Reflection::BelongsToReflection))
+              through_reflection = instance.source_reflection.through_reflection
+            end
+            parent_foreign_key = through_reflection.foreign_key
+            child_foreign_key = instance.source_reflection.foreign_key
+            relation_table_being_queried = through_reflection.klass.arel_table
+            relation_class = through_reflection.klass
+            through_relation = instance.through_reflection.name
+            relation_class = instance.through_reflection.klass
+            puts "THROUGH Relation: #{relation_class}"
+            puts "relation_class_table: #{relation_class.arel_table}"
+            puts "parent_foreign_key: #{parent_foreign_key}"
+            puts "child_foreign_key: #{child_foreign_key}"
+            node = apply(input, relation_class.arel_table, relation_class, false, child_foreign_key)
+          end
+        else
+          relation_class = instance.klass
+          node = apply(input, relation_class.arel_table, relation_class, false)
+        end
+        puts "Updated Nodes: #{node.to_sql}"
+        return node
       else
-        create_pending_has_many_through_subquery(input: input, relation: relation, instance: instance, query: query)
-      end
+        filter.set_pending_relationship(relation, instance)
+        
+        # If the current condition is a refinement (filter refinement) set collapsible to true 
+        if is_refinement
+          filter.allow_pending_relationship_to_collapse
+        end
 
-      filter.release_pending_relationship
+        if can_use_where_in_relationship_subquery?(instance)
+          create_pending_wherein_subquery(input: input, relation: relation, instance: instance, query: query)
+        else
+          create_pending_has_many_through_subquery(input: input, relation: relation, instance: instance, query: query)
+        end
+
+        filter.release_pending_relationship
+      end
       # We want the method to return nil for relationship attributes
       # The purpose of this method is to populate pending relationship subqueries
       nil

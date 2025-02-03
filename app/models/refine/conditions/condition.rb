@@ -147,11 +147,20 @@ module Refine::Conditions
         input.delete(:filter_refinement)
       end
 
+      puts "in Condition.apply"
       if is_relationship_attribute?
-        apply_relationship_attribute(input: input, query: initial_query)
-        return
+        use_joins = true
+        if use_joins
+          puts "Applying relationship attribute with JOINS #{self.class.name} with input #{input}"
+          nodes = apply_relationship_attribute(input: input, query: initial_query)
+          return nodes
+        else
+          apply_relationship_attribute(input: input, query: initial_query)
+          return
+        end
       end
       # No longer a relationship attribute, apply condition normally
+      puts "Applying condition #{self.class.name} with input #{input}"
       self.attribute = through_attribute if through_attribute
       nodes = apply_condition(input, table, inverse_clause)
       if !is_refinement && has_any_refinements?
@@ -159,6 +168,7 @@ module Refine::Conditions
         # Count refinement will return nil because it directly modified pending relationship subquery
         nodes = nodes.and(refined_node) if refined_node
       end
+      puts "applied condition - nodes: #{nodes.to_sql}"
       nodes
     end
 

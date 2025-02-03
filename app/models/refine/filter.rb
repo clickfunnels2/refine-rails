@@ -91,7 +91,15 @@ module Refine
     def get_query
       raise "Initial query must exist" if initial_query.nil?
       if blueprint.present?
-        @relation.where(group(make_sub_query(blueprint)))
+        subquery = make_sub_query(blueprint)
+        puts "Subquery: #{subquery.to_sql}"
+        use_joins = true
+        if use_joins
+          @relation = @relation.joins(:applied_tags)
+          @relation = @relation.joins(:pending_products)
+          @relation = @relation.distinct
+        end
+        @relation.where(group(subquery))
       else
         @relation
       end
@@ -106,6 +114,7 @@ module Refine
     def add_nodes_to_query(subquery:, nodes:, query_method:)
       # Apply existing nodes to existing subquery
       if subquery.present? && nodes.present?
+        puts "Adding nodes to query: #{nodes}, #{subquery}, #{query_method}"
         subquery = if query_method == "and"
           # Apply the nodes using the AREL AND method
           subquery.send(query_method, group(nodes))
@@ -119,6 +128,7 @@ module Refine
       # Subquery has not yet been initialized, initialize with new nodes - must use !nil? here, present/exists/blank etc don't
       # account for AR::Relation object.
       elsif subquery.blank? && !nodes.nil?
+        puts "Adding nodes to blank subquery: #{subquery}, #{nodes}, #{query_method}"
         subquery = group(nodes)
       end
       subquery
@@ -152,12 +162,19 @@ module Refine
           # Modify the array to send in the elements not yet handled (depth>current depth)
           new_depth_array = modified_blueprint[index..-1]
 
+          use_joins = true
           # Return the nodes in () for elements on the same depth
           recursive_nodes = make_sub_query(new_depth_array, depth + 1)
 
-          # Add the recursive subquery nodes to the existing query and modify the query
+          if use_joins
+            # Add the recursive subquery nodes to the existing query and modify the query
+            puts "Adding subquery"
+            #convert arel to AR model to handle joins, then back to arel for node management
+            puts "Subquery: #{subquery.inspect}"
+          end
           subquery = add_nodes_to_query(subquery: subquery, nodes: recursive_nodes, query_method: query_method)
 
+          puts "Added subquery: #{subquery.to_sql}"
           # Skip indexes handled by recursive call
           index = fast_forward(index, modified_blueprint, depth) + 1
           next
@@ -172,6 +189,7 @@ module Refine
         # If it is a relationship attribute apply_condition will call apply_relationship_attribute which will set up the pending relationship
         # subquery but will not return a value.
         # apply condition is NOT idempotent, hence the placeholder var
+        puts "Calling apply_condition with criterion: #{criterion}"
         nodes_to_apply = apply_condition(criterion)
         # If an error has been added to the errors array from apply_condition, do not continue execution at this level
         if errors.any?
@@ -179,6 +197,7 @@ module Refine
           next
         end
 
+        puts "Nodes to apply: #{nodes_to_apply}"
         subquery = add_nodes_to_query(subquery: subquery, nodes: nodes_to_apply, query_method: query_method)
 
         if @immediately_commit_pending_relationship_subqueries.present?

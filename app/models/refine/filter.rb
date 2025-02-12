@@ -5,6 +5,8 @@ module Refine
     include TracksPendingRelationshipSubqueries
     include Stabilize
     include Internationalized
+    include Inspector
+    include FlatQueryTools
     # This validation structure sents `initial_query` as the method to validate against
     define_model_callbacks :initialize, only: [:after]
     after_initialize :valid?
@@ -211,7 +213,7 @@ module Refine
 
     def apply_condition(criterion)
       begin
-        get_condition_for_criterion(criterion)&.apply(criterion[:input], table, initial_query)
+        get_condition_for_criterion(criterion)&.apply(criterion[:input], table, initial_query, false, nil)
       rescue Refine::Conditions::Errors::ConditionClauseError => e
         e.errors.each do |error|
           errors.add(:base, error.full_message, criterion_uid: criterion[:uid])

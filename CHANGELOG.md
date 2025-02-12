@@ -1,3 +1,5 @@
+### 2.13.4
+  * Intitial test version of flat_query generation logic
 ### 2.13.3
   * Patch for through relationship efficiency with associations with belongs_to
 ### 2.13.2

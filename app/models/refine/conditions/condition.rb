@@ -13,6 +13,7 @@ module Refine::Conditions
     include HasThroughIdRelationship
     include WithForcedIndex
     include HasIcon
+    include SupportsFlatQueries
 
     attr_reader :ensurances, :before_validations, :clause, :filter
     attr_accessor :display, :id, :is_refinement, :attribute

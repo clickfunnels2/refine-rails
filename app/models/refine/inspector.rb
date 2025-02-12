@@ -20,6 +20,12 @@ module Refine
       return condition
     end
 
+    def uses_condition_at_least(condition_id, occurrences: 1)
+      return false if @blueprint.nil? || @blueprint.empty?
+      conditions = @blueprint.select{|c| c[:type] == "criterion" && c[:condition_id] == condition_id}
+      return conditions.length >= occurrences
+    end
+
     def uses_negative_clause?
       return false if @blueprint.nil? || @blueprint.empty?
       negative_clauses = [

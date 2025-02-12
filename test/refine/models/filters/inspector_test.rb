@@ -117,6 +117,48 @@ describe Refine::Filter do
     end
   end
 
+  describe "uses_condition_at_least" do
+    it "returns false if the blueprint is nil" do
+      query = create_filter
+      assert_equal query.uses_condition_at_least("text_field_value"), false
+    end
+
+    it "returns false if the blueprint is empty" do
+      query = create_filter([])
+      assert_equal query.uses_condition_at_least("text_field_value"), false
+    end
+
+    it "returns true if the condition is in use in the blueprint" do
+      query = create_filter(single_condition_blueprint)
+      assert_equal query.uses_condition_at_least("text_field_value"), true
+    end
+
+    it "returns false if the condition is not in use in the blueprint" do
+      query = create_filter(single_condition_blueprint)
+      assert_equal query.uses_condition_at_least("fake"), false
+    end
+
+    it "returns true if the condition is in use in the blueprint the specified number of times" do
+      query = create_filter(single_condition_blueprint + single_condition_blueprint)
+      assert_equal query.uses_condition_at_least("text_field_value", occurrences: 2), true
+    end
+
+    it "returns false if the condition is in use in the blueprint fewer times than specified" do
+      query = create_filter(single_condition_blueprint)
+      assert_equal query.uses_condition_at_least("text_field_value", occurrences: 2), false
+    end
+
+    it "returns true if the condition is in use in the blueprint the specified number of times with the specified clause" do
+      query = create_filter(single_condition_blueprint + single_condition_blueprint)
+      assert_equal query.uses_condition_at_least("text_field_value", occurrences: 2), true
+    end
+
+    it "returns false if the condition is in use in the blueprint fewer times than specified with the specified clause" do
+      query = create_filter(single_condition_blueprint)
+      assert_equal query.uses_condition_at_least("text_field_value", occurrences: 2), false
+    end
+  end
+
   describe "uses_negative_clause?" do
     it "returns false if the blueprint is nil" do
       query = create_filter

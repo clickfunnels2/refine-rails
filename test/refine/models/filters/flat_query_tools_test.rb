@@ -42,7 +42,7 @@ describe Refine::Filter do
         filter = create_filter(single_tag_blueprint)
         test_scope = initial_query.joins(:applied_tags).where(applied_tags: {tag_id: 1})
         expected_sql = <<-SQL.squish
-          SELECT `contacts`.* FROM `contacts` 
+          SELECT DISTINCT `contacts`.* FROM `contacts` 
             INNER JOIN `contacts_applied_tags` ON `contacts_applied_tags`.`contact_id` = `contacts`.`id` 
             WHERE ((`contacts_applied_tags`.`tag_id` = 1))
         SQL
@@ -55,7 +55,7 @@ describe Refine::Filter do
         filter.get_flat_query
         test_scope = initial_query.joins(:applied_tags).where(applied_tags: {tag_id: 1})
         expected_sql = <<-SQL.squish
-          SELECT `contacts`.* FROM `contacts` 
+          SELECT DISTINCT `contacts`.* FROM `contacts` 
             INNER JOIN `contacts_applied_tags` ON `contacts_applied_tags`.`contact_id` = `contacts`.`id` 
             WHERE ((`contacts_applied_tags`.`tag_id` = 1)) 
         SQL

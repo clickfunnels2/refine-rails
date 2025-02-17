@@ -78,6 +78,8 @@ module Refine::Conditions
         # can just reference the foreign key of the previous step in the relation chain
         through_reflection = get_through_reflection(instance: instance, relation: decompose_attribute[0])
         add_pending_joins_if_needed(instance: instance, reflection: through_reflection, input: input)
+        # TODO - this is not the right long-term place for this.
+        filter.needs_distinct = true
         @attribute = get_foreign_key_from_relation(instance: instance, reflection: through_reflection)
       else
         puts "TODO - not referencing an ID in attribute"

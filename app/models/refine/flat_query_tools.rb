@@ -3,7 +3,7 @@
 # NOTE: This is more specialized query construction and it is up to the implementer to use the inspector tools to ensure this is only being used for supported queries
 module Refine
   module FlatQueryTools
-    attr_accessor :pending_joins, :applied_conditions
+    attr_accessor :pending_joins, :applied_conditions, :needs_distinct
 
     def pending_joins
       @pending_joins ||= {}
@@ -11,6 +11,10 @@ module Refine
 
     def applied_conditions
       @applied_conditions ||= {}
+    end
+
+    def needs_distinct?
+      @needs_distinct ||= false
     end
 
     def get_flat_query
@@ -50,6 +54,9 @@ module Refine
       end
       if pending_joins.present?
         apply_pending_joins
+      end
+      if needs_distinct?
+        @relation = @relation.distinct
       end
       @relation
     end

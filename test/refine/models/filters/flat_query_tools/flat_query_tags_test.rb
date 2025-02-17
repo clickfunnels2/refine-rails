@@ -24,7 +24,7 @@ describe Refine::Filter do
       filter = create_filter(two_tag_criteria)
 
       expected_sql = <<-SQL.squish
-        SELECT `contacts`.* FROM `contacts` 
+        SELECT DISTINCT `contacts`.* FROM `contacts` 
           INNER JOIN `contacts_applied_tags` ON `contacts_applied_tags`.`contact_id` = `contacts`.`id` 
           WHERE ((`contacts_applied_tags`.`tag_id` IN (1, 2))) AND ((`contacts_applied_tags`.`tag_id` = 4))
       SQL

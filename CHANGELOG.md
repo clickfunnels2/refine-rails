@@ -1,3 +1,5 @@
+### 2.13.5
+  * Adds distinct to flat_queries that use inner_joins
 ### 2.13.4
   * Intitial test version of flat_query generation logic
 ### 2.13.3

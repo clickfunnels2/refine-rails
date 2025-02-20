@@ -37,7 +37,7 @@ module Refine
       @blueprint.select{|c| c[:type] == "criterion" && negative_clauses.include?(c[:input][:clause])}.any?
     end
 
-    def has_duplicate_conditions
+    def has_duplicate_conditions?
       return false if @blueprint.nil? || @blueprint.empty?
       conditions = @blueprint.select{|c| c[:type] == "criterion"}
       condition_ids = conditions.map{|c| c[:condition_id]}

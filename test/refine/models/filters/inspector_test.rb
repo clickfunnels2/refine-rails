@@ -189,22 +189,22 @@ describe Refine::Filter do
   describe "has_duplicate_conditions" do
     it "returns false if the blueprint is nil" do
       query = create_filter
-      assert_equal query.has_duplicate_conditions, false
+      assert_equal query.has_duplicate_conditions?, false
     end
 
     it "returns false if the blueprint is empty" do
       query = create_filter([])
-      assert_equal query.has_duplicate_conditions, false
+      assert_equal query.has_duplicate_conditions?, false
     end
 
     it "returns false if the blueprint does not contain duplicate conditions" do
       query = create_filter(single_condition_blueprint)
-      assert_equal query.has_duplicate_conditions, false
+      assert_equal query.has_duplicate_conditions?, false
     end
 
     it "returns true if the blueprint contains duplicate conditions" do
       query = create_filter(and_condition_blueprint)
-      assert_equal query.has_duplicate_conditions, true
+      assert_equal query.has_duplicate_conditions?, true
     end
   end
 

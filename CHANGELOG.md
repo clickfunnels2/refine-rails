@@ -1,3 +1,5 @@
+### 2.13.6
+  * Adds flat_query support for multi-db associations
 ### 2.13.5
   * Adds distinct to flat_queries that use inner_joins
 ### 2.13.4

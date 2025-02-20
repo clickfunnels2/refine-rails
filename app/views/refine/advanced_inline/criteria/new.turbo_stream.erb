@@ -1,6 +1,5 @@
 <% form_id = dom_id(@criterion, :form) %>
 
-<% puts "In New Turbo Stream" %>
 <%= turbo_stream.update dom_id(@criterion) do %>
   <%= render "refine/advanced_inline/filters/popup",
     frame_id: dom_id(@criterion), is_open: true do

@@ -116,6 +116,7 @@ module Refine
       subset.each do |relation, subquery|
         # relation = table
         # subquery.keys = [:instance, :query, :key, :secondary] possibly (:children)
+
         if subquery.dig(:children).present?
           # Send in the values at children as the subset hash and remove from existing subquery
           child_nodes = subquery.delete(:children)

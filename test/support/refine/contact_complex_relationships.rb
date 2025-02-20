@@ -9,6 +9,8 @@ class Contact < ActiveRecord::Base
   has_many :churned_line_items, -> { where(orders: {service_status: %w[churned canceled]}) }, through: :orders, source: :line_items
   has_many :churned_products, through: :churned_line_items, source: :original_product
 
+  has_many :events
+
   has_one :last_activity, class_name: "Contacts::LastActivity", dependent: :destroy
 end
 
@@ -50,4 +52,8 @@ end
 class Orders::LineItem < ActiveRecord::Base
   belongs_to :order, class_name: "Order"
   belongs_to :original_product, class_name: "Product"
+end
+
+class Event < ActiveRecord::Base
+  belongs_to :contact, optional: true
 end

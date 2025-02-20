@@ -15,6 +15,7 @@ module Refine::Conditions
     # @param [ActiveRecord::Relation] initial_query The base query the query is built on 
     # @param [Bool] inverse_clause Whether to invert the clause
     # @return [Arel::Node] 
+    # This is mostly a copy of the `apply` method from the Condition module, but avoids recursion and the pending_subquery system
     def apply_flat(input, table, initial_query, inverse_clause=false)
       table ||= filter.table
       # Ensurance validations are checking the developer configured correctly
@@ -27,6 +28,7 @@ module Refine::Conditions
       # TODO Determine right place to set the clause
       validate_user_input(input)
       if input.dig(:filter_refinement).present?
+        # TODO - Handle refinements. Currently not working for flat queries because its dependent on the pending_subquery system
 
         filter_condition = call_proc_if_callable(@filter_refinement_proc)
         # Set the filter on the filter_condition to be the current_condition's filter
@@ -39,7 +41,7 @@ module Refine::Conditions
       end
 
       if is_relationship_attribute?
-        return handle_flat_relational_condition(input: input, query: initial_query, inverse_clause: inverse_clause)
+        return handle_flat_relational_condition(input: input, table: table, query: initial_query, inverse_clause: inverse_clause)
       end
       # Not a relationship attribute, apply condition normally
       nodes = apply_condition(input, table, inverse_clause)
@@ -51,7 +53,7 @@ module Refine::Conditions
       nodes
     end
 
-    def handle_flat_relational_condition(input:, query:, inverse_clause:)
+    def handle_flat_relational_condition(input:, table:, query:, inverse_clause:)
       # Split on first .
       decompose_attribute = @attribute.split(".", 2)
       # Attribute now is the back half of the initial attribute
@@ -81,8 +83,8 @@ module Refine::Conditions
         # TODO - this is not the right long-term place for this.
         filter.needs_distinct = true
         @attribute = get_foreign_key_from_relation(instance: instance, reflection: through_reflection)
-      else
-        puts "TODO - not referencing an ID in attribute"
+      # else
+      #   puts "TODO - not referencing an ID in attribute"
       end
 
       unless instance
@@ -92,7 +94,15 @@ module Refine::Conditions
       relation_table_being_queried = through_reflection.klass.arel_table
       relation_class = through_reflection.klass
 
-      nodes = apply_condition(input, relation_table_being_queried, inverse_clause)
+      instance = get_reflection_object(query, relation)
+      key_1 = key_1(instance)
+      key_2 = key_2(instance)
+      if condiiton_uses_different_database?(relation_class, query.model)
+        nodes = handle_flat_cross_database_condition(input: input, table: table, relation_class: relation_class, relation_table_being_queried: relation_table_being_queried, inverse_clause: inverse_clause, key_1: key_1, key_2: key_2)  
+      else
+        nodes = apply(input, relation_table_being_queried, query, inverse_clause, key_2)
+      end
+
       if !is_refinement && has_any_refinements?
         refined_node = apply_refinements(input)
         # Count refinement will return nil because it directly modified pending relationship subquery
@@ -100,11 +110,20 @@ module Refine::Conditions
       end
       nodes
 
-      # if can_use_where_in_relationship_subquery?(instance)
-      #   create_pending_wherein_subquery(input: input, relation: relation, instance: instance, query: query)
-      # else
-      #   create_pending_has_many_through_subquery(input: input, relation: relation, instance: instance, query: query)
-      # end
+    end
+
+    # When we need to go to another DB for the relation. We need to do a separate query to get the IDS of
+    # the records matching the condition that will then be passed into the primary query.
+    def handle_flat_cross_database_condition(input:, table:, relation_class:, relation_table_being_queried:, inverse_clause:, key_1:, key_2:)
+      relational_query = relation_class.select(key_2).arel
+      node = apply(input, relation_table_being_queried, relation_class, inverse_clause)
+      relational_query = relational_query.where(node)
+      array_of_ids = relation_class.connection.exec_query(relational_query.to_sql).rows.flatten
+      if array_of_ids.length == 1
+        nodes = table[:"#{key_1}"].eq(array_of_ids.first)
+      else
+        nodes = table[:"#{key_1}"].in(array_of_ids)
+      end
     end
 
     def get_through_reflection(instance:, relation:)
@@ -140,6 +159,11 @@ module Refine::Conditions
       else
         add_pending_join(reflection.name, :inner)
       end
+    end
+
+    def condiiton_uses_different_database?(current_model, parent_model)
+      # Are the queries on different databases?
+      parent_model.connection_db_config.configuration_hash != current_model.connection_db_config.configuration_hash
     end
   end
 end

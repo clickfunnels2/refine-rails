@@ -13,6 +13,7 @@ group :development, :test do
   gem "minitest-around"
   gem "minitest-ci"
   gem "standard"
+  gem "mocha"
 end
 
 # Start debugger with binding.b [https://github.com/ruby/debug]

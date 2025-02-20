@@ -21,13 +21,7 @@ module Refine::Conditions
 
       # Get the Reflection object which defines the relationship between query and relation
       # First iteration pull relationship using base query which responds to model.
-      instance = if query.respond_to? :model
-        query.model.reflect_on_association(relation.to_sym)
-      else
-        # When query is sent in as subquery (recursive) the query object is the model class pulled from the
-        # previous instance value
-        query.reflect_on_association(relation.to_sym)
-      end
+      instance = get_reflection_object(query, relation)
 
       unless instance
         raise "Relationship does not exist for #{relation}."
@@ -66,6 +60,16 @@ module Refine::Conditions
         instance.active_record_primary_key.to_sym
       else
         instance.foreign_key.to_sym
+      end
+    end
+
+    def get_reflection_object(query, relation)
+      if query.respond_to? :model
+        query.model.reflect_on_association(relation.to_sym)
+      else
+        # When query is sent in as subquery (recursive) the query object is the model class pulled from the
+        # previous instance value
+        query.reflect_on_association(relation.to_sym)
       end
     end
 

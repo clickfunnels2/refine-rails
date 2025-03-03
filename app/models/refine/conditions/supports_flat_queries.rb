@@ -18,6 +18,7 @@ module Refine::Conditions
     # This is mostly a copy of the `apply` method from the Condition module, but avoids recursion and the pending_subquery system
     def apply_flat(input, table, initial_query, inverse_clause=false)
       table ||= filter.table
+      @is_flat_query = true
       # Ensurance validations are checking the developer configured correctly
       run_ensurance_validations
       # Allow developer to modify user input
@@ -73,20 +74,27 @@ module Refine::Conditions
       end
 
       through_reflection = instance
+      forced_id = false
 
       # TODO - make sure we're accounting for refinements
       if @attribute == "id"
         # We're referencing a primary key ID, so we dont need the final join table and
         # can just reference the foreign key of the previous step in the relation chain
         through_reflection = get_through_reflection(instance: instance, relation: decompose_attribute[0])
-        add_pending_joins_if_needed(instance: instance, reflection: through_reflection, input: input)
-        # TODO - this is not the right long-term place for this.
-        filter.needs_distinct = true
-        @attribute = get_foreign_key_from_relation(instance: instance, reflection: through_reflection)
-      # else
-      #   puts "TODO - not referencing an ID in attribute"
+        unless condition_uses_different_database?(through_reflection.klass, query.model)
+          forced_id = true
+          @attribute = get_foreign_key_from_relation(instance: instance, reflection: through_reflection)
+        end
       end
 
+      unless condition_uses_different_database?(through_reflection.klass, query.model)
+        add_pending_joins_if_needed(instance: instance, reflection: through_reflection, input: input)
+      end
+      # TODO - this is not the right long-term place for this.
+      apply_flat_relational_condition(instance: instance, relation: relation, through_reflection: through_reflection, input: input, table: table, query: query, inverse_clause: inverse_clause, forced_id: forced_id)
+    end
+
+    def apply_flat_relational_condition(instance:, relation:, through_reflection:, input:, table:, query:, inverse_clause:, forced_id: false)
       unless instance
         raise "Relationship does not exist for #{relation}."
       end
@@ -94,13 +102,18 @@ module Refine::Conditions
       relation_table_being_queried = through_reflection.klass.arel_table
       relation_class = through_reflection.klass
 
-      instance = get_reflection_object(query, relation)
+      instance = get_reflection_object(query, relation) if forced_id
+
       key_1 = key_1(instance)
       key_2 = key_2(instance)
-      if condiiton_uses_different_database?(relation_class, query.model)
+      if condition_uses_different_database?(relation_class, query.model)
         nodes = handle_flat_cross_database_condition(input: input, table: table, relation_class: relation_class, relation_table_being_queried: relation_table_being_queried, inverse_clause: inverse_clause, key_1: key_1, key_2: key_2)  
       else
-        nodes = apply(input, relation_table_being_queried, query, inverse_clause, key_2)
+        if forced_id
+          nodes = apply(input, relation_table_being_queried, query, inverse_clause, key_2)
+        else
+          nodes = apply(input, relation_table_being_queried, query, inverse_clause)
+        end
       end
 
       if !is_refinement && has_any_refinements?
@@ -109,7 +122,6 @@ module Refine::Conditions
         nodes = nodes.and(refined_node) if refined_node
       end
       nodes
-
     end
 
     # When we need to go to another DB for the relation. We need to do a separate query to get the IDS of
@@ -148,6 +160,7 @@ module Refine::Conditions
       # If we already are tracking the relation with a left joins, don't overwrite it
       # puts "adding a pending join for relation: #{relation} with join type: #{join_type}"
       unless join_type == :inner && filter.pending_joins[relation] == :left
+        filter.needs_distinct = true
         filter.pending_joins[relation] = join_type
       end
     end
@@ -161,7 +174,7 @@ module Refine::Conditions
       end
     end
 
-    def condiiton_uses_different_database?(current_model, parent_model)
+    def condition_uses_different_database?(current_model, parent_model)
       # Are the queries on different databases?
       parent_model.connection_db_config.configuration_hash != current_model.connection_db_config.configuration_hash
     end

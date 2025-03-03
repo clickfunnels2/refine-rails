@@ -16,7 +16,7 @@ module Refine::Conditions
     include SupportsFlatQueries
 
     attr_reader :ensurances, :before_validations, :clause, :filter
-    attr_accessor :display, :id, :is_refinement, :attribute
+    attr_accessor :display, :id, :is_refinement, :attribute, :is_flat_query
 
     I18N_PREFIX = "refine.refine_blueprints.condition."
 

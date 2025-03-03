@@ -94,7 +94,7 @@ module Refine::Conditions
       apply_flat_relational_condition(instance: instance, relation: relation, through_reflection: through_reflection, input: input, table: table, query: query, inverse_clause: inverse_clause, forced_id: forced_id)
     end
 
-    def apply_flat_relational_condition(instance:, relation:, through_reflection:, input:, table:, query:, inverse_clause:, forced_id: nil)
+    def apply_flat_relational_condition(instance:, relation:, through_reflection:, input:, table:, query:, inverse_clause:, forced_id: false)
       unless instance
         raise "Relationship does not exist for #{relation}."
       end

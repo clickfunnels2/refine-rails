@@ -1,3 +1,8 @@
+### 2.13.7
+  * Adds an is_flat_query instance variable to conditions so that custom overridden conditions can tell if they're being called with flat_query or regular make_query
+  * Fixes a typo with multi-db method name
+  * Adds test for non-id association with datetime
+  * Abstracts some of the flat_query methods for dry purpose
 ### 2.13.6
   * Adds flat_query support for multi-db associations
 ### 2.13.5

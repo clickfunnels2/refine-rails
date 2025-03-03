@@ -25,7 +25,7 @@ describe Refine::Filter do
     it "properly constructs the initial query before applying the condition" do
       initial_query = Contact.all
       filter = create_filter(event_blueprint)
-      Refine::Conditions::Condition.any_instance.stubs(:condiiton_uses_different_database?).returns(true)
+      Refine::Conditions::Condition.any_instance.stubs(:condition_uses_different_database?).returns(true)
       executed_queries = []
       original_execute = Event.connection.method(:execute)
 
@@ -48,7 +48,7 @@ describe Refine::Filter do
       initial_query = Contact.all
       Event.create(source_id: 1, contact_id: 50)
       filter = create_filter(event_blueprint)
-      Refine::Conditions::Condition.any_instance.stubs(:condiiton_uses_different_database?).returns(true)
+      Refine::Conditions::Condition.any_instance.stubs(:condition_uses_different_database?).returns(true)
 
       expected_sql = <<-SQL.squish
         SELECT `contacts`.* FROM `contacts` 
@@ -62,7 +62,7 @@ describe Refine::Filter do
       Event.create(source_id: 1, contact_id: 50)
       Event.create(source_id: 1, contact_id: 51)
       filter = create_filter(event_blueprint)
-      Refine::Conditions::Condition.any_instance.stubs(:condiiton_uses_different_database?).returns(true)
+      Refine::Conditions::Condition.any_instance.stubs(:condition_uses_different_database?).returns(true)
 
       expected_sql = <<-SQL.squish
         SELECT `contacts`.* FROM `contacts` 
@@ -77,7 +77,7 @@ describe Refine::Filter do
       Event.create(source_id: 2, contact_id: 51)
       Event.create(source_id: 5, contact_id: 50)
       filter = create_filter(multi_event_blueprint)
-      Refine::Conditions::Condition.any_instance.stubs(:condiiton_uses_different_database?).returns(true)
+      Refine::Conditions::Condition.any_instance.stubs(:condition_uses_different_database?).returns(true)
 
       expected_sql = <<-SQL.squish
         SELECT `contacts`.* FROM `contacts` 

@@ -29,14 +29,12 @@ module Refine::Conditions
       # TODO Determine right place to set the clause
       validate_user_input(input)
       if input.dig(:filter_refinement).present?
-        # TODO - Handle refinements. Currently not working for flat queries because its dependent on the pending_subquery system
 
         filter_condition = call_proc_if_callable(@filter_refinement_proc)
         # Set the filter on the filter_condition to be the current_condition's filter
         filter_condition.set_filter(filter)
         filter_condition.is_refinement = true
 
-        # Applying the filter condition will modify pending relationship subqueries in place
         filter_condition.apply(input.dig(:filter_refinement), table, initial_query)
         input.delete(:filter_refinement)
       end

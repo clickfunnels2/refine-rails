@@ -66,7 +66,6 @@ module Refine::Conditions
 
         instance = model_class.reflect_on_association(relation.to_sym)
 
-        # TODO - make sure we're accounting for refinements
         if @attribute == "id"
           # We're referencing a primary key ID, so we dont need the final join table and
           # can just reference the foreign key of the previous step in the relation chain

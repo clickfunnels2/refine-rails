@@ -29,14 +29,12 @@ module Refine::Conditions
       # TODO Determine right place to set the clause
       validate_user_input(input)
       if input.dig(:filter_refinement).present?
-        # TODO - Handle refinements. Currently not working for flat queries because its dependent on the pending_subquery system
 
         filter_condition = call_proc_if_callable(@filter_refinement_proc)
         # Set the filter on the filter_condition to be the current_condition's filter
         filter_condition.set_filter(filter)
         filter_condition.is_refinement = true
 
-        # Applying the filter condition will modify pending relationship subqueries in place
         filter_condition.apply(input.dig(:filter_refinement), table, initial_query)
         input.delete(:filter_refinement)
       end
@@ -55,59 +53,80 @@ module Refine::Conditions
     end
 
     def handle_flat_relational_condition(input:, table:, query:, inverse_clause:)
-      # Split on first .
-      decompose_attribute = @attribute.split(".", 2)
-      # Attribute now is the back half of the initial attribute
-      @attribute = decompose_attribute[1]
-      # Relation to be handled
-      relation = decompose_attribute[0]
+      model_class = query.model
+      condition_joins = []
+      while @attribute.include?(".")
+        forced_id = false
+        # Split on first .
+        decompose_attribute = @attribute.split(".", 2)
+        # Attribute now is the back half of the initial attribute
+        @attribute = decompose_attribute[1]
+        # Relation to be handled
+        relation = decompose_attribute[0]
 
-     
-      # Get the Reflection object which defines the relationship between query and relation
-      # First iteration pull relationship using base query which responds to model.
-      instance = if query.respond_to? :model
-        query.model.reflect_on_association(relation.to_sym)
-      else
-        # When query is sent in as subquery (recursive) the query object is the model class pulled from the
-        # previous instance value
-        query.reflect_on_association(relation.to_sym)
-      end
+        instance = model_class.reflect_on_association(relation.to_sym)
 
-      through_reflection = instance
-      forced_id = false
-
-      # TODO - make sure we're accounting for refinements
-      if @attribute == "id"
-        # We're referencing a primary key ID, so we dont need the final join table and
-        # can just reference the foreign key of the previous step in the relation chain
-        through_reflection = get_through_reflection(instance: instance, relation: decompose_attribute[0])
-        unless condition_uses_different_database?(through_reflection.klass, query.model)
-          forced_id = true
-          @attribute = get_foreign_key_from_relation(instance: instance, reflection: through_reflection)
+        if @attribute == "id"
+          # We're referencing a primary key ID, so we dont need the final join table and
+          # can just reference the foreign key of the previous step in the relation chain
+          model_class = instance.class_name.safe_constantize
+          through_reflection = get_through_reflection(instance: instance, relation: relation)
+          unless condition_uses_different_database?(through_reflection.klass, query.model)
+            forced_id = true
+            @attribute = get_foreign_key_from_relation(instance: instance, reflection: through_reflection)
+            unless condition_uses_different_database?(model_class, query.model)
+              condition_joins << through_reflection.name
+            end
+          end
+        else
+          # Track the loop iteration of needing joins.
+          # The resulting array will be used to construct a nested joins statement
+          # IE: [forms_submissions, forms_submissions_answers] will later be converted to forms_submissions: {forms_submissions_answers: {}}
+          unless condition_uses_different_database?(model_class, query.model)
+            condition_joins << relation
+          end
         end
+        model_class = instance.class_name.safe_constantize
+       
+      end # End of while loop
+
+      if condition_joins.any?
+        add_pending_joins_if_needed(input: input, joins_array: condition_joins)
       end
 
-      unless condition_uses_different_database?(through_reflection.klass, query.model)
-        add_pending_joins_if_needed(instance: instance, reflection: through_reflection, input: input)
-      end
-      # TODO - this is not the right long-term place for this.
-      apply_flat_relational_condition(instance: instance, relation: relation, through_reflection: through_reflection, input: input, table: table, query: query, inverse_clause: inverse_clause, forced_id: forced_id)
+      apply_flat_relational_condition(instance: instance, relation: relation, through_reflection: through_reflection, input: input, query: query, inverse_clause: inverse_clause, forced_id: forced_id)
     end
 
-    def apply_flat_relational_condition(instance:, relation:, through_reflection:, input:, table:, query:, inverse_clause:, forced_id: false)
+    # apply_flat_relational_condition
+    # instance: The reflection object for the relationship
+    # relation: The name of the relationship
+    # through_reflection: The reflection object for the through relationship if applicable. Might be nil
+    # input: The user input for the condition
+    # query: The base query the condition is being applied to
+    # inverse_clause: Whether to invert the clause
+    # forced_id: Whether to force the ID of the instance to be used. This is used when the condition is referencing a primary key
+    def apply_flat_relational_condition(instance:, relation:, through_reflection:, input:,  query:, inverse_clause:, forced_id: false)
       unless instance
         raise "Relationship does not exist for #{relation}."
       end
 
-      relation_table_being_queried = through_reflection.klass.arel_table
-      relation_class = through_reflection.klass
+      if through_reflection
+        # If through reflection is passed in (due to an association only referencing the id)
+        # use that to get the table and class
+        relation_table_being_queried = through_reflection.klass.arel_table
+        relation_class = through_reflection.klass
+      else
+        # Otherwise, use the instance to get the table and class.
+        relation_table_being_queried = instance.class_name.safe_constantize&.arel_table
+        relation_class = instance.class_name.safe_constantize
+      end
 
       instance = get_reflection_object(query, relation) if forced_id
 
       key_1 = key_1(instance)
       key_2 = key_2(instance)
       if condition_uses_different_database?(relation_class, query.model)
-        nodes = handle_flat_cross_database_condition(input: input, table: table, relation_class: relation_class, relation_table_being_queried: relation_table_being_queried, inverse_clause: inverse_clause, key_1: key_1, key_2: key_2)  
+        nodes = handle_flat_cross_database_condition(root_model: query.model, input: input, relation_class: relation_class, relation_table_being_queried: relation_table_being_queried, inverse_clause: inverse_clause, key_1: key_1, key_2: key_2)  
       else
         if forced_id
           nodes = apply(input, relation_table_being_queried, query, inverse_clause, key_2)
@@ -126,7 +145,8 @@ module Refine::Conditions
 
     # When we need to go to another DB for the relation. We need to do a separate query to get the IDS of
     # the records matching the condition that will then be passed into the primary query.
-    def handle_flat_cross_database_condition(input:, table:, relation_class:, relation_table_being_queried:, inverse_clause:, key_1:, key_2:)
+    def handle_flat_cross_database_condition(root_model:, input:, relation_class:, relation_table_being_queried:, inverse_clause:, key_1:, key_2:)
+      table = root_model.arel_table
       relational_query = relation_class.select(key_2).arel
       node = apply(input, relation_table_being_queried, relation_class, inverse_clause)
       relational_query = relational_query.where(node)
@@ -156,21 +176,22 @@ module Refine::Conditions
       child_foreign_key
     end
 
-    def add_pending_join(relation, join_type=:inner)
+    def add_pending_join(joins_array, join_type=:inner)
+      relation = joins_array.first
+      joins_block = joins_array.reverse.inject({}) { |a, n| { n.to_sym => a } }
       # If we already are tracking the relation with a left joins, don't overwrite it
-      # puts "adding a pending join for relation: #{relation} with join type: #{join_type}"
-      unless join_type == :inner && filter.pending_joins[relation] == :left
+      unless join_type == :inner && filter.pending_joins[relation] && filter.pending_joins[relation][:type] == :left
         filter.needs_distinct = true
-        filter.pending_joins[relation] = join_type
+        filter.pending_joins[relation] = { type: join_type, joins_block: joins_block}.compact
       end
     end
 
-    def add_pending_joins_if_needed(instance:, reflection:, input:)
+    def add_pending_joins_if_needed(input:, joins_array:)
       # Determine if we need to do left-joins due to the clause needing to include null values
       if(input && LEFT_JOIN_CLAUSES.include?(input[:clause]))
-        add_pending_join(reflection.name, :left)
+        add_pending_join(joins_array, :left)
       else
-        add_pending_join(reflection.name, :inner)
+        add_pending_join(joins_array, :inner)
       end
     end
 

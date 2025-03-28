@@ -1,3 +1,7 @@
+### 2.13.8
+  * Each flat-query condition now loops to more deeply support nested attributes. For each nest a new join param will be added to the query
+  * simplified some of the variable usage and params being passed around to remove things unnecessary.
+  * adds several tests for nested attributes using a theoretical custom_attributes model as example
 ### 2.13.7
   * Adds an is_flat_query instance variable to conditions so that custom overridden conditions can tell if they're being called with flat_query or regular make_query
   * Fixes a typo with multi-db method name

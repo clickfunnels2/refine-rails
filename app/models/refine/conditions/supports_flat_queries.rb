@@ -97,8 +97,6 @@ module Refine::Conditions
         add_pending_joins_if_needed(input: input, joins_array: condition_joins)
       end
 
-      puts "Passing into apply_flat_relational_condition with \ninstance: #{instance.inspect},\nrelation: #{relation},\nthrough_reflection: #{through_reflection.inspect},\nforced_id: #{forced_id}"
-
       apply_flat_relational_condition(instance: instance, relation: relation, through_reflection: through_reflection, input: input, query: query, inverse_clause: inverse_clause, forced_id: forced_id)
     end
 

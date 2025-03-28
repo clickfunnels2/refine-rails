@@ -12,6 +12,8 @@ class Contact < ActiveRecord::Base
   has_many :events
 
   has_one :last_activity, class_name: "Contacts::LastActivity", dependent: :destroy
+
+  belongs_to :custom_attributes, class_name: "Forms::Submission", optional: true
 end
 
 module Contacts
@@ -22,11 +24,11 @@ end
 
 class Contacts::AppliedTag < ActiveRecord::Base
   belongs_to :contact, touch: true
-  belongs_to :tag, class_name: "Tag"
+  belongs_to :tag, class_name: "Contacts::Tag"
 end
 
 class Contacts::Tag < ActiveRecord::Base
-  has_many :applied_tags, class_name: "AppliedTag", dependent: :destroy
+  has_many :applied_tags, class_name: "Contacts::AppliedTag", dependent: :destroy
   has_many :contacts, through: :applied_tags
 end
 
@@ -57,3 +59,57 @@ end
 class Event < ActiveRecord::Base
   belongs_to :contact, optional: true
 end
+
+
+module Forms
+  def self.table_name_prefix
+    "forms_"
+  end
+end
+
+class Forms::Submission < ActiveRecord::Base
+  belongs_to :contact, optional: true
+
+  has_many :answers, class_name: "Forms::Submissions::Answer"
+end
+
+module Forms::Submissions
+  def self.table_name_prefix
+    "forms_submissions_"
+  end
+end
+
+class Forms::Submissions::Answer < ActiveRecord::Base
+  belongs_to :submission, class_name: "Forms::Submission"
+  belongs_to :field, class_name: "Forms::Field"
+  belongs_to :fields_option, class_name: "Forms::Fields::Option", optional: true
+  has_many :selected_options, class_name: "Forms::Submissions::Answers::SelectedOption", dependent: :destroy, foreign_key: :answer_id, inverse_of: :answer
+end
+
+module Forms::Submissions::Answers
+  def self.table_name_prefix
+    "forms_submissions_answers_"
+  end
+end
+
+class Forms::Submissions::Answers::SelectedOption < ActiveRecord::Base
+  belongs_to :answer, class_name: "Forms::Submissions::Answer", inverse_of: :selected_options
+  belongs_to :field_option, class_name: "Forms::Fields::Option"
+end
+
+module Forms::Fields
+  def self.table_name_prefix
+    "forms_fields_"
+  end
+end
+
+class Forms::Field < ActiveRecord::Base
+  has_many :answers, class_name: "Forms::Submissions::Answer", foreign_key: :field_id, inverse_of: :field
+  has_many :options, class_name: "Forms::Fields::Option", foreign_key: :field_id, inverse_of: :field
+end
+
+class Forms::Fields::Option < ActiveRecord::Base
+  belongs_to :field, class_name: "Forms::Field"
+end
+
+

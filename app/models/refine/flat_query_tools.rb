@@ -76,18 +76,15 @@ module Refine
     def apply_pending_joins
       if pending_joins.present?
         join_count = 0
-        pending_joins.each do |relation, join_type|
-          if join_type == :left
-            @relation = @relation.left_joins(relation.to_sym).distinct
+        pending_joins.each do |relation, join_data|
+          if join_data[:type] == :left
+            @relation = @relation.left_joins(join_data[:joins_block]).distinct
           else
-            @relation = @relation.joins(relation.to_sym)
+            @relation = @relation.joins(join_data[:joins_block]).distinct
           end
           join_count += 1
         end
 
-        if join_count > 1
-          @relation = @relation.distinct
-        end
       end
     end
 

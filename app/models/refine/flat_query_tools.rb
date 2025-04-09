@@ -17,6 +17,11 @@ module Refine
       @needs_distinct ||= false
     end
 
+    def should_use_flat_query?
+      # Defaults to false. Implementing filter classes should override this to enable flat_query
+      false
+    end
+
     def get_flat_query
       raise "Initial query must exist" if initial_query.nil?
       raise "Cannot make flat query for a filter using OR conditions" if uses_or?

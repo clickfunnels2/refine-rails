@@ -26,10 +26,13 @@ module Refine::Conditions
 
       run_before_validate_validations(input)
 
-      # TODO Determine right place to set the clause
+      puts "Validating user input: apply_flat"
       validate_user_input(input)
-      if input.dig(:filter_refinement).present?
+      puts "DONE Validating user input: apply_flat"
 
+      # This is specifically for filter_refinements, not date or count refinements
+      if input.dig(:filter_refinement).present?
+        puts "Applying filter_refinement"
         filter_condition = call_proc_if_callable(@filter_refinement_proc)
         # Set the filter on the filter_condition to be the current_condition's filter
         filter_condition.set_filter(filter)
@@ -43,14 +46,20 @@ module Refine::Conditions
         return handle_flat_relational_condition(input: input, table: table, query: initial_query, inverse_clause: inverse_clause)
       end
       # Not a relationship attribute, apply condition normally
+      puts "supports_flat_query: apply_condition BEFORE"
       nodes = apply_condition(input, table, inverse_clause)
-      if !is_refinement && has_any_refinements?
+      puts "supports_flat_query: apply_condition AFTER"
+
+      if is_refinement && has_any_refinements?
+        puts "Handling Refinement"
         refined_node = apply_refinements(input)
         # Count refinement will return nil because it directly modified pending relationship subquery
         nodes = nodes.and(refined_node) if refined_node
       end
       nodes
     end
+
+
 
     def handle_flat_relational_condition(input:, table:, query:, inverse_clause:)
       model_class = query.model
@@ -128,18 +137,15 @@ module Refine::Conditions
       if condition_uses_different_database?(relation_class, query.model)
         nodes = handle_flat_cross_database_condition(root_model: query.model, input: input, relation_class: relation_class, relation_table_being_queried: relation_table_being_queried, inverse_clause: inverse_clause, key_1: key_1, key_2: key_2)  
       else
+        puts "Applying nodes - apply_flat_relational_condition"
         if forced_id
-          nodes = apply(input, relation_table_being_queried, query, inverse_clause, key_2)
+          nodes = apply_condition(input, relation_table_being_queried, query, inverse_clause, key_2)
         else
-          nodes = apply(input, relation_table_being_queried, query, inverse_clause)
+          nodes = apply_condition(input, relation_table_being_queried, query, inverse_clause)
         end
       end
 
-      if !is_refinement && has_any_refinements?
-        refined_node = apply_refinements(input)
-        # Count refinement will return nil because it directly modified pending relationship subquery
-        nodes = nodes.and(refined_node) if refined_node
-      end
+      nodes = try_apply_refinements_to_nodes(input: input, nodes: nodes) 
       nodes
     end
 
@@ -148,14 +154,33 @@ module Refine::Conditions
     def handle_flat_cross_database_condition(root_model:, input:, relation_class:, relation_table_being_queried:, inverse_clause:, key_1:, key_2:)
       table = root_model.arel_table
       relational_query = relation_class.select(key_2).arel
-      node = apply(input, relation_table_being_queried, relation_class, inverse_clause)
+      puts "Running cross database condition with apply"
+      node = apply_condition(input, relation_table_being_queried, inverse_clause)
+      puts "Running cross database condition with apply DONE"
       relational_query = relational_query.where(node)
       array_of_ids = relation_class.connection.exec_query(relational_query.to_sql).rows.flatten
+      
       if array_of_ids.length == 1
         nodes = table[:"#{key_1}"].eq(array_of_ids.first)
       else
         nodes = table[:"#{key_1}"].in(array_of_ids)
       end
+
+      nodes = try_apply_refinements_to_nodes(input: input, nodes: nodes) 
+      nodes
+    end
+
+    def try_apply_refinements_to_nodes(input:, nodes:, reflection: nil)
+      puts "Checking if refinement: #{is_refinement}"
+      puts "Checking if has any refinements: #{has_any_refinements?}"
+      if input[:date_refinement].present? || input[:count_refinement].present?
+        puts "Applying refinements to flat relational condition"
+        puts "Refinement input: #{input}"
+        refined_node = apply_refinements(input, )
+        # Count refinement will return nil because it directly modified pending relationship subquery
+        nodes = nodes.and(refined_node) if refined_node
+      end
+      nodes
     end
 
     def get_through_reflection(instance:, relation:)
@@ -193,6 +218,10 @@ module Refine::Conditions
       else
         add_pending_join(joins_array, :inner)
       end
+    end
+
+    def refinements_allowed?
+      true # This should be smarter but for cross-database queries we don't really need this
     end
 
     def condition_uses_different_database?(current_model, parent_model)

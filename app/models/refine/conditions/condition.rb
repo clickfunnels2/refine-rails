@@ -144,6 +144,7 @@ module Refine::Conditions
         filter_condition.is_refinement = true
 
         # Applying the filter condition will modify pending relationship subqueries in place
+        puts "Running filter_condition.apply"
         filter_condition.apply(input.dig(:filter_refinement), table, initial_query)
         input.delete(:filter_refinement)
       end
@@ -156,6 +157,7 @@ module Refine::Conditions
       self.attribute = through_attribute if through_attribute
       nodes = apply_condition(input, table, inverse_clause)
       if !is_refinement && has_any_refinements?
+        puts "in Condition.rb apply, handling Refinement. WHY??"
         refined_node = apply_refinements(input)
         # Count refinement will return nil because it directly modified pending relationship subquery
         nodes = nodes.and(refined_node) if refined_node

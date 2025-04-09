@@ -125,7 +125,12 @@ class Refine::Inline::Criterion
     errors.clear
     begin
       query_for_validate = refine_filter.initial_query || refine_filter.model.all
-      condition&.apply(input_attributes, refine_filter.table, query_for_validate)
+      puts "Validating Condition (inline) - calling apply: #{refine_filter.should_use_flat_query?}"
+      if refine_filter.should_use_flat_query?
+        condition&.apply_flat(input_attributes, refine_filter.table, query_for_validate)
+      else
+        condition&.apply(input_attributes, refine_filter.table, query_for_validate)
+      end
     rescue Refine::Conditions::Errors::ConditionClauseError => e
       e.errors.each do |error|
         errors.add(:base, error.full_message)

@@ -27,7 +27,12 @@ class Refine::Filters::Criterion
     return true if type == "conjunction"
     begin
       query_for_validate = filter.initial_query || filter.model.all
-      condition&.apply(input, filter.table, query_for_validate)
+      puts "Validating Condition - calling apply"
+      if filter.should_use_flat_query?
+        condition&.apply_flat(input, filter.table, query_for_validate)
+      else
+        condition&.apply(input, filter.table, query_for_validate)
+      end
     rescue Refine::Conditions::Errors::ConditionClauseError => e
       e.errors.each do |error|
         errors.add(:base, :invalid, message: error.full_message)

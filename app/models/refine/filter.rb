@@ -212,6 +212,7 @@ module Refine
     end
 
     def apply_condition(criterion)
+      puts "filter.apply_condition from filter...."
       begin
         get_condition_for_criterion(criterion)&.apply(criterion[:input], table, initial_query, false, nil)
       rescue Refine::Conditions::Errors::ConditionClauseError => e

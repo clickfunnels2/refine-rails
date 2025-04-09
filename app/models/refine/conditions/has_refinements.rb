@@ -31,6 +31,7 @@ module Refine::Conditions
     end
 
     def apply_refinements(input)
+      puts "Running apply_refinements"
       if has_any_refinements? && !refinements_allowed?
         raise Errors::RelationshipError, I18n.t("refine.refine_blueprints.has_refinements.not_allowed")
       end
@@ -67,6 +68,7 @@ module Refine::Conditions
     end
 
     def apply_date_refinement(table, input)
+      puts "Applying date refinement"
       get_date_refinement_condition.apply(input, table, nil)
     end
 

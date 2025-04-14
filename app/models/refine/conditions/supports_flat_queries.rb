@@ -90,11 +90,12 @@ module Refine::Conditions
        
       end # End of while loop
 
-      if condition_joins.any?
-        add_pending_joins_if_needed(input: input, joins_array: condition_joins)
-      end
 
-      apply_flat_relational_condition(instance: instance, relation: relation, through_reflection: through_reflection, input: input, query: query, inverse_clause: inverse_clause, forced_id: forced_id)
+      if condition_joins.any?
+        add_pending_joins_if_needed(input: input, joins_array: condition_joins, through_reflection: through_reflection)
+      else
+        apply_flat_relational_condition(instance: instance, relation: relation, through_reflection: through_reflection, input: input, query: query, inverse_clause: inverse_clause, forced_id: forced_id)
+      end
     end
 
     # apply_flat_relational_condition
@@ -176,22 +177,44 @@ module Refine::Conditions
       child_foreign_key
     end
 
-    def add_pending_join(joins_array, join_type=:inner)
-      relation = joins_array.first
-      joins_block = joins_array.reverse.inject({}) { |a, n| { n.to_sym => a } }
-      # If we already are tracking the relation with a left joins, don't overwrite it
-      unless join_type == :inner && filter.pending_joins[relation] && filter.pending_joins[relation][:type] == :left
-        filter.needs_distinct = true
-        filter.pending_joins[relation] = { type: join_type, joins_block: joins_block}.compact
+    def add_pending_join(joins_array, join_type: :inner, on_condition:, through_reflection: )
+      base_table = joins_array.last
+      root_table = filter.model.arel_table
+      filter.needs_distinct = true
+    
+      filter.pending_joins[base_table] ||= { count: 0, nodes: [], joins_block: nil }
+    
+      filter.pending_joins[base_table][:count] += 1
+      join_count = filter.pending_joins[base_table][:count]
+    
+      if join_count == 1
+        # Use normal AR joins if it's a single join
+        joins_block = joins_array.reverse.inject({}) { |a, n| { n.to_sym => a } }
+        filter.pending_joins[base_table][:joins_block] = joins_block
+      else
+        alias_name = "#{base_table}_#{join_count}"
+        arel_alias = Arel::Table.new(base_table).alias(alias_name)
+        puts "AREL Alias: #{arel_alias.inspect}"
+        puts "ROOT TABLE: #{root_tabld.inspect}"
+    
+        relationship_condition = arel_alias[:contact_id].eq(root_table[:id])
+        full_condition = on_condition ? relationship_condition.and(on_condition) : relationship_condition
+    
+        join_class = join_type == :left ? Arel::Nodes::OuterJoin : Arel::Nodes::InnerJoin
+        join_node  = root_table.join(arel_alias, join_class)
+                             .on(full_condition)
+                             .join_sources
+    
+        filter.pending_joins[base_table][:nodes] << join_node
       end
     end
 
-    def add_pending_joins_if_needed(input:, joins_array:)
+    def add_pending_joins_if_needed(input:, joins_array:, on_condition: nil, through_reflection: nil)
       # Determine if we need to do left-joins due to the clause needing to include null values
       if(input && LEFT_JOIN_CLAUSES.include?(input[:clause]))
-        add_pending_join(joins_array, :left)
+        add_pending_join(joins_array: joins_array, join_type: :left, on_condition: on_condition, through_reflection: through_reflection)
       else
-        add_pending_join(joins_array, :inner)
+        add_pending_join(joins_array: joins_array, join_type: :inner, on_condition: on_condition, through_reflection: through_reflection)
       end
     end
 

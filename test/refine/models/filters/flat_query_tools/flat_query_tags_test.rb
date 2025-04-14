@@ -19,14 +19,14 @@ describe Refine::Filter do
   end
 
   describe "get_flat_query" do
-    it "two separaete criteria referencing tags generates a proper query" do
+    it "two separate criteria referencing tags generates a proper query" do
       initial_query = Contact.all
       filter = create_filter(two_tag_criteria)
 
       expected_sql = <<-SQL.squish
         SELECT DISTINCT `contacts`.* FROM `contacts` 
-          INNER JOIN `contacts_applied_tags` ON `contacts_applied_tags`.`contact_id` = `contacts`.`id` 
-          WHERE ((`contacts_applied_tags`.`tag_id` IN (1, 2))) AND ((`contacts_applied_tags`.`tag_id` = 4))
+          INNER JOIN `contacts_applied_tags` ON `contacts_applied_tags`.`contact_id` = `contacts`.`id` AND ((`contacts_applied_tags`.`tag_id` IN (1, 2))
+          INNER JOIN `contacts_applied_tags` `contacts_applied_tags_2` ON `contacts_applied_tags_2`.`contact_id` = `contacts`.`id` AND ((`contacts_applied_tags_2`.`tag_id` = 4))
       SQL
       assert_equal expected_sql, filter.get_flat_query.to_sql
     end

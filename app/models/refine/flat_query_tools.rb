@@ -73,18 +73,18 @@ module Refine
     end
 
     # Called at the end of the filter's construct_flat_query. Applies joins from pending_joins hash constructed by individual conditions
+    # If the same joins occurs twice, we need to apply the extra clauses to the joins AND use aliases
     def apply_pending_joins
-      if pending_joins.present?
-        join_count = 0
-        pending_joins.each do |relation, join_data|
-          if join_data[:type] == :left
-            @relation = @relation.left_joins(join_data[:joins_block]).distinct
-          else
-            @relation = @relation.joins(join_data[:joins_block]).distinct
-          end
-          join_count += 1
+      return if pending_joins.blank?
+    
+      pending_joins.each_value do |data|
+        if data[:joins_block]
+          @relation = @relation.joins(data[:joins_block]).distinct
         end
-
+    
+        data[:nodes].each do |join_node|
+          @relation = @relation.joins(join_node).distinct
+        end
       end
     end
 

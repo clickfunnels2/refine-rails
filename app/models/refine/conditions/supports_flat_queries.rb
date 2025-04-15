@@ -177,7 +177,7 @@ module Refine::Conditions
       child_foreign_key
     end
 
-    def add_pending_join(joins_array, join_type: :inner, on_condition:, through_reflection: )
+    def add_pending_join(joins_array:, join_type: :inner, on_condition:, through_reflection: )
       base_table = joins_array.last
       root_table = filter.model.arel_table
       filter.needs_distinct = true

@@ -3,14 +3,14 @@
 # NOTE: This is more specialized query construction and it is up to the implementer to use the inspector tools to ensure this is only being used for supported queries
 module Refine
   module FlatQueryTools
-    attr_accessor :pending_joins, :applied_conditions, :needs_distinct
+    attr_accessor :pending_joins, :applied_conditions, :needs_distinct, :condition_counts
 
     def pending_joins
       @pending_joins ||= {}
     end
 
-    def applied_conditions
-      @applied_conditions ||= {}
+    def condition_counts
+      @condition_counts ||= {}
     end
 
     def needs_distinct?
@@ -37,6 +37,7 @@ module Refine
     # It is meant to be idempotent hence it checks for already applied conditions
     def construct_flat_query
       groups = []
+      build_condition_counts
       blueprint.each do |criteria_or_conjunction|
         if criteria_or_conjunction[:type] == "conjunction"
           if criteria_or_conjunction[:word] == "or"
@@ -45,10 +46,9 @@ module Refine
             @applied_conditions = {}
           end
         else
-          unless condition_already_applied?(criteria_or_conjunction)
-            node = apply_flat_condition(criteria_or_conjunction)
-            @relation = @relation.where(Arel.sql(node.to_sql))
-            track_condition_applied(criteria_or_conjunction)
+          node = apply_flat_condition(criteria_or_conjunction)
+          if node
+            @relation = @relation.where(node)
           end
         end
       end
@@ -64,7 +64,8 @@ module Refine
     # Same as Filter.apply_condition but uses `supports_flat_queries` helpers instead of default path
     def apply_flat_condition(criterion)
       begin
-        get_condition_for_criterion(criterion)&.apply_flat(criterion[:input], table, initial_query, false)
+        condition = get_condition_for_criterion(criterion)
+        condition&.apply_flat(criterion[:input], table, initial_query, false, should_apply_condition_on_join?(condition))
       rescue Refine::Conditions::Errors::ConditionClauseError => e
         e.errors.each do |error|
           errors.add(:base, error.full_message, criterion_uid: criterion[:uid])
@@ -73,32 +74,46 @@ module Refine
     end
 
     # Called at the end of the filter's construct_flat_query. Applies joins from pending_joins hash constructed by individual conditions
+    # If the same joins occurs twice, we need to apply the extra clauses to the joins AND use aliases
     def apply_pending_joins
-      if pending_joins.present?
-        join_count = 0
-        pending_joins.each do |relation, join_data|
-          if join_data[:type] == :left
-            @relation = @relation.left_joins(join_data[:joins_block]).distinct
-          else
-            @relation = @relation.joins(join_data[:joins_block]).distinct
+      return if pending_joins.blank?
+    
+      pending_joins.each_value do |data|
+        if data[:count] > 1
+          data[:nodes].each do |join_node_array|
+            join_node_array.each do |join_node|
+              puts "Applying join node: #{join_node} for dupe"
+              @relation = @relation.joins(join_node).distinct
+            end
           end
-          join_count += 1
+        else
+          if data[:joins_block].present?
+            puts "Applying joins block: #{data[:joins_block]} - single"
+            @relation = @relation.joins(data[:joins_block]).distinct
+          else
+            puts "Applying join node: #{data[:nodes]} - single"
+            @relation = @relation.joins(data[:nodes]).distinct
+          end
         end
-
       end
     end
 
-    def track_condition_applied(criterion)
-      if applied_conditions[criterion[:condition_id]].nil?
-        applied_conditions[criterion[:condition_id]] = [criterion[:input]]
-      else
-        applied_conditions[criterion[:condition_id]] << criterion[:input]
+    def build_condition_counts
+      blueprint.each do |criterion_or_conjunction|
+        if criterion_or_conjunction[:type] == "criterion"
+          increment_condition_count(get_condition_for_criterion(criterion_or_conjunction))
+        end
       end
     end
 
-    def condition_already_applied?(criterion)
-      applied_conditions[criterion[:condition_id]] && 
-        applied_conditions[criterion[:condition_id]].include?(criterion[:input])
+    def increment_condition_count(condition_object)
+      condition_counts[condition_object.attribute] ||= 0
+      condition_counts[condition_object.attribute] += 1
+    end
+
+    def should_apply_condition_on_join?(condition_object)
+      return false if condition_counts[condition_object.attribute].blank?
+      condition_counts[condition_object.attribute] > 1
     end
   end
 end

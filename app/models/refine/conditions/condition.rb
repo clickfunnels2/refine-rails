@@ -148,12 +148,13 @@ module Refine::Conditions
         input.delete(:filter_refinement)
       end
 
+      # No longer a relationship attribute, apply condition normally
+      self.attribute = through_attribute.to_s if through_attribute
       if is_relationship_attribute?
         apply_relationship_attribute(input: input, query: initial_query)
         return
       end
-      # No longer a relationship attribute, apply condition normally
-      self.attribute = through_attribute if through_attribute
+
       nodes = apply_condition(input, table, inverse_clause)
       if !is_refinement && has_any_refinements?
         refined_node = apply_refinements(input)

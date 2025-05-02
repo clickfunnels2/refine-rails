@@ -19,18 +19,29 @@ describe Refine::Filter do
   end
 
   describe "get_flat_query" do
-    it "two separaete criteria referencing tags generates a proper query" do
+    it "two separate criteria referencing tags generates a proper query" do
       initial_query = Contact.all
       filter = create_filter(two_tag_criteria)
 
       expected_sql = <<-SQL.squish
         SELECT DISTINCT `contacts`.* FROM `contacts` 
-          INNER JOIN `contacts_applied_tags` ON `contacts_applied_tags`.`contact_id` = `contacts`.`id` 
-          WHERE ((`contacts_applied_tags`.`tag_id` IN (1, 2))) AND ((`contacts_applied_tags`.`tag_id` = 4))
+          INNER JOIN `contacts_applied_tags` `contacts_applied_tags_1` ON `contacts_applied_tags_1`.`contact_id` = `contacts`.`id` AND (`contacts_applied_tags_1`.`tag_id` IN (1, 2))
+          INNER JOIN `contacts_applied_tags` `contacts_applied_tags_2` ON `contacts_applied_tags_2`.`contact_id` = `contacts`.`id` AND (`contacts_applied_tags_2`.`tag_id` = 4)
       SQL
       assert_equal expected_sql, filter.get_flat_query.to_sql
     end
     
+    it "single criteria referencing tags does not add alias" do
+      initial_query = Contact.all
+      filter = create_filter(single_tag_criteria)
+
+      expected_sql = <<-SQL.squish
+        SELECT DISTINCT `contacts`.* FROM `contacts`
+          INNER JOIN `contacts_applied_tags` ON `contacts_applied_tags`.`contact_id` = `contacts`.`id`
+          WHERE (`contacts_applied_tags`.`tag_id` IN (1, 2))
+      SQL
+      assert_equal expected_sql, filter.get_flat_query.to_sql
+    end
   end
 
   def create_filter(blueprint=nil)
@@ -42,6 +53,18 @@ describe Refine::Filter do
         Refine::Conditions::OptionCondition.new("tags.id").with_options(proc { tag_options })
       ],
       Contact.arel_table)
+  end
+
+  def single_tag_criteria
+    [{
+      depth: 0,
+      type: "criterion",
+      condition_id: "tags.id",
+      input: {
+        clause: "in",
+        selected: ["1", "2"]
+      }
+    }]
   end
 
   def two_tag_criteria

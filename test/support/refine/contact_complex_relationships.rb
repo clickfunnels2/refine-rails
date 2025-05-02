@@ -4,7 +4,7 @@ class Contact < ActiveRecord::Base
   has_many :tags, through: :applied_tags
 
   has_many :orders
-  has_many :line_items, through: :orders
+  has_many :line_items, through: :orders, class_name: "Orders::LineItem"
   has_many :products, through: :line_items, source: :original_product
   has_many :churned_line_items, -> { where(orders: {service_status: %w[churned canceled]}) }, through: :orders, source: :line_items
   has_many :churned_products, through: :churned_line_items, source: :original_product

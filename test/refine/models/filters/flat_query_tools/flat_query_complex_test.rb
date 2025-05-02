@@ -39,7 +39,7 @@ describe Refine::Filter do
 
     it "handles forms submissions with date range" do
       initial_query = Contact.all
-      filter = create_filter(forms_submissions_criteria)
+      filter = create_filter(custom_attributes_criteria)
 
       expected_sql = <<-SQL.squish
         SELECT DISTINCT `contacts`.* FROM `contacts`
@@ -53,7 +53,7 @@ describe Refine::Filter do
 
     it "handles multiple forms submissions with different conditions" do
       initial_query = Contact.all
-      filter = create_filter(multiple_forms_submissions_criteria)
+      filter = create_filter(multiple_custom_attributes_criteria)
 
       expected_sql = <<-SQL.squish
         SELECT DISTINCT `contacts`.* FROM `contacts`
@@ -78,9 +78,9 @@ describe Refine::Filter do
         Refine::Conditions::TextCondition.new("text_field_value"),
         Refine::Conditions::OptionCondition.new("tags.id").with_options(proc { tag_options }),
         Refine::Conditions::TextCondition.new("orders.service_status"),
-        Refine::Conditions::TextCondition.new("orders_line_items.original_product_id"),
-        Refine::Conditions::TextCondition.new("forms_submissions.form_id"),
-        Refine::Conditions::DateCondition.new("forms_submissions.submitted_at")
+        Refine::Conditions::TextCondition.new("line_items.original_product_id"),
+        Refine::Conditions::TextCondition.new("custom_attributes.form_id"),
+        Refine::Conditions::DateCondition.new("custom_attributes.submitted_at")
       ],
       Contact.arel_table)
   end
@@ -155,7 +155,7 @@ describe Refine::Filter do
       {
         depth: 0,
         type: "criterion",
-        condition_id: "orders_line_items.original_product_id",
+        condition_id: "line_items.original_product_id",
         input: {
           clause: "eq",
           value: "123"
@@ -164,12 +164,12 @@ describe Refine::Filter do
     ]
   end
 
-  def forms_submissions_criteria
+  def custom_attributes_criteria
     [
       {
         depth: 0,
         type: "criterion",
-        condition_id: "forms_submissions.form_id",
+        condition_id: "custom_attributes.form_id",
         input: {
           clause: "eq",
           value: "1"
@@ -183,10 +183,10 @@ describe Refine::Filter do
       {
         depth: 0,
         type: "criterion",
-        condition_id: "forms_submissions.submitted_at",
+        condition_id: "custom_attributes.submitted_at",
         input: {
           clause: "gte",
-          value: "2023-01-01"
+          date1: "2023-01-01"
         }
       },
       {
@@ -197,21 +197,21 @@ describe Refine::Filter do
       {
         depth: 0,
         type: "criterion",
-        condition_id: "forms_submissions.submitted_at",
+        condition_id: "custom_attributes.submitted_at",
         input: {
           clause: "lte",
-          value: "2023-12-31"
+          date1: "2023-12-31"
         }
       }
     ]
   end
 
-  def multiple_forms_submissions_criteria
+  def multiple_custom_attributes_criteria
     [
       {
         depth: 0,
         type: "criterion",
-        condition_id: "forms_submissions.form_id",
+        condition_id: "custom_attributes.form_id",
         input: {
           clause: "eq",
           value: "1"
@@ -225,10 +225,10 @@ describe Refine::Filter do
       {
         depth: 0,
         type: "criterion",
-        condition_id: "forms_submissions.submitted_at",
+        condition_id: "custom_attributes.submitted_at",
         input: {
           clause: "gte",
-          value: "2023-01-01"
+          date1: "2023-01-01"
         }
       },
       {
@@ -239,7 +239,7 @@ describe Refine::Filter do
       {
         depth: 0,
         type: "criterion",
-        condition_id: "forms_submissions.form_id",
+        condition_id: "custom_attributes.form_id",
         input: {
           clause: "eq",
           value: "2"
@@ -253,10 +253,10 @@ describe Refine::Filter do
       {
         depth: 0,
         type: "criterion",
-        condition_id: "forms_submissions.submitted_at",
+        condition_id: "custom_attributes.submitted_at",
         input: {
           clause: "lte",
-          value: "2023-12-31"
+          date1: "2023-12-31"
         }
       }
     ]

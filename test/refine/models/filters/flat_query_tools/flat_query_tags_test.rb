@@ -25,8 +25,8 @@ describe Refine::Filter do
 
       expected_sql = <<-SQL.squish
         SELECT DISTINCT `contacts`.* FROM `contacts` 
-          INNER JOIN `contacts_applied_tags` `contacts_applied_tags_1` ON `contacts_applied_tags_1`.`contact_id` = `contacts`.`id` AND ((`contacts_applied_tags_1`.`tag_id` IN (1, 2)))
-          INNER JOIN `contacts_applied_tags` `contacts_applied_tags_2` ON `contacts_applied_tags_2`.`contact_id` = `contacts`.`id` AND ((`contacts_applied_tags_2`.`tag_id` = 4))
+          INNER JOIN `contacts_applied_tags` `contacts_applied_tags_1` ON `contacts_applied_tags_1`.`contact_id` = `contacts`.`id` AND (`contacts_applied_tags_1`.`tag_id` IN (1, 2))
+          INNER JOIN `contacts_applied_tags` `contacts_applied_tags_2` ON `contacts_applied_tags_2`.`contact_id` = `contacts`.`id` AND (`contacts_applied_tags_2`.`tag_id` = 4)
       SQL
       assert_equal expected_sql, filter.get_flat_query.to_sql
     end

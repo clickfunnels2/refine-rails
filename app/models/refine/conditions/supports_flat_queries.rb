@@ -14,9 +14,10 @@ module Refine::Conditions
     # @param [Arel::Table] table The arel_table the query is built on 
     # @param [ActiveRecord::Relation] initial_query The base query the query is built on 
     # @param [Bool] inverse_clause Whether to invert the clause
+    # @param [Bool] apply_condition_on_join Whether to apply the condition on the join instead of the root query
     # @return [Arel::Node] 
     # This is mostly a copy of the `apply` method from the Condition module, but avoids recursion and the pending_subquery system
-    def apply_flat(input, table, initial_query, inverse_clause=false)
+    def apply_flat(input, table, initial_query, inverse_clause=false, apply_condition_on_join=false)
       table ||= filter.table
       @is_flat_query = true
       # Ensurance validations are checking the developer configured correctly
@@ -40,7 +41,7 @@ module Refine::Conditions
       end
 
       if is_relationship_attribute?
-        return handle_flat_relational_condition(input: input, table: table, query: initial_query, inverse_clause: inverse_clause)
+        return handle_flat_relational_condition(input: input, table: table, query: initial_query, inverse_clause: inverse_clause, apply_condition_on_join: apply_condition_on_join)
       end
       # Not a relationship attribute, apply condition normally
       nodes = apply_condition(input, table, inverse_clause)
@@ -52,10 +53,12 @@ module Refine::Conditions
       nodes
     end
 
-    def handle_flat_relational_condition(input:, table:, query:, inverse_clause:)
+    def handle_flat_relational_condition(input:, table:, query:, inverse_clause:, apply_condition_on_join: false)
       model_class = query.model
       condition_joins = []
+      condition_nodes = nil
       while @attribute.include?(".")
+        puts "Attribute: #{@attribute}"
         forced_id = false
         # Split on first .
         decompose_attribute = @attribute.split(".", 2)
@@ -64,12 +67,13 @@ module Refine::Conditions
         # Relation to be handled
         relation = decompose_attribute[0]
 
+        puts "RELATION: #{relation}"
+        puts "Reflecting #{model_class} on #{relation}"
         instance = model_class.reflect_on_association(relation.to_sym)
 
         if @attribute == "id"
           # We're referencing a primary key ID, so we dont need the final join table and
           # can just reference the foreign key of the previous step in the relation chain
-          model_class = instance.class_name.safe_constantize
           through_reflection = get_through_reflection(instance: instance, relation: relation)
           unless condition_uses_different_database?(through_reflection.klass, query.model)
             forced_id = true
@@ -87,12 +91,49 @@ module Refine::Conditions
           end
         end
         model_class = instance.class_name.safe_constantize
+        puts "MODEL CLASS: #{model_class}"
        
       end # End of while loop
 
 
       if condition_joins.any?
-        add_pending_joins_if_needed(input: input, joins_array: condition_joins, through_reflection: through_reflection)
+        # Copied from apply_flat_relational_condition - need to refactor
+        if through_reflection
+          # If through reflection is passed in (due to an association only referencing the id)
+          # use that to get the table and class
+          relation_table_being_queried = through_reflection.klass.arel_table
+          relation_class = through_reflection.klass
+        else
+          # Otherwise, use the instance to get the table and class.
+          relation_table_being_queried = instance.class_name.safe_constantize&.arel_table
+          relation_class = instance.class_name.safe_constantize
+        end
+  
+        instance = get_reflection_object(query, relation) if forced_id
+  
+        key_1 = key_1(instance)
+        key_2 = key_2(instance) 
+
+        # Ensure we're aliasing the table for the WHERE clause if the condition is used more than once. 
+        if apply_condition_on_join 
+          pending_join_value = filter.pending_joins[relation_table_being_queried.table_name] || {}
+          current_join_count = pending_join_value[:count] || 0
+          alias_name = "#{relation_table_being_queried.table_name}_#{current_join_count + 1}"
+          relation_table_being_queried = relation_table_being_queried.alias(alias_name)
+        end
+
+        if forced_id
+          condition_nodes = apply(input, relation_table_being_queried, relation_class, inverse_clause, key_2)
+        else
+          condition_nodes = apply(input, relation_table_being_queried, relation_class, inverse_clause)
+        end
+        # end of copied code
+        root_level_condition_to_add = add_pending_joins_if_needed(input: input, joins_array: condition_joins, through_reflection: through_reflection, on_condition: condition_nodes)
+        # If the condition is used just once, we need to apply the condition normally
+        unless apply_condition_on_join
+          return apply_flat_relational_condition(instance: instance, relation: relation, through_reflection: through_reflection, input: input, query: query, inverse_clause: inverse_clause, forced_id: forced_id)
+        end
+        root_level_condition_to_add
       else
         apply_flat_relational_condition(instance: instance, relation: relation, through_reflection: through_reflection, input: input, query: query, inverse_clause: inverse_clause, forced_id: forced_id)
       end
@@ -177,50 +218,73 @@ module Refine::Conditions
       child_foreign_key
     end
 
-    def add_pending_join(joins_array:, join_type: :inner, on_condition:, through_reflection: )
-      base_table = joins_array.last
-      root_table = filter.model.arel_table
+    def add_pending_join(joins_array:, join_type: :inner, on_condition:, through_reflection: nil)
+      current_model = filter.model
+      left_table = current_model.arel_table
       filter.needs_distinct = true
-    
-      filter.pending_joins[base_table] ||= { count: 0, nodes: [], joins_block: nil }
-    
-      filter.pending_joins[base_table][:count] += 1
-      join_count = filter.pending_joins[base_table][:count]
-    
-      if join_count == 1
-        # Use normal AR joins if it's a single join
-        joins_block = joins_array.reverse.inject({}) { |a, n| { n.to_sym => a } }
-        filter.pending_joins[base_table][:joins_block] = joins_block
-      else
+
+      joins_array.each_with_index do |relation, idx|
+        puts "Applying Join chain: #{relation} - #{idx} - #{current_model}"
+        reflection = current_model.reflect_on_association(relation.to_sym)
+        raise "Association #{relation} not found on #{current_model}" unless reflection
+
+        base_table = reflection.klass.table_name
+        filter.pending_joins[base_table] ||= { count: 0, nodes: [], aliased_nodes: [] joins_block: nil }
+        filter.pending_joins[base_table][:count] += 1
+        join_count = filter.pending_joins[base_table][:count]
         alias_name = "#{base_table}_#{join_count}"
-        arel_alias = Arel::Table.new(base_table).alias(alias_name)
-        puts "AREL Alias: #{arel_alias.inspect}"
-        puts "ROOT TABLE: #{root_tabld.inspect}"
-    
-        relationship_condition = arel_alias[:contact_id].eq(root_table[:id])
-        full_condition = on_condition ? relationship_condition.and(on_condition) : relationship_condition
-    
+        right_table = Arel::Table.new(base_table).alias(alias_name)
+
+        # Determine join keys
+        parent_key = reflection.active_record_primary_key
+        foreign_key = reflection.foreign_key
+
+        # The child table (right_table) always has the foreign key
+        bridge_condition = right_table[foreign_key].eq(left_table[parent_key])
+
+        # Only apply on_condition to the last join
+        full_condition = if idx == joins_array.length - 1 && on_condition
+          bridge_condition.and(on_condition)
+        else
+          bridge_condition
+        end
+
         join_class = join_type == :left ? Arel::Nodes::OuterJoin : Arel::Nodes::InnerJoin
-        join_node  = root_table.join(arel_alias, join_class)
-                             .on(full_condition)
-                             .join_sources
-    
+        if left_table.is_a?(Arel::Nodes::TableAlias)
+          join_node = Arel::Nodes::InnerJoin.new(
+            left_table,
+            Arel::Nodes::On.new(
+              left_table[parent_key].eq(right_table[foreign_key])
+            ).on(full_condition)
+            .join_sources
+          )
+        else
+          join_node = left_table.join(right_table, join_class)
+                          .on(full_condition)
+                          .join_sources
+        end
+
         filter.pending_joins[base_table][:nodes] << join_node
+
+        # Prepare for next iteration
+        left_table = right_table
+        current_model = reflection.klass
       end
+
+      # Should return nil because we've already added the condition to the query and do not need to add it later
+      nil
     end
 
     def add_pending_joins_if_needed(input:, joins_array:, on_condition: nil, through_reflection: nil)
       # Determine if we need to do left-joins due to the clause needing to include null values
-      if(input && LEFT_JOIN_CLAUSES.include?(input[:clause]))
-        add_pending_join(joins_array: joins_array, join_type: :left, on_condition: on_condition, through_reflection: through_reflection)
-      else
-        add_pending_join(joins_array: joins_array, join_type: :inner, on_condition: on_condition, through_reflection: through_reflection)
-      end
+      join_type = (input && LEFT_JOIN_CLAUSES.include?(input[:clause])) ? :left : :inner
+      add_pending_join(joins_array: joins_array, join_type: join_type, on_condition: on_condition, through_reflection: through_reflection)
     end
 
     def condition_uses_different_database?(current_model, parent_model)
       # Are the queries on different databases?
       parent_model.connection_db_config.configuration_hash != current_model.connection_db_config.configuration_hash
     end
+    
   end
 end

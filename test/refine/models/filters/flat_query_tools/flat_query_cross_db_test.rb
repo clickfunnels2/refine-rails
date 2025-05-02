@@ -31,7 +31,7 @@ describe Refine::Filter do
 
       expected_event_sql = <<-SQL.squish
         SELECT `events`.`contact_id` FROM `events`
-          WHERE (`events`.`source_id` IN (1, 2))
+          WHERE ()`events`.`source_id` IN (1, 2))
       SQL
 
       subscriber = ActiveSupport::Notifications.subscribe("sql.active_record") do |name, start, finish, id, payload|
@@ -52,7 +52,7 @@ describe Refine::Filter do
 
       expected_sql = <<-SQL.squish
         SELECT `contacts`.* FROM `contacts` 
-          WHERE (`contacts`.`id` = 50)
+          WHERE `contacts`.`id` = 50
       SQL
       assert_equal expected_sql, filter.get_flat_query.to_sql
     end
@@ -66,7 +66,7 @@ describe Refine::Filter do
 
       expected_sql = <<-SQL.squish
         SELECT `contacts`.* FROM `contacts` 
-          WHERE (`contacts`.`id` IN (50, 51))
+          WHERE `contacts`.`id` IN (50, 51)
       SQL
       assert_equal expected_sql, filter.get_flat_query.to_sql    
     end
@@ -81,7 +81,7 @@ describe Refine::Filter do
 
       expected_sql = <<-SQL.squish
         SELECT `contacts`.* FROM `contacts` 
-          WHERE (`contacts`.`id` IN (50, 51)) AND (`contacts`.`id` = 50)
+          WHERE `contacts`.`id` IN (50, 51) AND `contacts`.`id` = 50
       SQL
       assert_equal expected_sql, filter.get_flat_query.to_sql     
     end

@@ -23,7 +23,7 @@ describe Refine::Filter do
       expected_sql = <<-SQL.squish
         SELECT DISTINCT `contacts`.* FROM `contacts` 
           INNER JOIN `contacts_last_activities` ON `contacts_last_activities`.`contact_id` = `contacts`.`id` 
-          WHERE ((`contacts_last_activities`.`last_activity_at` BETWEEN '2020-01-01 00:00:00' AND '2020-01-01 23:59:59'))
+          WHERE (`contacts_last_activities`.`last_activity_at` BETWEEN '2020-01-01 00:00:00' AND '2020-01-01 23:59:59')
       SQL
       assert_equal expected_sql, filter.get_flat_query.to_sql
     end
@@ -36,7 +36,7 @@ describe Refine::Filter do
         SELECT DISTINCT `contacts`.* FROM `contacts` 
           INNER JOIN `contacts_last_activities` ON `contacts_last_activities`.`contact_id` = `contacts`.`id` 
           INNER JOIN `contacts_applied_tags` ON `contacts_applied_tags`.`contact_id` = `contacts`.`id` 
-          WHERE ((`contacts_last_activities`.`last_activity_at` BETWEEN '2020-01-01 00:00:00' AND '2020-01-01 23:59:59')) AND ((`contacts_applied_tags`.`tag_id` = 4))
+          WHERE (`contacts_last_activities`.`last_activity_at` BETWEEN '2020-01-01 00:00:00' AND '2020-01-01 23:59:59') AND (`contacts_applied_tags`.`tag_id` = 4)
       SQL
       assert_equal expected_sql, filter.get_flat_query.to_sql
     end

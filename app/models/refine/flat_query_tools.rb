@@ -47,7 +47,16 @@ module Refine
         else
           unless condition_already_applied?(criteria_or_conjunction)
             node = apply_flat_condition(criteria_or_conjunction)
-            @relation = @relation.where(Arel.sql(node.to_sql))
+            if node.is_a?(Arel::Nodes::Grouping)
+              @relation = @relation.where(node)
+            elsif node.is_a?(Array)
+              error = node.filter{ |n| n.is_a?(ActiveModel::Error) }.first
+              if error
+                filter.errors.add(:base, error.full_message)
+              end
+            else
+              @relation = @relation.where(Arel::Nodes::Grouping.new(node))
+            end
             track_condition_applied(criteria_or_conjunction)
           end
         end
@@ -84,7 +93,6 @@ module Refine
           end
           join_count += 1
         end
-
       end
     end
 
@@ -99,6 +107,11 @@ module Refine
     def condition_already_applied?(criterion)
       applied_conditions[criterion[:condition_id]] && 
         applied_conditions[criterion[:condition_id]].include?(criterion[:input])
+    end
+
+    # Meant to be overridden by Filter classes to add or replace with custom logic
+    def can_use_flat_query?
+      !uses_or? && !uses_negative_clause? && !has_duplicate_conditions?
     end
   end
 end

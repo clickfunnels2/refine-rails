@@ -1,5 +1,6 @@
 require "support/refine/blank_test_filter"
 require "support/refine/cf2_blank_test_filter"
+require "support/refine/flat_query_test_filter"
 
 module FilterTestHelper
   class TestDouble < ActiveRecord::Base

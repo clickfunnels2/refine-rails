@@ -91,7 +91,7 @@ describe Refine::Filter do
   def create_filter(blueprint=nil)
     tag_options = [{id: "1", display: "tag1"}, {id: "2", display: "tag2"}, {id: "3", display: "tag3"}, {id: "4", display: "tag4"}]
     event_source_options = [{id: "1", display: "source1"}, {id: "2", display: "source2"}, {id: "5", display: "source5"}]
-    BlankTestFilter.new(blueprint,
+    FlatQueryTestFilter.new(blueprint,
       Contact.all,
       [
         Refine::Conditions::TextCondition.new("text_field_value"),

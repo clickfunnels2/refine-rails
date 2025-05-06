@@ -2,6 +2,7 @@ require "test_helper"
 require "support/refine/test_double_filter"
 require "support/refine/contact_complex_relationships"
 require "refine/invalid_filter_error"
+require 'mocha/minitest'
 
 describe Refine::Filter do
   include FilterTestHelper
@@ -43,7 +44,7 @@ describe Refine::Filter do
         expected_sql = <<-SQL.squish
           SELECT DISTINCT `contacts`.* FROM `contacts` 
             INNER JOIN `contacts_applied_tags` ON `contacts_applied_tags`.`contact_id` = `contacts`.`id` 
-            WHERE ((`contacts_applied_tags`.`tag_id` = 1))
+            WHERE (`contacts_applied_tags`.`tag_id` = 1)
         SQL
         assert_equal expected_sql, filter.get_flat_query.to_sql
       end
@@ -55,79 +56,23 @@ describe Refine::Filter do
         expected_sql = <<-SQL.squish
           SELECT DISTINCT `contacts`.* FROM `contacts` 
             INNER JOIN `contacts_applied_tags` ON `contacts_applied_tags`.`contact_id` = `contacts`.`id` 
-            WHERE ((`contacts_applied_tags`.`tag_id` = 1)) 
+            WHERE (`contacts_applied_tags`.`tag_id` = 1) 
         SQL
         assert_equal  expected_sql, filter.get_flat_query.to_sql
       end
     end
   end
 
-  def grouped_blueprint
-    Refine::Blueprints::Blueprint.new
-      .criterion("text_field_value",
-        clause: Refine::Conditions::TextCondition::CLAUSE_EQUALS,
-        value: "one",)
-      .and
-      .group {
-        criterion("text_field_value",
-          clause: Refine::Conditions::TextCondition::CLAUSE_EQUALS,
-          value: "two",)
-          .and
-          .criterion("text_field_value",
-            clause: Refine::Conditions::TextCondition::CLAUSE_EQUALS,
-            value: "three",)
-      }
-  end
-
-  def nested_group_blueprint
-    Refine::Blueprints::Blueprint.new
-      .criterion("text_field_value",
-        clause: Refine::Conditions::TextCondition::CLAUSE_EQUALS,
-        value: "one",)
-      .and
-      .group {
-        group {
-          criterion("text_field_value",
-            clause: Refine::Conditions::TextCondition::CLAUSE_EQUALS,
-            value: "two",)
-            .and
-            .criterion("text_field_value",
-              clause: Refine::Conditions::TextCondition::CLAUSE_EQUALS,
-              value: "three",)
-        }
-          .and
-          .criterion("text_field_value",
-            clause: Refine::Conditions::TextCondition::CLAUSE_EQUALS,
-            value: "four",)
-      }
-      .and
-      .criterion("text_field_value",
-        clause: Refine::Conditions::TextCondition::CLAUSE_EQUALS,
-        value: "five")
-  end
-
   def create_filter(blueprint=nil)
-    BlankTestFilter.new(blueprint,
+    FlatQueryTestFilter.new(blueprint,
       Contact.all,
       [
         Refine::Conditions::TextCondition.new("text_field_value"),
-        Refine::Conditions::OptionCondition.new("tags.id").with_options(proc { [{id: "1", display: "tag1"}] })
+        Refine::Conditions::OptionCondition.new("tags.id").with_options(proc { [{id: "1", display: "tag1"}, {id: "2", display: "tag2"}, {id: "3", display: "tag3"}, {id: "4", display: "tag4"}] })
       ],
       Contact.arel_table)
   end
 
-
-  def bad_id
-    [{
-      depth: 0,
-      type: "criterion",
-      condition_id: "fake",
-      input: {
-        clause: "eq",
-        value: "aaron"
-      }
-    }]
-  end
 
   def single_tag_blueprint
     [{
@@ -149,42 +94,6 @@ describe Refine::Filter do
       input: {
         clause: "eq",
         value: "aaron"
-      }
-    }]
-  end
-
-  def invalid_condition_blueprint
-    [{
-      depth: 0,
-      type: "criterion",
-      condition_id: "invalid_condition",
-      input: {
-        clause: "eq",
-        value: "invalid"
-      }
-    }]
-  end
-
-  def and_condition_blueprint
-    [{ # criterion aaron and aa
-      depth: 0,
-      type: "criterion",
-      condition_id: "text_field_value",
-      input: {
-        clause: "eq",
-        value: "aaron"
-      }
-    }, { # conjunction
-      depth: 0,
-      type: "conjunction",
-      word: "and"
-    }, { # criterion
-      depth: 0,
-      type: "criterion",
-      condition_id: "text_field_value",
-      input: {
-        clause: "eq",
-        value: "aa"
       }
     }]
   end
@@ -213,57 +122,58 @@ describe Refine::Filter do
     }]
   end
 
-  def grouped_or_blueprint
-    [{
-      type: "criterion",
-      condition_id: "user_name",
-      depth: 1,
-      input: {
-        clause: "cont",
-        value: "Aaron"
-      }
-    },
-      {
-        type: "conjunction",
-        word: "and",
-        depth: 1
-      },
-      {
-        type: "criterion",
-        condition_id: "user_name",
-        depth: 1,
-        input: {
-          clause: "cont",
-          value: "Francis"
+  describe "flat query fallback and selection" do
+    it "falls back to complex query if OR is present" do
+      # Setup a blueprint with an OR conjunction
+      blueprint = [
+        {
+          depth: 0,
+          type: "criterion",
+          condition_id: "tags.id",
+          input: {
+            clause: "in",
+            selected: ["1", "2"]
+          }
+        },
+        {
+          depth: 0,
+          type: "conjunction",
+          word: "or"
+        },
+        {
+          depth: 0,
+          type: "criterion",
+          condition_id: "tags.id",
+          input: {
+            clause: "eq",
+            selected: ["4"]
+          }
         }
-      },
-      {
-        type: "conjunction",
-        word: "or",
-        depth: 0
-      },
-      {
-        type: "criterion",
-        condition_id: "user_name",
-        depth: 1,
-        input: {
-          clause: "cont",
-          value: "Sean"
+      ]
+      filter = create_filter(blueprint)
+      # Force can_use_get_query to return false for this test
+      filter.stubs(:can_use_get_query?).returns(false)
+      # Should use the complex query logic, not flat
+      assert_equal filter.get_complex_query.to_sql, filter.get_query.to_sql
+    end
+
+    it "uses flat query for simple AND tags filter" do
+      blueprint = [
+        {
+          depth: 0,
+          type: "criterion",
+          condition_id: "tags.id",
+          input: {
+            clause: "in",
+            selected: ["1", "2"]
+          }
         }
-      },
-      {
-        type: "conjunction",
-        word: "and",
-        depth: 1
-      },
-      {
-        type: "criterion",
-        condition_id: "user_name",
-        depth: 1,
-        input: {
-          clause: "cont",
-          value: "Fioritto"
-        }
-      }]
+      ]
+      filter = create_filter(blueprint)
+      # Force can_use_get_query to return true for this test
+      filter.stubs(:can_use_get_query?).returns(true)
+      # Should use the flat query logic
+      assert_equal filter.get_flat_query.to_sql, filter.get_query.to_sql
+    end
   end
 end

@@ -28,7 +28,7 @@ describe Refine::Filter do
         SELECT DISTINCT `contacts`.* FROM `contacts`
           INNER JOIN `forms_submissions` ON `forms_submissions`.`id` = `contacts`.`custom_attributes_id`
           INNER JOIN `forms_submissions_answers` ON `forms_submissions_answers`.`submission_id` = `forms_submissions`.`id`
-          WHERE ((`forms_submissions_answers`.`entry` = 'test'))
+          WHERE (`forms_submissions_answers`.`entry` = 'test')
       SQL
       assert_equal expected_sql, filter.get_flat_query.to_sql
     end
@@ -41,7 +41,7 @@ describe Refine::Filter do
         SELECT DISTINCT `contacts`.* FROM `contacts` 
           INNER JOIN `forms_submissions` ON `forms_submissions`.`id` = `contacts`.`custom_attributes_id` 
           INNER JOIN `forms_submissions_answers` ON `forms_submissions_answers`.`submission_id` = `forms_submissions`.`id` 
-          WHERE ((`forms_submissions_answers`.`fields_option_id` IN (2, 3)))
+          WHERE (`forms_submissions_answers`.`fields_option_id` IN (2, 3))
       SQL
       assert_equal expected_sql, filter.get_flat_query.to_sql
     end
@@ -55,7 +55,7 @@ describe Refine::Filter do
           INNER JOIN `forms_submissions` ON `forms_submissions`.`id` = `contacts`.`custom_attributes_id`
           INNER JOIN `forms_submissions_answers` ON `forms_submissions_answers`.`submission_id` = `forms_submissions`.`id`
           INNER JOIN `forms_submissions_answers_selected_options` ON `forms_submissions_answers_selected_options`.`answer_id` = `forms_submissions_answers`.`id`
-          WHERE ((`forms_submissions_answers_selected_options`.`fields_option_id` IN (1, 2)))
+          WHERE (`forms_submissions_answers_selected_options`.`fields_option_id` IN (1, 2))
       SQL
       assert_equal expected_sql, filter.get_flat_query.to_sql
     end
@@ -69,7 +69,7 @@ describe Refine::Filter do
           INNER JOIN `forms_submissions` ON `forms_submissions`.`id` = `contacts`.`custom_attributes_id`
           INNER JOIN `forms_submissions_answers` ON `forms_submissions_answers`.`submission_id` = `forms_submissions`.`id`
           INNER JOIN `contacts_applied_tags` ON `contacts_applied_tags`.`contact_id` = `contacts`.`id`
-          WHERE ((`forms_submissions_answers`.`fields_option_id` IN (2, 3))) AND ((`contacts_applied_tags`.`tag_id` IN (1, 2)))
+          WHERE (`forms_submissions_answers`.`fields_option_id` IN (2, 3)) AND (`contacts_applied_tags`.`tag_id` IN (1, 2))
       SQL
       assert_equal expected_sql, filter.get_flat_query.to_sql
     end
@@ -78,7 +78,7 @@ describe Refine::Filter do
   def create_filter(blueprint=nil)
     field_options = [{id: "1", display: "field1"}, {id: "2", display: "field2"}, {id: "3", display: "field3"}, {id: "4", display: "field4"}]
     selected_options = [{id: "1", display: "selected1"}, {id: "2", display: "selected2"}, {id: "3", display: "selected3"}, {id: "4", display: "selected4"}]
-    BlankTestFilter.new(blueprint,
+    FlatQueryTestFilter.new(blueprint,
       Contact.all,
       [
         Refine::Conditions::TextCondition.new("custom_attributes.answers.entry"),

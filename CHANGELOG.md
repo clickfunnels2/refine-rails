@@ -1,3 +1,7 @@
+### 2.14.0
+  * Making flat_query an includable module for implementing filter classes
+  * Adds a new method for filter classes with `FlatQueryTools` included. `can_use_flat_query?` which uses smart defaults and can be overridden
+  * branched the standard `get_query` method to go to `get_flat_query` or the sub-select `get_complex_query` based on whether module is included and `can_use_flat_query?` is set to true
 ### 2.13.8
   * Each flat-query condition now loops to more deeply support nested attributes. For each nest a new join param will be added to the query
   * simplified some of the variable usage and params being passed around to remove things unnecessary.

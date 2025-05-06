@@ -6,7 +6,6 @@ module Refine
     include Stabilize
     include Internationalized
     include Inspector
-    include FlatQueryTools
     # This validation structure sents `initial_query` as the method to validate against
     define_model_callbacks :initialize, only: [:after]
     after_initialize :valid?
@@ -92,10 +91,10 @@ module Refine
 
     def get_query
       raise "Initial query must exist" if initial_query.nil?
-      if blueprint.present?
-        @relation.where(group(make_sub_query(blueprint)))
+      if self.class.included_modules.include?(Refine::FlatQueryTools) && can_use_flat_query?
+        get_flat_query
       else
-        @relation
+        get_complex_query
       end
     end
 
@@ -103,6 +102,14 @@ module Refine
       result = get_query
       raise Refine::InvalidFilterError.new(filter: self) unless errors.none?
       result
+    end
+
+    def get_complex_query
+      if blueprint.present?
+        @relation.where(group(make_sub_query(blueprint)))
+      else
+        @relation
+      end
     end
 
     def add_nodes_to_query(subquery:, nodes:, query_method:)
@@ -213,6 +220,7 @@ module Refine
 
     def apply_condition(criterion)
       begin
+        condition = get_condition_for_criterion(criterion)
         get_condition_for_criterion(criterion)&.apply(criterion[:input], table, initial_query, false, nil)
       rescue Refine::Conditions::Errors::ConditionClauseError => e
         e.errors.each do |error|

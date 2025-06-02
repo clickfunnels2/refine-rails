@@ -30,7 +30,7 @@ describe Refine::Filter do
       original_execute = Event.connection.method(:execute)
 
       expected_event_sql = <<-SQL.squish
-        SELECT `events`.`contact_id` FROM `events`
+        SELECT DISTINCT `events`.`contact_id` FROM `events`
           WHERE (`events`.`source_id` IN (1, 2))
       SQL
 
@@ -42,6 +42,7 @@ describe Refine::Filter do
 
       assert executed_queries.any? { |sql| sql.include?(expected_event_sql)  }, "Expected to find the event query in the executed queries: #{expected_event_sql}"
 
+      ActiveSupport::Notifications.unsubscribe(subscriber)
     end
 
     it "single check " do

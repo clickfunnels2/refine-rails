@@ -150,9 +150,6 @@ module Refine::Conditions
       relational_query = relation_class.select(key_2).distinct.arel
       node = apply(input, relation_table_being_queried, relation_class, inverse_clause)
       relational_query = relational_query.where(node)
-      puts "Relational query: #{relational_query.to_sql}"
-      puts "Relational class: #{relation_class}"
-      puts "Relational db config: #{relation_class.connection_db_config.configuration_hash.inspect}"
       results = relation_class.find_by_sql(relational_query.to_sql)
       array_of_ids = results.map { |result| result.send(key_2) }
       if array_of_ids.length == 1

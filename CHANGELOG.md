@@ -1,3 +1,5 @@
+### 2.14.1
+  * Fixes bug with flat-query multi db query generation
 ### 2.14.0
   * Making flat_query an includable module for implementing filter classes
   * Adds a new method for filter classes with `FlatQueryTools` included. `can_use_flat_query?` which uses smart defaults and can be overridden

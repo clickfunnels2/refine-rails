@@ -90,7 +90,7 @@ module Refine::Conditions
        
       end # End of while loop
 
-      if condition_joins.any?
+      if condition_joins.any? && !condition_uses_different_database?(model_class, query.model)
         add_pending_joins_if_needed(input: input, joins_array: condition_joins)
       end
 
@@ -147,10 +147,11 @@ module Refine::Conditions
     # the records matching the condition that will then be passed into the primary query.
     def handle_flat_cross_database_condition(root_model:, input:, relation_class:, relation_table_being_queried:, inverse_clause:, key_1:, key_2:)
       table = root_model.arel_table
-      relational_query = relation_class.select(key_2).arel
+      relational_query = relation_class.select(key_2).distinct.arel
       node = apply(input, relation_table_being_queried, relation_class, inverse_clause)
       relational_query = relational_query.where(node)
-      array_of_ids = relation_class.connection.exec_query(relational_query.to_sql).rows.flatten
+      results = relation_class.find_by_sql(relational_query.to_sql)
+      array_of_ids = results.map { |result| result.send(key_2) }
       if array_of_ids.length == 1
         nodes = table[:"#{key_1}"].eq(array_of_ids.first)
       else

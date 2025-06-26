@@ -1,3 +1,5 @@
+### 2.15.0
+  * Adds the ability to pass localization to the date picker.
 ### 2.14.1
   * Fixes bug with flat-query multi db query generation
 ### 2.14.0

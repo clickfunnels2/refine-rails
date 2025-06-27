@@ -4,6 +4,7 @@
   data-refine--date-locale-value="<%= I18n.locale %>"
   data-refine--date-date-format-value="<%=  I18n.t("refine.date.formats.moment") %>"
   data-refine--date-datetime-format-value="<%= I18n.t("refine.time.formats.moment") %>"
+  data-refine--date-picker-locale-value="<%= I18n.t("refine.daterangepicker").deep_transform_keys { |k| k.to_s.camelize(:lower) }.to_json %>"
 >
   <input
     class="refine--input"
